@@ -19,7 +19,7 @@ const routes = createBrowserRouter([
       },
     ]
   }
-])
+]);
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
