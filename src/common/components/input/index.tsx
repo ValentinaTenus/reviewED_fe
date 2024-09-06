@@ -8,14 +8,16 @@ import {
     useController
 } from "react-hook-form";
 
+import { Icon } from "../index";
 import styles from "./styles.module.scss";
+import { IconName } from "~/common/enums";
 
 type Properties<T extends FieldValues> = {
 	className?: string | undefined;
 	control: Control<T, null>;
-  disabled: boolean;
+  disabled?: boolean;
 	errors: FieldErrors<T>;
-	label: string;
+	label?: string;
 	name: FieldPath<T>;
 	placeholder?: string;
 	type?: "email" | "password" | "text";
@@ -23,12 +25,14 @@ type Properties<T extends FieldValues> = {
 	rows?: number;
   helperText?: string;
   maxWords?: number;
+	hasVisuallyHiddenLabel?: boolean;
+	iconName?: IconName;
 };
 
 const Input = <T extends FieldValues>({
 	className,
 	control,
-  disabled,
+  disabled= false,
 	errors,
 	label,
 	name,
@@ -37,7 +41,9 @@ const Input = <T extends FieldValues>({
 	ref,
 	rows,
   helperText,
-  maxWords = 2000
+  maxWords = 2000,
+	hasVisuallyHiddenLabel = false,
+	iconName
 }: Properties<T>): JSX.Element => {
 	const { field } = useController({ control, name });
   const [wordCount, setWordCount] = useState(0);
@@ -46,12 +52,23 @@ const Input = <T extends FieldValues>({
 	const hasError = Boolean(error);
 	const isTextArea = Boolean(rows);
 
+	const placeholderIcon = iconName ? (
+		<Icon className={styles["icon"]} name={iconName} />
+	) : null;
+	const hasIcon = Boolean(iconName);
+
 	const inputClasses = clsx(
 		className,
 		styles["input"],
 		hasError && styles["input__error"],
+		hasIcon && styles["input-with-icon"],
     disabled && styles["input__disabled"],
 		isTextArea && styles["textarea"]
+	);
+
+	const labelClasses = clsx(
+		styles["label"],
+		hasVisuallyHiddenLabel && "visually-hidden",
 	);
 
   const handleWordCount = (value: string) => {
@@ -79,7 +96,8 @@ const Input = <T extends FieldValues>({
 
 	return (
 		<label className={styles["container"]}>
-			<span className={"label"}>{label}</span>
+			<span className={labelClasses}>{label}</span>
+			{placeholderIcon}
 			{ isTextArea ? (
         <>
           <textarea
