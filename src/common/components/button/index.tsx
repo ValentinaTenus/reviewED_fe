@@ -21,6 +21,7 @@ const sizes: Record<ButtonSize, string> = {
   large: styles.size__large,
 };
 
+
 type ButtonProperties = {
   children?: ReactNode;
   disabled?: boolean;
@@ -29,6 +30,7 @@ type ButtonProperties = {
   size?: ValueOf<typeof ButtonSize>;
   type?: ValueOf<typeof ButtonType>;
   variant: ValueOf<typeof ButtonVariant>;
+  isFullWidth?: boolean;
   appendedIcon?: ReactNode;
   prependedIcon?: ReactNode;
 };
@@ -40,6 +42,7 @@ const Button: React.FC<ButtonProperties> = ({
   className,
   type,
   variant,
+  isFullWidth,
   size = ButtonSize.SMALL,
   appendedIcon,
   prependedIcon,
@@ -51,8 +54,9 @@ const Button: React.FC<ButtonProperties> = ({
         onClick={onClick}
           className={clsx(
             styles.button,
-            variants[variant],
             sizes[size],
+            variants[variant],
+            isFullWidth && styles['width__full'],
             className,
           )}
           type={type}
