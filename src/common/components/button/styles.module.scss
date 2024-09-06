@@ -1,0 +1,89 @@
+.button {
+  background: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  min-height: 16px;
+  margin: 0;
+  font-family:var(--font-family-main);
+  font-size: var(--font-size-title-h5);
+  font-weight: var(--font-weight-semi-bold);
+  text-align: center;
+  text-decoration: none;
+  vertical-align: baseline;
+  border: none;
+  border-radius: 52px;
+  cursor: pointer;
+}
+
+.button:disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.size__small {
+  gap: 4px;
+  padding: 8px 24px;
+}
+
+.size__medium {
+  gap: 8px;
+  padding: 12px 24px;
+}
+
+.size__large {
+  gap: 8px;
+  padding: 12px 64px;
+}
+
+.button__login {
+  border: 1.5px solid var(--color-grey-1000);
+  color: var(--color-grey-1000);
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0.06em;
+  padding: 6px 8px;
+  width: 80px;
+}
+
+.button__primary {
+  color: var(--color-grey-950);
+  background-color: var(-color-yellow-500);
+  border: none;
+}
+
+.button__primary:hover {
+  background-color: var(--color-yellow-300);
+}
+
+.button__primary:active {
+  background-color: var(--color-yellow-600);
+}
+
+.button__share_linkedin {
+  color: var(--color-grey-50);
+  background-color: var(--color-button-blue);
+}
+
+.button__share_linkedin:hover {
+  background-color: var(--color-button-light-blue);
+}
+
+.button__share_facebook {
+  color: var(--color-grey-50);
+  background-color: var(--color-button-facebook-blue);
+}
+
+.button__share_facebook:hover {
+  background-color: var( --color-button-facebook-light-blue);
+}
+
+.button__share_twitter {
+  color: var(--color-grey-50);
+  background-color: var( --color-grey-950);
+}
+
+.button__share_twitter:hover {
+  background-color: var(--color-grey-700);
+}
