@@ -1,34 +1,21 @@
-import { type SizeProp } from '@fortawesome/fontawesome-svg-core';
-import {
-  faPlus,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import clsx from "clsx";
 
-import { IconName, IconSize } from '~/common/enums/index';
+import { type IconName } from '~/common/enums/index.js';
 
-const iconNameToSvgIcon = {
-    [IconName.PLUS]: faPlus,
+import { iconNameToSvg } from './icon-name-to-svg';
+import styles from './styles.module.scss';
+
+type Properties = {
+	className?: string | undefined;
+	name: IconName;
 };
 
-type IconProperties = {
-    className?: string;
-    name: IconName;
-    size?: SizeProp;
-    color?: string;
-};
+const Icon: React.FC<Properties> = ({ className, name }: Properties) => {
+	const IconComponent = iconNameToSvg[name];
 
-const Icon: React.FC<IconProperties> = ({
-    className,
-    name,
-    size = IconSize.LARGE,
-    color,
-}) => (
-    <FontAwesomeIcon
-        className={className as string}
-        icon={iconNameToSvgIcon[name]}
-        size={size}
-        color={color as string}
-    />
-);
+	return (
+		<IconComponent className={clsx(styles["icon"], className)} />
+	);
+};
 
 export { Icon };
