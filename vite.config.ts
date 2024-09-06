@@ -19,9 +19,7 @@ const config = ({ mode }: ConfigEnv): ReturnType<typeof defineConfig> => {
 						if (id.includes("node_modules")) {
 							return id
 								.toString()
-								.split("node_modules/")
-								[indexOne].split("/")
-								[indexZero].toString();
+								.split("node_modules/")[indexOne].split("/")[indexZero].toString();
 						}
 					},
 				},

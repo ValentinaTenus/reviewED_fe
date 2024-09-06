@@ -4,14 +4,13 @@ import Logo from '~/assets/images/logo.svg?react';
 import MenuIcon from '~/assets/images/menu.svg?react';
 import LogOutIcon from '~/assets/images/logout.svg?react';
 import UserIcon from '~/assets/images/user.svg?react';
-import { Button } from '~/common/components/button';
-import { ButtonVariant } from '~/common/enums';
+import { Button, IconButton } from '~/common/components/index';
+import { ButtonVariant } from '~/common/enums/index';
 
 import styles from './styles.module.scss';
-import { IconButton } from '~/common/components';
 
 const Header: FC = () => {
-   const user = true;
+   const user = false;
 
   return (
     <div className={styles['header_wrapper']}>
@@ -20,15 +19,20 @@ const Header: FC = () => {
             <div className={styles['header_logo']}>
               <Logo />
             </div>
-            <div className={styles['header_search']}></div>
+            <div className={styles['header_search']}>
+            </div>
           </div>
           <div >
-            {/* <Button className={styles['header__button']} variant={ButtonVariant.LOGIN}>
-              Вхід
-            </Button>
-            <IconButton className={styles['menu__button']}>
-              <MenuIcon />
-            </IconButton> */}
+            {!user && (
+              <>
+                <Button className={styles['header__button']} variant={ButtonVariant.LOGIN}>
+                  Вхід
+                </Button>
+                <IconButton className={styles['menu__button']}>
+                  <MenuIcon />
+                </IconButton>
+              </>
+            )}
             {user && (
               <div className={styles['user__button']}>
                 <IconButton >
