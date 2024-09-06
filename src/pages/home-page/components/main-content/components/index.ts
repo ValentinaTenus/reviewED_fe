@@ -1,0 +1,1 @@
+export { BanerBlock } from './baner-block/index';

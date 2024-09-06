@@ -1,0 +1,26 @@
+.main_content_wrapper {
+  margin-top: 80px;
+  padding: 8px 48px;
+}
+
+.main_content {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  gap: 80px;
+  margin: 0 auto;
+  max-width: 1252px;
+  padding: 0;
+}
+
+@media (max-width: 1024px)  {
+  .main_content_wrapper {
+    margin-top: 40px;
+  }
+}
+
+@media (max-width: 768px)  {
+  .main_content_wrapper {
+    padding: 0px 20px;  
+  }
+}

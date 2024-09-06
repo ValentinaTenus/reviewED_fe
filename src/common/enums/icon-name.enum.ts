@@ -1,5 +1,5 @@
 enum IconName {
-  PLUS = 'plus',
+  SEARCH = 'search',
 }
 
 export { IconName };
