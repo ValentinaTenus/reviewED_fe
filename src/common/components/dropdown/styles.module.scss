@@ -1,0 +1,27 @@
+
+.dropdown {
+  -webkit-appearance: none; 
+  appearance: none; 
+  background: url('~/assets/images/arrow-down.svg') no-repeat right center; 
+  background-color: var(--color-white);
+  background-size: 24px 24px; 
+  background-position: calc(100% - 16px) center;
+  border: none;
+  color: var(--color-grey-950);
+  cursor: pointer;
+  font-family: var(--font-family-main);
+  font-size: var( --font-size-title-h4);
+  font-weight: var(-font-weight-text);
+  outline: none;
+  padding: 16px;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+
+.dropdown.open {
+  background-image: url('~/assets/images/arrow-up.svg');
+}
+
+option {
+  color: var(--color-grey-950);
+}
