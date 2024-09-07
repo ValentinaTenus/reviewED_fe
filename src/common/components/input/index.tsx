@@ -8,9 +8,10 @@ import {
     useController
 } from "react-hook-form";
 
+import { IconName } from "~/common/enums/index";
+
 import { Icon } from "../index";
 import styles from "./styles.module.scss";
-import { IconName } from "~/common/enums";
 
 type Properties<T extends FieldValues> = {
 	className?: string | undefined;
@@ -95,39 +96,50 @@ const Input = <T extends FieldValues>({
   }, [ref]);
 
 	return (
-		<label className={styles["container"]}>
-			<span className={labelClasses}>{label}</span>
-			{placeholderIcon}
-			{ isTextArea ? (
-        <>
-          <textarea
-            className={inputClasses}
-            disabled={disabled}
-            {...field}
-            placeholder={placeholder}
-            rows={rows}
-            onChange={(e) => {
-              field.onChange(e);
-              handleInputChange(e);
-            }}
-            onBlur={field.onBlur}
-            value={field.value || ""}
-            ref={ref}
-				  />
-          <div className={styles['helper_container']}>
-            <span className={styles['helper_text']}>{helperText}</span>
-            <span className={styles['word_count']}>{wordCount}/{maxWords}</span>
-          </div>
-        </>
-				
-			) : (
-				<input
-					className={inputClasses}
-          disabled={disabled}
-					{...field}
-					placeholder={placeholder}
-					type={type}
-				/>
+		<label className={clsx(styles["container"], disabled && styles["container__disabled"])}>
+			<span className={styles["label-wrapper"]}>
+        <span className={labelClasses}>
+          {label}
+        </span>
+        {hasError && !hasVisuallyHiddenLabel && (
+          <span className={styles['error-asterisk']}>*</span>
+				)}
+      </span>
+
+			<div className={styles["input-wrapper"]}>
+				{placeholderIcon}
+				{ isTextArea ? (
+					<>
+						<textarea
+							className={inputClasses}
+							disabled={disabled}
+							{...field}
+							placeholder={placeholder}
+							rows={rows}
+							onChange={(e) => {
+								field.onChange(e);
+								handleInputChange(e);
+							}}
+							onBlur={field.onBlur}
+							value={field.value || ""}
+							ref={ref}
+						/>
+					</>
+				) : (
+					<input
+						className={inputClasses}
+						disabled={disabled}
+						{...field}
+						placeholder={placeholder}
+						type={type}
+					/>
+				)}
+			</div>
+			{isTextArea && (
+				<div className={styles['helper_container']}>
+					<span className={styles['helper_text']}>{helperText}</span>
+					<span className={styles['word_count']}>{wordCount}/{maxWords}</span>
+				</div>
 			)}
 		</label>
 	);

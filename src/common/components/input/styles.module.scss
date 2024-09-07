@@ -1,15 +1,36 @@
 .container {
   display: flex;
   flex-direction: column;
+  height: 100%;
   position: relative;
-  width: 100%;
+}
+
+.container__disabled .label-wrapper .label,
+.container__disabled .label-wrapper .error-asterisk {
+  color: var(--color-grey-400);
+}
+
+.label-wrapper {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
 }
 
 .label {
   color: var(--color-grey-950);
+  display: inline-block;
   font-family: var(--font-family-main);
   font-size: var(--font-size-title-h4);
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-semi-bold);
+  position: relative;
+}
+
+.error-asterisk {
+  color: var(--color-error-red);
+}
+
+.input-wrapper {
+  position: relative;
 }
 
 .input {
@@ -22,18 +43,21 @@
   height: 40px;
   margin-bottom: 8px;
   line-height: 19.6px;
+  margin-top: 8px;
   padding: 16px;
 }
 
 .icon {
-	position: absolute;
-	top: 10px;
-	left: 10px;
 	color: var(--color-grey-200);
+  height: 16px;
+	left: 16px;
+	position: absolute;
+	top: 33%;
+  width: 16px;
 }
 
 .input-with-icon {
-	padding-left: 35px;
+	padding-left: 42px;
 }
 
 .input__disabled + .label, 
@@ -46,15 +70,6 @@
   color: var(--color-grey-500);
 }
 
-.input__disabled, textarea:disabled {
-  background-color: var(--color-grey-200);
-  color: var(--color-grey-400);
-}
-
-.input__disabled::placeholder, .icon {
-  color: var(--color-grey-400);
-}
-
 .input:hover {
   border: 1px solid var(--color-grey-400);
   color: var(--color-grey-400);
@@ -63,16 +78,16 @@
 .input:focus {
   color: var(--color-grey-400);
   border: 3px solid var(--color-grey-400);
-  outline: none;
+  // outline: none;
 }
 
 .input:focus::placeholder, .icon {
   color: var(--color-grey-500);
 }
 
-.input:active {
-  color: var(--color-grey-950);
+.input:active, .input:focus {
   border: 1px solid var(--color-grey-700);
+  color: var(--color-grey-950);
 }
 
 .textarea {
@@ -101,4 +116,14 @@
   color: var(--color-grey-400);
   font-weight: var(--font-weight-text);
   font-size: var(--font-size-main-text);
+}
+
+.input__disabled, 
+textarea:disabled,
+.input__disabled:hover,
+textarea:disabled:hover {
+  background-color: var(--color-grey-200);
+  border: none; 
+  color: var(--color-grey-400);
+  cursor: not-allowed;
 }
