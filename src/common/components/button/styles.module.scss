@@ -23,16 +23,22 @@
 }
 
 .size__small {
+  font-weight: var(--font-weight-semi-bold);
+  font-size: var(--font-size-title-h5);
   gap: 4px;
   padding: 8px 24px;
 }
 
 .size__medium {
+  font-weight: var(--font-weight-semi-bold);
+  font-size: var(--font-size-title-h5);
   gap: 8px;
   padding: 12px 24px;
 }
 
 .size__large {
+  font-size: var(--font-size-title-h4);
+  font-weight: var(--font-weight-bold);
   gap: 8px;
   padding: 12px 64px;
 }
@@ -48,9 +54,9 @@
 }
 
 .button__primary {
-  color: var(--color-grey-950);
-  background-color: var(-color-yellow-500);
+  background-color: var(--color-yellow-500);
   border: none;
+  color: var(--color-grey-950);
 }
 
 .button__primary:hover {
