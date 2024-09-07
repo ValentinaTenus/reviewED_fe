@@ -1,12 +1,14 @@
 .main_content_wrapper {
   margin-top: 80px;
   padding: 8px 48px;
+  height: 100vh;
 }
 
 .main_content {
   align-items: center;
   display: flex;
   justify-content: space-between;
+  flex-direction: column;
   gap: 80px;
   margin: 0 auto;
   max-width: 1252px;

@@ -1,0 +1,47 @@
+.container {
+  display: flex;
+  border: 1px solid var(--color-grey-500);
+  border-radius: 40px;
+  box-shadow: 2px 2px 12px 0 var(--color-shadow-brown);
+  height: 58px;
+  gap: 12px;
+  max-width: 1252px;
+  overflow: hidden;
+}
+
+.search_form {
+  display: flex;
+}
+
+.search_form > *:not(:last-child) {
+  border-right: 1px solid var(--color-grey-500);
+}
+
+.search__input {
+  border-right: 1px solid var(--color-grey-500);
+  border-radius: 40px 0 0 40px; 
+  height: 100%;
+  width: 298px;
+}
+
+.search_dropdown_wrapper {
+  border: none;
+  height: 58px;
+  width: 218px;
+}
+
+.search_dropdown {
+  height: 100%;
+  width: 100%;
+}
+
+.search_button_wrapper {
+  height: 100%;
+  padding: 4px;
+  width: 196px;
+}
+
+.search__button {
+ height: 100%;
+ width: 100%;
+}
