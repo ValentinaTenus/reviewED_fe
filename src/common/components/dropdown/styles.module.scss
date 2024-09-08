@@ -1,3 +1,6 @@
+.dropdown-container {
+  width: 100%;
+}
 
 .dropdown {
   -webkit-appearance: none; 
@@ -5,7 +8,7 @@
   background: url('~/assets/images/arrow-down.svg') no-repeat right center; 
   background-color: var(--color-white);
   background-size: 24px 24px; 
-  background-position: calc(100% - 16px) center;
+  background-position: calc(100% - 0px) center;
   border: none;
   color: var(--color-grey-950);
   cursor: pointer;
@@ -13,7 +16,10 @@
   font-size: var( --font-size-title-h4);
   font-weight: var(-font-weight-text);
   outline: none;
-  padding: 16px;
+  padding-right: 48px;
+  text-overflow: ellipsis; 
+  white-space: nowrap;
+  overflow: hidden;
   transition: border-color 0.2s;
   width: 100%;
 }

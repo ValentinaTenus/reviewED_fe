@@ -39,36 +39,43 @@
 }
 
 .baner_block_picture {
-  height: 100%;
   object-fit: cover; 
   display: block;
+  width: 100%;
 }
 
-@media (max-width: 1024px)  {
+@media (max-width: 1280px)  {
   .baner_block {
     flex-direction: column;
+    height: 518px;
     gap: 56px;
     padding: 64px 0 68px 0;
   }
 
-  .baner_block_text, .baner_block_picture_wrapper  {
+  .baner_block_text, .baner_block_picture_wrapper {
+    height: 100%;
     width: 100%;
+  }
+
+  .baner_block_picture{
+   height: auto;
+   width: 100%;
   }
 
   .baner_block_text {
     gap: 32px;
   }
-
-  .baner_block_picture {
-    height: auto;
-    width: 100%;
-  }
 }
 
 @media (max-width: 768px)  {
   .baner_block {
-    padding: 0;
     gap: 32px;
+    flex-direction: column;
+    padding: 0;
+  }
+
+  .baner_block_picture_wrapper {
+    padding: 0;
   }
 
   .header {

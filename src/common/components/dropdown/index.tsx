@@ -34,7 +34,7 @@ const Dropdown: React.FC<Properties> = ({
     (e: React.ChangeEvent<HTMLSelectElement>) => {
       const newValue = e.target.value;
       setSelectedValue(newValue);
-      setIsOpen(false);
+      setIsOpen(!isOpen);
       onChange(newValue);
     },
     [onChange],

@@ -1,7 +1,7 @@
 .header_wrapper {
   border-bottom: 1.5px solid var(--color-grey-950);
   margin: 0 auto;
-  padding: 8px 48px;
+  padding: 8px 86px;
   position: relative;
 }
 
@@ -12,6 +12,7 @@
   margin: 0 auto;
   max-width: 1252px;
   padding: 10px 0;
+  width: 100%;
 }
 
 .header_logo_container {
@@ -100,7 +101,11 @@
   }
 }
 
-@media (min-width: 768px) and (max-width: 1024px)  {
+@media (min-width: 768px) and (max-width: 1280px)  {
+  .header_wrapper {
+    padding: 8px 48px;
+  }
+
   .header_logo_container {
     gap: 24px;
   }
