@@ -1,4 +1,6 @@
-import { Button,  } from '~/common/components/index';
+import { useState } from 'react';
+
+import { Button } from '~/common/components/index';
 import { useAppForm } from '~/common/hooks/index';
 import { ButtonSize, ButtonVariant, IconName } from '~/common/enums/index';
 
@@ -22,6 +24,8 @@ const mockCompanies = [
 ]
 
 const SearchElement: React.FC = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredSuggestions, setFilteredSuggestions] = useState<string[]>([]);
 
   const { control, errors } = useAppForm({
     defaultValues: {
@@ -29,19 +33,44 @@ const SearchElement: React.FC = () => {
     },
   });
 
+  const handleInputChange = (value: string) => {
+    setSearchTerm(value);
+
+    if (value.trim() === "") {
+      setFilteredSuggestions([]);
+    } else {
+      const filteredSuggestions = mockCompanies
+        .filter((option) =>
+          option.label.toLowerCase().includes(value.toLowerCase())
+        )
+        .map((option) => option.label);
+  
+      setFilteredSuggestions(filteredSuggestions);
+    }
+
+  };
+
+  const handleSuggestionClick = (suggestion: string) => {
+    setSearchTerm(suggestion); 
+  };
+
   return (
     <div className={styles['container']}>
       <form className={styles['search_form']}>
         <div className={styles['form']}>
+          <div className={styles['search_wrapper']}>
           <SearchInput
             className={styles['search__input']}
             placeholder='Введіть запит'
             control={control}
             errors={errors}
-            name='search'
-            hasVisuallyHiddenLabel
+            name='search'            
             iconName={IconName.SEARCH}
+            suggestions={filteredSuggestions} 
+            onSuggestionClick={handleSuggestionClick} 
+            onChange={handleInputChange}
           />
+          </div>
           <div className={styles['search_dropdown_wrapper']}>
             <Dropdown
               className={styles['search_dropdown']}
@@ -55,9 +84,9 @@ const SearchElement: React.FC = () => {
           <div className={styles['search_dropdown_wrapper']}>
             <Dropdown
               className={styles['search_dropdown']}
-              label='Локації'
-              placeholder='Локації'
-              name='location'
+              label='Всі Локації'
+              placeholder='Всі Локації'
+              name='allLocations'
               options={mockCompanies}
               onChange={(value) => console.log(value)}
             />

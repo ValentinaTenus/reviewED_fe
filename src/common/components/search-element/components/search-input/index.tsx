@@ -24,8 +24,10 @@ type Properties<T extends FieldValues> = {
 	rows?: number;
   helperText?: string;
   maxWords?: number;
-	hasVisuallyHiddenLabel?: boolean;
+	suggestions?: string[]; 
+  onSuggestionClick?: (suggestion: string) => void;
 	iconName?: IconName;
+	onChange?: (value: string) => void
 };
 
 const SearchInput = <T extends FieldValues>({
@@ -35,7 +37,10 @@ const SearchInput = <T extends FieldValues>({
 	name,
 	placeholder = "",
 	type = "text",
-	iconName
+	iconName,
+	suggestions,
+	onSuggestionClick,
+	onChange
 }: Properties<T>): JSX.Element => {
 	const { field } = useController({ control, name });
 
@@ -43,28 +48,49 @@ const SearchInput = <T extends FieldValues>({
 	const hasError = Boolean(error);
 
 	const placeholderIcon = iconName ? (
-		<Icon className={styles["icon"]} name={iconName} />
+		<Icon className={clsx(styles["icon"], field.value && styles["icon_hidden"])} name={iconName} />
 	) : null;
 
 	const inputClasses = clsx(
 		className,
 		styles["input"],
 		hasError && styles["input__error"],
+		field.value && styles["input_filled"]
 	);
 
 	return (
-		<label className={styles["container"]}>
-			<div className={styles["input-wrapper"]}>
+		<label className={styles['container']}>
+			<div className={styles['input_wrapper']}>
 				{placeholderIcon}
-					<input
-						className={inputClasses}
-						{...field}
-						placeholder={placeholder}
-						type={type}
-					/>
+				<input
+					className={inputClasses}
+					{...field}
+					placeholder={placeholder}
+					type={type} 
+					onChange={(e) => {
+						field.onChange(e);
+						onChange?.(e.target.value); 
+					}}
+				/>
 			</div>
+			{suggestions && suggestions.length > 0 && (
+				<ul className={styles['suggestions_list']}>
+					<li className={styles['suggestion_item']}>
+						<Icon className={styles['suggestion_icon']} name={IconName.SEARCH}/>
+						<span>{field.value }</span>
+					</li>
+					{suggestions.map((suggestion, index) => (
+						<li
+							key={index}
+							className={styles['suggestion_item']}
+							onClick={() => onSuggestionClick?.(suggestion)} 
+						>
+							<span>{suggestion}</span>
+						</li>
+					))}
+				</ul>)}
 		</label>
-	);
+	)
 };
 
 export { SearchInput };

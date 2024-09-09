@@ -1,11 +1,12 @@
 import clsx from 'clsx';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import styles from './styles.module.scss';
 
 type Option = {
   value: string;
   label: string;
+  children?: Option[];
 };
 
 type Properties = {
@@ -26,22 +27,20 @@ const Dropdown: React.FC<Properties> = ({
     isDisabled,
     options,
 }) => {
-  const [selectedValue, setSelectedValue] = useState<string | undefined>("");
+  const [selectedValue, setSelectedValue] = useState<string | undefined>(undefined);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const handleOptionChange = useCallback(
-    (e: React.ChangeEvent<HTMLSelectElement>) => {
-      const newValue = e.target.value;
-      setSelectedValue(newValue);
-      setIsOpen(!isOpen);
-      onChange(newValue);
-    },
-    [onChange],
-  );
+  const handleOptionClick = (value: string) => {
+    setSelectedValue(value);
+    setIsOpen(false);
+    onChange(value);
+  };
 
   const handleToggleDropdown = () => {
-    setIsOpen(!isOpen);
+    if (!isDisabled) {
+      setIsOpen(!isOpen);
+    }
   };
 
   useEffect(() => {
@@ -56,27 +55,33 @@ const Dropdown: React.FC<Properties> = ({
   }, []);
 
   return (
-    <div ref={dropdownRef} className={clsx(styles['dropdown-container'], { [styles['open']]: isOpen })}>
-      <select
-        value={selectedValue}
-        onChange={handleOptionChange}
+    <div 
+      ref={dropdownRef} 
+      className={clsx(styles['dropdown_container'], 
+      { [styles['open']]: isOpen, [styles['disabled']]: isDisabled }, 
+      className)}
+    >
+      <div
+        className={styles['dropdown_trigger']}
         onClick={handleToggleDropdown}
-        className={clsx(styles['dropdown'], { [styles['open']]: isOpen }, className)}
-        disabled={isDisabled}
       >
-        {selectedValue === "" && (
-          <option value="" disabled>
-            {placeholder}
-          </option>
-        )}
+        <span>{placeholder}</span>
+      </div>
+      {isOpen && !isDisabled && (
+        <div className={styles['dropdown_menu']}>
           {options.map((option, index) => (
-            <option key={index} value={option.value}>
+            <div
+              key={index}
+              className={styles['dropdown_item']}
+              onClick={() => handleOptionClick(option.value)}
+            >
               {option.label}
-            </option>
+            </div>
           ))}
-      </select>
+        </div>
+      )}
     </div>
-  )
+  );
 };
- 
+
 export { Dropdown };
