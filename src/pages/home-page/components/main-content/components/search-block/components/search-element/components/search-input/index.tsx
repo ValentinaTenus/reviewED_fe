@@ -10,9 +10,9 @@ import {
 
 import { Icon } from "~/common/components/icon";
 import { IconName } from "~/common/enums/index";
+import { DropdownOption } from "~/common/types/index";
 
 import styles from "./styles.module.scss";
-import { DropdownOption } from "~/common/types";
 
 type Properties<T extends FieldValues> = {
 	className?: string | undefined;
@@ -72,10 +72,18 @@ const SearchInput = <T extends FieldValues>({
 		setIsSuggestionsOpen(true)
 	}, []);
 
+	const handleSuggestionClick = useCallback((suggestion: DropdownOption) => {
+		onSuggestionClick(suggestion.value);
+		field.onChange(suggestion.value);
+		onChange?.(suggestion.value.toString())
+	}, [field, onChange, onSuggestionClick]);
+
 	useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (inputWrapperRef.current && !inputWrapperRef.current.contains(event.target as Node)) {
-        setIsSuggestionsOpen(false);
+        setTimeout(() => {
+					setIsSuggestionsOpen(false);
+			}, 100);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -109,7 +117,7 @@ const SearchInput = <T extends FieldValues>({
 							key={index}
 							value={suggestion.value}
 							className={styles['suggestion_item']}
-							onClick={() => onSuggestionClick(suggestion.value)} 
+							onClick={() =>  handleSuggestionClick(suggestion) } 
 						>
 							<span>{suggestion.label}</span>
 						</li>
