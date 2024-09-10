@@ -4,7 +4,7 @@ const mapCompanies = (companies: Company[]) => {
   const sortedCompanies = [...companies]
   .sort((company1, company2) => +company2.average_rating - +company1.average_rating)
   .map((company) => ({
-    value: company.id,
+    value: company.name,
     label: company.name
   }));
 

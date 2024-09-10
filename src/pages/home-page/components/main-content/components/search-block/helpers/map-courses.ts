@@ -10,7 +10,7 @@ const mapCourses = (courses: Course[]): DropdownOption[] => {
     }
 
     categoryMap[categoryName].push({
-      value: course.id,
+      value: course.title,
       label: course.title
     });
   });
@@ -21,7 +21,13 @@ const mapCourses = (courses: Course[]): DropdownOption[] => {
     options: categoryMap[categoryName], 
   }));
 
-  return options;
+  return [
+    {
+      value: 'Всі види курсів', 
+      label: 'Всі види курсів',
+    },
+    ...options
+  ];
 };
 
 export { mapCourses };

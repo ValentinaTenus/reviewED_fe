@@ -10,14 +10,14 @@ const getDropdownOptionsFormat= (items: Parameters): DropdownOption[] => {
 
   if(items.companies) {
     mappedItems = items.companies.map((company) => ({
-      value: company.id,
+      value: company.name,
       label: company.name
     }));
   }
 
   if(items.courses) {
     mappedItems = items.courses.map((course) => ({
-      value: course.id,
+      value: course.title,
       label: course.title
     }));
   }
