@@ -1,32 +1,41 @@
-import { useState } from 'react';
+import { useCallback,useEffect, useState } from 'react';
 
 import { Button } from '~/common/components/index';
 import { CITIES } from '~/common/constants/index';
 import { useAppForm } from '~/common/hooks/index';
-import { ButtonSize, ButtonVariant, IconName } from '~/common/enums/index';
+import { ButtonSize, ButtonType, ButtonVariant, IconName } from '~/common/enums/index';
+import { DropdownOption } from '~/common/types/index';
+import { useGetCompaniesQuery } from '~/redux/companies/companies-api';
 
 import { Dropdown } from '../dropdown';
 import { SearchInput } from './components/index';
+import { getDropdownOptionsFormat, mapCompanies } from './helpers';
 import styles from './styles.module.scss';
 
-const mockCompanies = [
+const categories = [
   {
-    value:'FirstCompany',
-    label:'FirstCompany'
+    value:'курси',
+    label:'Курси'
   },
   {
-    value:'SecondCompany',
-    label:'SecondCompany'
+    value:'компанії',
+    label:'Компанії'
   }, 
-  {
-    value:'LastCompany',
-    label:'LastCompany'
-  }
 ]
 
 const SearchElement: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [filteredSuggestions, setFilteredSuggestions] = useState<string[]>([]);
+  const [filteredSuggestions, setFilteredSuggestions] = useState<DropdownOption[]>([]);
+  const [companiesOptions, setCompaniesOptions] = useState<DropdownOption[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>(categories[0].value)
+  
+  const { data: companies, refetch: refetchCompanies } = useGetCompaniesQuery(
+    { name: searchTerm },
+    {
+      skip: selectedCategory !== categories[0].value,
+      refetchOnMountOrArgChange: true, 
+    }
+  );
 
   const { control, errors } = useAppForm({
     defaultValues: {
@@ -34,26 +43,35 @@ const SearchElement: React.FC = () => {
     },
   });
 
+  useEffect(() => {
+    if (companies) {
+      const options = mapCompanies(companies);
+      setCompaniesOptions(options);
+    }
+  }, [companies]);
+
   const handleInputChange = (value: string) => {
     setSearchTerm(value);
-    console.log(searchTerm)
 
-    if (value.trim() === "") {
+    if (value.trim() === '') {
       setFilteredSuggestions([]);
     } else {
-      const filteredSuggestions = mockCompanies
-        .filter((option) =>
-          option.label.toLowerCase().includes(value.toLowerCase())
-        )
-        .map((option) => option.label);
-  
-      setFilteredSuggestions(filteredSuggestions);
+      refetchCompanies();
+
+      if(companies){
+        const mappedCompanies = getDropdownOptionsFormat(companies)
+        setFilteredSuggestions(mappedCompanies);
+      }
     }
   };
 
-  const handleSuggestionClick = (suggestion: string) => {
-    setSearchTerm(suggestion); 
-  };
+  const handleCoursesOrCompaniesChoose = useCallback((value: string | number) => {
+    setSelectedCategory(value.toString()); 
+  }, []);
+
+  const handleSuggestionClick = useCallback((suggestion: string | number) => {
+    setSearchTerm(suggestion.toString()); 
+  }, []);
 
   return (
     <div className={styles['container']}>
@@ -78,8 +96,8 @@ const SearchElement: React.FC = () => {
               label='Компанії'
               placeholder="Компанії"
               name='companies'
-              options={mockCompanies}
-              onChange={(value) => console.log(value)}
+              options={categories}
+              onChange={handleCoursesOrCompaniesChoose}
             />
           </div>
           <div className={styles['search_dropdown_wrapper']}>
@@ -98,7 +116,7 @@ const SearchElement: React.FC = () => {
               label='Всі компанії'
               placeholder='Всі компанії'
               name='allCompanies'
-              options={mockCompanies}
+              options={companiesOptions}
               onChange={(value) => console.log(value)}
             />
           </div>
@@ -108,6 +126,7 @@ const SearchElement: React.FC = () => {
         <Button
           className={styles['search__button']}
           size={ButtonSize.LARGE}
+          type={ButtonType.SUBMIT}
           variant={ButtonVariant.PRIMARY}
         >
           Знайти
