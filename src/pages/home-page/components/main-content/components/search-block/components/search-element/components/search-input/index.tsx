@@ -72,11 +72,6 @@ const SearchInput = <T extends FieldValues>({
 		setIsSuggestionsOpen(true)
 	}, []);
 
-	const handleSuggestionClick = useCallback((value: string | number) => {
-		onSuggestionClick(value);
-		console.log(value)
-	}, [onSuggestionClick]);
-
 	useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (inputWrapperRef.current && !inputWrapperRef.current.contains(event.target as Node)) {
@@ -112,8 +107,9 @@ const SearchInput = <T extends FieldValues>({
 					{suggestions.map((suggestion, index) => (
 						<li
 							key={index}
+							value={suggestion.value}
 							className={styles['suggestion_item']}
-							onClick={() => handleSuggestionClick(suggestion.value)} 
+							onClick={() => onSuggestionClick(suggestion.value)} 
 						>
 							<span>{suggestion.label}</span>
 						</li>

@@ -1,0 +1,24 @@
+.not-found_container {
+  max-width: 1252px;
+  width: 100%;
+  padding: 120px 10px;
+}
+
+.not-found_content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+}
+
+.not-found_image {
+  height: 121px;
+  width: 132px;
+}
+
+.not-found_text {
+  color: var(--color-grey-400);
+  font-family: var(--font-family-main);
+  font-size: var( --font-size-title-h4);
+}
