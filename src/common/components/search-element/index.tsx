@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { Button } from '~/common/components/index';
+import { CITIES } from '~/common/constants/index';
 import { useAppForm } from '~/common/hooks/index';
 import { ButtonSize, ButtonVariant, IconName } from '~/common/enums/index';
 
@@ -35,6 +36,7 @@ const SearchElement: React.FC = () => {
 
   const handleInputChange = (value: string) => {
     setSearchTerm(value);
+    console.log(searchTerm)
 
     if (value.trim() === "") {
       setFilteredSuggestions([]);
@@ -47,7 +49,6 @@ const SearchElement: React.FC = () => {
   
       setFilteredSuggestions(filteredSuggestions);
     }
-
   };
 
   const handleSuggestionClick = (suggestion: string) => {
@@ -87,7 +88,7 @@ const SearchElement: React.FC = () => {
               label='Всі Локації'
               placeholder='Всі Локації'
               name='allLocations'
-              options={mockCompanies}
+              options={CITIES}
               onChange={(value) => console.log(value)}
             />
           </div>

@@ -1,23 +1,19 @@
 import clsx from 'clsx';
 import { useEffect, useRef, useState } from 'react';
 
-import styles from './styles.module.scss';
+import { type DropdownOption } from '~/common/types/index';
 
-type Option = {
-  value: string;
-  label: string;
-  children?: Option[];
-};
+import styles from './styles.module.scss';
 
 type Properties = {
   name: string;
   onChange: (value: string | undefined) => void;
-  options: Option[];
+  options: DropdownOption[];
   label?: string;
   isDisabled?: boolean;
   placeholder?: string;
   className?: string;
-  defaultValue?: Option;
+  defaultValue?: DropdownOption;
 };
 
 const Dropdown: React.FC<Properties> = ({
@@ -69,15 +65,27 @@ const Dropdown: React.FC<Properties> = ({
       </div>
       {isOpen && !isDisabled && (
         <div className={styles['dropdown_menu']}>
+          <div className={styles['dropdown_menu_content']}>
+          <div className={clsx(styles['dropdown_title'], styles['dropdown_item'])}>
+            {placeholder}
+          </div>
           {options.map((option, index) => (
-            <div
-              key={index}
-              className={styles['dropdown_item']}
-              onClick={() => handleOptionClick(option.value)}
-            >
-              {option.label}
+            <div key={index}>
+              <div className={clsx(styles['dropdown_title'], styles['dropdown_item'])}>
+                {option.label}
+              </div>
+              {option.options?.map((nestedOption, nestedIndex) => (
+                <div
+                  key={nestedIndex}
+                  className={clsx(styles['dropdown_item'], styles['nested_option'])}
+                  onClick={() => handleOptionClick(nestedOption.value)}
+                >
+                  {nestedOption.label}
+                </div>
+              ))}
             </div>
           ))}
+          </div>
         </div>
       )}
     </div>
