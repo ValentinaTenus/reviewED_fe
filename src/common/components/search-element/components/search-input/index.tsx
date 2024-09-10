@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { useEffect, useState, useRef, useCallback } from "react";
 import {
 	type Control,
 	type FieldErrors,
@@ -11,6 +12,7 @@ import { Icon } from "~/common/components/icon";
 import { IconName } from "~/common/enums/index";
 
 import styles from "./styles.module.scss";
+import { DropdownOption } from "~/common/types";
 
 type Properties<T extends FieldValues> = {
 	className?: string | undefined;
@@ -24,8 +26,8 @@ type Properties<T extends FieldValues> = {
 	rows?: number;
   helperText?: string;
   maxWords?: number;
-	suggestions?: string[]; 
-  onSuggestionClick?: (suggestion: string) => void;
+	suggestions?: DropdownOption[]; 
+  onSuggestionClick: (suggestion: string | number) => void;
 	iconName?: IconName;
 	onChange?: (value: string) => void
 };
@@ -43,6 +45,8 @@ const SearchInput = <T extends FieldValues>({
 	onChange
 }: Properties<T>): JSX.Element => {
 	const { field } = useController({ control, name });
+	const [isSuggestionsOpen, setIsSuggestionsOpen] = useState(true);
+	const inputWrapperRef = useRef<HTMLDivElement>(null);
 
 	const error = errors[name]?.message;
 	const hasError = Boolean(error);
@@ -58,22 +62,48 @@ const SearchInput = <T extends FieldValues>({
 		field.value && styles["input_filled"]
 	);
 
+	const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+		field.onChange(e);
+		onChange?.(e.target.value);
+		setIsSuggestionsOpen(true);
+	}, [field, onChange]);
+
+	const handleInputFocus = useCallback(() => {
+		setIsSuggestionsOpen(true)
+	}, []);
+
+	const handleSuggestionClick = useCallback((value: string | number) => {
+		onSuggestionClick(value);
+		console.log(value)
+	}, [onSuggestionClick]);
+
+	useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (inputWrapperRef.current && !inputWrapperRef.current.contains(event.target as Node)) {
+        setIsSuggestionsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
 	return (
 		<label className={styles['container']}>
-			<div className={styles['input_wrapper']}>
+			<div className={styles['input_wrapper']} ref={inputWrapperRef}>
 				{placeholderIcon}
 				<input
 					className={inputClasses}
 					{...field}
 					placeholder={placeholder}
 					type={type} 
-					onChange={(e) => {
-						field.onChange(e);
-						onChange?.(e.target.value); 
-					}}
+					onFocus={handleInputFocus}
+					onChange={handleInputChange}
 				/>
 			</div>
-			{suggestions && suggestions.length > 0 && (
+			{isSuggestionsOpen && suggestions && suggestions.length > 0 && (
 				<ul className={styles['suggestions_list']}>
 					<li className={styles['suggestion_item']}>
 						<Icon className={styles['suggestion_icon']} name={IconName.SEARCH}/>
@@ -83,9 +113,9 @@ const SearchInput = <T extends FieldValues>({
 						<li
 							key={index}
 							className={styles['suggestion_item']}
-							onClick={() => onSuggestionClick?.(suggestion)} 
+							onClick={() => handleSuggestionClick(suggestion.value)} 
 						>
-							<span>{suggestion}</span>
+							<span>{suggestion.label}</span>
 						</li>
 					))}
 				</ul>)}
