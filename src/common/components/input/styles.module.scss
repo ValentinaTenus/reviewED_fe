@@ -1,0 +1,128 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+}
+
+.container__disabled .label-wrapper .label,
+.container__disabled .label-wrapper .error-asterisk {
+  color: var(--color-grey-400);
+}
+
+.label-wrapper {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+}
+
+.label {
+  color: var(--color-grey-950);
+  display: inline-block;
+  font-family: var(--font-family-main);
+  font-size: var(--font-size-title-h4);
+  font-weight: var(--font-weight-semi-bold);
+  position: relative;
+}
+
+.error-asterisk {
+  color: var(--color-error-red);
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.input {
+  background: var(--color-white);
+  border: 1px solid var(--color-grey-200);
+  border-radius: 40px;
+  color: var(--color-grey-200);
+  font-size: var(--font-size-main-text);
+  font-weight: var(--font-weight-text);
+  height: 40px;
+  margin-bottom: 8px;
+  line-height: 19.6px;
+  margin-top: 8px;
+  padding: 16px;
+}
+
+.icon {
+	color: var(--color-grey-200);
+  height: 16px;
+	left: 16px;
+	position: absolute;
+	top: 33%;
+  width: 16px;
+}
+
+.input-with-icon {
+	padding-left: 42px;
+}
+
+.input__disabled + .label, 
+.textarea:disabled + .label {
+  border: 1px solid var(--color-grey-400);
+  color: var(--color-grey-400);
+}
+
+.input::placeholder {
+  color: var(--color-grey-500);
+}
+
+.input:hover {
+  border: 1px solid var(--color-grey-400);
+  color: var(--color-grey-400);
+}
+
+.input:focus {
+  color: var(--color-grey-400);
+  border: 3px solid var(--color-grey-400);
+}
+
+.input:focus::placeholder, .icon {
+  color: var(--color-grey-500);
+}
+
+.input:active, .input:focus {
+  border: 1px solid var(--color-grey-700);
+  color: var(--color-grey-950);
+}
+
+.textarea {
+  border: 1px solid var(--color-grey-300);
+  border-radius: 16px;
+	box-sizing: content-box;
+	line-height: 20px;
+  margin-top: 16px;
+	overflow: hidden;
+	resize: none;
+  padding: 16px;
+}
+
+.textarea::placeholder, .icon{
+  color: var(--color-grey-500);
+  font-size: var(--font-size-title-h5);
+  font-weight: var(--font-weight-text);
+}
+
+.helper_container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.helper_text, .word_count {
+  color: var(--color-grey-400);
+  font-weight: var(--font-weight-text);
+  font-size: var(--font-size-main-text);
+}
+
+.input__disabled, 
+textarea:disabled,
+.input__disabled:hover,
+textarea:disabled:hover {
+  background-color: var(--color-grey-200);
+  border: none; 
+  color: var(--color-grey-400);
+  cursor: not-allowed;
+}

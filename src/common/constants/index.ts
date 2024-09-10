@@ -1,0 +1,1 @@
+export { CITIES } from './cities';
