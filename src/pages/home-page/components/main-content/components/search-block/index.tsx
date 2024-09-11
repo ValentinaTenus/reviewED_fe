@@ -8,15 +8,17 @@ import styles from './styles.module.scss';
 
 const SearchBlock: FC = () => {
   const [searchResult, setSearchResult] = useState<Company[] | Course[]>([]);
+  const [hasSearched, setHasSearched] = useState(false); 
 
   const handleSearch = useCallback((searchResult: Company[] | Course[]) => {
-    setSearchResult(searchResult)
+    setSearchResult(searchResult);
+    setHasSearched(true);
   }, []);
 
   return (
     <div className={styles['search_block']}>
       <SearchElement onSearch={handleSearch}/>
-      {searchResult.length === 0 && <NotFound />}
+      {searchResult.length === 0 && hasSearched && <NotFound />}
     </div>
   )
 };
