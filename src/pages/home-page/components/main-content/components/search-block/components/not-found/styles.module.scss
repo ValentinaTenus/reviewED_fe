@@ -1,0 +1,31 @@
+.not-found_container {
+  max-width: 1252px;
+  padding: 120px 10px;
+  width: 100%;
+}
+
+.not-found_content {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 24px;
+}
+
+.not-found_image {
+  height: 121px;
+  width: 132px;
+}
+
+.not-found_text {
+  color: var(--color-grey-400);
+  font-family: var(--font-family-main);
+  font-size: var( --font-size-title-h4);
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .not-found_container {
+    padding: 56px 10px;
+  }
+}

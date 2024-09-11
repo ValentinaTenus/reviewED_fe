@@ -8,7 +8,6 @@ const baseQuery = fetchBaseQuery({
 	mode: "cors",
 });
 
-
 export const api = createApi({
 	baseQuery,
 	endpoints: () => ({}),

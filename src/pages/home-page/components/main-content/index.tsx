@@ -1,6 +1,4 @@
-import { SearchElement } from '~/common/components';
-
-import { BanerBlock, TopCompanies } from './components/index';
+import { BanerBlock, SearchBlock } from './components/index';
 import styles from './styles.module.scss';
 
 const MainContent = () => {
@@ -9,8 +7,7 @@ const MainContent = () => {
     <div className={styles['main_content_wrapper']}>
       <div className={styles['main_content']}>
         <BanerBlock />
-        <SearchElement />
-        <TopCompanies />
+        <SearchBlock />
       </div>
     </div>
   )

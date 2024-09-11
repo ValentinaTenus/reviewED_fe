@@ -1,15 +1,13 @@
-import { httpMethods } from "~/common/enums/index.ts";
-import { type Company } from "~/common/types/index.ts";
+import { httpMethods } from '~/common/enums/index.ts';
+import { type Company, 
+	type GetCompaniesRequestQuery, 
+	type GetCompaniesResponse 
+} from '~/common/types/index.ts';
 
-import { api } from "../services.ts";
+import { api } from '../services.ts';
 import {
 	companiesApiPath,
-} from "./constants.ts";
-
-type GetCompaniesRequestQuery = {
-	name?: string;
-	city?: string;
-};
+} from './constants.ts';
 
 export const companiesApi = api.injectEndpoints({
 	endpoints: (builder) => ({
@@ -37,6 +35,9 @@ export const companiesApi = api.injectEndpoints({
 			serializeQueryArgs: ({ endpointName }) => {
 				return endpointName;
 			},
+			transformResponse: (response: GetCompaniesResponse) => {
+        return response.results; 
+      },
 		}),
 	}),
 });

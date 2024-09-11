@@ -1,5 +1,5 @@
 type DropdownOption = {
-  value: string;
+  value: number  | string;
   label: string;
   options?: DropdownOption[];
 };

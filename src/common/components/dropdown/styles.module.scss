@@ -1,24 +1,32 @@
 .dropdown_container {
+  overflow: hidden;
   width: 100%;
 }
 
 .dropdown_trigger {
+  align-items: center;
   background-color: var(--color-white);
+  background: url('~/assets/images/arrow-down.svg') no-repeat right center;
   border-radius: 4px;
+  background-size: 24px 24px;
+  color: var(--color-grey-950);
   cursor: pointer;
   display: flex;
   justify-content: space-between;
+  font-family: var(--font-family-main);
   font-size: var(--font-size-title-h4);
-  color: var(--color-grey-950);
-  align-items: center;
+  height: 100%;
+  padding-right: 36px;
   width: 100%;
-  background: url('~/assets/images/arrow-down.svg') no-repeat right center;
-  background-size: 24px 24px;
+}
+
+.dropdown_trigger.open {
+  background-image: url('~/assets/images/arrow-up.svg');
 }
 
 .dropdown_trigger.disabled {
-  cursor: not-allowed;
   color: var(--color-grey-500);
+  cursor: not-allowed;
 }
 
 .dropdown_menu {
@@ -29,15 +37,15 @@
   color: var(--color-black); 
   font-family: var(--font-family-main);
   left: 0;
+  max-width: 100%;
   overflow: hidden;
   padding: 8px 0;
   position: absolute;
-  scrollbar-width: 16px; 
   scrollbar-color: var(--color-grey-500) var(--color-grey-200);
+  scrollbar-width: 16px; 
   top: 100%;
   z-index: 10; 
   width: 100%;
-  max-width: 100%;
 }
 
 .dropdown_menu_content {
@@ -46,8 +54,8 @@
 }
 
 .dropdown_menu_content::-webkit-scrollbar {
-  width: 16px !important; 
   border-radius: 16px !important;
+  width: 16px !important; 
 }
 
 .dropdown_menu_content::-webkit-scrollbar-track {
@@ -71,12 +79,12 @@
 }
 
 .dropdown_item {
-  padding: 8px 16px;
-  font-size: var(--font-size-title-h4);
+  align-items: center;
   color: var(--color-grey-950);
   cursor: pointer;
   display: flex;
-  align-items: center;
+  font-size: var(--font-size-title-h4);
+  padding: 8px 16px;
 }
 
 .dropdown_item:hover {
@@ -84,7 +92,7 @@
 }
 
 .nested_option {
-  padding-left: 4px 0 4px 16px;
-  font-size: var(--font-size-title-h5);     
   cursor: pointer;
+  font-size: var(--font-size-title-h5);     
+  padding: 4px 0 4px 32px;
 }

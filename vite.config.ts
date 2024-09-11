@@ -8,7 +8,7 @@ const indexZero = 0;
 const indexOne = 1;
 
 const config = ({ mode }: ConfigEnv): ReturnType<typeof defineConfig> => {
-	const { VITE_APP_DEVELOPMENT_PORT } = loadEnv(mode, process.cwd());
+	const { VITE_BASE_URL } = loadEnv(mode, process.cwd());
 
 	return defineConfig({
 		build: {
@@ -36,7 +36,7 @@ const config = ({ mode }: ConfigEnv): ReturnType<typeof defineConfig> => {
 		},
 		server: {
 			host: true,
-			port: Number(VITE_APP_DEVELOPMENT_PORT),
+			port: Number(VITE_BASE_URL),
 		},
 	});
 };
