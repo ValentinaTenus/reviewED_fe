@@ -22,12 +22,16 @@
   }
 
   .main_content {
-    gap: 0;
+    gap: 64px;
   }
 }
 
 @media (max-width: 768px)  {
   .main_content_wrapper {
     padding: 0px 20px;  
+  }
+
+  .main_content {
+    gap: 48px;
   }
 }

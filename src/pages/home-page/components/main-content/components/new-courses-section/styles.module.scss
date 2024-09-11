@@ -1,0 +1,24 @@
+.new_courses {
+  background-color: var(--color-yellow-100);
+  border-radius: 16px;
+  gap: 40px;
+  padding: 40px;
+}
+
+.new_courses button {
+  background-color: var(--color-yellow-100);
+}
+
+.items_section {
+  gap: 20px;
+}
+
+@media (max-width: 1280px)  {
+  .new-courses {
+    padding: 24px;
+  }
+
+  .items_section {
+    gap: 8px;
+  }
+}
