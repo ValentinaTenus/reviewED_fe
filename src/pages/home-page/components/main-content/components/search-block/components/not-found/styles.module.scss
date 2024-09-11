@@ -23,3 +23,9 @@
   font-size: var( --font-size-title-h4);
   text-align: center;
 }
+
+@media (max-width: 768px) {
+  .not-found_container {
+    padding: 56px 10px;
+  }
+}
