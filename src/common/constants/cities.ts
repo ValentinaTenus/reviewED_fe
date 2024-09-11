@@ -1,5 +1,10 @@
 const CITIES = [
-  {value: 'Всі міста',
+  {
+    value: 'Всі локації',
+    label: 'Всі локації'
+  },
+  {
+    value: 'Всі міста',
     label: 'Всі міста',
     options: [
       {

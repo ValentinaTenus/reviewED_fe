@@ -5,6 +5,7 @@
   box-shadow: 2px 2px 12px 0 var(--color-shadow-brown);
   display: flex;
   height: 58px;
+  margin: 0 auto;
   max-width: 1252px;
   width: 100%;
 }
@@ -31,8 +32,8 @@
 
 .search_wrapper {
   height: 100%;
-  width: 100%;
   position: relative;
+  width: 100%;
 }
 
 .search__input {
@@ -116,14 +117,14 @@
   }
 
   .form > :nth-child(3)::before {
+    background-color: var(--color-grey-500);
+    bottom: 8px; 
     content: '';
+    height: calc(100% - 16px); 
+    left: 0;
     position: absolute;
     top: 8px;
-    bottom: 8px; 
-    left: 0;
     width: 1px;
-    height: calc(100% - 16px); 
-    background-color: var(--color-grey-500);
   }
 
   .form > :last-child {
