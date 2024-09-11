@@ -3,7 +3,7 @@ type Company = {
   name: string;
   city: string;
   website: string;
-  average_rating: string;
+  average_rating: number;
 };
 
 export { type Company };

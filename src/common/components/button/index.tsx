@@ -10,6 +10,7 @@ const variants: Record<ButtonVariant, string> = {
   default: styles.button__base,
   primary: styles.button__primary,
   login: styles.button__login,
+  outlined: styles.button__outlined,
   share_linkedin: styles.button__share_linkedin,
   share_facebook: styles.button__share_facebook,
   share_twitter: styles.button__share_twitter,
