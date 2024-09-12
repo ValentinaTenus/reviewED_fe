@@ -6,23 +6,26 @@ import { ButtonVariant, IconName } from '~/common/enums/index';
 import styles from './styles.module.scss';
 
 type ItemsHeaderProperties = {
+  children?: ReactNode;
   className?: string;
   header: string;
-  children?: ReactNode;
+  onClick: () => void;
   screenWidth: number;
 };
 
 const ItemsHeader: React.FC<ItemsHeaderProperties> = ({
-  header, screenWidth
+  header, onClick, screenWidth
 }) => {
 
   return (
     <div className={styles['header_wrapper']}>
       <p className={styles['header']}>{header}</p>
       <Button
+        appendedIcon={<Icon name={IconName.ARROW_RIGHT}/>}
         className={styles['arrow_button']}
-        variant={ButtonVariant.OUTLINED} 
-        appendedIcon={<Icon name={IconName.ARROW_RIGHT}/>}>
+        onClick={onClick}
+        variant={ButtonVariant.OUTLINED}
+      >
         {screenWidth > 768 ? 'Дивитися всі' : ''}
       </Button>
     </div>

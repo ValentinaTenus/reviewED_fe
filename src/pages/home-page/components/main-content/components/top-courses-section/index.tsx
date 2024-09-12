@@ -1,3 +1,7 @@
+import { useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { AppRoute } from '~/common/enums/index';
 import { Course } from '~/common/types/index';
 
 import { CourseCard, ItemsContainer, ItemsContentWrapperSection, ItemsHeader } from '../index';
@@ -11,10 +15,19 @@ type TopCoursesSectionProperties = {
 const TopCoursesSection: React.FC<TopCoursesSectionProperties> = ({
   courses, screenWidth
 }) => {
+  const navigate = useNavigate();
+
+  const handleSeeAllClick = useCallback(() => {
+    navigate(AppRoute.TOP_COURSES);
+  }, []);
 
   return (
     <ItemsContainer >
-      <ItemsHeader header='TOP Курси' screenWidth={screenWidth}/>
+      <ItemsHeader 
+        header='TOP Курси'
+        onClick={handleSeeAllClick}
+        screenWidth={screenWidth}
+      />
       <ItemsContentWrapperSection className={styles['items_section']}>
         {courses.map((course) => (
           <CourseCard  className={styles['item_card']} course={course} key={course.id}/>
