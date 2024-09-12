@@ -4,6 +4,7 @@ import { useGetCompaniesQuery } from '~/redux/companies/companies-api';
 import { useGetCoursesQuery } from '~/redux/courses/courses-api';
 
 import { 
+  AddCompanySection,
   BanerBlock, 
   CompaniesSection, 
   NewCoursesSection,
@@ -53,6 +54,7 @@ const MainContent: React.FC = () => {
             courses={courses ? courses.slice(0, visibleItems) : []}
             screenWidth={screenWidth}
           />
+          <AddCompanySection />
       </div>
     </div>
   )

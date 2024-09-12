@@ -1,3 +1,4 @@
+export { AddCompanySection } from './add-company/index';
 export { BanerBlock } from './baner-block/index';
 export { CompaniesSection } from './companies-section/index';
 export { NewCoursesSection } from './new-courses-section/index';
