@@ -8,7 +8,8 @@ import {
   BanerBlock, 
   CompaniesSection, 
   NewCoursesSection,
-  SearchBlock 
+  SearchBlock,
+  TopCoursesSection
 } from './components/index';
 import styles from './styles.module.scss';
 
@@ -54,7 +55,11 @@ const MainContent: React.FC = () => {
             courses={courses ? courses.slice(0, visibleItems) : []}
             screenWidth={screenWidth}
           />
-          <AddCompanySection />
+          <TopCoursesSection 
+            courses={courses ? courses.slice(0, visibleItems) : []}
+            screenWidth={screenWidth}
+          />
+         <AddCompanySection />
       </div>
     </div>
   )
