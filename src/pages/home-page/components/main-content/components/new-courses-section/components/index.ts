@@ -1,1 +1,0 @@
-export { NewCourseCard } from './new-course-card/index';

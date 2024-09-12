@@ -1,7 +1,6 @@
 import { Course } from '~/common/types/index';
 
-import { ItemsContainer, ItemsContentWrapperSection, ItemsHeader } from '../index';
-import { NewCourseCard } from './components/index';
+import { CourseCard, ItemsContentWrapperSection, ItemsHeader } from '../index';
 import styles from './styles.module.scss';
 
 type NewCoursesSectionProperties = {
@@ -14,17 +13,17 @@ const NewCoursesSection: React.FC<NewCoursesSectionProperties> = ({
 }) => {
 
   return (
-    <ItemsContainer className={styles['new_courses']} >
+    <div className={styles['new_courses']} >
       <ItemsHeader 
-        header={screenWidth < 768 ? 'Нові курси' : 'Нещодавно додані курси'}
+        header={screenWidth < 1280 ? 'Нові курси' : 'Нещодавно додані курси'}
         screenWidth={screenWidth}
       />
       <ItemsContentWrapperSection className={styles['items_section']} >
         {courses.map((course) => (
-          <NewCourseCard course={course} key={course.id}/>
+          <CourseCard course={course} key={course.id}/>
         ))}
       </ItemsContentWrapperSection>
-  </ItemsContainer>
+  </div>
   )
 };
 

@@ -1,4 +1,5 @@
 .header_wrapper {
+  align-items: center;
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -28,6 +29,12 @@
   }
 }
 
+@media (max-width: 1280px) {
+  .header {
+    font-size: var(--font-size-title-mobile-h1);
+  }
+}
+
 @media (max-width: 768px) {
   .arrow_button {
     border-radius: 40px;
@@ -37,7 +44,6 @@
   }
 
   .header {
-    font-size: var(--font-size-title-mobile-h1);
-    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-title--mobile-h2);
   }
 }
