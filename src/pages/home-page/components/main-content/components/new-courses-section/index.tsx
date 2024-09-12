@@ -19,7 +19,7 @@ const NewCoursesSection: React.FC<NewCoursesSectionProperties> = ({
 
   const handleSeeAllClick = useCallback(() => {
     navigate(AppRoute.NEW_COURSES)
-  }, []);
+  }, [navigate]);
 
   return (
     <div className={styles['new_courses']} >

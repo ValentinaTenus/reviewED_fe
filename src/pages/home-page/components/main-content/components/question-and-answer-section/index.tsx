@@ -33,7 +33,7 @@ const QuestionAndAnswer: React.FC<QuestionAndAnswerSectionProperties> = ({
 
   const handleSeeAllClick = useCallback(() => {
     navigate(AppRoute.QUESTION_AND_ANSWERS)
-  }, []);
+  }, [navigate]);
 
   return (
     <div className={styles['question_and_answer__container']}>

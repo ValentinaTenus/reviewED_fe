@@ -19,7 +19,7 @@ const TopCoursesSection: React.FC<TopCoursesSectionProperties> = ({
 
   const handleSeeAllClick = useCallback(() => {
     navigate(AppRoute.TOP_COURSES);
-  }, []);
+  }, [navigate]);
 
   return (
     <ItemsContainer >
