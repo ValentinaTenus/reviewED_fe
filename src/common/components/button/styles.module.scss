@@ -121,3 +121,10 @@
 .button__outlined:active {
   color: var(--color-yellow-600);
 }
+
+.button__outlined_mobile {
+  border-radius: 40px;
+  height: 48px;
+  padding: 12px;
+  width: 48px;
+}

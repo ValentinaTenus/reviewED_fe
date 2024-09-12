@@ -11,6 +11,7 @@ const variants: Record<ButtonVariant, string> = {
   primary: styles.button__primary,
   login: styles.button__login,
   outlined: styles.button__outlined,
+  outlined_mobile: clsx(styles.button__outlined, styles.button__outlined_mobile),
   share_linkedin: styles.button__share_linkedin,
   share_facebook: styles.button__share_facebook,
   share_twitter: styles.button__share_twitter,
