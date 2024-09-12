@@ -6,5 +6,6 @@ export { NewCoursesSection } from './new-courses-section/index';
 export { ItemsHeader } from './items-header/index';
 export { ItemsContainer } from './items-container/index';
 export { ItemsContentWrapperSection } from './items-content-wrapper/index';
+export { QuestionAndAnswer } from './question-and-answer-section/index';
 export { SearchBlock } from './search-block/index';
 export { TopCoursesSection } from './top-courses-section/index';

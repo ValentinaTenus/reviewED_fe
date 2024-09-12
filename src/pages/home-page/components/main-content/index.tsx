@@ -8,6 +8,7 @@ import {
   BanerBlock, 
   CompaniesSection, 
   NewCoursesSection,
+  QuestionAndAnswer,
   SearchBlock,
   TopCoursesSection
 } from './components/index';
@@ -60,6 +61,7 @@ const MainContent: React.FC = () => {
             screenWidth={screenWidth}
           />
          <AddCompanySection />
+         <QuestionAndAnswer  screenWidth={screenWidth}/>
       </div>
     </div>
   )
