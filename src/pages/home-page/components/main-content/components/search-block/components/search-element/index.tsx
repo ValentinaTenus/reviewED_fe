@@ -1,4 +1,4 @@
-import { useCallback,useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
 import { Button, Dropdown } from '~/common/components/index';
@@ -6,8 +6,8 @@ import { CITIES } from '~/common/constants/index';
 import { useAppForm } from '~/common/hooks/index';
 import { ButtonSize, ButtonType, ButtonVariant, IconName } from '~/common/enums/index';
 import { Company, Course, DropdownOption } from '~/common/types/index';
-import { useGetCompaniesQuery } from '~/redux/companies/companies-api';
-import { useGetCoursesQuery } from '~/redux/courses/courses-api';
+import { useGetCompaniesByFilterQuery } from '~/redux/companies/companies-api';
+import {  useGetCoursesByFilterQuery } from '~/redux/courses/courses-api';
 
 import { getDropdownOptionsFormat, mapCompanies, mapCourses } from '../../helpers/index';
 import { SearchInput } from './components/search-input';
@@ -25,30 +25,22 @@ const categories = [
 ];
 
 type SearchElementProperties = {
+  companies: Company[];
+  courses: Course[];
   onSearch: (searchResult: Company[] | Course[]) => void; 
 }
 
 const SearchElement: React.FC<SearchElementProperties> = ({
-  onSearch
+  companies, courses, onSearch
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredSuggestions, setFilteredSuggestions] = useState<DropdownOption[]>([]);
-  const [companiesOptions, setCompaniesOptions] = useState<DropdownOption[]>([]); 
-  const [coursesOptions, setCoursesOptions] = useState<DropdownOption[]>([]); 
   const [selectedCategory, setSelectedCategory] = useState<string>(categories[1].value);
   const [selectedLocation, setSelectedLocation] = useState<string>('');
   const [selectedFromAll, setSelectedFromAll] = useState<string>('');
   const [serverError, setServerError] = useState('');
-  
-  const { data: companies, refetch: refetchCompanies } = useGetCompaniesQuery(
-    { name: selectedFromAll ? selectedFromAll : searchTerm, city: selectedLocation },
-    {
-      skip: selectedCategory !== categories[1].value,
-      refetchOnMountOrArgChange: true, 
-    }
-  );
 
-  const { data: courses, refetch: refetchCourses } = useGetCoursesQuery(
+  const { data: filteredCourses, refetch: refetchCourses } = useGetCoursesByFilterQuery(
     { title: selectedFromAll ? selectedFromAll : searchTerm, city: selectedLocation },
     {
       skip: selectedCategory !== categories[0].value, 
@@ -56,44 +48,41 @@ const SearchElement: React.FC<SearchElementProperties> = ({
     }
   );
 
+  const { data: filteredCompanies, refetch: refetchCompanies } = useGetCompaniesByFilterQuery(
+    { name: selectedFromAll ? selectedFromAll : searchTerm, city: selectedLocation },
+    {
+      skip: selectedCategory !== categories[1].value,
+      refetchOnMountOrArgChange: true, 
+    }
+  );
+
+  const coursesOptions = mapCourses(courses);
+  const companiesOptions = mapCompanies(companies);
+
   const { control, errors, handleSubmit } = useAppForm({
     defaultValues: {
       search: '',
     },
   });
 
-  useEffect(() => {
-    if (companies) {
-      const options = mapCompanies(companies);
-      setCompaniesOptions(options);
-    }
-  }, [companies]);
-
-  useEffect(() => {
-    if (courses) {
-      const options = mapCourses(courses);
-      setCoursesOptions(options);
-    }
-  }, [courses]);
-
-  const handleInputChange = useCallback((value: string) => {
+  const handleInputChange = useCallback(async(value: string) => {
     setSearchTerm(value);
 
     if (value.trim() === '') {
       setFilteredSuggestions([]);
     } else {
-    
-      if(selectedCategory === categories[1].value && companies){
-        const mappedCompanies = getDropdownOptionsFormat({ companies: companies })
-        setFilteredSuggestions(mappedCompanies);
-      }
 
-      if(selectedCategory === categories[0].value && courses){
-        const mappedCourses = getDropdownOptionsFormat({ courses: courses })
+      if( selectedCategory === categories[0].value && filteredCourses){
+        const mappedCourses = getDropdownOptionsFormat({ courses: filteredCourses });
         setFilteredSuggestions(mappedCourses);
       }
+
+      if( selectedCategory === categories[1].value && filteredCompanies){
+        const mappedCompanies = getDropdownOptionsFormat({ companies: filteredCompanies })
+        setFilteredSuggestions(mappedCompanies);
+      }
     }
-  }, [selectedCategory, companies, courses]);
+  }, [filteredCompanies, filteredCourses, selectedCategory]);
   
   const handleSelectCategory = useCallback((value: string | number) => {
     setSelectedCategory(value.toString()); 
@@ -128,7 +117,7 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 				setServerError(loadError.message);
 			}
 		},
-		[onSearch, refetchCompanies, refetchCourses, selectedCategory],
+		[onSearch, selectedCategory, refetchCompanies, refetchCourses],
 	);
 
 	const handleFormSubmit = useCallback(
@@ -139,7 +128,7 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 		[ handleFormChange, handleSubmit])
 
   return (
-    <div>
+    <>
       <div className={styles['container']}>
         <form className={styles['search_form']} onSubmit={handleFormSubmit}>
           <div className={styles['form']}>
@@ -206,7 +195,7 @@ const SearchElement: React.FC<SearchElementProperties> = ({
       {serverError && (
 				<p>{serverError}</p>
 			)}
-    </div>
+    </>
   );
 };
 
