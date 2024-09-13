@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  width: 298px;
 }
 
 .footer_content__contacts_title {
@@ -21,4 +20,10 @@
   color: var(--color-grey-50);
   font-size: var(--font-size-title-large);
   font-weight: var(--font-weight-semi-bold);
+}
+
+@media (max-width: 768px) {
+  .footer_content__contact_link {
+    font-size: var( --font-size-title-h5);
+  }
 }
