@@ -5,6 +5,7 @@
   color: var(--color-grey-950);
   display: flex;
   font-family: var(--font-family-main);
+  justify-content: space-between;
   gap: 20px;
   padding: 106px;
   width: 100%;
@@ -22,7 +23,7 @@
   font-size: var(--font-size-title);
   font-weight: var(--font-weight-bold);
   line-height: 40.7px;
-  text-align: center;
+  text-align: start;
 }
 
 .title_yellow {
@@ -47,7 +48,7 @@
 .form_section_title {
   font-size: var(--font-size-title-h2);
   font-weight: var(--font-weight-bold);
-  align-self: center;
+  align-self: start;
 }
 
 .add_company_form {
@@ -92,7 +93,12 @@
   }
 
   .form_section_title {
+    align-self: center;
     font-size: var(--font-size-title-mobile-h2);
+  }
+
+  .text_section_title {
+    align-self: center;
   }
 
   .form_inputs {

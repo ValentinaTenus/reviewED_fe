@@ -21,7 +21,7 @@ const CourseCard: React.FC<CourseCardProperties> = ({
         <img  alt={course.title} className={styles['course_image']} src={DefaultCompanyImage}/>
           <div className={styles['item_rating_container']}>
             <Rating averageRating={course.average_rating}/>
-            <p className={styles['reviews_amount']}>56 відгуків</p>
+            <p className={styles['reviews_amount']}>{course.reviews_count}{' '} відгуків</p>
         </div>
       </div>
         <h4 className={styles['item_name']}>{course.title}</h4>

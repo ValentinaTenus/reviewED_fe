@@ -13,10 +13,12 @@ import {
   TopCoursesSection
 } from './components/index';
 import styles from './styles.module.scss';
+import { Course } from '~/common/types';
 
 const MainContent: React.FC = () => {
+  const [topCourses, setTopCourses] = useState<Course[]>([]);
   const { data: companies } = useGetCompaniesQuery({});
-  const { data: courses } = useGetCoursesQuery({});
+  const { data: courses } = useGetCoursesQuery(undefined);
 
   const [visibleItems, setVisibleItems] = useState(8);
   const [screenWidth, setScreenWidth] = useState<number>(0);
@@ -43,11 +45,21 @@ const MainContent: React.FC = () => {
     return () => window.removeEventListener('resize', updateVisibleItems);
   }, []);
 
+  useEffect(() => {
+    if(courses) {
+      const topCourses = [...courses]?.sort((course1, course2) => (
+        course2.average_rating - course1.average_rating));
+      setTopCourses(topCourses)
+    }
+  }, [courses]);
+  
   return (
     <div className={styles['main_content_wrapper']}>
       <div className={styles['main_content']}>
-        <BanerBlock />
-        <SearchBlock />
+          <BanerBlock />
+          <SearchBlock 
+            companies={companies || []} 
+            courses={courses || []}  />
           <CompaniesSection 
             companies={companies ? companies.slice(0, visibleItems) : []} 
             screenWidth={screenWidth}
@@ -57,7 +69,7 @@ const MainContent: React.FC = () => {
             screenWidth={screenWidth}
           />
           <TopCoursesSection 
-            courses={courses ? courses.slice(0, visibleItems) : []}
+            courses={topCourses ? topCourses.slice(0, visibleItems) : []}
             screenWidth={screenWidth}
           />
          <AddCompanySection />
