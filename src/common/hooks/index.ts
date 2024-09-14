@@ -1,1 +1,1 @@
-export { useAppForm } from './use-app-form.hook'
+export { useAppForm } from "./use-app-form.hook";

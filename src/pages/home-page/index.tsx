@@ -1,15 +1,14 @@
-import { FC } from "react";
+import React from "react";
 
 import { Header, MainContent } from "./components/index";
 
-const HomePage: FC = () => {
+const HomePage: React.FC = () => {
+	return (
+		<>
+			<Header />
+			<MainContent />
+		</>
+	);
+};
 
-  return (
-    <>
-      <Header />
-      <MainContent />
-    </>
-  )
-}
-
-export { HomePage }; 
+export { HomePage };

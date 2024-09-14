@@ -1,7 +1,7 @@
 type DropdownOption = {
-  value: number  | string;
-  label: string;
-  options?: DropdownOption[];
+	label: string;
+	options?: DropdownOption[];
+	value: number | string;
 };
 
 export { type DropdownOption };

@@ -1,22 +1,15 @@
-import { httpMethods } from '~/common/enums/index.ts';
-import { type Company, 
-	type GetCompaniesRequestQuery, 
-	type GetCompaniesResponse 
-} from '~/common/types/index.ts';
-
-import { api } from '../services.ts';
+import { httpMethods } from "~/common/enums/index.ts";
 import {
-	companiesApiPath,
-} from './constants.ts';
+	type Company,
+	type GetCompaniesRequestQuery,
+	type GetCompaniesResponse,
+} from "~/common/types/index.ts";
+
+import { api } from "../services.ts";
+import { companiesApiPath } from "./constants.ts";
 
 export const companiesApi = api.injectEndpoints({
 	endpoints: (builder) => ({
-		getCompanyById: builder.query<Company, string | undefined>({
-			query: (id) => ({
-				method: httpMethods.GET,
-				url: companiesApiPath.ROOT + `/${id}`,
-			}),
-		}),
 		getCompanies: builder.query<Company[], GetCompaniesRequestQuery>({
 			forceRefetch({ currentArg, previousArg }) {
 				return (
@@ -25,7 +18,6 @@ export const companiesApi = api.injectEndpoints({
 				);
 			},
 			query: (filters: GetCompaniesRequestQuery = {}) => {
-			
 				return {
 					method: httpMethods.GET,
 					params: filters,
@@ -36,13 +28,16 @@ export const companiesApi = api.injectEndpoints({
 				return endpointName;
 			},
 			transformResponse: (response: GetCompaniesResponse) => {
-        return response.results; 
-      },
+				return response.results;
+			},
+		}),
+		getCompanyById: builder.query<Company, string | undefined>({
+			query: (id) => ({
+				method: httpMethods.GET,
+				url: companiesApiPath.ROOT + `/${id}`,
+			}),
 		}),
 	}),
 });
 
-export const {
-  useGetCompaniesQuery,
-  useGetCompanyByIdQuery
-} = companiesApi;
+export const { useGetCompaniesQuery, useGetCompanyByIdQuery } = companiesApi;

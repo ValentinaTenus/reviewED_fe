@@ -7,8 +7,9 @@ import svgr from "vite-plugin-svgr";
 const indexZero = 0;
 const indexOne = 1;
 
-const config = ({ mode }: ConfigEnv): ReturnType<typeof defineConfig> => {
-	const { VITE_BASE_URL } = loadEnv(mode, process.cwd());
+const config = ({ mode, }: ConfigEnv): ReturnType<typeof defineConfig> => {
+	const env = loadEnv(mode, process.cwd());
+	const { VITE_BASE_URL } = env;
 
 	return defineConfig({
 		build: {
@@ -19,7 +20,9 @@ const config = ({ mode }: ConfigEnv): ReturnType<typeof defineConfig> => {
 						if (id.includes("node_modules")) {
 							return id
 								.toString()
-								.split("node_modules/")[indexOne].split("/")[indexZero].toString();
+								.split("node_modules/")
+								[indexOne].split("/")
+								[indexZero].toString();
 						}
 					},
 				},

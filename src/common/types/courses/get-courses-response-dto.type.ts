@@ -1,10 +1,10 @@
 import { type Course } from "./course.type";
 
 type GetCoursesResponse = {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: Course[];
+	count: number;
+	next: null | string;
+	previous: null | string;
+	results: Course[];
 };
 
 export { type GetCoursesResponse };

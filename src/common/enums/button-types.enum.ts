@@ -1,7 +1,7 @@
 enum ButtonType {
-  SUBMIT = "submit",
-  BUTTON = "button",
-  RESET = "reset",
+	BUTTON = "button",
+	RESET = "reset",
+	SUBMIT = "submit",
 }
 
 export { ButtonType };
