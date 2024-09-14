@@ -18,7 +18,6 @@ export const coursesApi = api.injectEndpoints({
 		}),
 		getCourses: builder.query<Course[], undefined>({
 			query: (filters: GetCoursesRequestQuery = {}) => {
-			
 				return {
 					method: httpMethods.GET,
 					params: filters,
@@ -29,8 +28,8 @@ export const coursesApi = api.injectEndpoints({
 				return endpointName;
 			},
 			transformResponse: (response: GetCoursesResponse) => {
-        return response.results; 
-      },
+				return response.results;
+			},
 		}),
 		getCoursesByFilter: builder.query<Course[], GetCoursesRequestQuery>({
 			forceRefetch({ currentArg, previousArg }) {
@@ -57,8 +56,8 @@ export const coursesApi = api.injectEndpoints({
 });
 
 export const {
-  useGetCourseByIdQuery,
-	useGetCoursesQuery,
+	useGetCourseByIdQuery,
 	useGetCoursesByFilterQuery,
-	useLazyGetCoursesByFilterQuery
+	useGetCoursesQuery,
+	useLazyGetCoursesByFilterQuery,
 } = coursesApi;

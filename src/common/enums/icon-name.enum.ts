@@ -1,16 +1,16 @@
 enum IconName {
-  SEARCH = 'search',
-  ARROW_TOP = 'arrowUp',
-  ARROW_DOWN = 'arrowDown',
-  ARROW_RIGHT = 'arrowRight',
-  FACEBOOK = 'facebook',
-  EMAIL = 'email',
-  MINUS = 'minus',
-  LINKEDIN = 'linkedin',
-  PHONE = 'phone',
-  PLUS = 'plus',
-  YOUTUBE= 'youtube',
-  XRP = 'xrp'
+	ARROW_DOWN = "arrowDown",
+	ARROW_RIGHT = "arrowRight",
+	ARROW_TOP = "arrowUp",
+	EMAIL = "email",
+	FACEBOOK = "facebook",
+	LINKEDIN = "linkedin",
+	MINUS = "minus",
+	PHONE = "phone",
+	PLUS = "plus",
+	SEARCH = "search",
+	XRP = "xrp",
+	YOUTUBE = "youtube",
 }
 
 export { IconName };

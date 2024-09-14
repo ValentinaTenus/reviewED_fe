@@ -25,13 +25,13 @@ const mapCourses = (courses: Course[]): DropdownOption[] => {
 		}),
 	);
 
-  return [
-    {
-      value: '', 
-      label: 'Всі види курсів',
-    },
-    ...options
-  ];
+	return [
+		{
+			label: "Всі види курсів",
+			value: "",
+		},
+		...options,
+	];
 };
 
 export { mapCourses };

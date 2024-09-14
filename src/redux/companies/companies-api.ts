@@ -12,7 +12,6 @@ export const companiesApi = api.injectEndpoints({
 	endpoints: (builder) => ({
 		getCompanies: builder.query<Company[], GetCompaniesRequestQuery>({
 			query: (filters: GetCompaniesRequestQuery = {}) => {
-			
 				return {
 					method: httpMethods.GET,
 					params: filters,
@@ -23,8 +22,8 @@ export const companiesApi = api.injectEndpoints({
 				return endpointName;
 			},
 			transformResponse: (response: GetCompaniesResponse) => {
-        return response.results; 
-      },
+				return response.results;
+			},
 		}),
 		getCompaniesByFilter: builder.query<Company[], GetCompaniesRequestQuery>({
 			forceRefetch({ currentArg, previousArg }) {
@@ -57,8 +56,8 @@ export const companiesApi = api.injectEndpoints({
 });
 
 export const {
-  useGetCompaniesQuery,
+	useGetCompaniesByFilterQuery,
+	useGetCompaniesQuery,
+	useGetCompanyByIdQuery,
 	useLazyGetCompaniesQuery,
-  useGetCompanyByIdQuery,
-	useGetCompaniesByFilterQuery
 } = companiesApi;

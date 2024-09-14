@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 
 import { Screen_Breakpoints } from "~/common/constants/index";
+import { type Course } from "~/common/types/index";
 import { useGetCompaniesQuery } from "~/redux/companies/companies-api";
 import { useGetCoursesQuery } from "~/redux/courses/courses-api";
-import { type Course } from '~/common/types/index';
 
 import {
 	AddCompanySection,
@@ -21,73 +21,72 @@ const VisibleCards = {
 	MOBILE: 3,
 	SMALL_TABLET: 4,
 	TABLET: 6,
-}
+};
 
 const DEFAULT_SCREEN_WIDTH = 0;
 const INDEX_ZERO = 0;
 
 const MainContent: React.FC = () => {
-  const [topCourses, setTopCourses] = useState<Course[]>([]);
-  const { data: companies } = useGetCompaniesQuery({});
-  const { data: courses } = useGetCoursesQuery(undefined);
+	const [topCourses, setTopCourses] = useState<Course[]>([]);
+	const { data: companies } = useGetCompaniesQuery({});
+	const { data: courses } = useGetCoursesQuery(undefined);
 
-  const [visibleItems, setVisibleItems] = useState(VisibleCards.DESKTOP);
-  const [screenWidth, setScreenWidth] = useState<number>(DEFAULT_SCREEN_WIDTH);
+	const [visibleItems, setVisibleItems] = useState(VisibleCards.DESKTOP);
+	const [screenWidth, setScreenWidth] = useState<number>(DEFAULT_SCREEN_WIDTH);
 
-  const updateVisibleItems = () => {
-    const screenWidth = window.innerWidth;
-    setScreenWidth(screenWidth);
+	const updateVisibleItems = () => {
+		const screenWidth = window.innerWidth;
+		setScreenWidth(screenWidth);
 
-    if (screenWidth <= Screen_Breakpoints.MOBILE) {
-      setVisibleItems(VisibleCards.MOBILE);
-    } else if (screenWidth <= Screen_Breakpoints.TABLET){
-      setVisibleItems(VisibleCards.SMALL_TABLET);
-    } else if (screenWidth <= Screen_Breakpoints.DESKTOP) {
-      setVisibleItems(VisibleCards.TABLET); 
-    } else {
-      setVisibleItems(VisibleCards.DESKTOP); 
-    }
-  };
+		if (screenWidth <= Screen_Breakpoints.MOBILE) {
+			setVisibleItems(VisibleCards.MOBILE);
+		} else if (screenWidth <= Screen_Breakpoints.TABLET) {
+			setVisibleItems(VisibleCards.SMALL_TABLET);
+		} else if (screenWidth <= Screen_Breakpoints.DESKTOP) {
+			setVisibleItems(VisibleCards.TABLET);
+		} else {
+			setVisibleItems(VisibleCards.DESKTOP);
+		}
+	};
 
-  useEffect(() => {
-    updateVisibleItems(); 
-    window.addEventListener('resize', updateVisibleItems);
+	useEffect(() => {
+		updateVisibleItems();
+		window.addEventListener("resize", updateVisibleItems);
 
-    return () => window.removeEventListener('resize', updateVisibleItems);
-  }, []);
+		return () => window.removeEventListener("resize", updateVisibleItems);
+	}, []);
 
-  useEffect(() => {
-    if(courses) {
-      const topCourses = [...courses]?.sort((course1, course2) => (
-        course2.average_rating - course1.average_rating));
-      setTopCourses(topCourses)
-    }
-  }, [courses]);
-  
-  return (
-    <div className={styles['main_content_wrapper']}>
-      <div className={styles['main_content']}>
-          <BanerBlock />
-          <SearchBlock 
-            companies={companies || []} 
-            courses={courses || []}  />
-          <CompaniesSection 
-            companies={companies ? companies.slice(INDEX_ZERO, visibleItems) : []} 
-            screenWidth={screenWidth}
-          />
-          <NewCoursesSection 
-            courses={courses ? courses.slice(INDEX_ZERO, visibleItems) : []}
-            screenWidth={screenWidth}
-          />
-          <TopCoursesSection 
-            courses={topCourses ? topCourses.slice(INDEX_ZERO, visibleItems) : []}
-            screenWidth={screenWidth}
-          />
-         <AddCompanySection />
-         <QuestionAndAnswer  screenWidth={screenWidth}/>
-      </div>
-    </div>
-  )
+	useEffect(() => {
+		if (courses) {
+			const topCourses = [...courses]?.sort(
+				(course1, course2) => course2.average_rating - course1.average_rating,
+			);
+			setTopCourses(topCourses);
+		}
+	}, [courses]);
+
+	return (
+		<div className={styles["main_content_wrapper"]}>
+			<div className={styles["main_content"]}>
+				<BanerBlock />
+				<SearchBlock companies={companies || []} courses={courses || []} />
+				<CompaniesSection
+					companies={companies ? companies.slice(INDEX_ZERO, visibleItems) : []}
+					screenWidth={screenWidth}
+				/>
+				<NewCoursesSection
+					courses={courses ? courses.slice(INDEX_ZERO, visibleItems) : []}
+					screenWidth={screenWidth}
+				/>
+				<TopCoursesSection
+					courses={topCourses ? topCourses.slice(INDEX_ZERO, visibleItems) : []}
+					screenWidth={screenWidth}
+				/>
+				<AddCompanySection />
+				<QuestionAndAnswer screenWidth={screenWidth} />
+			</div>
+		</div>
+	);
 };
 
 export { MainContent };
