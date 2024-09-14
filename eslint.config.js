@@ -92,8 +92,6 @@ export default tseslint.config(
 				},
 			],
       'react-hooks/rules-of-hooks': 'error',
-      'typesafe/no-await-without-trycatch': 'off',
-      '@typescript-eslint/no-explicit-any': 'error',
       'prefer-destructuring': [
 				"warn",
 				{
