@@ -1,7 +1,7 @@
 enum IconSize {
-  LARGE = 'lg',
-  MEDIUM = 'sm',
-  SMALL = 'xs',
+	LARGE = "lg",
+	MEDIUM = "sm",
+	SMALL = "xs",
 }
 
 export { IconSize };

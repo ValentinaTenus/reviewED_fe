@@ -1,17 +1,17 @@
 type Course = {
-  id: number;
-  title: string;
-  category: string;
-  price: string;
-  company: string;
-  age: string;
-  location: string;
-  website: string;
-  contact: string;
-  company_logo: string;
-  description: string;
-  average_rating: number;
-  reviews_count: number;
+	age: string;
+	average_rating: number;
+	category: string;
+	company: string;
+	company_logo: string;
+	contact: string;
+	description: string;
+	id: number;
+	location: string;
+	price: string;
+	reviews_count: number;
+	title: string;
+	website: string;
 };
 
 export { type Course };

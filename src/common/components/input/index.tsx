@@ -1,53 +1,56 @@
 import clsx from "clsx";
-import { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
 	type Control,
 	type FieldErrors,
 	type FieldPath,
 	type FieldValues,
-    useController
+	useController,
 } from "react-hook-form";
 
+import { Icon } from "~/common/components/index";
 import { IconName } from "~/common/enums/index";
 
-import { Icon } from "../index";
 import styles from "./styles.module.scss";
+
+const MAX_TEXT_AREA_WORDS = 2000;
+const INITIAL_WORD_COUNT = 0;
 
 type Properties<T extends FieldValues> = {
 	className?: string | undefined;
 	control: Control<T, null>;
-  disabled?: boolean;
+	disabled?: boolean;
 	errors: FieldErrors<T>;
+	hasVisuallyHiddenLabel?: boolean;
+	helperText?: string;
+	iconName?: IconName;
 	label?: string;
+	maxWords?: number;
 	name: FieldPath<T>;
 	placeholder?: string;
-	type?: "email" | "password" | "text";
-	ref?: React.RefObject<HTMLTextAreaElement>
+	ref?: React.RefObject<HTMLTextAreaElement>;
 	rows?: number;
-  helperText?: string;
-  maxWords?: number;
-	hasVisuallyHiddenLabel?: boolean;
-	iconName?: IconName;
+	type?: "email" | "password" | "text";
 };
 
 const Input = <T extends FieldValues>({
 	className,
 	control,
-  disabled= false,
+	disabled = false,
 	errors,
+	hasVisuallyHiddenLabel = false,
+	helperText,
+	iconName,
 	label,
+	maxWords = MAX_TEXT_AREA_WORDS,
 	name,
 	placeholder = "",
-	type = "text",
 	ref,
 	rows,
-  helperText,
-  maxWords = 2000,
-	hasVisuallyHiddenLabel = false,
-	iconName
-}: Properties<T>): JSX.Element => {
+	type = "text",
+}: Properties<T>): React.JSX.Element => {
 	const { field } = useController({ control, name });
-  const [wordCount, setWordCount] = useState(0);
+	const [wordCount, setWordCount] = useState(INITIAL_WORD_COUNT);
 
 	const error = errors[name]?.message;
 	const hasError = Boolean(error);
@@ -63,8 +66,8 @@ const Input = <T extends FieldValues>({
 		styles["input"],
 		hasError && styles["input__error"],
 		hasIcon && styles["input-with-icon"],
-    disabled && styles["input__disabled"],
-		isTextArea && styles["textarea"]
+		disabled && styles["input__disabled"],
+		isTextArea && styles["textarea"],
 	);
 
 	const labelClasses = clsx(
@@ -72,57 +75,66 @@ const Input = <T extends FieldValues>({
 		hasVisuallyHiddenLabel && "visually-hidden",
 	);
 
-  const handleWordCount = (value: string) => {
+	const handleWordCount = (value: string) => {
 		const words = value.trim().split(/\s+/);
-		const count = words[0] === '' ? 0 : words.length; 
+		const count =
+			words[INITIAL_WORD_COUNT] === "" ? INITIAL_WORD_COUNT : words.length;
 		setWordCount(count);
 	};
 
-	const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const textarea = e.target;
-    if (textarea) {
-      textarea.style.height = "auto"; 
-      textarea.style.height = `${textarea.scrollHeight}px`; 
-    }
+	const handleInputChange = useCallback(
+		(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+			const textarea = e.target;
+			if (textarea) {
+				textarea.style.height = "auto";
+				textarea.style.height = `${textarea.scrollHeight}px`;
+			}
 
-    field.onChange(e);
-		handleWordCount(e.target.value);
-  };
+			field.onChange(e);
+			handleWordCount(e.target.value);
+		},
+		[field],
+	);
 
-  useEffect(() => {
-    if (ref && ref.current) {
-      handleInputChange({ target: ref.current } as React.ChangeEvent<HTMLTextAreaElement>);
-    }
-  }, [ref]);
+	useEffect(() => {
+		if (ref && ref.current) {
+			handleInputChange({
+				target: ref.current,
+			} as React.ChangeEvent<HTMLTextAreaElement>);
+		}
+	}, [handleInputChange, ref]);
 
 	return (
-		<label className={clsx(styles["container"], disabled && styles["container__disabled"])}>
+		<label
+			className={clsx(
+				styles["container"],
+				disabled && styles["container__disabled"],
+			)}
+		>
 			<span className={styles["label-wrapper"]}>
-        <span className={labelClasses}>
-          {label}
-        </span>
-        {hasError && !hasVisuallyHiddenLabel && (
-          <span className={styles['error-asterisk']}>*</span>
+				<span className={labelClasses}>{label}</span>
+				{hasError && !hasVisuallyHiddenLabel && (
+					<span className={styles["error-asterisk"]}>*</span>
 				)}
-      </span>
+			</span>
 
 			<div className={styles["input-wrapper"]}>
 				{placeholderIcon}
-				{ isTextArea ? (
+				{isTextArea ? (
 					<>
 						<textarea
 							className={inputClasses}
 							disabled={disabled}
 							{...field}
-							placeholder={placeholder}
-							rows={rows}
+							onBlur={field.onBlur}
 							onChange={(e) => {
 								field.onChange(e);
 								handleInputChange(e);
 							}}
-							onBlur={field.onBlur}
-							value={field.value || ""}
+							placeholder={placeholder}
 							ref={ref}
+							rows={rows}
+							value={field.value || ""}
 						/>
 					</>
 				) : (
@@ -136,9 +148,11 @@ const Input = <T extends FieldValues>({
 				)}
 			</div>
 			{isTextArea && (
-				<div className={styles['helper_container']}>
-					<span className={styles['helper_text']}>{helperText}</span>
-					<span className={styles['word_count']}>{wordCount}/{maxWords}</span>
+				<div className={styles["helper_container"]}>
+					<span className={styles["helper_text"]}>{helperText}</span>
+					<span className={styles["word_count"]}>
+						{wordCount}/{maxWords}
+					</span>
 				</div>
 			)}
 		</label>
