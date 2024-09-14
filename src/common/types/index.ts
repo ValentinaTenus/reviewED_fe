@@ -1,3 +1,8 @@
+export { 
+  type Company, 
+  type GetCompaniesRequestQuery, 
+  type GetCompaniesResponse 
+} from './company/index';
 export {
   type Course,
   type GetCoursesRequestQuery,
