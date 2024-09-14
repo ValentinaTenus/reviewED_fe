@@ -1,6 +1,6 @@
 import React from "react";
 
-import Image from "~/assets/images/medium-shot-woman-working-with-laptop.png";
+import Image from "~/assets/images/medium-shot-woman-working-with-laptop .png";
 
 import styles from "./styles.module.scss";
 
