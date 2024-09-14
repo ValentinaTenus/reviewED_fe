@@ -1,0 +1,29 @@
+.footer_content__contacts {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer_content__contacts_title {
+  color: var(--color-yellow-500);
+  font-size: var(--font-size-main-text);
+  font-family: var(--font-family-main);
+}
+
+.footer_content__contacts_data {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer_content__contact_link {
+  color: var(--color-grey-50);
+  font-size: var(--font-size-title-large);
+  font-weight: var(--font-weight-semi-bold);
+}
+
+@media (max-width: 768px) {
+  .footer_content__contact_link {
+    font-size: var( --font-size-title-h5);
+  }
+}

@@ -7,21 +7,31 @@ import styles from "./styles.module.scss";
 
 const LENGTH_ZERO = 0;
 
-const SearchBlock: React.FC = () => {
-	const [searchResult, setSearchResult] = useState<Company[] | Course[]>([]);
-	const [hasSearched, setHasSearched] = useState(false);
+type SearchBlockProperties = {
+  companies: Company[];
+  courses: Course[];
+};
+
+const SearchBlock: React.FC<SearchBlockProperties> = ({
+  companies, courses
+}) => {
+  const [searchResult, setSearchResult] = useState<Company[] | Course[]>([]);
+  const [hasSearched, setHasSearched] = useState(false); 
 
 	const handleSearch = useCallback((searchResult: Company[] | Course[]) => {
 		setSearchResult(searchResult);
 		setHasSearched(true);
 	}, []);
 
-	return (
-		<div className={styles["search_block"]}>
-			<SearchElement onSearch={handleSearch} />
-			{searchResult.length === LENGTH_ZERO && hasSearched && <NotFound />}
-		</div>
-	);
+  return (
+    <div className={styles['search_block']}>
+      <SearchElement
+        companies={companies}
+        courses={courses}
+        onSearch={handleSearch}/>
+      {searchResult.length === LENGTH_ZERO && hasSearched && <NotFound />}
+    </div>
+  )
 };
 
 export { SearchBlock };

@@ -1,0 +1,136 @@
+.footer__container {
+  background-color: var(--color-grey-950);
+  color: var(--color-white);
+  font-family: var(--font-family-main);
+  padding: 0 86px;
+  width: 100%;
+}
+
+.footer_content__container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 8px 0;
+  width: 100%;
+}
+
+.footer_content__logo_container {
+  display: flex;
+  grid-area: logo;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.footer_content__courses {
+  grid-area: courses;
+}
+
+.footer_content__companies {
+  grid-area: companies;
+}
+
+.footer_content__social_media {
+  grid-area: social_media;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+
+.footer_content {
+  display: grid;
+  grid-template-columns: 32.3% 23.8% 23.8% 15.3%;
+  grid-template-areas: 'logo courses companies social_media';
+  gap: 20px;
+  padding: 40px 0;
+  width: 100%;
+}
+
+.footer_content__logo {
+  color: var(--color-white);
+  height: 40px;
+  width: 192px;
+}
+
+.footer_content__contacts {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer_content__contacts_title {
+  color: var(--color-yellow-500);
+  font-size: var(--font-size-main-text);
+  font-family: var(--font-family-main);
+}
+
+.footer_content__contacts_data {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer_content__contacts {
+  color: var(--color-grey-50);
+  font-weight: var(--font-weight-bold);
+  display: flex;
+  gap: 8px;
+}
+
+.footer_content__contact {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+}
+
+.footer__link {
+  color: var(--color-grey-50);
+  font-size: var(--font-size-main-text);
+  text-align: center;
+}
+
+@media (max-width: 1280px) {
+  .footer__container {
+    padding: 0 48px;
+  }
+  
+  .footer_content__container {
+    gap: 8px;
+  }
+
+  .footer_content {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 'logo courses'
+                         'social_media companies';
+    gap: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer__container {
+    padding: 0 20px;
+  }
+
+  .footer_content__container {
+    gap: 8px;
+    padding: 8px 0;
+  }
+
+  .footer_content {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 'logo logo'
+                         'courses companies'
+                          'social_media social_media';
+    gap: 20px;
+  }
+
+  .footer_content__social_media {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .footer_content__small_link {
+    font-size: var(--font-size-secondary-text);
+  }
+}

@@ -11,6 +11,22 @@ import { companiesApiPath } from "./constants.ts";
 export const companiesApi = api.injectEndpoints({
 	endpoints: (builder) => ({
 		getCompanies: builder.query<Company[], GetCompaniesRequestQuery>({
+			query: (filters: GetCompaniesRequestQuery = {}) => {
+			
+				return {
+					method: httpMethods.GET,
+					params: filters,
+					url: companiesApiPath.ROOT,
+				};
+			},
+			serializeQueryArgs: ({ endpointName }) => {
+				return endpointName;
+			},
+			transformResponse: (response: GetCompaniesResponse) => {
+        return response.results; 
+      },
+		}),
+		getCompaniesByFilter: builder.query<Company[], GetCompaniesRequestQuery>({
 			forceRefetch({ currentArg, previousArg }) {
 				return (
 					currentArg?.name !== previousArg?.name ||
@@ -40,4 +56,9 @@ export const companiesApi = api.injectEndpoints({
 	}),
 });
 
-export const { useGetCompaniesQuery, useGetCompanyByIdQuery } = companiesApi;
+export const {
+  useGetCompaniesQuery,
+	useLazyGetCompaniesQuery,
+  useGetCompanyByIdQuery,
+	useGetCompaniesByFilterQuery
+} = companiesApi;

@@ -1,3 +1,16 @@
 .search_block {
   width: 100%;
 }
+
+@media (min-width: 853px ) and (max-width: 1280px) {
+  .search_block {
+    width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .search_block {
+    margin-top: -115px;
+    width: 100%;
+  }  
+}

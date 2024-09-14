@@ -1,7 +1,5 @@
 .main_content_wrapper {
-  margin-top: 80px;
   padding: 8px 86px;
-  height: 100vh;
 }
 
 .main_content {
@@ -11,13 +9,11 @@
   flex-direction: column;
   gap: 80px;
   margin: 0 auto;
-  max-width: 1252px;
   padding: 0;
 }
 
 @media (max-width: 1280px)  {
   .main_content_wrapper {
-    margin-top: 40px;
     padding: 0px 48px;
   }
 

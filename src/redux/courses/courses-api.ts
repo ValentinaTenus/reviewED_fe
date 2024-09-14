@@ -16,7 +16,23 @@ export const coursesApi = api.injectEndpoints({
 				url: coursesApiPath.ROOT + `/${id}`,
 			}),
 		}),
-		getCourses: builder.query<Course[], GetCoursesRequestQuery>({
+		getCourses: builder.query<Course[], undefined>({
+			query: (filters: GetCoursesRequestQuery = {}) => {
+			
+				return {
+					method: httpMethods.GET,
+					params: filters,
+					url: coursesApiPath.ROOT,
+				};
+			},
+			serializeQueryArgs: ({ endpointName }) => {
+				return endpointName;
+			},
+			transformResponse: (response: GetCoursesResponse) => {
+        return response.results; 
+      },
+		}),
+		getCoursesByFilter: builder.query<Course[], GetCoursesRequestQuery>({
 			forceRefetch({ currentArg, previousArg }) {
 				return (
 					currentArg?.title !== previousArg?.title ||
@@ -40,4 +56,9 @@ export const coursesApi = api.injectEndpoints({
 	}),
 });
 
-export const { useGetCourseByIdQuery, useGetCoursesQuery } = coursesApi;
+export const {
+  useGetCourseByIdQuery,
+	useGetCoursesQuery,
+	useGetCoursesByFilterQuery,
+	useLazyGetCoursesByFilterQuery
+} = coursesApi;
