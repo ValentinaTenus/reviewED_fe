@@ -6,7 +6,14 @@ import { NotFound } from './components/index';
 import { SearchElement } from './components/index';
 import styles from './styles.module.scss';
 
-const SearchBlock: FC = () => {
+type SearchBlockProperties = {
+  companies: Company[];
+  courses: Course[];
+};
+
+const SearchBlock: FC<SearchBlockProperties> = ({
+  companies, courses
+}) => {
   const [searchResult, setSearchResult] = useState<Company[] | Course[]>([]);
   const [hasSearched, setHasSearched] = useState(false); 
 
@@ -17,7 +24,10 @@ const SearchBlock: FC = () => {
 
   return (
     <div className={styles['search_block']}>
-      <SearchElement onSearch={handleSearch}/>
+      <SearchElement
+        companies={companies}
+        courses={courses}
+        onSearch={handleSearch}/>
       {searchResult.length === 0 && hasSearched && <NotFound />}
     </div>
   )

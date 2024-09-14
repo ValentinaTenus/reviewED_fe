@@ -37,6 +37,8 @@
   --color-error-red: #E22138;
 
   --color-shadow-brown: rgb(165, 113, 3, 0.25);
+  --color-shadow-grey: rgb(0, 0, 0, 0.25);
+  --color-shadow-light-grey: rgb(0, 0, 0, 0.1);
 
   //FONT FAMILY
   --font-family-main: 'Open Sans', sans-serif;
@@ -51,10 +53,13 @@
   //FONT SIZE
 
   --font-size-title-h1: 48px;
+  --font-size-title: 36px;
   --font-size-title-mobile-h1: 32px;
   --font-size-title-h2: 28px;
+  --font-size-title-mobile-h2: 24px;
   --font-size-title-h3: 22px;
   --font-size-title-h4: 20px;
+  --font-size-title-large: 18px;
   --font-size-title-h5: 16px;
   --font-size-main-text: 14px;
   --font-size-secondary-text: 12px;

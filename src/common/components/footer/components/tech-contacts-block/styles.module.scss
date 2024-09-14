@@ -1,0 +1,31 @@
+.footer_content__contacts {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer_content__contacts_title {
+  color: var(--color-yellow-500);
+  font-size: var(--font-size-main-text);
+  font-family: var(--font-family-main);
+  font-weight: var( --font-weight-text);
+}
+
+.footer_content__contacts_data {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer_content__contacts {
+  color: var(--color-grey-50);
+  font-weight: var(--font-weight-semi-bold);
+  display: flex;
+  gap: 8px;
+}
+
+.footer_content__contact {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+}

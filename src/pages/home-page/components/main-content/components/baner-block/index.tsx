@@ -17,9 +17,9 @@ const BanerBlock: FC = () => {
           Коли ми впевнимось в дійсності Вашої особи, ми його опублікуємо.
         </p>
       </div>
-      <div className={styles['baner_block_picture_wrapper']}>
+        <div className={styles['baner_block_picture_wrapper']}>
         <img className={styles['baner_block_picture']} src={Image} alt="Woman working on laptop"/>
-      </div>
+      </div>    
     </div>
   )
 };

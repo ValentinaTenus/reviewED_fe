@@ -1,8 +1,6 @@
 .baner_block {
   display: flex;
   gap: 20px;
-  height: 475px;
-  padding: 0 14px;
 }
 
 .baner_block_text {
@@ -45,9 +43,8 @@
 @media (max-width: 1280px)  {
   .baner_block {
     flex-direction: column;
-    height: 518px;
     gap: 56px;
-    padding: 64px 0 68px 0;
+    padding-top: 64px;
   }
 
   .baner_block_text {
@@ -61,7 +58,7 @@
     width: 100%;
   }
 
-  .baner_block_picture{
+  .baner_block_picture {
     height: 100%;
     max-height: 100%;
     width: 100%;
@@ -80,7 +77,7 @@
   }
 
   .baner_block_picture_wrapper {
-    height: 359px;
+    max-height: 359px;
     padding: 0;
   }
 

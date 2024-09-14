@@ -22,7 +22,7 @@
   display: inline-block;
   font-family: var(--font-family-main);
   font-size: var(--font-size-title-h4);
-  font-weight: var(--font-weight-semi-bold);
+  font-weight: var(--font-weight-bold);
   position: relative;
 }
 
@@ -42,9 +42,8 @@
   font-size: var(--font-size-main-text);
   font-weight: var(--font-weight-text);
   height: 40px;
-  margin-bottom: 8px;
+  margin: 8px 0;
   line-height: 19.6px;
-  margin-top: 8px;
   padding: 16px;
   width: 100%;
 }
@@ -70,6 +69,7 @@
 
 .input::placeholder {
   color: var(--color-grey-500);
+  font-size: var(--font-size-title-h5);
 }
 
 .input:hover {
@@ -127,4 +127,11 @@ textarea:disabled:hover {
   border: none; 
   color: var(--color-grey-400);
   cursor: not-allowed;
+}
+
+
+@media (max-width: 768px) {
+  .label {
+    font-size: var(--font-size-title-h5);
+  }  
 }

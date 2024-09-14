@@ -23,7 +23,7 @@ const mapCourses = (courses: Course[]): DropdownOption[] => {
 
   return [
     {
-      value: 'Всі види курсів', 
+      value: '', 
       label: 'Всі види курсів',
     },
     ...options
