@@ -1,11 +1,11 @@
-import { FC } from "react";
+import React from "react";
 
-import { Header, MainContent } from "./components/index";
-import { Footer } from "~/common/components";
+import { MainContent } from "./components/index";
+import { Header, Footer } from "~/common/components/index";
 
 import styles from './styles.module.scss';
 
-const HomePage: FC = () => {
+const HomePage: React.FC = () => {
 
   return (
     <div className={styles['home_page']}>
