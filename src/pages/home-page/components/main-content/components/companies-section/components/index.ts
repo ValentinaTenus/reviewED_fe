@@ -1,1 +1,1 @@
-export { CompanyCard } from './company-card/index';
+export { CompanyCard } from "./company-card/index";

@@ -1,26 +1,26 @@
-import clsx from 'clsx';
-import { type ReactNode } from 'react';
+import clsx from "clsx";
+import React, { type ReactNode } from "react";
 
-import styles from './styles.module.scss';
+import styles from "./styles.module.scss";
 
 type IconButtonProperties = {
-    onClick?: React.MouseEventHandler<HTMLButtonElement>;
-    children?: ReactNode;
-    className?: string;
+	children?: ReactNode;
+	className?: string;
+	onClick?: React.MouseEventHandler<HTMLButtonElement>;
 };
 
 const IconButton: React.FC<IconButtonProperties> = ({
-    onClick,
-    children,
-    className,
+	children,
+	className,
+	onClick,
 }) => (
-    <button
-        className={clsx(styles.icon__button, className)}
-        type="button"
-        onClick={onClick}
-    >
-        {children}
-    </button>
+	<button
+		className={clsx(styles.icon__button, className)}
+		onClick={onClick}
+		type="button"
+	>
+		{children}
+	</button>
 );
 
 export { IconButton };

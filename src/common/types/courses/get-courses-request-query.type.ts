@@ -1,6 +1,6 @@
 type GetCoursesRequestQuery = {
-	title?: string;
 	city?: string;
+	title?: string;
 };
 
 export { type GetCoursesRequestQuery };

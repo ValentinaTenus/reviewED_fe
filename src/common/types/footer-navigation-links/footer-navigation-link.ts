@@ -1,6 +1,6 @@
 type FooterNavigationLink = {
-  href: string;
-  label: string;
+	href: string;
+	label: string;
 };
 
 export { type FooterNavigationLink };

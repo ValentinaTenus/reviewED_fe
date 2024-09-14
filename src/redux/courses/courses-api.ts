@@ -1,12 +1,12 @@
-import { httpMethods } from '~/common/enums/index.ts';
-import { 
-  type Course, 
-	type GetCoursesRequestQuery, 
-	type GetCoursesResponse 
-} from '~/common/types/index.ts';
+import { httpMethods } from "~/common/enums/index.ts";
+import {
+	type Course,
+	type GetCoursesRequestQuery,
+	type GetCoursesResponse,
+} from "~/common/types/index.ts";
 
-import { api } from '../services.ts';
-import { coursesApiPath } from './constants.ts';
+import { api } from "../services.ts";
+import { coursesApiPath } from "./constants.ts";
 
 export const coursesApi = api.injectEndpoints({
 	endpoints: (builder) => ({
@@ -18,7 +18,6 @@ export const coursesApi = api.injectEndpoints({
 		}),
 		getCourses: builder.query<Course[], undefined>({
 			query: (filters: GetCoursesRequestQuery = {}) => {
-			
 				return {
 					method: httpMethods.GET,
 					params: filters,
@@ -29,8 +28,8 @@ export const coursesApi = api.injectEndpoints({
 				return endpointName;
 			},
 			transformResponse: (response: GetCoursesResponse) => {
-        return response.results; 
-      },
+				return response.results;
+			},
 		}),
 		getCoursesByFilter: builder.query<Course[], GetCoursesRequestQuery>({
 			forceRefetch({ currentArg, previousArg }) {
@@ -40,7 +39,6 @@ export const coursesApi = api.injectEndpoints({
 				);
 			},
 			query: (filters: GetCoursesRequestQuery = {}) => {
-			
 				return {
 					method: httpMethods.GET,
 					params: filters,
@@ -51,15 +49,15 @@ export const coursesApi = api.injectEndpoints({
 				return endpointName;
 			},
 			transformResponse: (response: GetCoursesResponse) => {
-        return response.results; 
-      },
+				return response.results;
+			},
 		}),
 	}),
 });
 
 export const {
-  useGetCourseByIdQuery,
-	useGetCoursesQuery,
+	useGetCourseByIdQuery,
 	useGetCoursesByFilterQuery,
-	useLazyGetCoursesByFilterQuery
+	useGetCoursesQuery,
+	useLazyGetCoursesByFilterQuery,
 } = coursesApi;

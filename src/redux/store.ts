@@ -1,27 +1,27 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { setupListeners } from '@reduxjs/toolkit/query';
-import { combineReducers } from 'redux';
-import { persistReducer, persistStore } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+import { configureStore } from "@reduxjs/toolkit";
+import { setupListeners } from "@reduxjs/toolkit/query";
+import { combineReducers } from "redux";
+import { persistReducer, persistStore } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
-import { companiesApi } from './companies/companies-api.ts';
-import { companiesReducer } from './companies/companies-slice.ts';
-import { coursesApi } from './courses/courses-api.ts';
-import { api } from './services.ts';
-import { coursesReducer } from './courses/courses-slice.ts';
+import { companiesApi } from "./companies/companies-api.ts";
+import { companiesReducer } from "./companies/companies-slice.ts";
+import { coursesApi } from "./courses/courses-api.ts";
+import { coursesReducer } from "./courses/courses-slice.ts";
+import { api } from "./services.ts";
 
 const rootReducer = combineReducers({
-  [api.reducerPath]: api.reducer,
+	[api.reducerPath]: api.reducer,
 	companies: companiesReducer,
 	companiesApiSlice: companiesApi.reducer,
 	courses: coursesReducer,
-	coursesApiSlice: coursesApi.reducer
+	coursesApiSlice: coursesApi.reducer,
 });
 
 const persistConfig = {
-	key: 'root',
+	key: "root",
 	storage,
-  whitelist: ['companies'],
+	whitelist: ["companies"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

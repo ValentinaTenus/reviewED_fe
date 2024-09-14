@@ -1,12 +1,12 @@
-import { Outlet } from "react-router-dom"
+import React from "react";
+import { Outlet } from "react-router-dom";
 
-function App() {
+const App: React.FC = () => {
+	return (
+		<>
+			<Outlet />
+		</>
+	);
+};
 
-  return (
-    <>
-     <Outlet />
-    </>
-  )
-}
-
-export { App }
+export { App };

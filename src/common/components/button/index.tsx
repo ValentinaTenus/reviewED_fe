@@ -1,74 +1,76 @@
-import clsx from 'clsx';
-import { type ReactNode } from 'react';
+import clsx from "clsx";
+import React, { type ReactNode } from "react";
 
-import { ButtonSize, ButtonType, ButtonVariant } from '../../enums/index.ts';
-import { type ValueOf } from '../../types/index.ts';
+import { ButtonSize, ButtonType, ButtonVariant } from "~/common/enums/index.ts";
+import { type ValueOf } from "~/common/types/index.ts";
 
-import styles from './styles.module.scss';
+import styles from "./styles.module.scss";
 
 const variants: Record<ButtonVariant, string> = {
-  default: styles.button__base,
-  primary: styles.button__primary,
-  login: styles.button__login,
-  outlined: styles.button__outlined,
-  outlined_mobile: clsx(styles.button__outlined, styles.button__outlined_mobile),
-  share_linkedin: styles.button__share_linkedin,
-  share_facebook: styles.button__share_facebook,
-  share_twitter: styles.button__share_twitter,
+	default: styles.button__base,
+	login: styles.button__login,
+	outlined: styles.button__outlined,
+	outlined_mobile: clsx(
+		styles.button__outlined,
+		styles.button__outlined_mobile,
+	),
+	primary: styles.button__primary,
+	share_facebook: styles.button__share_facebook,
+	share_linkedin: styles.button__share_linkedin,
+	share_twitter: styles.button__share_twitter,
 };
 
 const sizes: Record<ButtonSize, string> = {
-  small: styles.size__small,
-  medium: styles.size__medium,
-  large: styles.size__large,
+	large: styles.size__large,
+	medium: styles.size__medium,
+	small: styles.size__small,
 };
 
-
 type ButtonProperties = {
-  children?: ReactNode;
-  disabled?: boolean;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
-  className?: string;
-  size?: ValueOf<typeof ButtonSize>;
-  type?: ValueOf<typeof ButtonType>;
-  variant: ValueOf<typeof ButtonVariant>;
-  isFullWidth?: boolean;
-  appendedIcon?: ReactNode;
-  prependedIcon?: ReactNode;
+	appendedIcon?: ReactNode;
+	children?: ReactNode;
+	className?: string;
+	disabled?: boolean;
+	isFullWidth?: boolean;
+	onClick?: React.MouseEventHandler<HTMLButtonElement>;
+	prependedIcon?: ReactNode;
+	size?: ValueOf<typeof ButtonSize>;
+	type?: ValueOf<typeof ButtonType>;
+	variant: ValueOf<typeof ButtonVariant>;
 };
 
 const Button: React.FC<ButtonProperties> = ({
-  children,
-  disabled,
-  onClick,
-  className,
-  type,
-  variant,
-  isFullWidth,
-  size = ButtonSize.SMALL,
-  appendedIcon,
-  prependedIcon,
-  ...restProperties
+	appendedIcon,
+	children,
+	className,
+	disabled,
+	isFullWidth,
+	onClick,
+	prependedIcon,
+	size = ButtonSize.SMALL,
+	type,
+	variant,
+	...restProperties
 }) => {
-  return (
-    <button
-      disabled={disabled}
-        onClick={onClick}
-          className={clsx(
-            styles.button,
-            sizes[size],
-            variants[variant],
-            isFullWidth && styles['width__full'],
-            className,
-          )}
-          type={type}
-          {...restProperties}
-      >
-        {prependedIcon}
-        {children}
-        {appendedIcon}
-      </button>
-  );
+	return (
+		<button
+			className={clsx(
+				styles.button,
+				sizes[size],
+				variants[variant],
+				isFullWidth && styles["width__full"],
+				className,
+			)}
+			disabled={disabled}
+			onClick={onClick}
+			type={type}
+			{...restProperties}
+		>
+			{prependedIcon}
+			{children}
+			{appendedIcon}
+		</button>
+	);
 };
 
 export { Button };

@@ -1,6 +1,6 @@
 type GetCompaniesRequestQuery = {
-	name?: string;
 	city?: string;
+	name?: string;
 };
 
 export { type GetCompaniesRequestQuery };

@@ -1,36 +1,39 @@
-import { FC, useCallback, useState } from 'react';
+import React, { useCallback, useState } from "react";
 
-import { type Company, type Course } from '~/common/types/index';
+import { type Company, type Course } from "~/common/types/index";
 
-import { NotFound } from './components/index';
-import { SearchElement } from './components/index';
-import styles from './styles.module.scss';
+import { NotFound, SearchElement } from "./components/index";
+import styles from "./styles.module.scss";
+
+const LENGTH_ZERO = 0;
 
 type SearchBlockProperties = {
-  companies: Company[];
-  courses: Course[];
+	companies: Company[];
+	courses: Course[];
 };
 
-const SearchBlock: FC<SearchBlockProperties> = ({
-  companies, courses
+const SearchBlock: React.FC<SearchBlockProperties> = ({
+	companies,
+	courses,
 }) => {
-  const [searchResult, setSearchResult] = useState<Company[] | Course[]>([]);
-  const [hasSearched, setHasSearched] = useState(false); 
+	const [searchResult, setSearchResult] = useState<Company[] | Course[]>([]);
+	const [hasSearched, setHasSearched] = useState(false);
 
-  const handleSearch = useCallback((searchResult: Company[] | Course[]) => {
-    setSearchResult(searchResult);
-    setHasSearched(true);
-  }, []);
+	const handleSearch = useCallback((searchResult: Company[] | Course[]) => {
+		setSearchResult(searchResult);
+		setHasSearched(true);
+	}, []);
 
-  return (
-    <div className={styles['search_block']}>
-      <SearchElement
-        companies={companies}
-        courses={courses}
-        onSearch={handleSearch}/>
-      {searchResult.length === 0 && hasSearched && <NotFound />}
-    </div>
-  )
+	return (
+		<div className={styles["search_block"]}>
+			<SearchElement
+				companies={companies}
+				courses={courses}
+				onSearch={handleSearch}
+			/>
+			{searchResult.length === LENGTH_ZERO && hasSearched && <NotFound />}
+		</div>
+	);
 };
 
 export { SearchBlock };

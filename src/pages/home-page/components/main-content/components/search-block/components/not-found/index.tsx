@@ -1,17 +1,20 @@
-import NotFoundImage from '~/assets/images/not-found.svg?react';
+import React from "react";
 
-import styles from './styles.module.scss';
+import NotFoundImage from "~/assets/images/not-found.svg?react";
 
-const NotFound = () => {
+import styles from "./styles.module.scss";
 
-  return (
-    <div className={styles['not-found_container']}>
-      <div className={styles['not-found_content']}>
-        <NotFoundImage className={styles['not-found_image']}/>
-        <p className={styles['not-found_text']}>За вашим запитом нічого не знайдено</p>
-      </div>
-    </div>
-  )
+const NotFound: React.FC = () => {
+	return (
+		<div className={styles["not-found_container"]}>
+			<div className={styles["not-found_content"]}>
+				<NotFoundImage className={styles["not-found_image"]} />
+				<p className={styles["not-found_text"]}>
+					За вашим запитом нічого не знайдено
+				</p>
+			</div>
+		</div>
+	);
 };
 
 export { NotFound };
