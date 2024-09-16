@@ -41,8 +41,6 @@
   overflow: hidden;
   padding: 8px 0;
   position: absolute;
-  scrollbar-color: var(--color-grey-500) var(--color-grey-200);
-  scrollbar-width: 16px; 
   top: 100%;
   z-index: 10; 
   width: 100%;
@@ -51,25 +49,6 @@
 .dropdown_menu_content {
   max-height: 418px;
   overflow: auto;
-}
-
-.dropdown_menu_content::-webkit-scrollbar {
-  border-radius: 16px !important;
-  width: 16px !important; 
-}
-
-.dropdown_menu_content::-webkit-scrollbar-track {
-  background-color: var(--color-grey-200); 
-  border-radius: 16px !important;
-}
-
-.dropdown_menu_content::-webkit-scrollbar-thumb {
-  background-color: var(--color-grey-500);
-  border-radius: 16px !important;
-}
-
-.dropdown_menu_content::-webkit-scrollbar-thumb:hover {
-  background-color: var(--color-grey-500);
 }
 
 .dropdown_title {
