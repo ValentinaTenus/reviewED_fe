@@ -1,8 +1,7 @@
 import React from "react";
 
-import { Footer } from "~/common/components/index";
+import { Footer, Header } from "~/common/components/index";
 
-import { Header } from "../home-page/components";
 import { CompaniesContent } from "./components/index";
 import styles from "./styles.module.scss";
 
