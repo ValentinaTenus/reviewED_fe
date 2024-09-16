@@ -5,10 +5,12 @@ enum IconName {
 	EMAIL = "email",
 	FACEBOOK = "facebook",
 	LINKEDIN = "linkedin",
+	LIST_VIEW = "listView",
 	MINUS = "minus",
 	PHONE = "phone",
 	PLUS = "plus",
 	SEARCH = "search",
+	TABLE_VIEW = "tableView",
 	XRP = "xrp",
 	YOUTUBE = "youtube",
 }

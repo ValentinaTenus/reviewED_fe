@@ -9,7 +9,7 @@ import {
 	CoursesLinksSmartphones,
 	CoursesLinksTablets,
 	OthersFooterLinks,
-	Screen_Breakpoints,
+	ScreenBreakpoints,
 	SocialLinks,
 } from "~/common/constants/index";
 import { FooterNavigationLink } from "~/common/types/index";
@@ -30,10 +30,10 @@ const Footer: React.FC = () => {
 	const updateVisibleItems = () => {
 		const screenWidth = window.innerWidth;
 
-		if (screenWidth <= Screen_Breakpoints.TABLET) {
+		if (screenWidth <= ScreenBreakpoints.TABLET) {
 			setCompaniesLinks(CompaniesLinksSmartphones);
 			setCoursesLinks(CoursesLinksSmartphones);
-		} else if (screenWidth <= Screen_Breakpoints.DESKTOP) {
+		} else if (screenWidth <= ScreenBreakpoints.DESKTOP) {
 			setCompaniesLinks(CompaniesLinksTablets);
 			setCoursesLinks(CoursesLinksTablets);
 		} else {
