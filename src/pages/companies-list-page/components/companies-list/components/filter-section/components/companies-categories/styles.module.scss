@@ -1,0 +1,20 @@
+.companies_categories__container {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-family-main);
+  gap: 8px;
+  max-width: 850px;
+}
+
+.companies_categories__text {
+  color: var(--color-grey-470);
+  font-size: var(--font-size-main-text);
+  font-weight: var(--font-weight-text);
+}
+
+.companies_categories__content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 17px;
+}
+

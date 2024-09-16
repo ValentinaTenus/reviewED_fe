@@ -1,0 +1,26 @@
+.filtered_companies__container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.filtered_companies__view_by {
+  align-self: flex-end;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.filtered_companies__view_text {
+  align-self: center;
+  color: var(--color-grey-470);
+  font-family: var(--font-family-main);
+  font-size: var(--font-size-title-h5);
+}
+
+.filtered_companies__search_result_wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}

@@ -2,8 +2,8 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Button, Icon } from "~/common/components/index";
-import { Screen_Breakpoints } from "~/common/constants/index";
-import { questionsAndAnswers } from "~/common/constants/mock-question-and-answers";
+import { ScreenBreakpoints } from "~/common/constants/index";
+import { questionsAndAnswers } from "~/common/constants/mock-data/mock-question-and-answers";
 import { AppRoute, ButtonVariant, IconName } from "~/common/enums";
 
 import { QuestionAndAnswerItem } from "./components/question-and-answer-item/index";
@@ -33,7 +33,7 @@ const QuestionAndAnswer: React.FC<QuestionAndAnswerSectionProperties> = ({
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (screenWidth < Screen_Breakpoints.DESKTOP) {
+		if (screenWidth < ScreenBreakpoints.DESKTOP) {
 			setQuestionsAnswers(
 				questionsAndAnswers.slice(ZERO_LENGTH, MaxQuestionsNumber.TABLET),
 			);
@@ -58,14 +58,14 @@ const QuestionAndAnswer: React.FC<QuestionAndAnswerSectionProperties> = ({
 					</QuestionAndAnswerItem>
 				))}
 			</div>
-			{screenWidth < Screen_Breakpoints.TABLET && (
+			{screenWidth < ScreenBreakpoints.TABLET && (
 				<Button
 					appendedIcon={<Icon name={IconName.ARROW_RIGHT} />}
 					onClick={handleSeeAllClick}
 					variant={ButtonVariant.OUTLINED_MOBILE}
 				/>
 			)}
-			{screenWidth > Screen_Breakpoints.TABLET && (
+			{screenWidth > ScreenBreakpoints.TABLET && (
 				<Button
 					appendedIcon={<Icon name={IconName.ARROW_RIGHT} />}
 					onClick={handleSeeAllClick}

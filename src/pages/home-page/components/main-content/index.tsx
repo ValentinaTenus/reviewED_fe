@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { Screen_Breakpoints } from "~/common/constants/index";
+import { ScreenBreakpoints } from "~/common/constants/index";
 import { type Course } from "~/common/types/index";
 import { useGetCompaniesQuery } from "~/redux/companies/companies-api";
 import { useGetCoursesQuery } from "~/redux/courses/courses-api";
@@ -38,11 +38,11 @@ const MainContent: React.FC = () => {
 		const screenWidth = window.innerWidth;
 		setScreenWidth(screenWidth);
 
-		if (screenWidth <= Screen_Breakpoints.MOBILE) {
+		if (screenWidth <= ScreenBreakpoints.MOBILE) {
 			setVisibleItems(VisibleCards.MOBILE);
-		} else if (screenWidth <= Screen_Breakpoints.TABLET) {
+		} else if (screenWidth <= ScreenBreakpoints.TABLET) {
 			setVisibleItems(VisibleCards.SMALL_TABLET);
-		} else if (screenWidth <= Screen_Breakpoints.DESKTOP) {
+		} else if (screenWidth <= ScreenBreakpoints.DESKTOP) {
 			setVisibleItems(VisibleCards.TABLET);
 		} else {
 			setVisibleItems(VisibleCards.DESKTOP);

@@ -1,0 +1,65 @@
+.company_list_card__container {
+  border: 1px solid var(--color-grey-300);
+  cursor: pointer;
+  display: grid;
+  gap: 0;
+  grid-template-columns: 33.4% 8.2% 18.2% 13.8%;
+  font-family: var( --font-family-main);
+  justify-content: space-between;
+  padding: 24px 24px;
+  width: 100%;
+}
+
+.company_list_card__title {
+  align-items: center;
+  display: flex;
+  gap: 16px;
+}
+
+.company_list_card__logo {
+  border: 1px solid var(--color-grey-480);
+  border-radius: 8px;
+  height: 60px;
+  width: 60px;
+}
+
+.company_list_card__name {
+  color: var(--color-grey-950);
+  font-size: var(--font-size-title-large);
+}
+
+.company_list_card__total_courses {
+  align-self: center;
+  color: var(--color-grey-490);
+  font-size: var(--font-size-title-h5);
+}
+
+.company_list_card__reviews_container {
+  align-items: center;
+  display: flex;
+  gap: 16px;
+}
+
+.company_list_card__reviews {
+  display: flex;
+  gap: 8px;
+}
+
+.company_list_card__reviewer_avatars {
+
+}
+
+.company_list_card__review_amount {
+  color: var(--color-grey-400);
+  font-size: var(--font-size-main-text);
+}
+
+.company_list_card__review_icon {
+  color: var(--color-icon-green);
+  height: 24px;
+  width: 24px;
+}
+
+.company_list_card__rating {
+  align-self: center;
+}

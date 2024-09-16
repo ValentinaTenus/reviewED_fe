@@ -1,0 +1,41 @@
+.companies_filter__container {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-family-main);
+  gap: 40px;
+}
+
+.companies_filter__content {
+  display: flex;
+  flex-direction: column;
+  gap: 34px;
+}
+
+.companies_filter__search_and_categories {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.companies_filter__search_bar {
+  align-items: flex-end;
+  display: flex;
+  justify-content: space-between;
+  gap: 124px;
+}
+
+@media (max-width: 1280px) {
+  .companies_filter__content {
+    gap: 34px;
+  }
+
+  .companies_filter__search_bar {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .companies_filter__search_and_categories {
+    gap: 10px;
+  }
+}

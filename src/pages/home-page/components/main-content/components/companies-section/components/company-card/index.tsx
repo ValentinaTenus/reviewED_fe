@@ -1,6 +1,5 @@
 import React from "react";
 
-import DefaultCompanyImage from "~/assets/images/default-company-image.png";
 import { Rating } from "~/common/components/index";
 import { Company } from "~/common/types/index";
 
@@ -21,7 +20,7 @@ const CompanyCard: React.FC<CompanyCardProperties> = ({ company }) => {
 				<img
 					alt={company.name}
 					className={styles["company_logo"]}
-					src={DefaultCompanyImage}
+					src={company.logo}
 				/>
 				<h4 className={styles["item_name"]}>{company.name}</h4>
 			</div>

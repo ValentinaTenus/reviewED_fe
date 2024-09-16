@@ -7,7 +7,7 @@ import "~/assets/styles/index.scss";
 
 import { App } from "./app/App.tsx";
 import { AppRoute } from "./common/enums/app-route.enum.ts";
-import { HomePage } from "./pages/index.ts";
+import { CompaniesListPage, HomePage } from "./pages/index.ts";
 import { store } from "./redux/store.ts";
 
 const routes = createBrowserRouter([
@@ -16,6 +16,10 @@ const routes = createBrowserRouter([
 			{
 				element: <HomePage />,
 				path: AppRoute.ROOT,
+			},
+			{
+				element: <CompaniesListPage />,
+				path: AppRoute.ALL_COMPANIES,
 			},
 		],
 		element: <App />,

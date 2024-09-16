@@ -1,0 +1,26 @@
+.companies_list_page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  height: 100%;
+}
+
+.companies_list_main_content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 64px;
+  padding: 40px 86px;
+}
+
+@media (max-width: 1280px) {
+  .companies_list_main_content {
+    padding: 40px 48px;
+  }
+}
+
+@media (max-width: 768px) {
+  .companies_list_main_content {
+    padding: 40px 20px;
+  }
+}
