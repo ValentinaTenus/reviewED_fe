@@ -4,6 +4,8 @@ import { combineReducers } from "redux";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
+import { categoriesApi } from "./categories/categories-api.ts";
+import { categoriesReducer } from "./categories/categories-slice.ts";
 import { companiesApi } from "./companies/companies-api.ts";
 import { companiesReducer } from "./companies/companies-slice.ts";
 import { coursesApi } from "./courses/courses-api.ts";
@@ -12,6 +14,8 @@ import { api } from "./services.ts";
 
 const rootReducer = combineReducers({
 	[api.reducerPath]: api.reducer,
+	categories: categoriesReducer,
+	categoriesApiSlice: categoriesApi.reducer,
 	companies: companiesReducer,
 	companiesApiSlice: companiesApi.reducer,
 	courses: coursesReducer,
