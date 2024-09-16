@@ -1,8 +1,8 @@
 import React from "react";
 
-import { Footer } from "~/common/components/index";
+import { Footer, Header } from "~/common/components/index";
 
-import { Header, MainContent } from "./components/index";
+import { MainContent } from "./components/index";
 import styles from "./styles.module.scss";
 
 const HomePage: React.FC = () => {
