@@ -7,12 +7,24 @@
 
 .sort_text {
   color: var(--color-grey-470);
+  display: inline;
   font-size: var(--font-size-title-h5);
 }
 
 .dropdown_container {
   overflow: visible;
   position: relative;
+}
+
+.sort__button {
+  height: 24px;
+  width: 24px;
+}
+
+.sort__button_icon {
+  color: var(--color-black);
+  height: 100%;
+  width: 100%;
 }
 
 .dropdown_trigger {
@@ -82,4 +94,21 @@
 
 .dropdown_item:hover {
   background-color: var(--color-grey-200);
+}
+
+
+@media (max-width: 768px) {
+  .dropdown_container {
+    position: static;
+  }  
+
+  .dropdown_menu {
+    right: 0;
+    top: calc(100% + 24px);
+    z-index: 10; 
+  }
+
+  .sort_text {
+    display: none;
+  }
 }

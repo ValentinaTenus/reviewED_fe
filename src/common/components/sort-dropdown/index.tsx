@@ -3,17 +3,19 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import ArrowDown from "~/assets/images/arrow-down.svg?react";
 import ArrowUp from "~/assets/images/arrow-up.svg?react";
+import { IconName } from "~/common/enums";
 import { type DropdownOption } from "~/common/types/index";
 
+import { Icon } from "../icon";
+import { IconButton } from "../icon-button";
 import styles from "./styles.module.scss";
 
 const FIRST_OPTION = 0;
 
 type Properties = {
 	className?: string;
-	defaultValue?: DropdownOption;
 	isDisabled?: boolean;
-	label?: string;
+	isIconButton?: boolean;
 	name: string;
 	onChange: (value: number | string) => void;
 	options: DropdownOption[];
@@ -22,6 +24,7 @@ type Properties = {
 const SortDropdown: React.FC<Properties> = ({
 	className,
 	isDisabled,
+	isIconButton = false,
 	onChange,
 	options,
 }) => {
@@ -69,15 +72,30 @@ const SortDropdown: React.FC<Properties> = ({
 				)}
 				ref={dropdownRef}
 			>
-				<div
-					className={clsx(styles["dropdown_trigger"], {
-						[styles["open"]]: isOpen,
-					})}
-					onClick={handleToggleDropdown}
-				>
-					{selectedOption ? selectedOption.label : options[FIRST_OPTION].label}
-					<ArrowDown className={styles["dropdown_icon"]} />
-				</div>
+				{isIconButton && (
+					<IconButton
+						className={styles["sort__button"]}
+						onClick={handleToggleDropdown}
+					>
+						<Icon
+							className={styles["sort__button_icon"]}
+							name={IconName.SORT}
+						/>
+					</IconButton>
+				)}
+				{!isIconButton && (
+					<div
+						className={clsx(styles["dropdown_trigger"], {
+							[styles["open"]]: isOpen,
+						})}
+						onClick={handleToggleDropdown}
+					>
+						{selectedOption
+							? selectedOption.label
+							: options[FIRST_OPTION].label}
+						<ArrowDown className={styles["dropdown_icon"]} />
+					</div>
+				)}
 				{isOpen && !isDisabled && (
 					<div className={styles["dropdown_menu"]}>
 						{options.map((option, index) => (
@@ -87,7 +105,7 @@ const SortDropdown: React.FC<Properties> = ({
 								onClick={() => handleOptionClick(option)}
 							>
 								{option.label}
-								{index === FIRST_OPTION && (
+								{index === FIRST_OPTION && !isIconButton && (
 									<ArrowUp className={styles["dropdown_icon"]} />
 								)}
 							</div>
