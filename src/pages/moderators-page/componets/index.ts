@@ -1,1 +1,1 @@
-export { MainModeratorsPage } from "./MainModeratorsPage/index";
+export { MainModeratorsContent } from "./main-moderators-content/index";
