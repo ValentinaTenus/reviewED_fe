@@ -13,17 +13,15 @@ const ALL_CATEGORIES_ID = 0;
 const CompaniesContent: React.FC = () => {
 	const [searchTerm, setSearchTerm] = useState("");
 	const [sortBy, setSortBy] = useState<string>("");
-	const [selectedCategoriesIds, setSelectedCategoriesIds] = useState<number[]>(
-		[],
-	);
+	const [selectedCategoryId, setSelectedCategoryId] =
+		useState<number>(ALL_CATEGORIES_ID);
 	const { data: categories } = useGetCategoriesQuery(undefined);
 	const { data: companies } = useGetCompaniesByFilterQuery(
 		{
-			categories:
-				selectedCategoriesIds.length &&
-				!selectedCategoriesIds.includes(ALL_CATEGORIES_ID)
-					? selectedCategoriesIds
-					: undefined,
+			category_by_id:
+				selectedCategoryId === ALL_CATEGORIES_ID
+					? undefined
+					: selectedCategoryId,
 			name: searchTerm,
 			sort: sortBy,
 		},
@@ -46,31 +44,9 @@ const CompaniesContent: React.FC = () => {
 		setSortBy(newSortBy.toString());
 	}, []);
 
-	const handleChooseCategory = useCallback(
-		(chosenCategoryId: number) => {
-			if (chosenCategoryId === ALL_CATEGORIES_ID) {
-				setSelectedCategoriesIds([ALL_CATEGORIES_ID]);
-			} else {
-				if (selectedCategoriesIds.includes(ALL_CATEGORIES_ID)) {
-					setSelectedCategoriesIds([chosenCategoryId]);
-				} else {
-					const isChosen = selectedCategoriesIds.includes(chosenCategoryId);
-					if (isChosen) {
-						const newSelectedCategories = selectedCategoriesIds.filter(
-							(categoryId) => categoryId !== chosenCategoryId,
-						);
-						setSelectedCategoriesIds(newSelectedCategories);
-					} else {
-						setSelectedCategoriesIds((selectedCategoriesIds) => [
-							...selectedCategoriesIds,
-							chosenCategoryId,
-						]);
-					}
-				}
-			}
-		},
-		[selectedCategoriesIds],
-	);
+	const handleChooseCategory = useCallback((chosenCategoryId: number) => {
+		setSelectedCategoryId(chosenCategoryId);
+	}, []);
 
 	const updateScreenWidth = () => {
 		const screenWidth = window.innerWidth;
@@ -93,7 +69,7 @@ const CompaniesContent: React.FC = () => {
 					onChangeSortBy={handleChangeSortBy}
 					onChooseCategory={handleChooseCategory}
 					screenWidth={screenWidth}
-					selectedCategoriesIds={selectedCategoriesIds}
+					selectedCategoryId={selectedCategoryId}
 				/>
 			)}
 			{companies && (

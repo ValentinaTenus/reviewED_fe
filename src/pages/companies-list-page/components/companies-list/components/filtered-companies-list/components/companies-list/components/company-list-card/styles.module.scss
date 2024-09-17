@@ -1,0 +1,101 @@
+.company_list_card__container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.company_list_card__header {
+  align-items: center;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-grey-300);
+  display: flex;
+  justify-content: space-between;
+  border-radius: 16px 16px 0 0;
+  padding: 24px;
+}
+
+.company_list_card__logo_container {
+  display: flex;
+  gap: 16px;
+  width: 40%;
+}
+
+.company_list_card__logo {
+  border: 1px solid var(--color-grey-480);
+  border-radius: 8px;
+  height: 60px;
+  width: 60px;
+}
+
+.company_list_card__name {
+  align-self: center;
+  color: var(--color-grey-950);
+  font-family: var(--font-family-main);
+  font-size: var(--font-size-title-large);
+}
+
+
+.company_list_card__arrow {
+  color: var(--color-black);
+  height: 24px;
+  width: 24px;
+}
+
+.company_list_card__details {
+  background-color: var(--color-grey-100);
+  border-radius: 0 0 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  width: 100%;
+}
+
+.company_list_card__detail_item {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.company_list_card__detail_title {
+  color: var(--color-grey-950);
+  font-family: var(--font-family-main);
+  font-size: var(--font-size-title-large);
+  font-weight: var(--font-weight-bold);
+}
+
+.company_list_card__detail_value {
+  color: var(--color-grey-500);
+  font-family: var(--font-family-main);
+  font-size: var(--font-size-title-h5);
+  font-weight: var(--font-weight-text);
+}
+
+.company_list_card__reviews_details {
+  display: flex;
+  gap: 16px;
+}
+
+.company_list_card__reviews_icon {
+  color: var(--color-icon-green);
+  height: 24px;
+  width: 24px;
+}
+
+.company_list_card__detail_rating {
+  gap: 4px;
+}
+
+.company_list_card__detail_rating svg {
+  height: 24px;
+  width: 24px;
+}
+
+.company_list_card__detail_rating svg:last-child {
+  padding-right: 4px;
+}
+
+.company_list_card__detail_rating .average_rating {
+  font-size: var(--font-size-main-text);
+  padding-left: 4px;
+}
