@@ -1,0 +1,59 @@
+import React, { useCallback, useState } from "react";
+
+import { SortDropdown, ViewTabs } from "~/common/components/index";
+import { CompaniesSortOptions } from "~/common/constants/index";
+import { ViewStyle } from "~/common/enums/index";
+import { type Company } from "~/common/types/index";
+import { NotFound } from "~/pages/home-page/components/main-content/components/search-block/components";
+
+import { CompaniesList, CompaniesTable } from "./components/index";
+import styles from "./styles.module.scss";
+
+const LENGTH_ZERO = 0;
+
+type FilteredCompaniesListProperties = {
+	companies: Company[];
+	onChangeSortBy: (newSortBy: number | string) => void;
+};
+
+const FilteredCompaniesList: React.FC<FilteredCompaniesListProperties> = ({
+	companies,
+	onChangeSortBy,
+}) => {
+	const [viewStyle, setViewStyle] = useState(ViewStyle.TABLE);
+
+	const handleViewChange = useCallback((newViewStyle: ViewStyle) => {
+		setViewStyle(newViewStyle);
+	}, []);
+
+	return (
+		<div className={styles["filtered_companies__container"]}>
+			<div className={styles["filtered_companies__sort_and_view"]}>
+				<div className={styles["filtered_companies__view_by"]}>
+					<p className={styles["filtered_companies__view_text"]}>View by</p>
+					<ViewTabs defaultViewStyle={viewStyle} onChange={handleViewChange} />
+				</div>
+				<div className={styles["filtered_companies__sort_button"]}>
+					<SortDropdown
+						isIconButton
+						name="sort"
+						onChange={onChangeSortBy}
+						options={CompaniesSortOptions}
+					/>
+				</div>
+			</div>
+
+			<div className={styles["filtered_companies__search_result_wrapper"]}>
+				{viewStyle === ViewStyle.TABLE && companies.length > LENGTH_ZERO && (
+					<CompaniesTable companies={companies} />
+				)}
+				{viewStyle === ViewStyle.LIST && companies.length > LENGTH_ZERO && (
+					<CompaniesList companies={companies} />
+				)}
+				{companies.length === LENGTH_ZERO && <NotFound />}
+			</div>
+		</div>
+	);
+};
+
+export { FilteredCompaniesList };

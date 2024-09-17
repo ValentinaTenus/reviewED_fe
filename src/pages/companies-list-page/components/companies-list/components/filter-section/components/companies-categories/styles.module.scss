@@ -1,0 +1,33 @@
+.companies_categories__container {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-family-main);
+  gap: 8px;
+  max-width: 850px;
+}
+
+.companies_categories__text {
+  color: var(--color-grey-470);
+  font-size: var(--font-size-main-text);
+  font-weight: var(--font-weight-text);
+}
+
+.companies_categories__content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 17px;
+}
+
+@media (max-width: 768px) {
+  .companies_categories__content {
+      flex-wrap: nowrap;
+      overflow-x: auto; 
+      scrollbar-width: none; 
+      -ms-overflow-style: none; 
+      padding-bottom: 16px; 
+    }
+    
+    .companies_categories__content::-webkit-scrollbar {
+      display: none; 
+    }
+}

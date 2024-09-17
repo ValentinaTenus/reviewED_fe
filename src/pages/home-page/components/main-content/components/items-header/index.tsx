@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 
 import { Button, Icon } from "~/common/components/index";
-import { Screen_Breakpoints } from "~/common/constants/index";
+import { ScreenBreakpoints } from "~/common/constants/index";
 import { ButtonVariant, IconName } from "~/common/enums/index";
 
 import styles from "./styles.module.scss";
@@ -28,7 +28,7 @@ const ItemsHeader: React.FC<ItemsHeaderProperties> = ({
 				onClick={onClick}
 				variant={ButtonVariant.OUTLINED}
 			>
-				{screenWidth > Screen_Breakpoints.TABLET ? "Дивитися всі" : ""}
+				{screenWidth > ScreenBreakpoints.TABLET ? "Дивитися всі" : ""}
 			</Button>
 		</div>
 	);

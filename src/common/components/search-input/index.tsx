@@ -22,7 +22,7 @@ type Properties<T extends FieldValues> = {
 	control: Control<T, null>;
 	errors: FieldErrors<T>;
 	helperText?: string;
-	iconName?: IconName;
+	iconName?: IconName | null;
 	label?: string;
 	maxWords?: number;
 	name: FieldPath<T>;
@@ -65,6 +65,7 @@ const SearchInput = <T extends FieldValues>({
 		className,
 		styles["input"],
 		hasError && styles["input__error"],
+		placeholderIcon && styles["input_with_icon_placeholder"],
 		field.value && styles["input_filled"],
 	);
 

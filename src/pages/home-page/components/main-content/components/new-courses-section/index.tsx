@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Screen_Breakpoints } from "~/common/constants/index";
+import { ScreenBreakpoints } from "~/common/constants/index";
 import { AppRoute } from "~/common/enums/index";
 import { Course } from "~/common/types/index";
 
@@ -27,7 +27,7 @@ const NewCoursesSection: React.FC<NewCoursesSectionProperties> = ({
 		<div className={styles["new_courses"]}>
 			<ItemsHeader
 				header={
-					screenWidth < Screen_Breakpoints.DESKTOP
+					screenWidth < ScreenBreakpoints.DESKTOP
 						? "Нові курси"
 						: "Нещодавно додані курси"
 				}

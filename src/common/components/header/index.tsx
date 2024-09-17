@@ -11,13 +11,13 @@ import { BurgerMenu, Search } from "./components/index";
 import styles from "./styles.module.scss";
 
 const Header: React.FC = () => {
-	const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false);
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-	const user = false;
+	const user = true;
 
-	const handleToggleBurgerMenu = useCallback(() => {
-		setIsBurgerMenuOpen(!isBurgerMenuOpen);
-	}, [isBurgerMenuOpen]);
+	const handleToggleMenu = useCallback(() => {
+		setIsMenuOpen(!isMenuOpen);
+	}, [isMenuOpen]);
 
 	return (
 		<div className={styles["header_wrapper"]}>
@@ -41,31 +41,33 @@ const Header: React.FC = () => {
 							</Button>
 							<IconButton
 								className={styles["menu__button"]}
-								onClick={handleToggleBurgerMenu}
+								onClick={handleToggleMenu}
 							>
 								<MenuIcon />
 							</IconButton>
-							{isBurgerMenuOpen && <BurgerMenu />}
+							{isMenuOpen && <BurgerMenu />}
 						</>
 					)}
 					{user && (
 						<div className={styles["user__button"]}>
-							<IconButton>
+							<IconButton onClick={handleToggleMenu}>
 								<UserIcon />
 							</IconButton>
-							<div className={styles["user_menu"]}>
-								<ul className={styles["user_menu_list"]}>
-									<li>
-										<a href="#">Ваші відгуки</a>
-									</li>
-									<li>
-										<a href="#">
-											<LogOutIcon />
-											Вийти
-										</a>
-									</li>
-								</ul>
-							</div>
+							{isMenuOpen && (
+								<div className={styles["user_menu"]}>
+									<ul className={styles["user_menu_list"]}>
+										<li>
+											<a href="#">Ваші відгуки</a>
+										</li>
+										<li>
+											<a href="#">
+												<LogOutIcon />
+												Вийти
+											</a>
+										</li>
+									</ul>
+								</div>
+							)}
 						</div>
 					)}
 				</div>

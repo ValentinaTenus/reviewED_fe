@@ -1,3 +1,4 @@
+export { type Category } from "./category/index";
 export {
 	type Company,
 	type GetCompaniesRequestQuery,

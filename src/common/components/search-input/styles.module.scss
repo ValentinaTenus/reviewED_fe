@@ -28,8 +28,11 @@
   outline: none; 
   overflow: hidden;
   padding: 16px;
-  padding-left: 56px;
   width: 100%;
+}
+
+.input_with_icon_placeholder {
+  padding-left: 56px;
 }
 
 .input_filled {

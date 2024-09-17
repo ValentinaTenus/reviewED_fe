@@ -1,0 +1,28 @@
+.bread_crumb {
+  align-items: center;
+  display: flex;
+  gap: 4px;
+}
+
+.bread_crumb_item {
+  align-items: center;
+  display: flex;
+  gap: 4px;
+  font-family: var(--font-family-main);
+}
+
+.bread_crumb_link {
+  color: var(--color-black);
+  font-size: var( --font-size-main-text);
+  font-weight: var( --font-weight-semi-bold);
+}
+
+.bread_crumb__arrow {
+  color: var(--color-grey-450);
+  height: 16px;
+  width: 16px;
+}
+
+.bread_crumb_active {
+  color: var(--color-grey-460);
+}

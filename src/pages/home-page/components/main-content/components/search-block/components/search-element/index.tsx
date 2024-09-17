@@ -1,7 +1,7 @@
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import React, { useCallback, useState } from "react";
 
-import { Button, Dropdown } from "~/common/components/index";
+import { Button, Dropdown, SearchInput } from "~/common/components/index";
 import { CITIES } from "~/common/constants/index";
 import {
 	ButtonSize,
@@ -19,7 +19,6 @@ import {
 	mapCompanies,
 	mapCourses,
 } from "../../helpers/index";
-import { SearchInput } from "./components/search-input";
 import styles from "./styles.module.scss";
 
 const categories = [

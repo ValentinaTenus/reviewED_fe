@@ -1,3 +1,4 @@
+export { BreadCrumb } from "./breadcrumb/index";
 export { Button } from "./button/index";
 export { Dropdown } from "./dropdown/index";
 export { Footer } from "./footer/index";
@@ -6,3 +7,7 @@ export { Icon } from "./icon/index";
 export { IconButton } from "./icon-button/index";
 export { Input } from "./input/index";
 export { Rating } from "./rating/index";
+export { SearchBar } from "./search-bar/index";
+export { SearchInput } from "./search-input/index";
+export { SortDropdown } from "./sort-dropdown/index";
+export { ViewTabs } from "./view-tabs/index";
