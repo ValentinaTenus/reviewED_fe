@@ -55,6 +55,7 @@ export default tseslint.config(
       ...eslintReact.configs["jsx-runtime"].rules,
 			...eslintReact.configs["recommended"].rules,
       ...reactHooks.configs.recommended.rules,
+       "react/react-in-jsx-scope": "off",
       'react/jsx-boolean-value': ['error'],
       'react/jsx-curly-brace-presence': ['error'],
       'react/self-closing-comp': ['error'],
