@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 
+import { Category } from "~/common/types";
 import { useGetCategoriesQuery } from "~/redux/categories/categories-api";
 import { useGetCompaniesByFilterQuery } from "~/redux/companies/companies-api";
 
@@ -7,6 +8,7 @@ import { FilteredCompaniesList, FilterSection } from "./components/index";
 import styles from "./styles.module.scss";
 
 const DEFAULT_SCREEN_WIDTH = 0;
+const ALL_CATEGORIES_ID = 0;
 
 const CompaniesContent: React.FC = () => {
 	const [searchTerm, setSearchTerm] = useState("");
@@ -14,10 +16,14 @@ const CompaniesContent: React.FC = () => {
 	const [selectedCategoriesIds, setSelectedCategoriesIds] = useState<number[]>(
 		[],
 	);
-
 	const { data: categories } = useGetCategoriesQuery(undefined);
 	const { data: companies } = useGetCompaniesByFilterQuery(
 		{
+			categories:
+				selectedCategoriesIds.length &&
+				!selectedCategoriesIds.includes(ALL_CATEGORIES_ID)
+					? selectedCategoriesIds
+					: undefined,
 			name: searchTerm,
 			sort: sortBy,
 		},
@@ -25,6 +31,10 @@ const CompaniesContent: React.FC = () => {
 			refetchOnMountOrArgChange: true,
 		},
 	);
+
+	const allCategories: Category[] = categories
+		? [{ id: 0, name: "All", subcategories: [] }, ...categories]
+		: [];
 
 	const [screenWidth, setScreenWidth] = useState<number>(DEFAULT_SCREEN_WIDTH);
 
@@ -38,20 +48,25 @@ const CompaniesContent: React.FC = () => {
 
 	const handleChooseCategory = useCallback(
 		(chosenCategoryId: number) => {
-			const isChosen = selectedCategoriesIds.find(
-				(categoryId) => categoryId === chosenCategoryId,
-			);
-
-			if (isChosen) {
-				const newSelectedCategories = selectedCategoriesIds.filter(
-					(categoryId) => categoryId !== chosenCategoryId,
-				);
-				setSelectedCategoriesIds(newSelectedCategories);
+			if (chosenCategoryId === ALL_CATEGORIES_ID) {
+				setSelectedCategoriesIds([ALL_CATEGORIES_ID]);
 			} else {
-				setSelectedCategoriesIds((selectedCategoriesIds) => [
-					...selectedCategoriesIds,
-					chosenCategoryId,
-				]);
+				if (selectedCategoriesIds.includes(ALL_CATEGORIES_ID)) {
+					setSelectedCategoriesIds([chosenCategoryId]);
+				} else {
+					const isChosen = selectedCategoriesIds.includes(chosenCategoryId);
+					if (isChosen) {
+						const newSelectedCategories = selectedCategoriesIds.filter(
+							(categoryId) => categoryId !== chosenCategoryId,
+						);
+						setSelectedCategoriesIds(newSelectedCategories);
+					} else {
+						setSelectedCategoriesIds((selectedCategoriesIds) => [
+							...selectedCategoriesIds,
+							chosenCategoryId,
+						]);
+					}
+				}
 			}
 		},
 		[selectedCategoriesIds],
@@ -73,14 +88,20 @@ const CompaniesContent: React.FC = () => {
 		<div className={styles["companies_list__container"]}>
 			{categories && (
 				<FilterSection
-					categories={categories}
+					categories={allCategories}
 					onChangeSearchTerm={handleChangeSearchTerm}
 					onChangeSortBy={handleChangeSortBy}
 					onChooseCategory={handleChooseCategory}
 					screenWidth={screenWidth}
+					selectedCategoriesIds={selectedCategoriesIds}
 				/>
 			)}
-			{companies && <FilteredCompaniesList companies={companies} />}
+			{companies && (
+				<FilteredCompaniesList
+					companies={companies}
+					onChangeSortBy={handleChangeSortBy}
+				/>
+			)}
 		</div>
 	);
 };

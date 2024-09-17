@@ -1,8 +1,9 @@
 import clsx from "clsx";
 import React from "react";
+import { Link } from "react-router-dom";
 
-import DefaultCompanyImage from "~/assets/images/default-company-image.png";
 import { Rating } from "~/common/components/index";
+import { AppRoute } from "~/common/enums/index";
 import { Course } from "~/common/types/index";
 
 import styles from "./styles.module.scss";
@@ -14,12 +15,16 @@ type CourseCardProperties = {
 
 const CourseCard: React.FC<CourseCardProperties> = ({ className, course }) => {
 	return (
-		<div className={clsx(styles["item_card"], className)} key={course.id}>
+		<Link
+			className={clsx(styles["item_card"], className)}
+			key={course.id}
+			to={`${AppRoute.COURSE_DETAILS}${course.id}`}
+		>
 			<div className={styles["item_loco_container"]}>
 				<img
 					alt={course.title}
 					className={styles["course_image"]}
-					src={DefaultCompanyImage}
+					src={course.company_logo}
 				/>
 				<div className={styles["item_rating_container"]}>
 					<Rating averageRating={course.average_rating} />
@@ -29,7 +34,7 @@ const CourseCard: React.FC<CourseCardProperties> = ({ className, course }) => {
 				</div>
 			</div>
 			<h4 className={styles["item_name"]}>{course.title}</h4>
-		</div>
+		</Link>
 	);
 };
 

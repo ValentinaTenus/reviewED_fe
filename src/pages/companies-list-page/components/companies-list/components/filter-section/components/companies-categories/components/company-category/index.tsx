@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 
 import { Button } from "~/common/components/index";
 import { ButtonVariant } from "~/common/enums/index";
@@ -9,18 +9,17 @@ import styles from "./styles.module.scss";
 
 type Properties = {
 	category: Category;
+	isSelected: boolean;
 	onSelectCategory: (categoryId: number) => void;
 };
 
 const CompanyCategory: React.FC<Properties> = ({
 	category,
+	isSelected,
 	onSelectCategory,
 }) => {
-	const [isSelected, setIsSelected] = useState(false);
-
 	const handleSelectCategory = useCallback(() => {
 		onSelectCategory(category.id);
-		setIsSelected((prevIsSelected) => !prevIsSelected);
 	}, [category.id, onSelectCategory]);
 
 	return (

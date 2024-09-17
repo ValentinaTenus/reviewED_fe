@@ -1,7 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import ShieldTick from "~/assets/images/shield-tick.svg?react";
 import { Rating } from "~/common/components";
+import { AppRoute } from "~/common/enums";
 import { Company } from "~/common/types/index";
 
 import styles from "./styles.module.scss";
@@ -12,7 +14,10 @@ type Properties = {
 
 const CompanyListCardDesktop: React.FC<Properties> = ({ company }) => {
 	return (
-		<div className={styles["company_list_card__container"]}>
+		<Link
+			className={styles["company_list_card__container"]}
+			to={`${AppRoute.COMPANY_DETAILS}${company.id}`}
+		>
 			<div className={styles["company_list_card__title"]}>
 				<img
 					alt={company.name}
@@ -41,7 +46,7 @@ const CompanyListCardDesktop: React.FC<Properties> = ({ company }) => {
 			<div className={styles["company_list_card__rating"]}>
 				<Rating averageRating={company.average_rating} />
 			</div>
-		</div>
+		</Link>
 	);
 };
 

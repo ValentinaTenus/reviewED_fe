@@ -18,3 +18,16 @@
   gap: 17px;
 }
 
+@media (max-width: 768px) {
+  .companies_categories__content {
+      flex-wrap: nowrap;
+      overflow-x: auto; 
+      scrollbar-width: none; 
+      -ms-overflow-style: none; 
+      padding-bottom: 16px; 
+    }
+    
+    .companies_categories__content::-webkit-scrollbar {
+      display: none; 
+    }
+}

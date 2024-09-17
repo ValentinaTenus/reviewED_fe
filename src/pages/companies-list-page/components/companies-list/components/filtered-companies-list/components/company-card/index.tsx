@@ -1,9 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import DefaultCompanyImage from "~/assets/images/default-company-image.png";
 import ShieldTick from "~/assets/images/shield-tick.svg?react";
 import { Rating } from "~/common/components/index";
 import { ScreenBreakpoints } from "~/common/constants/index";
+import { AppRoute } from "~/common/enums/index";
 import { Company } from "~/common/types/index";
 
 import styles from "./styles.module.scss";
@@ -16,7 +18,11 @@ const CompanyCard: React.FC<CompanyCardProperties> = ({ company }) => {
 	const screenWidth = window.innerWidth;
 
 	return (
-		<div className={styles["company_card__container"]} key={company.id}>
+		<Link
+			className={styles["company_card__container"]}
+			key={company.id}
+			to={`${AppRoute.COMPANY_DETAILS}${company.id}`}
+		>
 			<div className={styles["company_card__logo_container"]}>
 				<img
 					alt={company.name}
@@ -41,7 +47,7 @@ const CompanyCard: React.FC<CompanyCardProperties> = ({ company }) => {
 					<ShieldTick className={styles["company_card__reviews_icon"]} />
 				</div>
 			</div>
-		</div>
+		</Link>
 	);
 };
 
