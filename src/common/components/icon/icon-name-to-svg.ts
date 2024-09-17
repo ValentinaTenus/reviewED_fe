@@ -11,6 +11,7 @@ import Minus from "~/assets/images/minus.svg?react";
 import Plus from "~/assets/images/plus.svg?react";
 import SearchIcon from "~/assets/images/search-normal.svg?react";
 import Email from "~/assets/images/sms.svg?react";
+import SortIcon from "~/assets/images/sort.svg?react";
 import TableView from "~/assets/images/table-view.svg?react";
 import Xrp from "~/assets/images/xrp-(xrp).svg?react";
 import Youtube from "~/assets/images/youtube.svg?react";
@@ -31,6 +32,7 @@ const iconNameToSvg: Record<
 	phone: Phone,
 	plus: Plus,
 	search: SearchIcon,
+	sort: SortIcon,
 	tableView: TableView,
 	xrp: Xrp,
 	youtube: Youtube,

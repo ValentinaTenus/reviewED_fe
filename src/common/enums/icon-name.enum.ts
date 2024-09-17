@@ -10,6 +10,7 @@ enum IconName {
 	PHONE = "phone",
 	PLUS = "plus",
 	SEARCH = "search",
+	SORT = "sort",
 	TABLE_VIEW = "tableView",
 	XRP = "xrp",
 	YOUTUBE = "youtube",
