@@ -30,6 +30,7 @@ export const companiesApi = api.injectEndpoints({
 				return (
 					currentArg?.name !== previousArg?.name ||
 					currentArg?.sort !== previousArg?.sort ||
+					currentArg?.categories !== previousArg?.categories ||
 					currentArg?.city !== previousArg?.city
 				);
 			},
