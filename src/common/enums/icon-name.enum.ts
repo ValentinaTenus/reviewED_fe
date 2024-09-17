@@ -1,6 +1,7 @@
 enum IconName {
 	ARROW_DOWN = "arrowDown",
 	ARROW_RIGHT = "arrowRight",
+	ARROW_RIGHT_WIDE = "arrowRightWide",
 	ARROW_TOP = "arrowUp",
 	EMAIL = "email",
 	FACEBOOK = "facebook",
@@ -10,6 +11,7 @@ enum IconName {
 	PHONE = "phone",
 	PLUS = "plus",
 	SEARCH = "search",
+	SHIELD_TICK = "shieldTick",
 	SORT = "sort",
 	TABLE_VIEW = "tableView",
 	XRP = "xrp",
