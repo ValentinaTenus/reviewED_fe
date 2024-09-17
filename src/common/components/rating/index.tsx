@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React from "react";
 
 import HalfFilledStar from "~/assets/images/half-filled-star.svg?react";
@@ -11,14 +12,19 @@ const DECREMENT_RATING_NUMBER = 0.5;
 
 type RatingProperties = {
 	averageRating: number;
+	className?: string;
 	isOneStar?: boolean;
 };
 
-const Rating: React.FC<RatingProperties> = ({ averageRating, isOneStar }) => {
+const Rating: React.FC<RatingProperties> = ({
+	averageRating,
+	className,
+	isOneStar,
+}) => {
 	const totalStars = TOTAL_STARTS;
 
 	return (
-		<div className={styles["rating"]}>
+		<div className={clsx(styles["rating"], className)}>
 			{isOneStar && (
 				<span className={styles["star"]}>
 					<StarIcon />
@@ -29,15 +35,21 @@ const Rating: React.FC<RatingProperties> = ({ averageRating, isOneStar }) => {
 					const ratingValue = index + INCREMENT_RATING_NUMBER;
 
 					return (
-						<span className={styles["star"]} key={index}>
+						<>
 							{averageRating >= ratingValue ? (
-								<StarIcon />
+								<StarIcon className={styles["star"]} key={index} />
 							) : averageRating >= ratingValue - DECREMENT_RATING_NUMBER ? (
-								<HalfFilledStar className={styles["star_half_filled"]} />
+								<HalfFilledStar
+									className={clsx(styles["star_half_filled"], styles["star"])}
+									key={index}
+								/>
 							) : (
-								<StarIcon className={styles["star_empty"]} />
+								<StarIcon
+									className={clsx(styles["star_empty"], styles["star"])}
+									key={index}
+								/>
 							)}
-						</span>
+						</>
 					);
 				})}
 			<span className={styles["average_rating"]}>{`(${averageRating})`}</span>
