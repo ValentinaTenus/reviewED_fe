@@ -1,50 +1,37 @@
-# reviewED
+# Chats
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## ℹ️ General Info
 
-Currently, two official plugins are available:
+This is the repository responsible for Chats apps.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🏭 Applications
 
-## Expanding the ESLint configuration
+ _To work properly, fill in the **`.env`** file. Use the **`.env.example`** file as an example._
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+ ## 🖍 Requirements
 
-- Configure the top-level `parserOptions` property like this:
+-   [NodeJS](https://nodejs.org/en/) (18.x.x);
+-   [NPM](https://www.npmjs.com/) (9.x.x);
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## 🏃‍♂️ Simple Start
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+1. **`npm install`** at the root
+2. Fill ENVs
+3. **`npm run dev`**
+4. Enjoy ❤️
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### 🌕 Technology
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+-   [React](https://reactjs.org/) — a frontend library.
+-   [Redux](https://redux.js.org/) +  [RTKQuery] (https://redux-toolkit.js.org/) — a state manager.
+
+- react-router-dom - for routing
+- react-hook-form - for working with forms
+
+
+# before every commit run 
+ - `npm run format` - fix styles
+ - `npm run lint:fix` - and fix your warnings and errors
+
+ # in folder common are reusable components, types, hooks and etc. you can use in your part of code
+ # in folder redux are api and store. 
