@@ -3,6 +3,7 @@ enum AppRoute {
 	ALL_COURSES = "/all-courses",
 	COMPANY_DETAILS = "/company-details/",
 	COURSE_DETAILS = "/course-details/",
+	MODERATORS_PAGE = "/moderators-page",
 	NEW_COMPANIES = "/new-companies",
 	NEW_COURSES = "/new-courses",
 	PRIVACY_POLICY = "/privacy-policy",
