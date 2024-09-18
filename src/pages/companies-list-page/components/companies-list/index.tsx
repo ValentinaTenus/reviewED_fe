@@ -1,45 +1,38 @@
 import React, { useCallback, useEffect, useState } from "react";
 
-import { Pagination } from "~/common/components";
-import { Category } from "~/common/types";
+import { Category } from "~/common/types/index";
 import { useGetCategoriesQuery } from "~/redux/categories/categories-api";
 import { useGetCompaniesByFilterQuery } from "~/redux/companies/companies-api";
 
-import { FilteredCompaniesList, FilterSection } from "./components/index";
+import {
+	FilteredCompaniesList,
+	FilterSection,
+	ReviewsSection,
+} from "./components/index";
 import styles from "./styles.module.scss";
 
 const DEFAULT_SCREEN_WIDTH = 0;
 const ALL_CATEGORIES_ID = 0;
-const DEFAULT_PAGE_NUMBER = 0;
-const DEFAULT_COMPANIES_PER_PAGE = 10;
-const DEFAULT_CURRENT_PAGE = 1;
 
 const CompaniesContent: React.FC = () => {
 	const [searchTerm, setSearchTerm] = useState("");
 	const [sortBy, setSortBy] = useState<string>("");
 	const [selectedCategoryId, setSelectedCategoryId] =
 		useState<number>(ALL_CATEGORIES_ID);
-	const [currentPage, setCurrentPage] = useState(DEFAULT_CURRENT_PAGE);
-	const [companiesPerPage] = useState(DEFAULT_COMPANIES_PER_PAGE);
 
 	const { data: categories } = useGetCategoriesQuery(undefined);
-	const { data: getCompaniesResponse, refetch } = useGetCompaniesByFilterQuery(
+	const { data: getCompaniesResponse } = useGetCompaniesByFilterQuery(
 		{
 			category_by_id:
 				selectedCategoryId === ALL_CATEGORIES_ID
 					? undefined
 					: selectedCategoryId,
 			name: searchTerm,
-			page: currentPage,
 			sort: sortBy,
 		},
 		{
 			refetchOnMountOrArgChange: true,
 		},
-	);
-
-	const howManyPages = Math.ceil(
-		(getCompaniesResponse?.count || DEFAULT_PAGE_NUMBER) / companiesPerPage,
 	);
 
 	const allCategories: Category[] = categories
@@ -66,10 +59,6 @@ const CompaniesContent: React.FC = () => {
 	};
 
 	useEffect(() => {
-		refetch();
-	}, [currentPage, refetch]);
-
-	useEffect(() => {
 		updateScreenWidth();
 		window.addEventListener("resize", updateScreenWidth);
 
@@ -94,7 +83,8 @@ const CompaniesContent: React.FC = () => {
 					onChangeSortBy={handleChangeSortBy}
 				/>
 			)}
-			<Pagination pages={howManyPages} setCurrentPage={setCurrentPage} />
+
+			<ReviewsSection screenWidth={screenWidth} />
 		</div>
 	);
 };

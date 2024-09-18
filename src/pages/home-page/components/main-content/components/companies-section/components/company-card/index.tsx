@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { Rating } from "~/common/components/index";
-import { AppRoute } from "~/common/enums";
+import { StarRating } from "~/common/components/index";
+import { AppRoute, RatingSize, StarRatingVariant } from "~/common/enums/index";
 import { Company } from "~/common/types/index";
 
 import styles from "./styles.module.scss";
@@ -19,8 +19,14 @@ const CompanyCard: React.FC<CompanyCardProperties> = ({ company }) => {
 			to={`${AppRoute.COMPANY_DETAILS}${company.id}`}
 		>
 			<div className={styles["item_rating_container"]}>
-				<p className={styles["reviews_amount"]}>56 відгуків</p>
-				<Rating averageRating={company.average_rating} />
+				<p className={styles["reviews_amount"]}>
+					{company.total_reviews_count} відгуків
+				</p>
+				<StarRating
+					averageRating={company.avg_overall_rating}
+					size={RatingSize.SMALL}
+					variant={StarRatingVariant.SMALL_CARD}
+				/>
 			</div>
 			<div className={styles["item_logo_container"]}>
 				<img

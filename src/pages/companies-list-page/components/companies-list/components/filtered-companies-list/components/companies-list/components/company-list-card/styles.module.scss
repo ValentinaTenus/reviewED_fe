@@ -72,6 +72,7 @@
 }
 
 .company_list_card__reviews_details {
+  align-items: center;
   display: flex;
   gap: 16px;
 }
@@ -82,20 +83,25 @@
   width: 24px;
 }
 
-.company_list_card__detail_rating {
-  gap: 4px;
-}
 
-.company_list_card__detail_rating svg {
-  height: 24px;
-  width: 24px;
-}
+@media (max-width: 768px) {
+  .company_list_card__container 
+  .company_list_card__rating_stars svg{
+    height: 18px;
+    width: 18px;
+  }
 
-.company_list_card__detail_rating svg:last-child {
-  padding-right: 4px;
-}
+  .company_list_card__logo_container {
+    width: 100%;
+  }
 
-.company_list_card__detail_rating .average_rating {
-  font-size: var(--font-size-main-text);
-  padding-left: 4px;
+  .company_list_card__name {
+    -webkit-line-clamp: 2; 
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 193px;
+  }
 }
