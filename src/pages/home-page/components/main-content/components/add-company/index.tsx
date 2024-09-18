@@ -31,7 +31,7 @@ const AddCompanySection: React.FC = () => {
 				<form className={styles["add_company_form"]}>
 					<div className={styles["form_inputs"]}>
 						<Input
-							className={styles["input"]}
+							className={styles["form_input"]}
 							control={control}
 							errors={errors}
 							label="Назва компанії"

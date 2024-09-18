@@ -22,6 +22,12 @@
   font-weight: var(--font-weight-semi-bold);
 }
 
+.footer_content__contact_link{
+  &:hover {
+    text-decoration: underline; 
+  }
+}
+
 @media (max-width: 768px) {
   .footer_content__contact_link {
     font-size: var( --font-size-title-h5);

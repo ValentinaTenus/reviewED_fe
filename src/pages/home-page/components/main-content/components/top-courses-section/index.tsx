@@ -30,7 +30,7 @@ const TopCoursesSection: React.FC<TopCoursesSectionProperties> = ({
 	return (
 		<ItemsContainer>
 			<ItemsHeader
-				header="TOP Курси"
+				header="TOП Курси"
 				onClick={handleSeeAllClick}
 				screenWidth={screenWidth}
 			/>

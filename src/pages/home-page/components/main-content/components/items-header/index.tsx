@@ -28,7 +28,7 @@ const ItemsHeader: React.FC<ItemsHeaderProperties> = ({
 				onClick={onClick}
 				variant={ButtonVariant.OUTLINED}
 			>
-				{screenWidth > ScreenBreakpoints.TABLET ? "Дивитися всі" : ""}
+				{screenWidth > ScreenBreakpoints.TABLET ? "Дивитись всі" : ""}
 			</Button>
 		</div>
 	);
