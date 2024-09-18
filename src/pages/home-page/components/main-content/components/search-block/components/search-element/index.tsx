@@ -69,7 +69,7 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 			},
 		);
 
-	const { data: filteredCompanies, refetch: refetchCompanies } =
+	const { data: getCompaniesResponse, refetch: refetchCompanies } =
 		useGetCompaniesByFilterQuery(
 			{
 				city: selectedLocation,
@@ -109,16 +109,16 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 
 				if (
 					selectedCategory === categories[INDEX_COMPANIES].value &&
-					filteredCompanies
+					getCompaniesResponse?.results
 				) {
 					const mappedCompanies = getDropdownOptionsFormat({
-						companies: filteredCompanies,
+						companies: getCompaniesResponse.results,
 					});
 					setFilteredSuggestions(mappedCompanies);
 				}
 			}
 		},
-		[filteredCompanies, filteredCourses, selectedCategory],
+		[getCompaniesResponse?.results, filteredCourses, selectedCategory],
 	);
 
 	const handleSelectCategory = useCallback((value: number | string) => {
@@ -141,7 +141,7 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 		try {
 			if (selectedCategory === categories[INDEX_COMPANIES].value) {
 				const result = await refetchCompanies().unwrap();
-				onSearch(result);
+				onSearch(result.results);
 			} else {
 				const result = await refetchCourses().unwrap();
 				onSearch(result);
