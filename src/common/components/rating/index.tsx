@@ -35,7 +35,7 @@ const Rating: React.FC<RatingProperties> = ({
 					const ratingValue = index + INCREMENT_RATING_NUMBER;
 
 					return (
-						<>
+						<div key={index}>
 							{averageRating >= ratingValue ? (
 								<StarIcon className={styles["star"]} key={index} />
 							) : averageRating >= ratingValue - DECREMENT_RATING_NUMBER ? (
@@ -49,7 +49,7 @@ const Rating: React.FC<RatingProperties> = ({
 									key={index}
 								/>
 							)}
-						</>
+						</div>
 					);
 				})}
 			<span className={styles["average_rating"]}>{`(${averageRating})`}</span>

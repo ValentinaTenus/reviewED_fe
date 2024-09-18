@@ -33,7 +33,7 @@ const Pagination: React.FC<PaginationProperties> = ({
 	const [arrOfCurrButtons, setArrOfCurrButtons] = useState<(number | string)[]>(
 		[],
 	);
-
+console.log(pages, 'pages')
 	const numberOfPages = useMemo(() => {
 		return Array.from({ length: pages }, (_, i) => i + INDEX_ONE);
 	}, [pages]);
@@ -98,7 +98,7 @@ const Pagination: React.FC<PaginationProperties> = ({
 
 		setArrOfCurrButtons(tempNumberOfPages);
 		setCurrentPage(+currentButton);
-	}, [currentButton, numberOfPages, arrOfCurrButtons, setCurrentPage]);
+	}, [currentButton, numberOfPages, setCurrentPage]);
 
 	return (
 		<nav
