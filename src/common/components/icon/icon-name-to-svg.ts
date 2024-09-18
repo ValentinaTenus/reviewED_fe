@@ -1,5 +1,7 @@
 import React from "react";
 
+import ArrowLeftLong from "~/assets/images/arrow_left_long_light.svg?react";
+import ArrowRightLong from "~/assets/images/arrow_right_long_light.svg?react";
 import ArrowDown from "~/assets/images/arrow-down.svg?react";
 import ArrowRight from "~/assets/images/arrow-right.svg?react";
 import ArrowRightWide from "~/assets/images/arrow-right-2.svg?react";
@@ -24,7 +26,9 @@ const iconNameToSvg: Record<
 	React.FC<React.SVGProps<SVGSVGElement>>
 > = {
 	arrowDown: ArrowDown,
+	arrowLeftLong: ArrowLeftLong,
 	arrowRight: ArrowRight,
+	arrowRightLong: ArrowRightLong,
 	arrowRightWide: ArrowRightWide,
 	arrowUp: ArrowUp,
 	email: Email,
