@@ -17,8 +17,13 @@
   padding: 12px 20px 0 20px;
 }
 
-.user_menu__list li{
+.user_menu__list_item {
+  cursor: pointer;
   padding: 8px 10px;
+}
+
+.user_menu__list_item:hover {
+  background-color: var(--color-grey-100);
 }
 
 .user_menu__button {

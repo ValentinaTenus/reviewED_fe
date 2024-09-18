@@ -12,8 +12,8 @@ const BurgerMenu: React.FC = () => {
 			<div className={styles["user_menu"]}>
 				<Search />
 				<ul className={styles["user_menu__list"]}>
-					<li>Курси</li>
-					<li>Компанії</li>
+					<li className={styles["user_menu__list_item"]}>Курси</li>
+					<li className={styles["user_menu__list_item"]}>Компанії</li>
 				</ul>
 			</div>
 			<div className={styles["user_menu__button"]}>

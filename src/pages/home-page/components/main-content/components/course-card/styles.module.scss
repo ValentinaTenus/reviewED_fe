@@ -38,6 +38,7 @@
 }
 
 .item_name {
+  align-self: flex-start;
   display: -webkit-box;
   font-family: var(--font-family-main);
   font-size: var(--font-size-title-h4);

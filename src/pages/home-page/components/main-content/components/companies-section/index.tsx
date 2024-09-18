@@ -30,7 +30,7 @@ const CompaniesSection: React.FC<CompaniesSectionProperties> = ({
 	return (
 		<ItemsContainer>
 			<ItemsHeader
-				header="TOP Компанії"
+				header="TOП Компанії"
 				onClick={handleSeeAllClick}
 				screenWidth={screenWidth}
 			/>
