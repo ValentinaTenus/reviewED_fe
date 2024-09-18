@@ -13,7 +13,7 @@ import styles from "./styles.module.scss";
 const Header: React.FC = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-	const user = false;
+	const user = true;
 
 	const handleToggleMenu = useCallback(() => {
 		setIsMenuOpen(!isMenuOpen);
@@ -43,7 +43,7 @@ const Header: React.FC = () => {
 								className={styles["menu__button"]}
 								onClick={handleToggleMenu}
 							>
-								<MenuIcon />
+								<MenuIcon className={styles["menu__button_icon"]} />
 							</IconButton>
 							{isMenuOpen && <BurgerMenu />}
 						</>
@@ -51,15 +51,15 @@ const Header: React.FC = () => {
 					{user && (
 						<div className={styles["user__button"]}>
 							<IconButton onClick={handleToggleMenu}>
-								<UserIcon />
+								<UserIcon className={styles["user__button_icon"]} />
 							</IconButton>
 							{isMenuOpen && (
 								<div className={styles["user_menu"]}>
 									<ul className={styles["user_menu_list"]}>
-										<li>
+										<li className={styles["user_menu_list_item"]}>
 											<a href="#">Ваші відгуки</a>
 										</li>
-										<li>
+										<li className={styles["user_menu_list_item"]}>
 											<a href="#">
 												<LogOutIcon />
 												Вийти
