@@ -27,7 +27,7 @@ type FilterSectionProperties = {
 	onChangeSortBy: (sortBy: number | string) => void;
 	onChooseCategory: (categoryId: number) => void;
 	screenWidth: number;
-	selectedCategoriesIds: number[];
+	selectedCategoryId: number;
 };
 
 const FilterSection: React.FC<FilterSectionProperties> = ({
@@ -36,7 +36,7 @@ const FilterSection: React.FC<FilterSectionProperties> = ({
 	onChangeSortBy,
 	onChooseCategory,
 	screenWidth,
-	selectedCategoriesIds,
+	selectedCategoryId,
 }) => {
 	return (
 		<div className={styles["companies_filter__container"]}>
@@ -61,7 +61,7 @@ const FilterSection: React.FC<FilterSectionProperties> = ({
 					<CompaniesCategories
 						categories={categories}
 						onSelectCategory={onChooseCategory}
-						selectedCategoriesIds={selectedCategoriesIds}
+						selectedCategoryId={selectedCategoryId}
 					/>
 				</div>
 			</div>

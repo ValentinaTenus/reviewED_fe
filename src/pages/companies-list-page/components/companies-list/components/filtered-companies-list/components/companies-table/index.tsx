@@ -12,8 +12,8 @@ type CompaniesTableProperties = {
 const CompaniesTable: React.FC<CompaniesTableProperties> = ({ companies }) => {
 	return (
 		<div className={styles["filtered_companies__search_result"]}>
-			{companies.map((company) => (
-				<CompanyCard company={company} key={company.id} />
+			{companies.map((company, index) => (
+				<CompanyCard company={company} key={index} />
 			))}
 		</div>
 	);

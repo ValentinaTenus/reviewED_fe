@@ -1,5 +1,5 @@
 type GetCompaniesRequestQuery = {
-	categories?: number[];
+	category_by_id?: number;
 	city?: string;
 	name?: string;
 	sort?: string;

@@ -8,13 +8,13 @@ import styles from "./styles.module.scss";
 type Properties = {
 	categories: Category[];
 	onSelectCategory: (categoryId: number) => void;
-	selectedCategoriesIds: number[];
+	selectedCategoryId: number;
 };
 
 const CompaniesCategories: React.FC<Properties> = ({
 	categories,
 	onSelectCategory,
-	selectedCategoriesIds,
+	selectedCategoryId,
 }) => {
 	return (
 		<div className={styles["companies_categories__container"]}>
@@ -23,7 +23,7 @@ const CompaniesCategories: React.FC<Properties> = ({
 				{categories.map((category) => (
 					<CompanyCategory
 						category={category}
-						isSelected={selectedCategoriesIds.includes(category.id)}
+						isSelected={selectedCategoryId === category.id}
 						key={category.id}
 						onSelectCategory={onSelectCategory}
 					/>
