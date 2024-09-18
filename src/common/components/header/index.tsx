@@ -13,7 +13,7 @@ import styles from "./styles.module.scss";
 const Header: React.FC = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-	const user = true;
+	const user = false;
 
 	const handleToggleMenu = useCallback(() => {
 		setIsMenuOpen(!isMenuOpen);
