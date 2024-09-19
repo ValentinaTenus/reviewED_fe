@@ -50,7 +50,7 @@
   overflow: hidden;
   padding: 8px 0;
   position: absolute;
-  top: 100%;
+  top: calc(100% + 2px);
   z-index: 10; 
   width: 100%;
 }
