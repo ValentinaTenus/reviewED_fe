@@ -13,3 +13,4 @@ export { SortDropdown } from "./sort-dropdown/index";
 export { Spinner } from "./spinner/index";
 export { StarRating } from "./star-rating/index";
 export { ViewTabs } from "./view-tabs/index";
+export { ToggleGroupButtons } from "./toggle-group-buttons/index";

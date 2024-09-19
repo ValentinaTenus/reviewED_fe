@@ -137,3 +137,11 @@
   padding: 12px;
   width: 48px;
 }
+
+.group__buttons {
+	color: var(--color-grey-500);
+	font-weight: var(--font-weight-bold);
+	font-family: var(--font-family-main);
+	font-size: var(--font-size-h5);
+  transition: background-color 0.3s;
+}
