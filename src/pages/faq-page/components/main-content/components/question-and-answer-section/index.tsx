@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { ToggleGroupButtons } from "~/common/components/toggle-group-buttons";
+import { ToggleGroupButtons } from "~/common/components";
 import {
 	dropdownData,
 	DropdownKey,
