@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+import { ToggleGroupButtons } from "~/common/components/toggle-group-buttons";
 import {
 	dropdownData,
 	DropdownKey,
@@ -9,7 +10,6 @@ import {
 
 import { QuestionAndAnswerItem } from "./components/question-and-answer-item/index";
 import styles from "./styles.module.scss";
-import { ToggleGroupButtons } from "~/common/components/toggle-group-buttons";
 
 const QuestionAndAnswer = () => {
 	const [activeButtonValue, setActiveButtonValue] = useState<DropdownKey>(
