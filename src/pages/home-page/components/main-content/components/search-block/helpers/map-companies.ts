@@ -7,7 +7,7 @@ const mapCompanies = (companies: Company[]) => {
 	const sortedCompanies = [...companies]
 		.sort(
 			(company1, company2) =>
-				+company2.average_rating - +company1.average_rating,
+				+company2.avg_overall_rating - +company1.avg_overall_rating,
 		)
 		.map((company) => ({
 			label: company.name,
@@ -18,8 +18,9 @@ const mapCompanies = (companies: Company[]) => {
 	const otherCompanies = sortedCompanies.slice(NUMBER_TOP_COMPANIES);
 
 	const options: DropdownOption[] = [
-		{ label: "Топ компанії", options: topCompanies, value: 1 },
-		{ label: "Інші компанії", options: otherCompanies, value: 2 },
+		{ label: "Всі компанії", value: "" },
+		{ label: "Топ компанії", options: topCompanies, value: "" },
+		{ label: "Інші компанії", options: otherCompanies, value: "" },
 	];
 
 	return options;

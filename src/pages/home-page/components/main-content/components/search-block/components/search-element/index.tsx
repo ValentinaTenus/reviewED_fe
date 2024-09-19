@@ -1,9 +1,10 @@
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { Button, Dropdown, SearchInput } from "~/common/components/index";
-import { CITIES } from "~/common/constants/index";
 import {
+	AppRoute,
 	ButtonSize,
 	ButtonType,
 	ButtonVariant,
@@ -11,13 +12,22 @@ import {
 } from "~/common/enums/index";
 import { useAppForm } from "~/common/hooks/index";
 import { Company, Course, DropdownOption } from "~/common/types/index";
+import { useGetCategoriesQuery } from "~/redux/categories/categories-api";
 import { useGetCompaniesByFilterQuery } from "~/redux/companies/companies-api";
+import { setCompanies } from "~/redux/companies/companies-slice";
 import { useGetCoursesByFilterQuery } from "~/redux/courses/courses-api";
+import { setCourses } from "~/redux/courses/courses-slice";
+import { useAppDispatch } from "~/redux/hooks.type";
+import {
+	useGetCompaniesLocationsQuery,
+	useGetCoursesLocationsQuery,
+} from "~/redux/locations/locations-api";
 
 import {
 	getDropdownOptionsFormat,
 	mapCompanies,
-	mapCourses,
+	mapCoursesCategories,
+	mapLocations,
 } from "../../helpers/index";
 import styles from "./styles.module.scss";
 
@@ -37,15 +47,16 @@ const INDEX_COMPANIES = 1;
 
 type SearchElementProperties = {
 	companies: Company[];
-	courses: Course[];
 	onSearch: (searchResult: Company[] | Course[]) => void;
 };
 
 const SearchElement: React.FC<SearchElementProperties> = ({
 	companies,
-	courses,
 	onSearch,
 }) => {
+	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
+
 	const [searchTerm, setSearchTerm] = useState("");
 	const [filteredSuggestions, setFilteredSuggestions] = useState<
 		DropdownOption[]
@@ -54,17 +65,34 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 		categories[INDEX_COMPANIES].value,
 	);
 	const [selectedLocation, setSelectedLocation] = useState<string>("");
-	const [selectedFromAll, setSelectedFromAll] = useState<string>("");
+	const [selectedCompanyFromAll, setSelectedCompanyFromAll] =
+		useState<string>("");
+	const [selectedCourseCategory, setSelectedCourseCategory] = useState<
+		null | string
+	>(null);
+	const [selectedCourseSubCategory, setSelectedCourseSubCategory] = useState<
+		null | string
+	>(null);
+
+	const [coursesDropdownLocations, setCoursesDropdownLocations] = useState<
+		DropdownOption[]
+	>([]);
+	const [companiesDropdownLocations, setCompaniesDropdownLocations] = useState<
+		DropdownOption[]
+	>([]);
+
 	const [serverError, setServerError] = useState("");
 
 	const { data: filteredCourses, refetch: refetchCourses } =
 		useGetCoursesByFilterQuery(
 			{
+				category_by_id: selectedCourseCategory || "",
 				city: selectedLocation,
-				title: selectedFromAll ? selectedFromAll : searchTerm,
+				subcategory_by_id: selectedCourseSubCategory || "",
+				title: selectedCompanyFromAll ? selectedCompanyFromAll : searchTerm,
 			},
 			{
-				refetchOnMountOrArgChange: true,
+				refetchOnMountOrArgChange: false,
 				skip: selectedCategory !== categories[INDEX_COURSES].value,
 			},
 		);
@@ -73,16 +101,34 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 		useGetCompaniesByFilterQuery(
 			{
 				city: selectedLocation,
-				name: selectedFromAll ? selectedFromAll : searchTerm,
+				name: selectedCompanyFromAll ? selectedCompanyFromAll : searchTerm,
 			},
 			{
-				refetchOnMountOrArgChange: true,
+				refetchOnMountOrArgChange: false,
 				skip: selectedCategory !== categories[INDEX_COMPANIES].value,
 			},
 		);
 
-	const coursesOptions = mapCourses(courses);
+	const { data: coursesLocations } = useGetCoursesLocationsQuery(undefined);
+	const { data: companiesLocations } = useGetCompaniesLocationsQuery(undefined);
+	const { data: fetchedCategories } = useGetCategoriesQuery(undefined);
+
+	const coursesCategoriesOptions = mapCoursesCategories(
+		fetchedCategories || [],
+	);
 	const companiesOptions = mapCompanies(companies);
+
+	useEffect(() => {
+		if (coursesLocations) {
+			const coursesLocationOptions = mapLocations(coursesLocations);
+			setCoursesDropdownLocations(coursesLocationOptions);
+		}
+
+		if (companiesLocations) {
+			const companiesLocationOptions = mapLocations(companiesLocations);
+			setCompaniesDropdownLocations(companiesLocationOptions);
+		}
+	}, [coursesLocations, companiesLocations]);
 
 	const { control, errors, handleSubmit } = useAppForm({
 		defaultValues: {
@@ -121,17 +167,39 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 		[getCompaniesResponse?.results, filteredCourses, selectedCategory],
 	);
 
-	const handleSelectCategory = useCallback((value: number | string) => {
-		setSelectedCategory(value.toString());
-	}, []);
+	const handleSelectCategory = useCallback(
+		({ value }: { value: number | string }) => {
+			setSelectedCategory(value.toString());
+		},
+		[],
+	);
 
-	const handleSelectLocation = useCallback((value: number | string) => {
-		setSelectedLocation(value.toString());
-	}, []);
+	const handleSelectLocation = useCallback(
+		({ value }: { value: number | string }) => {
+			setSelectedLocation(value.toString());
+		},
+		[],
+	);
 
-	const handleSelectedFromAll = useCallback((value: number | string) => {
-		setSelectedFromAll(value.toString());
-	}, []);
+	const handleSelectedCompanyFromAll = useCallback(
+		({ value }: { value: number | string }) => {
+			setSelectedCompanyFromAll(value.toString());
+		},
+		[],
+	);
+
+	const handleSelectedCoursesCategory = useCallback(
+		({ isTitle, value }: { isTitle: boolean; value: number | string }) => {
+			if (isTitle) {
+				setSelectedCourseSubCategory(null);
+				setSelectedCourseCategory(value.toString());
+			} else {
+				setSelectedCourseCategory(null);
+				setSelectedCourseSubCategory(value.toString());
+			}
+		},
+		[],
+	);
 
 	const handleSuggestionClick = useCallback((suggestion: number | string) => {
 		setSearchTerm(suggestion.toString());
@@ -142,9 +210,11 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 			if (selectedCategory === categories[INDEX_COMPANIES].value) {
 				const result = await refetchCompanies().unwrap();
 				onSearch(result.results);
+				void dispatch(setCompanies(result.results));
 			} else {
 				const result = await refetchCourses().unwrap();
 				onSearch(result);
+				void dispatch(setCourses(result));
 			}
 		} catch (error) {
 			const loadError = (error as FetchBaseQueryError).data
@@ -152,14 +222,20 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 				: { message: "Невідома помилка" };
 			setServerError(loadError.message);
 		}
-	}, [onSearch, selectedCategory, refetchCompanies, refetchCourses]);
+	}, [dispatch, onSearch, selectedCategory, refetchCompanies, refetchCourses]);
 
 	const handleFormSubmit = useCallback(
-		(event_: React.BaseSyntheticEvent): void => {
+		async (event_: React.BaseSyntheticEvent): Promise<void> => {
 			event_.preventDefault();
-			void handleSubmit(handleFormChange)(event_);
+			await handleSubmit(handleFormChange)(event_);
+
+			if (selectedCategory === categories[INDEX_COMPANIES].value) {
+				navigate(AppRoute.ALL_COMPANIES);
+			} else {
+				navigate(AppRoute.ALL_COURSES);
+			}
 		},
-		[handleFormChange, handleSubmit],
+		[handleFormChange, handleSubmit, navigate, selectedCategory],
 	);
 
 	return (
@@ -193,30 +269,54 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 						<div className={styles["search_dropdown_wrapper"]}>
 							<Dropdown
 								className={styles["search_dropdown"]}
-								label="Всі Локації"
+								label="Всі локації"
 								name="allLocations"
 								onChange={handleSelectLocation}
-								options={CITIES}
+								options={
+									selectedCategory === categories[INDEX_COURSES].value
+										? coursesDropdownLocations
+										: companiesDropdownLocations
+								}
 								placeholder="Всі Локації"
 							/>
 						</div>
 						<div className={styles["search_dropdown_wrapper"]}>
-							<Dropdown
-								className={styles["search_dropdown"]}
-								label="Всі компанії"
-								name="allCompanies"
-								onChange={handleSelectedFromAll}
-								options={
-									selectedCategory === categories[INDEX_COMPANIES].value
-										? companiesOptions
-										: coursesOptions
-								}
-								placeholder={
-									selectedCategory === categories[INDEX_COURSES].value
-										? "Всі курси"
-										: "Всі компанії"
-								}
-							/>
+							{selectedCategory === categories[INDEX_COURSES].value ? (
+								<Dropdown
+									className={styles["search_dropdown"]}
+									label={
+										selectedCategory === categories[INDEX_COURSES].value
+											? "Всі курси"
+											: "Всі компанії"
+									}
+									name="allCourses"
+									onChange={handleSelectedCoursesCategory}
+									options={coursesCategoriesOptions}
+									placeholder={
+										selectedCategory === categories[INDEX_COURSES].value
+											? "Всі курси"
+											: "Всі компанії"
+									}
+								/>
+							) : (
+								<Dropdown
+									className={styles["search_dropdown"]}
+									isTitleClickable={false}
+									label={
+										selectedCategory === categories[INDEX_COURSES].value
+											? "Всі курси"
+											: "Всі компанії"
+									}
+									name="allCompanies"
+									onChange={handleSelectedCompanyFromAll}
+									options={companiesOptions}
+									placeholder={
+										selectedCategory === categories[INDEX_COURSES].value
+											? "Всі курси"
+											: "Всі компанії"
+									}
+								/>
+							)}
 						</div>
 					</div>
 					<div className={styles["search_button_wrapper"]}>
