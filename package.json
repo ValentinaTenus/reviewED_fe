@@ -9,6 +9,7 @@
     "lint": "eslint . --max-warnings 0",
     "lint:fix": "eslint . --max-warnings 0 --fix",
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "prepare": "husky",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -48,9 +49,32 @@
     "eslint-plugin-react-refresh": "^0.4.9",
     "eslint-plugin-typesafe": "^0.5.2",
     "globals": "^15.9.0",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
     "sass-embedded": "^1.78.0",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
     "vite": "^5.4.1"
-  }
+  },
+ "husky": {
+		"hooks": {
+			"pre-commit": "lint-staged"
+		}
+	},
+	"lint-staged": {
+		"*.js": [
+			"npm run lint:fix",
+			"git add ."
+		],
+		"*.ts": [
+			"eslint --fix",
+			"prettier --write",
+			"git add"
+		],
+		"*.tsx": [
+			"eslint --fix",
+			"prettier --write",
+			"git add"
+		]
+	}
 }

@@ -69,7 +69,7 @@ const MainContent: React.FC = () => {
 		<div className={styles["main_content_wrapper"]}>
 			<div className={styles["main_content"]}>
 				<BanerBlock />
-				<SearchBlock companies={companies || []} courses={courses || []} />
+				<SearchBlock companies={companies || []} />
 				<CompaniesSection
 					companies={companies ? companies.slice(INDEX_ZERO, visibleItems) : []}
 					screenWidth={screenWidth}

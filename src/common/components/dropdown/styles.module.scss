@@ -29,6 +29,15 @@
   cursor: not-allowed;
 }
 
+.dropdown_trigger_text {
+  -webkit-line-clamp: 1; 
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  line-clamp: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .dropdown_menu {
   background-color: var(--color-white); 
   border: 1px solid var(--color-grey-300); 
@@ -56,6 +65,7 @@
   font-family: var(--font-family-main);
   font-size: var(--font-size-title-h4);
 }
+
 
 .dropdown_item {
   align-items: center;
