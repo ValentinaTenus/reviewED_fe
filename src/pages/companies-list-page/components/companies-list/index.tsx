@@ -30,8 +30,7 @@ const CompaniesContent: React.FC = () => {
 	const { companies: companiesInState } = useAppSelector(
 		(state) => state.companies,
 	);
-	const { data: categories, isLoading: isCategoriesLoading } =
-		useGetCategoriesQuery(undefined);
+	const { data: categories } = useGetCategoriesQuery(undefined);
 	const {
 		data: companiesFromApi,
 		isLoading: isCompaniesLoading,
@@ -63,22 +62,31 @@ const CompaniesContent: React.FC = () => {
 			setCompanies(result.data?.results);
 			void dispatch(removeCompanies());
 		}
-	}, [refetchCompanies]);
+	}, [dispatch, refetchCompanies]);
 
-	const handleChangeSearchTerm = useCallback((newSearchTerm: string) => {
-		setSearchTerm(newSearchTerm);
-		getCompanies();
-	}, [getCompanies]);
+	const handleChangeSearchTerm = useCallback(
+		(newSearchTerm: string) => {
+			setSearchTerm(newSearchTerm);
+			getCompanies();
+		},
+		[getCompanies],
+	);
 
-	const handleChangeSortBy = useCallback((newSortBy: number | string) => {
-		setSortBy(newSortBy.toString());
-		getCompanies();
-	}, [getCompanies]);
+	const handleChangeSortBy = useCallback(
+		(newSortBy: number | string) => {
+			setSortBy(newSortBy.toString());
+			getCompanies();
+		},
+		[getCompanies],
+	);
 
-	const handleChooseCategory = useCallback((chosenCategoryId: number) => {
-		setSelectedCategoryId(chosenCategoryId);
-		getCompanies();
-	}, [getCompanies]);
+	const handleChooseCategory = useCallback(
+		(chosenCategoryId: number) => {
+			setSelectedCategoryId(chosenCategoryId);
+			getCompanies();
+		},
+		[getCompanies],
+	);
 
 	const updateScreenWidth = () => {
 		const screenWidth = window.innerWidth;
@@ -101,7 +109,7 @@ const CompaniesContent: React.FC = () => {
 			setCompanies(companiesFromApi.results);
 			void dispatch(removeCompanies());
 		}
-	}, [companiesFromApi, companiesInState]);
+	}, [companiesFromApi, companiesInState, dispatch]);
 
 	useEffect(() => {
 		updateScreenWidth();

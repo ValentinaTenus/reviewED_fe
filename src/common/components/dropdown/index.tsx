@@ -92,7 +92,10 @@ const Dropdown: React.FC<Properties> = ({
 				})}
 				onClick={handleToggleDropdown}
 			>
-				<span className={styles['dropdown_trigger_text']} > {selectedOption ? selectedOption.label : placeholder}</span>
+				<span className={styles["dropdown_trigger_text"]}>
+					{" "}
+					{selectedOption ? selectedOption.label : placeholder}
+				</span>
 			</div>
 			{isOpen && !isDisabled && (
 				<div className={styles["dropdown_menu"]}>
