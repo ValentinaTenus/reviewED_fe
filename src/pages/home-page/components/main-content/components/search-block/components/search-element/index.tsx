@@ -44,6 +44,7 @@ const categories = [
 
 const INDEX_COURSES = 0;
 const INDEX_COMPANIES = 1;
+const ZERO_INDEX = 0;
 
 type SearchElementProperties = {
 	companies: Company[];
@@ -208,13 +209,21 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 	const handleFormChange = useCallback(async (): Promise<void> => {
 		try {
 			if (selectedCategory === categories[INDEX_COMPANIES].value) {
-				const result = await refetchCompanies().unwrap();
-				onSearch(result.results);
-				void dispatch(setCompanies(result.results));
+				const { results } = await refetchCompanies().unwrap();
+				onSearch(results);
+				void dispatch(setCompanies(results));
+
+				if (results.length > ZERO_INDEX) {
+					navigate(AppRoute.ALL_COMPANIES);
+				}
 			} else {
 				const result = await refetchCourses().unwrap();
 				onSearch(result);
 				void dispatch(setCourses(result));
+
+				if (result.length > ZERO_INDEX) {
+					navigate(AppRoute.ALL_COURSES);
+				}
 			}
 		} catch (error) {
 			const loadError = (error as FetchBaseQueryError).data
@@ -222,20 +231,21 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 				: { message: "Невідома помилка" };
 			setServerError(loadError.message);
 		}
-	}, [dispatch, onSearch, selectedCategory, refetchCompanies, refetchCourses]);
+	}, [
+		dispatch,
+		onSearch,
+		navigate,
+		selectedCategory,
+		refetchCompanies,
+		refetchCourses,
+	]);
 
 	const handleFormSubmit = useCallback(
 		async (event_: React.BaseSyntheticEvent): Promise<void> => {
 			event_.preventDefault();
 			await handleSubmit(handleFormChange)(event_);
-
-			if (selectedCategory === categories[INDEX_COMPANIES].value) {
-				navigate(AppRoute.ALL_COMPANIES);
-			} else {
-				navigate(AppRoute.ALL_COURSES);
-			}
 		},
-		[handleFormChange, handleSubmit, navigate, selectedCategory],
+		[handleFormChange, handleSubmit],
 	);
 
 	return (
