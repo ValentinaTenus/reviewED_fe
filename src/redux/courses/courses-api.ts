@@ -35,6 +35,8 @@ export const coursesApi = api.injectEndpoints({
 			forceRefetch({ currentArg, previousArg }) {
 				return (
 					currentArg?.title !== previousArg?.title ||
+					currentArg?.category_by_id !== previousArg?.category_by_id ||
+					currentArg?.subcategory_by_id !== previousArg?.subcategory_by_id ||
 					currentArg?.city !== previousArg?.city
 				);
 			},
