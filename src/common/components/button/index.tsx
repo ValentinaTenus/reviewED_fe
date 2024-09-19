@@ -18,6 +18,7 @@ const variants: Record<ButtonVariant, string> = {
 	share_facebook: styles.button__share_facebook,
 	share_linkedin: styles.button__share_linkedin,
 	share_twitter: styles.button__share_twitter,
+	group_buttons: styles.group__buttons
 };
 
 const sizes: Record<ButtonSize, string> = {

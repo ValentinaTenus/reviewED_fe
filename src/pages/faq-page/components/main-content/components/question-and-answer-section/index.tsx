@@ -1,0 +1,49 @@
+import { useState } from "react";
+
+import {
+	dropdownData,
+	DropdownKey,
+	QuestionAndAnswerProperties,
+	toggleButtonGroupData,
+} from "~/common/constants/faq-page-data";
+
+import { QuestionAndAnswerItem } from "./components/question-and-answer-item/index";
+import styles from "./styles.module.scss";
+import { ToggleGroupButtons } from "~/common/components/toggle-group-buttons";
+
+const QuestionAndAnswer = () => {
+	const [activeButtonValue, setActiveButtonValue] = useState<DropdownKey>(
+		toggleButtonGroupData[0],
+	);
+	const [questionsAnswers, setQuestionsAnswers] = useState<
+		QuestionAndAnswerProperties[]
+	>(dropdownData[activeButtonValue]);
+
+	const handleButtonClick = (value: DropdownKey) => {
+		setQuestionsAnswers(dropdownData[value]);
+		setActiveButtonValue(value);
+	};
+
+	return (
+		<div className={styles["question_and_answer__container"]}>
+			<h1 className={styles["question_and_answer__title"]}>FAQ</h1>
+			<h3 className={styles["question_and_answer__subtitle"]}>
+				Тут Ви можете знайти відповіді на найпоширеніші запитання.
+			</h3>
+			<ToggleGroupButtons
+				activeButtonValue={activeButtonValue}
+				handleButtonClick={handleButtonClick}
+				toggleButtonGroupData={toggleButtonGroupData}
+			/>
+			<div className={styles["question_and_answer__content"]}>
+				{questionsAnswers.map((item, index) => (
+					<QuestionAndAnswerItem key={index} title={item.question}>
+						<p>{item.answer}</p>
+					</QuestionAndAnswerItem>
+				))}
+			</div>
+		</div>
+	);
+};
+
+export { QuestionAndAnswer };
