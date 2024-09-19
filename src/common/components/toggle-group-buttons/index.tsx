@@ -1,10 +1,11 @@
 import clsx from "clsx";
 import React from "react";
-import styles from "./styles.module.scss";
 
-import { DropdownKey } from "~/common/constants/faq-page-data";
 import { Button } from "~/common/components";
+import { DropdownKey } from "~/common/constants/faq-page-data";
 import { ButtonVariant } from "~/common/enums";
+
+import styles from "./styles.module.scss";
 
 type Properties = {
 	activeButtonValue: DropdownKey;
@@ -29,8 +30,9 @@ const ToggleGroupButtons: React.FC<Properties> = ({
 						styles["button-group__item"],
 						activeButtonValue === buttonValue && styles["active"],
 					)}
-					onClick={() => handleClick(buttonValue as DropdownKey)}
 					isFullWidth
+					key={buttonValue}
+					onClick={() => handleClick(buttonValue as DropdownKey)}
 					variant={ButtonVariant.GROUP_BUTTONS}
 				>
 					{buttonValue}
