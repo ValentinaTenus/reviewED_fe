@@ -5,6 +5,7 @@ export { ButtonVariant } from "./button-variants.enum";
 export { httpMethods } from "./http-methods.enum";
 export { IconName } from "./icon-name.enum";
 export { IconSize } from "./icon-size.enum";
+export { SpinnerVariant } from "./spinner-variant.enum";
 export { RatingSize } from "./star-rating-size.enum";
 export { StarRatingVariant } from "./star-rating-variants.enum";
 export { ViewStyle } from "./view-style.enum";
