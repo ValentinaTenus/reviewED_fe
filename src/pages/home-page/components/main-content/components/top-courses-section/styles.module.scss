@@ -8,3 +8,32 @@
   box-shadow: none;
   padding: 32px;
 }
+
+.item_card img {
+  height: 52px;
+  width: 98px;
+}
+
+@media (max-width: 1280px) {
+  .item_card {
+    padding: 16px 12px;
+    gap: 12px;
+  }
+
+  .item_card img {
+    height: 41px;
+    width: 76px;
+  }
+}
+
+@media (max-width: 768px) {
+  .item_card {
+    gap: 16px;
+    padding: 24px 32px;
+  }
+
+  .item_card img {
+    height: 44px;
+    width: 82px;
+  }
+}

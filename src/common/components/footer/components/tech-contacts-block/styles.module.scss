@@ -19,6 +19,7 @@
 
 .footer_content__contacts {
   color: var(--color-grey-50);
+  font-size: var(--font-size-title-h4);
   font-weight: var(--font-weight-semi-bold);
   display: flex;
   gap: 8px;
@@ -28,4 +29,13 @@
   align-items: center;
   display: flex;
   gap: 8px;
+}
+
+.footer_content__contact-link {
+  text-decoration: none; 
+  color: inherit; 
+  
+  &:hover {
+    text-decoration: underline; 
+  }
 }
