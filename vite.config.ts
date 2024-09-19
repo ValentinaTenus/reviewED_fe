@@ -41,7 +41,6 @@ const config = ({ mode, }: ConfigEnv): ReturnType<typeof defineConfig> => {
 			host: true,
 			port: Number(VITE_BASE_URL),
 		},
-		base: "/",
 	});
 };
 
