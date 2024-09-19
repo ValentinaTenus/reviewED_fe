@@ -14,10 +14,22 @@ const TechContactsBlock: React.FC = () => {
 			<div className={styles["footer_content__contacts_data"]}>
 				<div className={styles["footer_content__contacts"]}>
 					<div className={styles["footer_content__contact"]}>
-						<Icon name={IconName.PHONE} /> <span>+380674646575</span>
+						<Icon name={IconName.PHONE} />
+						<a
+							className={styles["footer_content__contact-link"]}
+							href="tel:+380674646575"
+						>
+							<span>+380674646575</span>
+						</a>
 					</div>
 					<div className={styles["footer_content__contact"]}>
-						<Icon name={IconName.EMAIL} /> <span>reviewED@gmail.com </span>
+						<Icon name={IconName.EMAIL} />
+						<a
+							className={styles["footer_content__contact-link"]}
+							href="mailto:reviewED@gmail.com"
+						>
+							<span>reviewED@gmail.com</span>
+						</a>
 					</div>
 				</div>
 			</div>

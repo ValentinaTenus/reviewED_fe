@@ -6,6 +6,7 @@ export { Header } from "./header/index";
 export { Icon } from "./icon/index";
 export { IconButton } from "./icon-button/index";
 export { Input } from "./input/index";
+export { Pagination } from "./pagination/index";
 export { Rating } from "./rating/index";
 export { SearchBar } from "./search-bar/index";
 export { SearchInput } from "./search-input/index";

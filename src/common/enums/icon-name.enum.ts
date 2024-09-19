@@ -1,6 +1,8 @@
 enum IconName {
 	ARROW_DOWN = "arrowDown",
+	ARROW_LEFT_LONG = "arrowLeftLong",
 	ARROW_RIGHT = "arrowRight",
+	ARROW_RIGHT_LONG = "arrowRightLong",
 	ARROW_RIGHT_WIDE = "arrowRightWide",
 	ARROW_TOP = "arrowUp",
 	EMAIL = "email",

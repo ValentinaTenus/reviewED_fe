@@ -25,12 +25,16 @@ export const companiesApi = api.injectEndpoints({
 				return response.results;
 			},
 		}),
-		getCompaniesByFilter: builder.query<Company[], GetCompaniesRequestQuery>({
+		getCompaniesByFilter: builder.query<
+			GetCompaniesResponse,
+			GetCompaniesRequestQuery
+		>({
 			forceRefetch({ currentArg, previousArg }) {
 				return (
 					currentArg?.name !== previousArg?.name ||
 					currentArg?.sort !== previousArg?.sort ||
 					currentArg?.category_by_id !== previousArg?.category_by_id ||
+					currentArg?.page !== previousArg?.page ||
 					currentArg?.city !== previousArg?.city
 				);
 			},
@@ -44,9 +48,9 @@ export const companiesApi = api.injectEndpoints({
 			serializeQueryArgs: ({ endpointName }) => {
 				return endpointName;
 			},
-			transformResponse: (response: GetCompaniesResponse) => {
-				return response.results;
-			},
+			// 	transformResponse: (response: GetCompaniesResponse) => {
+			// 		return response;
+			// }
 		}),
 		getCompanyById: builder.query<Company, string | undefined>({
 			query: (id) => ({
