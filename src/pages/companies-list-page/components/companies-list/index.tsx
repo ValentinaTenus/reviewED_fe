@@ -5,7 +5,8 @@ import { SpinnerVariant } from "~/common/enums";
 import { Category } from "~/common/types/index";
 import { useGetCategoriesQuery } from "~/redux/categories/categories-api";
 import { useGetCompaniesByFilterQuery } from "~/redux/companies/companies-api";
-import { useAppSelector } from "~/redux/hooks.type";
+import { removeCompanies } from "~/redux/companies/companies-slice";
+import { useAppDispatch, useAppSelector } from "~/redux/hooks.type";
 
 import {
 	FilteredCompaniesList,
@@ -23,6 +24,8 @@ const CompaniesContent: React.FC = () => {
 	const [sortBy, setSortBy] = useState<string>("");
 	const [selectedCategoryId, setSelectedCategoryId] =
 		useState<number>(ALL_CATEGORIES_ID);
+
+	const dispatch = useAppDispatch();
 
 	const { companies: companiesInState } = useAppSelector(
 		(state) => state.companies,
@@ -54,17 +57,28 @@ const CompaniesContent: React.FC = () => {
 
 	const [screenWidth, setScreenWidth] = useState<number>(DEFAULT_SCREEN_WIDTH);
 
+	const getCompanies = useCallback(async () => {
+		const result = await refetchCompanies();
+		if (result.data?.results) {
+			setCompanies(result.data?.results);
+			void dispatch(removeCompanies());
+		}
+	}, [refetchCompanies]);
+
 	const handleChangeSearchTerm = useCallback((newSearchTerm: string) => {
 		setSearchTerm(newSearchTerm);
-	}, []);
+		getCompanies();
+	}, [getCompanies]);
 
 	const handleChangeSortBy = useCallback((newSortBy: number | string) => {
 		setSortBy(newSortBy.toString());
-	}, []);
+		getCompanies();
+	}, [getCompanies]);
 
 	const handleChooseCategory = useCallback((chosenCategoryId: number) => {
 		setSelectedCategoryId(chosenCategoryId);
-	}, []);
+		getCompanies();
+	}, [getCompanies]);
 
 	const updateScreenWidth = () => {
 		const screenWidth = window.innerWidth;
@@ -79,23 +93,13 @@ const CompaniesContent: React.FC = () => {
 		}
 	}, [companiesInState, refetchCompanies]);
 
-	const getCompanies = useCallback(async () => {
-		const result = await refetchCompanies();
-		if (result.data?.results) {
-			setCompanies(result.data?.results);
-		}
-	}, [refetchCompanies]);
-
-	useEffect(() => {
-		getCompanies();
-	}, [getCompanies, searchTerm, selectedCategoryId]);
-
 	useEffect(() => {
 		if (
 			companiesFromApi?.results &&
 			(!companiesInState || companiesInState.length === ZERO_LENGTH)
 		) {
 			setCompanies(companiesFromApi.results);
+			void dispatch(removeCompanies());
 		}
 	}, [companiesFromApi, companiesInState]);
 
@@ -108,7 +112,6 @@ const CompaniesContent: React.FC = () => {
 
 	return (
 		<div className={styles["companies_list__container"]}>
-			{isCategoriesLoading && <Spinner variant={SpinnerVariant.MEDIUM} />}
 			{categories && (
 				<FilterSection
 					categories={allCategories}

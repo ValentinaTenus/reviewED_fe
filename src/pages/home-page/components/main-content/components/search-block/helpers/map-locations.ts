@@ -8,11 +8,11 @@ const mapLocations = (locations: string[]): DropdownOption[] => {
 
 	return [
 		{
-			label: "Всі Локації",
+			label: "Всі локації",
 			value: "",
 		},
 		{
-			label: "Всі Міста",
+			label: "Всі міста",
 			options: mappedItems,
 			value: "",
 		},

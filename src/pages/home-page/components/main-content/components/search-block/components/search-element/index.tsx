@@ -277,7 +277,7 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 										? coursesDropdownLocations
 										: companiesDropdownLocations
 								}
-								placeholder="Всі Локації"
+								placeholder="Всі локації"
 							/>
 						</div>
 						<div className={styles["search_dropdown_wrapper"]}>
