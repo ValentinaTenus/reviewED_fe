@@ -9,7 +9,7 @@ const CompaniesSortOptions = [
 	},
 	{
 		label: "Найнадійніші",
-		value: "-avg_rating",
+		value: "avg_overall_rating",
 	},
 ];
 

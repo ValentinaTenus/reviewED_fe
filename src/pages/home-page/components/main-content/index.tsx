@@ -59,7 +59,7 @@ const MainContent: React.FC = () => {
 	useEffect(() => {
 		if (courses) {
 			const topCourses = [...courses]?.sort(
-				(course1, course2) => course2.average_rating - course1.average_rating,
+				(course1, course2) => course2.avg_rating - course1.avg_rating,
 			);
 			setTopCourses(topCourses);
 		}
@@ -69,7 +69,7 @@ const MainContent: React.FC = () => {
 		<div className={styles["main_content_wrapper"]}>
 			<div className={styles["main_content"]}>
 				<BanerBlock />
-				<SearchBlock companies={companies || []} courses={courses || []} />
+				<SearchBlock companies={companies || []} />
 				<CompaniesSection
 					companies={companies ? companies.slice(INDEX_ZERO, visibleItems) : []}
 					screenWidth={screenWidth}

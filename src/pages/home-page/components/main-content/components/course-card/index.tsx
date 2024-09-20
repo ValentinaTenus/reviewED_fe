@@ -2,8 +2,8 @@ import clsx from "clsx";
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { Rating } from "~/common/components/index";
-import { AppRoute } from "~/common/enums/index";
+import { StarRating } from "~/common/components/index";
+import { AppRoute, RatingSize, StarRatingVariant } from "~/common/enums/index";
 import { Course } from "~/common/types/index";
 
 import styles from "./styles.module.scss";
@@ -27,7 +27,11 @@ const CourseCard: React.FC<CourseCardProperties> = ({ className, course }) => {
 					src={course.company_logo}
 				/>
 				<div className={styles["item_rating_container"]}>
-					<Rating averageRating={course.average_rating} />
+					<StarRating
+						averageRating={course.avg_rating}
+						size={RatingSize.SMALL}
+						variant={StarRatingVariant.SMALL_CARD}
+					/>
 					<p className={styles["reviews_amount"]}>
 						{course.reviews_count} відгуків
 					</p>

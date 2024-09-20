@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import ArrowDown from "~/assets/images/arrow-down.svg?react";
 import ArrowUp from "~/assets/images/arrow-up.svg?react";
-import { IconName } from "~/common/enums";
+import { IconName } from "~/common/enums/index";
 import { type DropdownOption } from "~/common/types/index";
 
 import { Icon } from "../icon";
@@ -93,21 +93,30 @@ const SortDropdown: React.FC<Properties> = ({
 						{selectedOption
 							? selectedOption.label
 							: options[FIRST_OPTION].label}
-						<ArrowDown className={styles["dropdown_icon"]} />
+						{isOpen ? (
+							<ArrowUp className={styles["dropdown_icon"]} />
+						) : (
+							<ArrowDown className={styles["dropdown_icon"]} />
+						)}
 					</div>
 				)}
 				{isOpen && !isDisabled && (
-					<div className={styles["dropdown_menu"]}>
+					<div
+						className={clsx(
+							styles["dropdown_menu"],
+							isIconButton && styles["icon_button__menu"],
+						)}
+					>
 						{options.map((option, index) => (
 							<div
-								className={clsx(styles["dropdown_item"])}
+								className={clsx(
+									styles["dropdown_item"],
+									isIconButton && styles["icon_button__menu_item"],
+								)}
 								key={index}
 								onClick={() => handleOptionClick(option)}
 							>
 								{option.label}
-								{index === FIRST_OPTION && !isIconButton && (
-									<ArrowUp className={styles["dropdown_icon"]} />
-								)}
 							</div>
 						))}
 					</div>

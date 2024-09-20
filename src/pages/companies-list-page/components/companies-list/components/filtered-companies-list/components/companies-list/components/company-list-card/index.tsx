@@ -1,8 +1,8 @@
 import React, { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Icon, IconButton, Rating } from "~/common/components/index";
-import { AppRoute, IconName } from "~/common/enums/index";
+import { Icon, IconButton, StarRating } from "~/common/components/index";
+import { AppRoute, IconName, RatingSize } from "~/common/enums/index";
 import { Company } from "~/common/types/index";
 
 import styles from "./styles.module.scss";
@@ -44,7 +44,9 @@ const CompanyListCard: React.FC<Properties> = ({ company }) => {
 					<span className={styles["company_list_card__detail_title"]}>
 						Total courses:
 					</span>
-					<span className={styles["company_list_card__detail_value"]}>10</span>
+					<span className={styles["company_list_card__detail_value"]}>
+						{company.total_courses}
+					</span>
 				</div>
 				<div className={styles["company_list_card__detail_item"]}>
 					<span className={styles["company_list_card__detail_title"]}>
@@ -56,7 +58,7 @@ const CompanyListCard: React.FC<Properties> = ({ company }) => {
 							name={IconName.SHIELD_TICK}
 						/>
 						<span className={styles["company_list_card__detail_value"]}>
-							10 Reviews
+							{company.total_reviews_count} Reviews
 						</span>
 					</div>
 				</div>
@@ -64,9 +66,10 @@ const CompanyListCard: React.FC<Properties> = ({ company }) => {
 					<span className={styles["company_list_card__detail_title"]}>
 						Rating:
 					</span>
-					<Rating
-						averageRating={company.average_rating}
-						className={styles["company_list_card__detail_rating"]}
+					<StarRating
+						averageRating={company.avg_overall_rating}
+						className={styles["company_list_card__rating_stars"]}
+						size={RatingSize.LARGE}
 					/>
 				</div>
 			</div>
