@@ -1,13 +1,16 @@
 import React from "react";
 
 import styles from "./styles.module.scss";
+import { Category } from "./components/category";
 
-const MainContent: React.FC = () => {
-	return <div className={styles["main_content_wrapper"]}>
-    <div className={styles["main_content"]}>
-OK, testing what do we have
-    </div>
-</div>
+
+const CategoriesSection: React.FC = () => {
+	return (
+		<div>
+			<h3 className={styles["categories_header"]}>Категорії курса</h3>
+           <Category categoryName="Інформаційні технології, IT"/>
+		</div>
+	);
 };
 
-export { MainContent };
+export { CategoriesSection };
