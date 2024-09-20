@@ -49,9 +49,9 @@
   justify-content: space-between;
   font-family: var(--font-family-main);
   font-size: var( --font-size-title-h5);
-  font-weight: var( --font-weight-semi-bold);
+  font-weight: var( --font-weight-bold);
   padding: 12px 24px;
-  width: 200px;
+  min-width: 200px;
 }
 
 .dropdown_trigger.disabled {

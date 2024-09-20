@@ -3,7 +3,6 @@
   column-gap: 20px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(3, 1fr);
   row-gap: 40px;
   width: 100%;
 }
@@ -13,7 +12,6 @@
     column-gap: 24px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(4, 1fr);
     row-gap: 24px;
   }
 }
@@ -21,7 +19,6 @@
 @media (max-width: 768px) {
   .filtered_companies__search_result {
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(5, 1fr);
   }
 }
 
