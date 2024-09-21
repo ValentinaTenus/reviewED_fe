@@ -1,6 +1,7 @@
 enum AppRoute {
 	ALL_COMPANIES = "/all-companies",
 	ALL_COURSES = "/all-courses",
+	AUTH = "auth",
 	COMPANY_DETAILS = "/company-details/",
 	COURSE_DETAILS = "/course-details/",
 	FAQ_PAGE = "/faq-page",
