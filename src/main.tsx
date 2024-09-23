@@ -37,6 +37,10 @@ const routes = createBrowserRouter([
 				path: AppRoute.MODERATORS_PAGE,
 			},
 			{
+				element: <FaqPage />,
+				path: AppRoute.FAQ_PAGE,
+			},
+			{
 				element: <CourseDetailsPage />,
 				path: AppRoute.COURSE_DETAILS_TEST,
 			},
