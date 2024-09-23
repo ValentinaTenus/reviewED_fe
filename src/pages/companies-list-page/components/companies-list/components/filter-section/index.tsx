@@ -27,6 +27,7 @@ type FilterSectionProperties = {
 	onChangeSortBy: (sortBy: number | string) => void;
 	onChooseCategory: (categoryId: number) => void;
 	screenWidth: number;
+	searchTerm: string;
 	selectedCategoryId: number;
 };
 
@@ -36,6 +37,7 @@ const FilterSection: React.FC<FilterSectionProperties> = ({
 	onChangeSortBy,
 	onChooseCategory,
 	screenWidth,
+	searchTerm,
 	selectedCategoryId,
 }) => {
 	return (
@@ -49,6 +51,7 @@ const FilterSection: React.FC<FilterSectionProperties> = ({
 						<SearchBar
 							onSubmit={onChangeSearchTerm}
 							placeholder="Find your perfect company"
+							value={searchTerm}
 						/>
 						{screenWidth > ScreenBreakpoints.TABLET && (
 							<SortDropdown
