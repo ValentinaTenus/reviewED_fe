@@ -8,7 +8,13 @@ import "~/assets/styles/index.scss";
 import { App } from "./app/App.tsx";
 import { AppRoute } from "./common/enums/app-route.enum.ts";
 import { FaqPage } from "./pages/faq-page/index.tsx";
-import { CompaniesListPage, CoursesListPage, HomePage, ModeratorsPage } from "./pages/index.ts";
+import {
+	CompaniesListPage,
+	CoursesListPage,
+	HomePage,
+	ModeratorsPage,
+	CourseDetailsPage,
+} from "./pages/index.ts";
 import { store } from "./redux/store.ts";
 
 const routes = createBrowserRouter([
@@ -23,12 +29,16 @@ const routes = createBrowserRouter([
 				path: AppRoute.ALL_COMPANIES,
 			},
 			{
-                element: <CoursesListPage />,
-                path: AppRoute.COURSE_DETAILS,
-            },
+				element: <CoursesListPage />,
+				path: AppRoute.COURSE_DETAILS,
+			},
 			{
 				element: <ModeratorsPage />,
 				path: AppRoute.MODERATORS_PAGE,
+			},
+			{
+				element: <CourseDetailsPage />,
+				path: AppRoute.COURSE_DETAILS_TEST,
 			},
 		],
 		element: <App />,
