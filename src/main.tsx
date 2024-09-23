@@ -11,7 +11,6 @@ import { FaqPage } from "./pages/faq-page/index.tsx";
 import {
 	CompaniesListPage,
 	CourseDetailsPage,
-	CoursesListPage,
 	HomePage,
 	ModeratorsPage,
 } from "./pages/index.ts";
@@ -27,10 +26,6 @@ const routes = createBrowserRouter([
 			{
 				element: <CompaniesListPage />,
 				path: AppRoute.ALL_COMPANIES,
-			},
-			{
-				element: <CoursesListPage />,
-				path: AppRoute.COURSE_DETAILS,
 			},
 			{
 				element: <ModeratorsPage />,
