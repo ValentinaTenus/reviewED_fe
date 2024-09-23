@@ -3,7 +3,8 @@ import React from "react";
 import { ListItem } from "./components/list-item";
 import styles from "./styles.module.scss";
 
-const mockSkills = new Array(10).fill("Основи тестування ПЗ");
+const mockSkillsNumber = 10;
+const mockSkills = new Array(mockSkillsNumber).fill("Основи тестування ПЗ");
 const SkillsList: React.FC = () => {
 	return (
 		<div>
