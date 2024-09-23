@@ -10,6 +10,8 @@ import { companiesApi } from "./companies/companies-api.ts";
 import { companiesReducer } from "./companies/companies-slice.ts";
 import { coursesApi } from "./courses/courses-api.ts";
 import { coursesReducer } from "./courses/courses-slice.ts";
+import { locationsApi } from "./locations/locations-api.ts";
+import { locationsReducer } from "./locations/locations-slice.ts";
 import { api } from "./services.ts";
 
 const rootReducer = combineReducers({
@@ -20,6 +22,8 @@ const rootReducer = combineReducers({
 	companiesApiSlice: companiesApi.reducer,
 	courses: coursesReducer,
 	coursesApiSlice: coursesApi.reducer,
+	locations: locationsReducer,
+	locationsApiSlice: locationsApi.reducer,
 });
 
 const persistConfig = {

@@ -49,9 +49,6 @@ export const companiesApi = api.injectEndpoints({
 			serializeQueryArgs: ({ endpointName }) => {
 				return endpointName;
 			},
-			// 	transformResponse: (response: GetCompaniesResponse) => {
-			// 		return response;
-			// }
 		}),
 		getCompanyById: builder.query<Company, string | undefined>({
 			query: (id) => ({

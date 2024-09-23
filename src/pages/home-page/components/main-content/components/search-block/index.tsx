@@ -9,13 +9,9 @@ const LENGTH_ZERO = 0;
 
 type SearchBlockProperties = {
 	companies: Company[];
-	courses: Course[];
 };
 
-const SearchBlock: React.FC<SearchBlockProperties> = ({
-	companies,
-	courses,
-}) => {
+const SearchBlock: React.FC<SearchBlockProperties> = ({ companies }) => {
 	const [searchResult, setSearchResult] = useState<Company[] | Course[]>([]);
 	const [hasSearched, setHasSearched] = useState(false);
 
@@ -26,11 +22,7 @@ const SearchBlock: React.FC<SearchBlockProperties> = ({
 
 	return (
 		<div className={styles["search_block"]}>
-			<SearchElement
-				companies={companies}
-				courses={courses}
-				onSearch={handleSearch}
-			/>
+			<SearchElement companies={companies} onSearch={handleSearch} />
 			{searchResult.length === LENGTH_ZERO && hasSearched && <NotFound />}
 		</div>
 	);

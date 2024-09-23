@@ -11,9 +11,10 @@ type Properties = {
 	className?: string;
 	defaultValue?: DropdownOption;
 	isDisabled?: boolean;
+	isTitleClickable?: boolean;
 	label?: string;
 	name: string;
-	onChange: (value: number | string) => void;
+	onChange: (value: { isTitle: boolean; value: number | string }) => void;
 	options: DropdownOption[];
 	placeholder?: string;
 };
@@ -21,13 +22,15 @@ type Properties = {
 const Dropdown: React.FC<Properties> = ({
 	className,
 	isDisabled,
+	isTitleClickable = true,
+	label,
 	onChange,
 	options,
 	placeholder,
 }) => {
-	const [selectedOption, setSelectedOption] = useState<
-		DropdownOption | undefined
-	>(undefined);
+	const [selectedOption, setSelectedOption] = useState<DropdownOption | null>(
+		null,
+	);
 	const [isOpen, setIsOpen] = useState(false);
 	const [expandedOptions, setExpandedOptions] = useState<DropdownOption | null>(
 		null,
@@ -38,15 +41,16 @@ const Dropdown: React.FC<Properties> = ({
 		const { label, value } = option;
 		setSelectedOption({ label, value });
 		setIsOpen(false);
-		onChange(value);
+		onChange({ isTitle: false, value });
 	};
 
 	const handleTitleClick = (option: DropdownOption) => {
-		if (option.options && option.options.length > ZERO) {
+		if (option.options && option.options.length > ZERO && !isTitleClickable) {
 			setExpandedOptions(expandedOptions === option ? null : option);
 		} else {
 			handleOptionClick(option);
 		}
+		onChange({ isTitle: true, value: option.value });
 	};
 
 	const handleToggleDropdown = useCallback(() => {
@@ -54,6 +58,10 @@ const Dropdown: React.FC<Properties> = ({
 			setIsOpen(!isOpen);
 		}
 	}, [isDisabled, isOpen]);
+
+	useEffect(() => {
+		setSelectedOption(null);
+	}, [label]);
 
 	useEffect(() => {
 		const handleClickOutside = (e: MouseEvent) => {
@@ -84,7 +92,10 @@ const Dropdown: React.FC<Properties> = ({
 				})}
 				onClick={handleToggleDropdown}
 			>
-				<span>{selectedOption ? selectedOption.label : placeholder}</span>
+				<span className={styles["dropdown_trigger_text"]}>
+					{" "}
+					{selectedOption ? selectedOption.label : placeholder}
+				</span>
 			</div>
 			{isOpen && !isDisabled && (
 				<div className={styles["dropdown_menu"]}>

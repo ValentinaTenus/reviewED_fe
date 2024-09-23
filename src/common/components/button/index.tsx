@@ -8,6 +8,7 @@ import styles from "./styles.module.scss";
 
 const variants: Record<ButtonVariant, string> = {
 	default: styles.button__base,
+	group_buttons: styles.group__buttons,
 	login: styles.button__login,
 	outlined: styles.button__outlined,
 	outlined_mobile: clsx(

@@ -1,5 +1,6 @@
 enum ButtonVariant {
 	DEFAULT = "default",
+	GROUP_BUTTONS = "group_buttons",
 	LOGIN = "login",
 	OUTLINED = "outlined",
 	OUTLINED_MOBILE = "outlined_mobile",

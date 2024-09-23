@@ -100,6 +100,10 @@
 	overflow: hidden;
 	resize: none;
   padding: 16px;
+  max-width: calc(100% - 32px);
+  min-height: 120px;
+  max-height: 120px;
+  overflow: auto;
 }
 
 .textarea::placeholder, .icon{

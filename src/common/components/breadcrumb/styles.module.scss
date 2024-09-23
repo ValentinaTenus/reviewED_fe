@@ -1,28 +1,55 @@
 .bread_crumb {
-  align-items: center;
-  display: flex;
-  gap: 4px;
+	align-items: center;
+	display: flex;
+	gap: 4px;
+}
+
+.bread_crumb__container {
+	max-width: 1252px;
+	width: 100%;
+	margin: 0 auto;
+	display: flex;
+	justify-content: flex-start;
+	gap: 4px;
+	align-items: center;
+
+	@media (max-width: 1280px) {
+		padding: 0px 48px;
+	}
+
+	@media (max-width: 768px) {
+		padding: 0px 20px;
+	}
 }
 
 .bread_crumb_item {
-  align-items: center;
-  display: flex;
-  gap: 4px;
-  font-family: var(--font-family-main);
+	align-items: center;
+	display: flex;
+	gap: 4px;
+	font-family: var(--font-family-main);
 }
 
 .bread_crumb_link {
-  color: var(--color-black);
-  font-size: var( --font-size-main-text);
-  font-weight: var( --font-weight-semi-bold);
+	color: var(--color-grey-400);
+	font-size: var(--font-size-main-text);
+	font-weight: var(--font-weight-semi-bold);
 }
 
 .bread_crumb__arrow {
-  color: var(--color-grey-450);
-  height: 16px;
-  width: 16px;
+	color: var(--color-grey-400);
+	height: 16px;
+	width: 16px;
 }
 
 .bread_crumb_active {
-  color: var(--color-grey-460);
+	color: var(--color-grey-950);
+	font-size: var(--font-size-main-text);
+	font-weight: var(--font-weight-bold);
+}
+
+.bread_crumb_last {
+	.bread_crumb_link {
+		color: var(--color-grey-950);
+		font-weight: var(--font-weight-bold);
+	}
 }

@@ -1,0 +1,77 @@
+.rating {
+  align-items: center;
+  display: flex;
+}
+
+.rating_stars {
+  align-items: center;
+  display: flex;
+}
+
+.rating__base {
+  gap: 8px;
+}
+
+.rating__base .rating_stars {
+  gap: 4px;
+}
+
+.rating__small_card {
+  gap: 4px; 
+}
+
+.rating__small_card .rating_stars{
+  gap: 2px;
+}
+
+.star {
+  width: 16px;
+  height: 16px;
+  color: var(--color-yellow-500);
+}
+
+.star_empty {
+  color: var(--color-grey-400);
+}
+
+.average_rating {
+  font-family: var(--font-family-main);
+  font-size: var(--font-size-main-text);
+  font-weight: var(--font-weight-bold);
+}
+
+
+.size__small .star {
+  width: 16px;
+  height: 16px;
+}
+
+.size__medium .star {
+  width: 16px;
+  height: 16px;
+}
+
+.size__small .average_rating {
+  font-size: var(--font-size-main-text);
+  font-weight: var(--font-weight-text);
+}
+
+.size__medium .star {
+  width: 18px;
+  height: 18px;
+}
+
+.size__small .average_rating {
+  font-size: var(--font-size-main-text);
+  font-weight: var(--font-weight-bold);
+}
+
+.size__large .star {
+  width: 24px;
+  height: 24px;
+}
+
+.size__small .average_rating {
+  font-size: var(--font-size-main-text);
+  font-weight: var(--font-weight-bold);
+}

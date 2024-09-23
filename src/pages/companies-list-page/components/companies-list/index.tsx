@@ -1,13 +1,18 @@
 import React, { useCallback, useEffect, useState } from "react";
 
-import { Pagination } from "~/common/components/index";
+import { Pagination, Spinner } from "~/common/components/index";
 import { ScreenBreakpoints } from "~/common/constants/index";
-import { ViewStyle } from "~/common/enums/index";
+import { SpinnerVariant, ViewStyle } from "~/common/enums/index";
 import { Category } from "~/common/types/index";
 import { useGetCategoriesQuery } from "~/redux/categories/categories-api";
 import { useGetCompaniesByFilterQuery } from "~/redux/companies/companies-api";
+import { useAppSelector } from "~/redux/hooks.type";
 
-import { FilteredCompaniesList, FilterSection } from "./components/index";
+import {
+	FilteredCompaniesList,
+	FilterSection,
+	ReviewsSection,
+} from "./components/index";
 import styles from "./styles.module.scss";
 
 const DEFAULT_SCREEN_WIDTH = 0;
@@ -43,8 +48,15 @@ const CompaniesContent: React.FC = () => {
 
 	const [viewStyle, setViewStyle] = useState(ViewStyle.TABLE);
 
+	const { companies: companiesInState } = useAppSelector(
+		(state) => state.companies,
+	);
 	const { data: categories } = useGetCategoriesQuery(undefined);
-	const { data: getCompaniesResponse, refetch } = useGetCompaniesByFilterQuery(
+	const {
+		data: companiesFromApi,
+		isLoading: isCompaniesLoading,
+		refetch: refetchCompanies,
+	} = useGetCompaniesByFilterQuery(
 		{
 			category_by_id:
 				selectedCategoryId === ALL_CATEGORIES_ID
@@ -56,7 +68,7 @@ const CompaniesContent: React.FC = () => {
 			sort: sortBy,
 		},
 		{
-			refetchOnMountOrArgChange: true,
+			refetchOnMountOrArgChange: false,
 		},
 	);
 
@@ -77,10 +89,10 @@ const CompaniesContent: React.FC = () => {
 
 		setCompaniesPerPage(companiesPerPage);
 
-		if (getCompaniesResponse?.count) {
-			setPageCount(Math.ceil(getCompaniesResponse.count / companiesPerPage));
+		if (companiesFromApi?.count) {
+			setPageCount(Math.ceil(companiesFromApi.count / companiesPerPage));
 		}
-	}, [viewStyle, screenWidth, getCompaniesResponse?.count]);
+	}, [viewStyle, screenWidth, companiesFromApi?.count]);
 
 	const handleViewChange = useCallback(
 		(newViewStyle: ViewStyle) => {
@@ -111,15 +123,15 @@ const CompaniesContent: React.FC = () => {
 	useEffect(() => {
 		updateCompaniesPerPageAndPageCount();
 	}, [
-		getCompaniesResponse,
+		companiesFromApi,
 		viewStyle,
 		screenWidth,
 		updateCompaniesPerPageAndPageCount,
 	]);
 
 	useEffect(() => {
-		refetch();
-	}, [currentPage, refetch]);
+		refetchCompanies();
+	}, [currentPage, refetchCompanies]);
 
 	useEffect(() => {
 		updateScreenWidth();
@@ -144,15 +156,22 @@ const CompaniesContent: React.FC = () => {
 					selectedCategoryId={selectedCategoryId}
 				/>
 			)}
-			{getCompaniesResponse?.results && (
+
+			{isCompaniesLoading ? (
+				<div className={styles["spinner"]}>
+					<Spinner variant={SpinnerVariant.MEDIUM} />
+				</div>
+			) : (
 				<FilteredCompaniesList
-					companies={getCompaniesResponse.results}
+					companies={companiesInState || companiesFromApi?.results || []}
 					onChangeSortBy={handleChangeSortBy}
 					onChangeViewStyle={handleViewChange}
 					viewStyle={viewStyle}
 				/>
 			)}
 			<Pagination pages={pageCount} setCurrentPage={setCurrentPage} />
+
+			<ReviewsSection screenWidth={screenWidth} />
 		</div>
 	);
 };

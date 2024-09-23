@@ -24,12 +24,6 @@ const FilteredCompaniesList: React.FC<FilteredCompaniesListProperties> = ({
 	onChangeViewStyle,
 	viewStyle,
 }) => {
-	// const [viewStyle, setViewStyle] = useState(ViewStyle.TABLE);
-
-	// const handleChangeViewStyle = useCallback((newViewStyle: ViewStyle) => {
-	// 	setViewStyle(newViewStyle)
-	// }, [onChangeViewStyle]);
-
 	return (
 		<div className={styles["filtered_companies__container"]}>
 			<div className={styles["filtered_companies__sort_and_view"]}>
@@ -51,10 +45,12 @@ const FilteredCompaniesList: React.FC<FilteredCompaniesListProperties> = ({
 				{viewStyle === ViewStyle.TABLE && companies.length > LENGTH_ZERO && (
 					<CompaniesTable companies={companies} />
 				)}
+
 				{viewStyle === ViewStyle.LIST && companies.length > LENGTH_ZERO && (
 					<CompaniesList companies={companies} />
 				)}
-				{companies.length === LENGTH_ZERO && <NotFound />}
+
+				{!companies && <NotFound />}
 			</div>
 		</div>
 	);

@@ -14,11 +14,14 @@ const companiesSlice = createSlice({
 	initialState,
 	name: "companies",
 	reducers: {
+		removeCompanies: (state) => {
+			state.companies = null;
+		},
 		setCompanies: (state, action: PayloadAction<Company[]>) => {
 			state.companies = action.payload;
 		},
 	},
 });
 
-export const { setCompanies } = companiesSlice.actions;
+export const { removeCompanies, setCompanies } = companiesSlice.actions;
 export const companiesReducer = companiesSlice.reducer;
