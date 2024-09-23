@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React from "react";
 
 import { SortDropdown, ViewTabs } from "~/common/components/index";
 import { CompaniesSortOptions } from "~/common/constants/index";
@@ -22,7 +22,7 @@ const FilteredCompaniesList: React.FC<FilteredCompaniesListProperties> = ({
 	companies,
 	onChangeSortBy,
 	onChangeViewStyle,
-	viewStyle
+	viewStyle,
 }) => {
 	// const [viewStyle, setViewStyle] = useState(ViewStyle.TABLE);
 
