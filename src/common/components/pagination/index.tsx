@@ -7,6 +7,7 @@ import { Button, Icon, IconButton } from "../index";
 import styles from "./styles.module.scss";
 
 type PaginationProps = {
+	defaultCurrentPage: number;
 	pages?: number;
 	setCurrentPage: (page: number) => void;
 };
@@ -23,11 +24,12 @@ const INDEX_ONE = 1;
 const INDEX_TWO = 2;
 
 const Pagination: React.FC<PaginationProps> = ({
+	defaultCurrentPage,
 	pages = DEFAULT_PAGE_NUMBER,
 	setCurrentPage,
 }) => {
 	const [currentButton, setCurrentButton] = useState<number | string>(
-		FIRST_PAGE,
+		defaultCurrentPage,
 	);
 
 	const numberOfPages = Array.from({ length: pages }, (_, i) => i + FIRST_PAGE);
@@ -67,6 +69,10 @@ const Pagination: React.FC<PaginationProps> = ({
 		() => getDisplayedPages(currentButton, numberOfPages),
 		[currentButton, numberOfPages],
 	);
+
+	useEffect(() => {
+		setCurrentButton(defaultCurrentPage);
+	}, [defaultCurrentPage]);
 
 	useEffect(() => {
 		if (currentButton === DOTS) return;
