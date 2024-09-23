@@ -6,90 +6,99 @@ import { ButtonVariant, IconName } from "~/common/enums/index";
 import { Button, Icon, IconButton } from "../index";
 import styles from "./styles.module.scss";
 
-type PaginationProps = {
-	defaultCurrentPage: number;
+type PaginationProperties = {
 	pages?: number;
 	setCurrentPage: (page: number) => void;
 };
 
-const DOTS = "...";
-const VISIBLE_PAGES = 5;
-const INITIAL_THRESHOLD = 3;
-const END_THRESHOLD = 3;
-const DEFAULT_PAGE_NUMBER = 10;
-const FIRST_PAGE = 1;
+const DOTS_INITIAL = "...";
+const DOTS_LEFT = "... ";
+const DOTS_RIGHT = " ...";
 
 const INDEX_ZERO = 0;
 const INDEX_ONE = 1;
 const INDEX_TWO = 2;
+const VISIBLE_PAGES = 5;
+const INITIAL_THRESHOLD = 3;
+const END_THRESHOLD = 3;
+const DEFAULT_PAGE_NUMBER = 10;
 
-const Pagination: React.FC<PaginationProps> = ({
-	defaultCurrentPage,
+const Pagination: React.FC<PaginationProperties> = ({
 	pages = DEFAULT_PAGE_NUMBER,
 	setCurrentPage,
 }) => {
 	const [currentButton, setCurrentButton] = useState<number | string>(
-		defaultCurrentPage,
+		INDEX_ONE,
+	);
+	const [arrOfCurrButtons, setArrOfCurrButtons] = useState<(number | string)[]>(
+		[],
 	);
 
-	const numberOfPages = Array.from({ length: pages }, (_, i) => i + FIRST_PAGE);
-
-	const getDisplayedPages = (
-		currentButton: number | string,
-		pages: number[],
-	) => {
-		if (pages.length <= VISIBLE_PAGES) return pages;
-
-		if (+currentButton <= INITIAL_THRESHOLD) {
-			return [
-				...pages.slice(INDEX_ZERO, INITIAL_THRESHOLD + INDEX_ONE),
-				DOTS,
-				pages[pages.length - INDEX_ONE],
-			];
-		}
-
-		if (+currentButton >= pages.length - END_THRESHOLD) {
-			return [
-				FIRST_PAGE,
-				DOTS,
-				...pages.slice(pages.length - (END_THRESHOLD + INDEX_ONE)),
-			];
-		}
-
-		return [
-			FIRST_PAGE,
-			DOTS,
-			...pages.slice(+currentButton - INDEX_TWO, +currentButton + INDEX_ONE),
-			DOTS,
-			pages[pages.length - INDEX_ONE],
-		];
-	};
-
-	const displayedPages = useMemo(
-		() => getDisplayedPages(currentButton, numberOfPages),
-		[currentButton, numberOfPages],
-	);
+	const numberOfPages = useMemo(() => {
+		return Array.from({ length: pages }, (_, i) => i + INDEX_ONE);
+	}, [pages]);
 
 	useEffect(() => {
-		setCurrentButton(defaultCurrentPage);
-	}, [defaultCurrentPage]);
+		let tempNumberOfPages: (number | string)[] = [...arrOfCurrButtons];
 
-	useEffect(() => {
-		if (currentButton === DOTS) return;
+		if (numberOfPages.length < VISIBLE_PAGES) {
+			tempNumberOfPages = numberOfPages;
+		} else if (
+			+currentButton >= INDEX_ONE &&
+			+currentButton <= INITIAL_THRESHOLD
+		) {
+			tempNumberOfPages = [
+				...numberOfPages.slice(INDEX_ZERO, INITIAL_THRESHOLD + INDEX_ONE),
+				DOTS_INITIAL,
+				numberOfPages.length,
+			];
+		} else if (currentButton === INITIAL_THRESHOLD + INDEX_ONE) {
+			tempNumberOfPages = [
+				...numberOfPages.slice(INDEX_ZERO, INITIAL_THRESHOLD + INDEX_TWO),
+				DOTS_INITIAL,
+				numberOfPages.length,
+			];
+		} else if (
+			+currentButton > INITIAL_THRESHOLD + INDEX_ONE &&
+			+currentButton < numberOfPages.length - INDEX_TWO
+		) {
+			const sliced1 = numberOfPages.slice(
+				+currentButton - INDEX_TWO,
+				+currentButton,
+			);
+			const sliced2 = numberOfPages.slice(
+				+currentButton,
+				+currentButton + INDEX_ONE,
+			);
+
+			tempNumberOfPages = [
+				INDEX_ONE,
+				DOTS_LEFT,
+				...sliced1,
+				...sliced2,
+				DOTS_RIGHT,
+				numberOfPages.length,
+			];
+		} else if (+currentButton > numberOfPages.length - END_THRESHOLD) {
+			const sliced = numberOfPages.slice(
+				numberOfPages.length - (END_THRESHOLD + INDEX_ONE),
+			);
+
+			tempNumberOfPages = [INDEX_ONE, DOTS_LEFT, ...sliced];
+		} else if (currentButton === DOTS_INITIAL) {
+			setCurrentButton(
+				(arrOfCurrButtons[arrOfCurrButtons.length - END_THRESHOLD] as number) +
+					INDEX_ONE,
+			);
+		} else if (currentButton === DOTS_RIGHT) {
+			setCurrentButton((arrOfCurrButtons[END_THRESHOLD] as number) + INDEX_TWO);
+		} else if (currentButton === DOTS_LEFT) {
+			setCurrentButton((arrOfCurrButtons[END_THRESHOLD] as number) - INDEX_TWO);
+		}
+
+		setArrOfCurrButtons(tempNumberOfPages);
 		setCurrentPage(+currentButton);
-	}, [currentButton, setCurrentPage]);
-
-	const handlePrevious = () => {
-		setCurrentButton((prev) =>
-			prev === FIRST_PAGE ? prev : +prev - INDEX_ONE,
-		);
-	};
-
-	const handleNext = () => {
-		setCurrentButton((prev) =>
-			prev === numberOfPages.length ? prev : +prev + INDEX_ONE,
-		);
-	};
+	}, [currentButton, numberOfPages, arrOfCurrButtons, setCurrentPage]);
 
 	return (
 		<nav
@@ -98,22 +107,27 @@ const Pagination: React.FC<PaginationProps> = ({
 		>
 			<IconButton
 				aria-label="Previous page"
-				className={clsx(styles["pagination__arrow"], {
-					[styles["disabled"]]: currentButton === FIRST_PAGE,
-				})}
-				isDisabled={currentButton === FIRST_PAGE}
-				onClick={handlePrevious}
+				className={clsx(
+					styles["pagination__arrow"],
+					styles[`${currentButton === INDEX_ONE ? "disabled" : ""}`],
+				)}
+				isDisabled={currentButton === INDEX_ONE}
+				onClick={() =>
+					setCurrentButton((prev) =>
+						+prev <= INDEX_ONE ? prev : +prev - INDEX_ONE,
+					)
+				}
 			>
 				<Icon name={IconName.ARROW_LEFT_LONG} />
 			</IconButton>
 
-			{displayedPages.map((item, index) => (
+			{arrOfCurrButtons.map((item, index) => (
 				<Button
 					aria-label={`Page ${item}`}
 					className={clsx(
 						typeof item === "number" && styles["pagination__button_number"],
 						styles["pagination__button"],
-						{ [styles["active"]]: currentButton === item },
+						styles[`${currentButton === item ? "active" : ""}`],
 					)}
 					key={index}
 					onClick={() => typeof item === "number" && setCurrentButton(item)}
@@ -125,11 +139,16 @@ const Pagination: React.FC<PaginationProps> = ({
 
 			<IconButton
 				aria-label="Next page"
-				className={clsx(styles["pagination__arrow"], {
-					[styles["disabled"]]: currentButton === numberOfPages.length,
-				})}
+				className={clsx(
+					styles["pagination__arrow"],
+					styles[`${currentButton === numberOfPages.length ? "disabled" : ""}`],
+				)}
 				isDisabled={currentButton === numberOfPages.length}
-				onClick={handleNext}
+				onClick={() =>
+					setCurrentButton((prev) =>
+						+prev >= numberOfPages.length ? prev : +prev + INDEX_ONE,
+					)
+				}
 			>
 				<Icon name={IconName.ARROW_RIGHT_LONG} />
 			</IconButton>

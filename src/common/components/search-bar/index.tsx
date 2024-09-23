@@ -23,7 +23,6 @@ type SearchBarProperties = {
 	onInputChange?: (value: string) => [];
 	onSubmit: (searchTerm: string) => void;
 	placeholder: string;
-	value: string;
 };
 
 const SearchBar: React.FC<SearchBarProperties> = ({
@@ -31,17 +30,16 @@ const SearchBar: React.FC<SearchBarProperties> = ({
 	onInputChange,
 	onSubmit,
 	placeholder,
-	value,
 }) => {
 	const screenWidth = window.innerWidth;
-	const [searchTerm, setSearchTerm] = useState(value);
+	const [searchTerm, setSearchTerm] = useState("");
 	const [filteredSuggestions, setFilteredSuggestions] = useState<
 		DropdownOption[]
 	>([]);
 
 	const { control, errors, handleSubmit } = useAppForm({
 		defaultValues: {
-			search: value,
+			search: "",
 		},
 	});
 

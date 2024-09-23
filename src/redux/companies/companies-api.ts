@@ -34,8 +34,7 @@ export const companiesApi = api.injectEndpoints({
 					currentArg?.name !== previousArg?.name ||
 					currentArg?.sort !== previousArg?.sort ||
 					currentArg?.category_by_id !== previousArg?.category_by_id ||
-					currentArg?.limit !== previousArg?.limit ||
-					currentArg?.offset !== previousArg?.limit ||
+					currentArg?.page !== previousArg?.page ||
 					currentArg?.city !== previousArg?.city
 				);
 			},

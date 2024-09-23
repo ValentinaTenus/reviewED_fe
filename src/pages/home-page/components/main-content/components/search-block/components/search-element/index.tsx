@@ -3,23 +3,18 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Button, Dropdown, SearchInput } from "~/common/components/index";
-import { ScreenBreakpoints } from "~/common/constants";
 import {
 	AppRoute,
 	ButtonSize,
 	ButtonType,
 	ButtonVariant,
-	CompaniesPerPageTableView,
 	IconName,
 } from "~/common/enums/index";
 import { useAppForm } from "~/common/hooks/index";
 import { Company, Course, DropdownOption } from "~/common/types/index";
 import { useGetCategoriesQuery } from "~/redux/categories/categories-api";
 import { useGetCompaniesByFilterQuery } from "~/redux/companies/companies-api";
-import {
-	clearFilters as clearCompaniesFilters,
-	setFilters as setCompaniesFilters,
-} from "~/redux/companies/companies-slice";
+import { setCompanies } from "~/redux/companies/companies-slice";
 import { useGetCoursesByFilterQuery } from "~/redux/courses/courses-api";
 import { setCourses } from "~/redux/courses/courses-slice";
 import { useAppDispatch } from "~/redux/hooks.type";
@@ -62,7 +57,6 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 }) => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
-	const screenWidth = window.innerWidth;
 
 	const [searchTerm, setSearchTerm] = useState("");
 	const [filteredSuggestions, setFilteredSuggestions] = useState<
@@ -108,10 +102,6 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 		useGetCompaniesByFilterQuery(
 			{
 				city: selectedLocation,
-				limit:
-					screenWidth > ScreenBreakpoints.TABLET
-						? CompaniesPerPageTableView.LARGE_SCREEN
-						: CompaniesPerPageTableView.SMALL_SCREEN,
 				name: selectedCompanyFromAll ? selectedCompanyFromAll : searchTerm,
 			},
 			{
@@ -128,10 +118,6 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 		fetchedCategories || [],
 	);
 	const companiesOptions = mapCompanies(companies);
-
-	useEffect(() => {
-		dispatch(clearCompaniesFilters());
-	}, [dispatch]);
 
 	useEffect(() => {
 		if (coursesLocations) {
@@ -154,7 +140,6 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 	const handleInputChange = useCallback(
 		async (value: string) => {
 			setSearchTerm(value);
-			void dispatch(setCompaniesFilters({ name: value }));
 
 			if (value.trim() === "") {
 				setFilteredSuggestions([]);
@@ -180,12 +165,7 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 				}
 			}
 		},
-		[
-			dispatch,
-			getCompaniesResponse?.results,
-			filteredCourses,
-			selectedCategory,
-		],
+		[getCompaniesResponse?.results, filteredCourses, selectedCategory],
 	);
 
 	const handleSelectCategory = useCallback(
@@ -198,12 +178,8 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 	const handleSelectLocation = useCallback(
 		({ value }: { value: number | string }) => {
 			setSelectedLocation(value.toString());
-
-			if (selectedCategory === categories[INDEX_COMPANIES].value) {
-				void dispatch(setCompaniesFilters({ city: value.toString() }));
-			}
 		},
-		[dispatch, selectedCategory],
+		[],
 	);
 
 	const handleSelectedCompanyFromAll = useCallback(
@@ -235,6 +211,7 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 			if (selectedCategory === categories[INDEX_COMPANIES].value) {
 				const { results } = await refetchCompanies().unwrap();
 				onSearch(results);
+				void dispatch(setCompanies(results));
 
 				if (results.length > ZERO_INDEX) {
 					navigate(AppRoute.ALL_COMPANIES);
