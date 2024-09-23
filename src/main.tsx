@@ -10,10 +10,10 @@ import { AppRoute } from "./common/enums/app-route.enum.ts";
 import { FaqPage } from "./pages/faq-page/index.tsx";
 import {
 	CompaniesListPage,
+	CourseDetailsPage,
 	CoursesListPage,
 	HomePage,
 	ModeratorsPage,
-	CourseDetailsPage,
 } from "./pages/index.ts";
 import { store } from "./redux/store.ts";
 

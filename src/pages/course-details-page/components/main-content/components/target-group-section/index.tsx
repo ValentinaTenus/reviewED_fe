@@ -1,8 +1,9 @@
 import React from "react";
 
+import { IconName } from "~/common/enums/index";
+
 import { SectionTitle } from "../section-title";
 import styles from "./styles.module.scss";
-import { IconName } from "~/common/enums/index";
 
 const TargetGroupSection: React.FC = () => {
 	return (
