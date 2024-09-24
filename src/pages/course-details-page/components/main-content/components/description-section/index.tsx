@@ -2,17 +2,14 @@ import React from "react";
 
 import styles from "./styles.module.scss";
 
-const DescriptionSection: React.FC = () => {
+type DescriptionSectionProperties = {
+	description: string;
+};
+
+const DescriptionSection: React.FC<DescriptionSectionProperties> = ({description}) => {
 	return (
 		<div className={styles["main_content"]}>
-			Курс &quot;QA тестування. Тестувальник ПЗ&quot; допоможе вам освоїти
-			основи тестування програмного забезпечення та стати професіоналом у сфері
-			контролю якості. Ви навчитеся працювати з різними інструментами
-			тестування, створювати тест-кейси, знаходити та документувати помилки,а
-			також зрозумієте роль тестувальника у розробці продукту. Курс також
-			охоплює основи автоматизованого тестування, що дозволить вам ефективніше
-			контролювати якість програмного забезпечення та підвищити свою
-			конкурентоспроможність на ринку праці.
+			{description}
 		</div>
 	);
 };

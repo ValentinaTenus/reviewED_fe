@@ -5,11 +5,15 @@ import { IconName } from "~/common/enums/index";
 import { SectionTitle } from "../section-title";
 import styles from "./styles.module.scss";
 
-const PricingBar: React.FC = () => {
+type PricingBarProperties = {
+	price: string;
+};
+
+const PricingBar: React.FC<PricingBarProperties> = ({ price }) => {
 	return (
 		<div className={styles["main_content"]}>
-			<SectionTitle iconName={IconName.DOLLAR_SIGN} title="Ціна за навчання" />2
-			000 грн (місяць)
+			<SectionTitle iconName={IconName.DOLLAR_SIGN} title="Ціна за навчання:" />
+			{price}
 		</div>
 	);
 };

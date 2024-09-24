@@ -14,7 +14,7 @@ const Category: React.FC<CategoryProperties> = ({ categoryName }) => {
 			<h4 className={styles["categories_header"]}>{categoryName}</h4>
 			<ul className={styles["categories_list"]}>
 				{mockSkills.map((item, index) => {
-					return <CategoryItem key={index} reference="#" title={item} />;
+					return <CategoryItem key={index} title={item} />;
 				})}
 			</ul>
 		</div>

@@ -5,11 +5,15 @@ import { IconName } from "~/common/enums/index";
 import { SectionTitle } from "../section-title";
 import styles from "./styles.module.scss";
 
-const TargetGroupSection: React.FC = () => {
+type TargetGroupProperties = {
+	targetGroup: string;
+};
+
+const TargetGroupSection: React.FC<TargetGroupProperties> = ({targetGroup}) => {
 	return (
 		<div className={styles["main_content"]}>
 			<SectionTitle iconName={IconName.PEOPLE} title="Для кого:" />
-			Молодша школа, середня школа, студенти, дорослі, пенсіонери
+			{targetGroup}
 		</div>
 	);
 };
