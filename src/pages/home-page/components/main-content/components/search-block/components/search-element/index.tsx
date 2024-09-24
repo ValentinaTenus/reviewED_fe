@@ -209,8 +209,9 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 	const handleSelectedCompanyFromAll = useCallback(
 		({ value }: { value: number | string }) => {
 			setSelectedCompanyFromAll(value.toString());
+			void dispatch(setCompaniesFilters({ name: value.toString() }));
 		},
-		[],
+		[dispatch],
 	);
 
 	const handleSelectedCoursesCategory = useCallback(
