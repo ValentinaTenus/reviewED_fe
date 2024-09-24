@@ -18,7 +18,7 @@ const CompaniesCategories: React.FC<Properties> = ({
 }) => {
 	return (
 		<div className={styles["companies_categories__container"]}>
-			<p className={styles["companies_categories__text"]}>Company Type</p>
+			<p className={styles["companies_categories__text"]}>Категорія компанії</p>
 			<div className={styles["companies_categories__content"]}>
 				{categories.map((category) => (
 					<CompanyCategory
