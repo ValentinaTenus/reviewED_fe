@@ -1,20 +1,45 @@
-import { httpMethods } from "~/common/enums/index.ts";
-import { type AuthResponseDto } from "~/common/types/index.ts";
+import { HttpMethods } from "~/common/enums/index.ts";
+import {
+	type AuthResponseDto,
+	type LoginResponseDto,
+	type LogOutRequestDto,
+} from "~/common/types/index.ts";
 
 import { api } from "../services.ts";
 import { authApiPath } from "./constants.ts";
 
 export const authApi = api.injectEndpoints({
 	endpoints: (builder) => ({
-		login: builder.query<AuthResponseDto, undefined>({
+		getLoginUrl: builder.query<AuthResponseDto, undefined>({
 			query: () => {
 				return {
-					method: httpMethods.GET,
+					method: HttpMethods.GET,
 					url: authApiPath.LOGIN,
+				};
+			},
+		}),
+		login: builder.query<LoginResponseDto, string>({
+			query: (code: string) => {
+				return {
+					method: HttpMethods.GET,
+					url: `${authApiPath.LINKEDIN_CALLBACK}?code=${code}`,
+				};
+			},
+		}),
+		logOut: builder.query<string, LogOutRequestDto>({
+			query: (refresh) => {
+				return {
+					body: { refresh },
+					method: HttpMethods.POST,
+					url: authApiPath.LOGOUT,
 				};
 			},
 		}),
 	}),
 });
 
-export const { useLazyLoginQuery, useLoginQuery } = authApi;
+export const {
+	useLazyGetLoginUrlQuery,
+	useLazyLoginQuery,
+	useLazyLogOutQuery,
+} = authApi;

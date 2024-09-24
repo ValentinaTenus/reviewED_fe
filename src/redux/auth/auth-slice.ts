@@ -1,16 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { type GetTokensResponseDto, type User } from "~/common/types/index";
+import { type GetTokensResponseDto } from "~/common/types/index";
+import { UserWithStaff } from "~/common/types/user";
 
 type AuthState = {
-	accessToken: null | string;
-	refreshToken: null | string;
-	user: null | User;
+	access: null | string;
+	refresh: null | string;
+	user: null | UserWithStaff;
 };
 
 const initialState: AuthState = {
-	accessToken: null,
-	refreshToken: null,
+	access: null,
+	refresh: null,
 	user: null,
 };
 
@@ -20,14 +21,14 @@ const authSlice = createSlice({
 	reducers: {
 		logout: (state) => {
 			state.user = null;
-			state.accessToken = null;
-			state.refreshToken = null;
+			state.access = null;
+			state.refresh = null;
 		},
 		setTokens: (state, action: PayloadAction<GetTokensResponseDto>) => {
-			state.accessToken = action.payload.access;
-			state.refreshToken = action.payload.refresh;
+			state.access = action.payload.access;
+			state.refresh = action.payload.refresh;
 		},
-		setUser: (state, action: PayloadAction<User>) => {
+		setUser: (state, action: PayloadAction<UserWithStaff>) => {
 			state.user = action.payload;
 		},
 	},

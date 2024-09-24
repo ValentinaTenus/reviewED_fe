@@ -17,6 +17,7 @@ import { locationsReducer } from "./locations/locations-slice.ts";
 import { reviewsModerationApi } from "./reviews-moderation/reviews-moderation-api.ts";
 import { reviewsModerationReducer } from "./reviews-moderation/reviews-moderation-slice.ts";
 import { api } from "./services.ts";
+import { userApi } from "./user/user-api.ts";
 
 const rootReducer = combineReducers({
 	[api.reducerPath]: api.reducer,
@@ -32,12 +33,13 @@ const rootReducer = combineReducers({
 	locationsApiSlice: locationsApi.reducer,
 	rewiewsModeration: reviewsModerationReducer,
 	rewiewsModerationApiSlice: reviewsModerationApi.reducer,
+	user: userApi.reducer,
 });
 
 const persistConfig = {
 	key: "root",
 	storage,
-	whitelist: ["companies"],
+	whitelist: ["auth", "companies"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
