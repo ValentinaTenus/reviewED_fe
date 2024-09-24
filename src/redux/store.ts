@@ -9,8 +9,6 @@ import { categoriesReducer } from "./categories/categories-slice.ts";
 import { companiesApi } from "./companies/companies-api.ts";
 import { companiesReducer } from "./companies/companies-slice.ts";
 import { coursesApi } from "./courses/courses-api.ts";
-import { coursesApiTemp } from "./courses/courses-api-temp.ts";
-import filterReducer from "./courses/courses-filter-slice.ts";
 import { coursesReducer } from "./courses/courses-slice.ts";
 import { locationsApi } from "./locations/locations-api.ts";
 import { locationsReducer } from "./locations/locations-slice.ts";
@@ -24,8 +22,6 @@ const rootReducer = combineReducers({
 	companiesApiSlice: companiesApi.reducer,
 	courses: coursesReducer,
 	coursesApiSlice: coursesApi.reducer,
-	[coursesApiTemp.reducerPath]: coursesApiTemp.reducer,
-	filter: filterReducer,
 	locations: locationsReducer,
 	locationsApiSlice: locationsApi.reducer,
 });
@@ -44,9 +40,8 @@ const store = configureStore({
 			serializableCheck: {
 				ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
 			},
-		})
-			.concat(api.middleware)
-			.concat(coursesApiTemp.middleware),
+		}).concat(api.middleware),
+
 	reducer: persistedReducer,
 });
 
