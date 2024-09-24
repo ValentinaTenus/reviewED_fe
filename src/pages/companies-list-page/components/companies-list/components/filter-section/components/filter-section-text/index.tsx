@@ -8,17 +8,15 @@ const FilterSectionText: React.FC = () => {
 	return (
 		<div className={styles["companies_filter__text_section"]}>
 			<h1 className={styles["companies_filter__title"]}>
-				Discover Leading Course Provider
+				Відкрийте для себе провідного постачальника курсів
 			</h1>
 			<p className={styles["companies_filter__text"]}>
-				Search and compare educational companies. All reviews are verified by
-				real students to help you choose wisely
+				Шукайте та порівнюйте навчальні компанії. Усі відгуки перевірені
+				реальними студентами, щоб допомогти вам зробити правильний вибір.
 			</p>
 			<div className={styles["companies_filter__companies_number"]}>
 				<BuildingIcon className={styles["companies_filter__building_icon"]} />
-				<p className={styles["companies_filter__number"]}>
-					1,000,000 Companies
-				</p>
+				<p className={styles["companies_filter__number"]}>1,000,000 Компаній</p>
 			</div>
 		</div>
 	);

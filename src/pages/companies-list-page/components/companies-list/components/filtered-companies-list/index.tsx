@@ -28,7 +28,9 @@ const FilteredCompaniesList: React.FC<FilteredCompaniesListProperties> = ({
 		<div className={styles["filtered_companies__container"]}>
 			<div className={styles["filtered_companies__sort_and_view"]}>
 				<div className={styles["filtered_companies__view_by"]}>
-					<p className={styles["filtered_companies__view_text"]}>View by</p>
+					<p className={styles["filtered_companies__view_text"]}>
+						Переглянути як
+					</p>
 					<ViewTabs defaultViewStyle={viewStyle} onChange={onChangeViewStyle} />
 				</div>
 				<div className={styles["filtered_companies__sort_button"]}>
