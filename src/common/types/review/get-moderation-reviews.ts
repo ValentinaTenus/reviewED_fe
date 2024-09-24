@@ -7,10 +7,10 @@ type GetModerationReviews = {
 
 type ModerationReviews = {
 	avg_rating: number;
-	email: string;
+	author_email: string;
 	id: number;
-	logo_company: string;
-	profile_link: string;
+	logo: string;
+	author_profile_link: string;
 	rating: number;
 	related_entity_name: string;
 	status: string;

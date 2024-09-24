@@ -14,6 +14,7 @@ const Header: React.FC = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 	const user = true;
+	const isModerator = true;
 
 	const handleToggleMenu = useCallback(() => {
 		setIsMenuOpen(!isMenuOpen);
@@ -59,6 +60,16 @@ const Header: React.FC = () => {
 										<li className={styles["user_menu_list_item"]}>
 											<a href="#">Ваші відгуки</a>
 										</li>
+										{isModerator && (
+											<>
+												<li className={styles["user_menu_list_item"]}>
+													<a href="/moderators-page">Модерація</a>
+												</li>
+												<li className={styles["user_menu_list_item"]}>
+													<a href="#">Звернення користувачів</a>
+												</li>
+											</>
+										)}
 										<li className={styles["user_menu_list_item"]}>
 											<a href="#">
 												<LogOutIcon />

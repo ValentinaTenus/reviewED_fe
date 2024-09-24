@@ -9,7 +9,7 @@ type ReviewModeratorsCardProps = {
 const ReviewModeratorsCard: React.FC<ReviewModeratorsCardProps> = ({
 	review,
 }) => {
-	return <div>email: {review.email}</div>;
+	return <div>email: {review.author_email}</div>;
 };
 
 export { ReviewModeratorsCard };
