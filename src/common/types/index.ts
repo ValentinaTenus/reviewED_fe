@@ -1,4 +1,4 @@
-export { type AuthResponseDto } from "./auth/index";
+export { type AuthResponseDto, type GetTokensResponseDto } from "./auth/index";
 export { type Category } from "./category/index";
 export {
 	type Company,

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import AuthImage from "~/assets/images/auth-image.png";
 import Logo from "~/assets/images/logo.svg?react";
@@ -11,7 +10,6 @@ import styles from "./styles.module.scss";
 
 const AuthPage: React.FC = () => {
 	const [auth] = useLazyLoginQuery();
-	const navigate = useNavigate();
 	const [serverError, setServerError] = useState("");
 
 	const handleLogin = async () => {
@@ -19,7 +17,7 @@ const AuthPage: React.FC = () => {
 			const response = await auth(undefined).unwrap();
 
 			if (response.url) {
-				navigate(response.url);
+				window.location.href = response.url;
 			}
 		} catch (error: unknown) {
 			setServerError((error as Error).message);

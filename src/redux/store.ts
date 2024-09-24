@@ -5,7 +5,7 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
 import { authApi } from "./auth/auth-api.ts";
-import { userReducer } from "./auth/auth-slice.ts";
+import { authReducer } from "./auth/auth-slice.ts";
 import { categoriesApi } from "./categories/categories-api.ts";
 import { categoriesReducer } from "./categories/categories-slice.ts";
 import { companiesApi } from "./companies/companies-api.ts";
@@ -20,7 +20,8 @@ import { api } from "./services.ts";
 
 const rootReducer = combineReducers({
 	[api.reducerPath]: api.reducer,
-	auth: authApi.reducer,
+	auth: authReducer,
+	authApiSlice: authApi.reducer,
 	categories: categoriesReducer,
 	categoriesApiSlice: categoriesApi.reducer,
 	companies: companiesReducer,
@@ -31,7 +32,6 @@ const rootReducer = combineReducers({
 	locationsApiSlice: locationsApi.reducer,
 	rewiewsModeration: reviewsModerationReducer,
 	rewiewsModerationApiSlice: reviewsModerationApi.reducer,
-	user: userReducer,
 });
 
 const persistConfig = {
