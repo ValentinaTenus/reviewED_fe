@@ -45,7 +45,7 @@ const QuestionAndAnswer: React.FC<QuestionAndAnswerSectionProperties> = ({
 	}, [screenWidth]);
 
 	const handleSeeAllClick = useCallback(() => {
-		navigate(AppRoute.QUESTION_AND_ANSWERS);
+		navigate(AppRoute.FAQ_PAGE);
 	}, [navigate]);
 
 	return (
