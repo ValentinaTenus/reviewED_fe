@@ -6,10 +6,8 @@ import styles from "./styles.module.scss";
 type CategoryProperties = {
 	categoryName: string;
 };
-const mockCategoriesNumber = 2;
-const mockSkills = new Array(mockCategoriesNumber).fill(
-	"Програмування, розробка",
-);
+
+const mockSkills = ["Програмування, розробка"];
 const Category: React.FC<CategoryProperties> = ({ categoryName }) => {
 	return (
 		<div>

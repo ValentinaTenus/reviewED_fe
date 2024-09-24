@@ -15,8 +15,8 @@ const SectionTitle: React.FC<SectionTitleProperties> = ({
 	title,
 }) => {
 	return (
-		<span className={styles["main_content"]}>
-			<Icon name={iconName} />
+		<span className={styles["section_title"]}>
+			<Icon className={styles["section_title__icon"]} name={iconName} />
 			{title}
 		</span>
 	);
