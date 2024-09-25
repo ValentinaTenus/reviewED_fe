@@ -15,7 +15,9 @@ export const companiesApi = api.injectEndpoints({
 				return {
 					method: httpMethods.GET,
 					params: filters,
-					url: companiesApiPath.ROOT,
+					url:
+						`https://reviewed-api.azurewebsites.net/api/v1/` +
+						companiesApiPath.ROOT,
 				};
 			},
 			serializeQueryArgs: ({ endpointName }) => {
@@ -53,7 +55,10 @@ export const companiesApi = api.injectEndpoints({
 		getCompanyById: builder.query<Company, string | undefined>({
 			query: (id) => ({
 				method: httpMethods.GET,
-				url: companiesApiPath.ROOT + `/${id}`,
+				url:
+					`https://reviewed-api.azurewebsites.net/api/v1/` +
+					companiesApiPath.ROOT +
+					`/${id}`,
 			}),
 		}),
 	}),

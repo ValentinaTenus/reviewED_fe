@@ -6,17 +6,25 @@ import ArrowDown from "~/assets/images/arrow-down.svg?react";
 import ArrowRight from "~/assets/images/arrow-right.svg?react";
 import ArrowRightWide from "~/assets/images/arrow-right-2.svg?react";
 import ArrowUp from "~/assets/images/arrow-up.svg?react";
+import Audience from "~/assets/images/audience.svg?react";
+import Bank from "~/assets/images/bank.svg?react";
 import Phone from "~/assets/images/call.svg?react";
 import Facebook from "~/assets/images/facebook.svg?react";
+import Global from "~/assets/images/global.svg?react";
 import Linkedin from "~/assets/images/iconoir_linkedin.svg?react";
 import ListView from "~/assets/images/list-view.svg?react";
+import Location from "~/assets/images/location.svg?react";
 import Minus from "~/assets/images/minus.svg?react";
 import Plus from "~/assets/images/plus.svg?react";
+import Price from "~/assets/images/price.svg?react";
 import SearchIcon from "~/assets/images/search-normal.svg?react";
 import ShieldTick from "~/assets/images/shield-tick.svg?react";
+import ShieldTickGreen from "~/assets/images/shield-tick-green.svg?react";
 import Email from "~/assets/images/sms.svg?react";
 import SortIcon from "~/assets/images/sort.svg?react";
+import Star from "~/assets/images/star.svg?react";
 import TableView from "~/assets/images/table-view.svg?react";
+import Teacher from "~/assets/images/teacher.svg?react";
 import Xrp from "~/assets/images/xrp-(xrp).svg?react";
 import Youtube from "~/assets/images/youtube.svg?react";
 import { type IconName } from "~/common/enums/index";
@@ -31,17 +39,25 @@ const iconNameToSvg: Record<
 	arrowRightLong: ArrowRightLong,
 	arrowRightWide: ArrowRightWide,
 	arrowUp: ArrowUp,
+	audience: Audience,
+	bank: Bank,
 	email: Email,
 	facebook: Facebook,
+	global: Global,
 	linkedin: Linkedin,
 	listView: ListView,
+	location: Location,
 	minus: Minus,
 	phone: Phone,
 	plus: Plus,
+	price: Price,
 	search: SearchIcon,
 	shieldTick: ShieldTick,
+	shieldTickGreen: ShieldTickGreen,
 	sort: SortIcon,
+	star: Star,
 	tableView: TableView,
+	teacher: Teacher,
 	xrp: Xrp,
 	youtube: Youtube,
 };

@@ -21,7 +21,9 @@ export const coursesApi = api.injectEndpoints({
 				return {
 					method: httpMethods.GET,
 					params: filters,
-					url: coursesApiPath.ROOT,
+					url:
+						`https://reviewed-api.azurewebsites.net/api/v1/` +
+						coursesApiPath.ROOT,
 				};
 			},
 			serializeQueryArgs: ({ endpointName }) => {
@@ -37,14 +39,17 @@ export const coursesApi = api.injectEndpoints({
 					currentArg?.title !== previousArg?.title ||
 					currentArg?.category_by_id !== previousArg?.category_by_id ||
 					currentArg?.subcategory_by_id !== previousArg?.subcategory_by_id ||
-					currentArg?.city !== previousArg?.city
+					currentArg?.city !== previousArg?.city ||
+					currentArg?.company_id !== previousArg?.company_id
 				);
 			},
 			query: (filters: GetCoursesRequestQuery = {}) => {
 				return {
 					method: httpMethods.GET,
 					params: filters,
-					url: coursesApiPath.ROOT,
+					url:
+						`https://reviewed-api.azurewebsites.net/api/v1/` +
+						coursesApiPath.ROOT,
 				};
 			},
 			serializeQueryArgs: ({ endpointName }) => {

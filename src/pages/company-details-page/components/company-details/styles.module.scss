@@ -1,0 +1,43 @@
+.company-details_container {
+	padding: 30px 86px 0px;
+	width: 100%;
+	font-family: "Open Sans";
+	background-color: #fafafa;
+}
+
+h2 {
+	font-size: 32px;
+	font-weight: bold;
+}
+
+h3 {
+	font-size: 24px;
+	font-weight: 500;
+	line-height: 1.2;
+}
+
+/*-----------------------------*/
+
+@media (max-width: 1200px) {
+	.company-details_container {
+		padding: 30px 75px 0px;
+	}
+}
+
+@media (max-width: 992px) {
+	.company-details_container {
+		padding: 30px 65px 0px;
+	}
+}
+
+@media (max-width: 768px) {
+	.company-details_container {
+		padding: 30px 50px 0px;
+	}
+}
+
+@media (max-width: 576px) {
+	.company-details_container {
+		padding: 30px 40px 0px;
+	}
+}
