@@ -20,11 +20,11 @@ export const authApi = api.injectEndpoints({
 				};
 			},
 		}),
-		login: builder.query<LoginResponseDto, string>({
-			query: (code: string) => {
+		login: builder.query<LoginResponseDto, { code: string; state: string }>({
+			query: ({ code, state }) => {
 				return {
 					method: HttpMethods.GET,
-					url: `${authApiPath.LINKEDIN_CALLBACK}?code=${code}?redirect_uri=${REDIRECT_URI}`,
+					url: `${authApiPath.LINKEDIN_CALLBACK}?code=${code}?state=${state}?redirect_uri=${REDIRECT_URI}`,
 				};
 			},
 		}),

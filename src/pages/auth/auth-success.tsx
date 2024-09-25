@@ -14,6 +14,7 @@ const AuthSuccess: React.FC = () => {
 	const location = useLocation();
 	const queryParams = new URLSearchParams(location.search);
 	const code = queryParams.get("code");
+	const state = queryParams.get("state");
 
 	const dispatch = useDispatch();
 
@@ -22,10 +23,10 @@ const AuthSuccess: React.FC = () => {
 	const [login, { data, isLoading }] = useLazyLoginQuery();
 
 	const sendCode = useCallback(
-		async (code: string) => {
-			if (code) {
+		async (code: string, state: string) => {
+			if (code && state) {
 				try {
-					const { data } = await login(code);
+					const { data } = await login({ code, state });
 
 					if (data) {
 						void dispatch(setUser(data?.user_info));
@@ -36,7 +37,6 @@ const AuthSuccess: React.FC = () => {
 							}),
 						);
 					}
-					// navigate(AppRoute.ROOT);
 					console.log(data, "data");
 				} catch (error: unknown) {
 					const loadError = ((error as FetchBaseQueryError).data as {
@@ -52,10 +52,10 @@ const AuthSuccess: React.FC = () => {
 	);
 	console.log(code, "code");
 	useEffect(() => {
-		if (code) {
-			sendCode(code);
+		if (code && state) {
+			sendCode(code, state);
 		}
-	}, [code, sendCode]);
+	}, [code, state, sendCode]);
 
 	return (
 		<div className={styles["auth_page"]}>
