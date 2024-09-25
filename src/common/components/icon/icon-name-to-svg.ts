@@ -7,8 +7,10 @@ import ArrowRight from "~/assets/images/arrow-right.svg?react";
 import ArrowRightWide from "~/assets/images/arrow-right-2.svg?react";
 import ArrowUp from "~/assets/images/arrow-up.svg?react";
 import Phone from "~/assets/images/call.svg?react";
+import Close from "~/assets/images/close.svg?react";
 import DollarSign from "~/assets/images/dollar-circle.svg?react";
 import Facebook from "~/assets/images/facebook.svg?react";
+import Filter from "~/assets/images/filter.svg?react";
 import Linkedin from "~/assets/images/iconoir_linkedin.svg?react";
 import LinkedInLogo from "~/assets/images/linkedIn-logo.svg?react";
 import ListView from "~/assets/images/list-view.svg?react";
@@ -34,9 +36,11 @@ const iconNameToSvg: Record<
 	arrowRightLong: ArrowRightLong,
 	arrowRightWide: ArrowRightWide,
 	arrowUp: ArrowUp,
+	close: Close,
 	dollarSign: DollarSign,
 	email: Email,
 	facebook: Facebook,
+	filter: Filter,
 	linkedin: Linkedin,
 	linkedinLogo: LinkedInLogo,
 	listView: ListView,

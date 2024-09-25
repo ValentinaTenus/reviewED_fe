@@ -7,6 +7,7 @@ import "~/assets/styles/index.scss";
 
 import { App } from "./app/App.tsx";
 import { AppRoute } from "./common/enums/app-route.enum.ts";
+import { CourseList } from "./pages/course-list-page/index.tsx";
 import { AuthSuccess } from "./pages/auth/auth-success.tsx";
 import { FaqPage } from "./pages/faq-page/index.tsx";
 import {
@@ -48,6 +49,10 @@ const routes = createBrowserRouter([
 			{
 				element: <CourseDetailsPage />,
 				path: AppRoute.COURSE_DETAILS_TEST,
+			},
+			{
+				element: <CourseList />,
+				path: AppRoute.ALL_COURSES,
 			},
 		],
 		element: <App />,

@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from "react";
 
+import FilterIcon from "~/assets/images/filter.svg?react";
 import {
 	Button,
 	Icon,
@@ -19,16 +20,22 @@ import { type DropdownOption } from "~/common/types/index";
 import styles from "./styles.module.scss";
 
 type SearchBarProperties = {
+	filtersLength?: number;
 	iconSearch?: boolean;
+	isFilterButton?: boolean;
 	onInputChange?: (value: string) => [];
+	onOpenFilter?: () => void;
 	onSubmit: (searchTerm: string) => void;
 	placeholder: string;
 	value: string;
 };
 
 const SearchBar: React.FC<SearchBarProperties> = ({
+	filtersLength,
 	iconSearch = false,
+	isFilterButton,
 	onInputChange,
+	onOpenFilter,
 	onSubmit,
 	placeholder,
 	value,
@@ -92,7 +99,18 @@ const SearchBar: React.FC<SearchBarProperties> = ({
 							suggestions={filteredSuggestions}
 						/>
 					</div>
-
+					{isFilterButton && (
+						<Button
+							appendedIcon={
+								<FilterIcon className={styles["filter-button__icon"]} />
+							}
+							className={styles["filter-button"]}
+							onClick={onOpenFilter}
+							variant={ButtonVariant.DEFAULT}
+						>
+							Фільтр ({filtersLength})
+						</Button>
+					)}
 					{screenWidth > ScreenBreakpoints.TABLET ? (
 						<div className={styles["search_button_wrapper"]}>
 							<Button
