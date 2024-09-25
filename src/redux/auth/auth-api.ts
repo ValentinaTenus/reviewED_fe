@@ -24,7 +24,7 @@ export const authApi = api.injectEndpoints({
 			query: ({ code, state }) => {
 				return {
 					method: HttpMethods.GET,
-					url: `${authApiPath.LINKEDIN_CALLBACK}?code=${code}?state=${state}?redirect_uri=${REDIRECT_URI}`,
+					url: `${authApiPath.LINKEDIN_CALLBACK}?code=${code}&state=${state}&redirect_uri=${REDIRECT_URI}`,
 				};
 			},
 		}),
