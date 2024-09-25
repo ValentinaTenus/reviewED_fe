@@ -13,11 +13,11 @@ import styles from "./styles.module.scss";
 
 const BreadCrumbPaths = [
 	{
-		label: "Main page",
+		label: "Головна сторінка",
 		path: AppRoute.ROOT,
 	},
 	{
-		label: "Companies",
+		label: "Компанії",
 	},
 ];
 
@@ -50,7 +50,7 @@ const FilterSection: React.FC<FilterSectionProperties> = ({
 					<div className={styles["companies_filter__search_bar"]}>
 						<SearchBar
 							onSubmit={onChangeSearchTerm}
-							placeholder="Find your perfect company"
+							placeholder="Знайди свою ідеальну компанію"
 							value={searchTerm}
 						/>
 						{screenWidth > ScreenBreakpoints.TABLET && (

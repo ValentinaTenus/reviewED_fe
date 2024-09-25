@@ -63,7 +63,7 @@ const SortDropdown: React.FC<Properties> = ({
 
 	return (
 		<div className={styles["sort_container"]}>
-			<p className={styles["sort_text"]}>Sort by</p>
+			<p className={styles["sort_text"]}>Сортувати за</p>
 			<div
 				className={clsx(
 					styles["dropdown_container"],

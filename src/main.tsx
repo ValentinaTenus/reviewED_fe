@@ -12,6 +12,7 @@ import { FaqPage } from "./pages/faq-page/index.tsx";
 import {
 	AuthPage,
 	CompaniesListPage,
+	CourseDetailsPage,
 	HomePage,
 	ModeratorsPage,
 } from "./pages/index.ts";
@@ -43,6 +44,10 @@ const routes = createBrowserRouter([
 			{
 				element: <FaqPage />,
 				path: AppRoute.FAQ_PAGE,
+			},
+			{
+				element: <CourseDetailsPage />,
+				path: AppRoute.COURSE_DETAILS_TEST,
 			},
 		],
 		element: <App />,

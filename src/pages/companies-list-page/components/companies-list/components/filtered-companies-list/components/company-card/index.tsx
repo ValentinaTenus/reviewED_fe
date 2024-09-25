@@ -36,7 +36,7 @@ const CompanyCard: React.FC<CompanyCardProperties> = ({ company }) => {
 						size={RatingSize.MEDIUM}
 					/>
 					<p className={styles["company_card__courses_amount"]}>
-						{company.total_courses} courses
+						{company.total_courses} курсів
 					</p>
 				</div>
 			</div>
@@ -45,7 +45,7 @@ const CompanyCard: React.FC<CompanyCardProperties> = ({ company }) => {
 				<h4 className={styles["company_card__company_name"]}>{company.name}</h4>
 				<div className={styles["company_card__reviews_container"]}>
 					<span className={styles["company_card__reviews_text"]}>
-						{company.total_reviews_count} Reviews
+						{company.total_reviews_count} Відгуків
 					</span>
 					<ShieldTick className={styles["company_card__reviews_icon"]} />
 				</div>

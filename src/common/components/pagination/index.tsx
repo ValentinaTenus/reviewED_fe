@@ -98,13 +98,16 @@ const Pagination: React.FC<PaginationProps> = ({
 		>
 			<IconButton
 				aria-label="Previous page"
-				className={clsx(styles["pagination__arrow"], {
+				className={clsx(styles["pagination__arrow_button"], {
 					[styles["disabled"]]: currentButton === FIRST_PAGE,
 				})}
 				isDisabled={currentButton === FIRST_PAGE}
 				onClick={handlePrevious}
 			>
-				<Icon name={IconName.ARROW_LEFT_LONG} />
+				<Icon
+					className={styles["pagination__arrow"]}
+					name={IconName.ARROW_LEFT_LONG}
+				/>
 			</IconButton>
 
 			{displayedPages.map((item, index) => (
@@ -122,16 +125,18 @@ const Pagination: React.FC<PaginationProps> = ({
 					{item}
 				</Button>
 			))}
-
 			<IconButton
 				aria-label="Next page"
-				className={clsx(styles["pagination__arrow"], {
+				className={clsx(styles["pagination__arrow_button"], {
 					[styles["disabled"]]: currentButton === numberOfPages.length,
 				})}
 				isDisabled={currentButton === numberOfPages.length}
 				onClick={handleNext}
 			>
-				<Icon name={IconName.ARROW_RIGHT_LONG} />
+				<Icon
+					className={styles["pagination__arrow"]}
+					name={IconName.ARROW_RIGHT_LONG}
+				/>
 			</IconButton>
 		</nav>
 	);

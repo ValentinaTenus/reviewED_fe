@@ -51,6 +51,7 @@ const store = configureStore({
 				ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
 			},
 		}).concat(api.middleware),
+
 	reducer: persistedReducer,
 });
 

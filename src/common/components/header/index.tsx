@@ -1,6 +1,6 @@
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import React, { useCallback, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import Logo from "~/assets/images/logo.svg?react";
 import LogOutIcon from "~/assets/images/logout.svg?react";
@@ -54,9 +54,9 @@ const Header: React.FC = () => {
 		<div className={styles["header_wrapper"]}>
 			<div className={styles["header_content"]}>
 				<div className={styles["header_logo_container"]}>
-					<div className={styles["header_logo"]}>
+					<Link className={styles["header_logo"]} to={AppRoute.ROOT}>
 						<Logo />
-					</div>
+					</Link>
 					<div className={styles["header_search"]}>
 						<Search />
 					</div>

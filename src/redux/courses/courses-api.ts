@@ -37,6 +37,10 @@ export const coursesApi = api.injectEndpoints({
 					currentArg?.title !== previousArg?.title ||
 					currentArg?.category_by_id !== previousArg?.category_by_id ||
 					currentArg?.subcategory_by_id !== previousArg?.subcategory_by_id ||
+					currentArg?.limit !== previousArg?.limit ||
+					currentArg?.offset !== previousArg?.offset ||
+					currentArg?.company_id !== previousArg?.company_id ||
+					currentArg?.sort !== previousArg?.sort ||
 					currentArg?.city !== previousArg?.city
 				);
 			},
