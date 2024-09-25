@@ -20,7 +20,7 @@ const AuthSuccess: React.FC = () => {
 
 	const [serverError, setServerError] = useState("");
 
-	const [login, { data, isLoading }] = useLazyLoginQuery();
+	const [login, { isLoading }] = useLazyLoginQuery();
 
 	const sendCode = useCallback(
 		async (code: string) => {
@@ -60,7 +60,6 @@ const AuthSuccess: React.FC = () => {
 	return (
 		<div className={styles["auth_page"]}>
 			{isLoading && <Spinner variant={SpinnerVariant.MEDIUM} />}
-			{data && <p>Login successful!</p>}
 			{serverError && (
 				<p className={styles["auth__form_error"]}>{serverError}</p>
 			)}

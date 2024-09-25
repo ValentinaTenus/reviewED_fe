@@ -29,7 +29,7 @@ export const authApi = api.injectEndpoints({
 		logOut: builder.query<string, LogOutRequestDto>({
 			query: (refresh) => {
 				return {
-					body: { refresh },
+					body: refresh,
 					method: HttpMethods.POST,
 					url: authApiPath.LOGOUT,
 				};

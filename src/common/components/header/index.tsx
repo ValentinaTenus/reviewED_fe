@@ -34,17 +34,25 @@ const Header: React.FC = () => {
 	}, [navigate]);
 
 	const handleLogOut = useCallback(async () => {
+		setIsMenuOpen(false);
+
 		if (user && refresh) {
 			try {
-				await userLogout({ refresh: refresh });
-				void dispatch(logout());
-				setIsMenuOpen(false);
+				const response = await userLogout({ refresh });
+
+				if (response?.isSuccess) {
+					void dispatch(logout());
+				} else if (response?.error) {
+					throw new Error(
+						(response.error as { error: string }).error || "Hевідома помилка",
+					);
+				}
 			} catch (error: unknown) {
 				const loadError = ((error as FetchBaseQueryError).data as {
 					detail: string;
 				})
 					? ((error as FetchBaseQueryError).data as { detail: string })
-					: { detail: "Виникла невідома помилка" };
+					: { detail: (error as Error).message };
 				setServerError(loadError?.detail);
 			}
 		}
@@ -61,7 +69,7 @@ const Header: React.FC = () => {
 						<Search />
 					</div>
 				</div>
-				<div>
+				<div className={styles["header__button_container"]}>
 					{!user && (
 						<>
 							<Button
@@ -108,9 +116,9 @@ const Header: React.FC = () => {
 									</ul>
 								</div>
 							)}
-							{serverError && <p className={styles["error"]}>{serverError}</p>}
 						</div>
 					)}
+					{serverError && <p className={styles["error"]}>{serverError}</p>}
 				</div>
 			</div>
 		</div>
