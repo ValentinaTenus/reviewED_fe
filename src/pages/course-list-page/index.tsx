@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import { Footer, Header, Pagination } from "~/common/components/index";
+
 import { CourseContent } from "./components";
 import styles from "./styles.module.scss";
 
