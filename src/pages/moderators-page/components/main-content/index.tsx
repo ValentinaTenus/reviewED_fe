@@ -1,6 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
+import { SearchBar, SortDropdown } from "~/common/components";
+import {
+	moderationsReviewSortOptionsByPeriod,
+	moderationsReviewSortOptionsByStatus,
+} from "~/common/constants";
+import { DropdownOption, GetModerationReviewsRequest } from "~/common/types";
 import {
 	useGetReviewsModerationByFilterQuery,
 	// useGetReviewsModerationQuery,
@@ -9,15 +15,20 @@ import { setRewiews } from "~/redux/reviews-moderation/reviews-moderation-slice"
 
 import { ReviewModeratorsCard } from "./components/index";
 import styles from "./styles.module.scss";
-import { SearchBar, SortDropdown } from "~/common/components";
 
 const MainModeratorsContent: React.FC = () => {
-	// const { data: moderatorsReviews } = useGetReviewsModerationQuery();
+	const [searchTerm, setSearchTerm] = useState<string>("");
+	const [sortByStatus, setSortByStatus] = useState<DropdownOption["value"]>();
+	const [sortByPeriod, setSortByPeriod] = useState<DropdownOption["value"]>();
+
 	const { data: filteredModeratorsReviews } =
 		useGetReviewsModerationByFilterQuery(
 			{
-				ordering: undefined,
-				status: undefined,
+				ordering:
+					(sortByPeriod as GetModerationReviewsRequest["ordering"]) ||
+					undefined,
+				status:
+					(sortByStatus as GetModerationReviewsRequest["status"]) || undefined,
 				type: "course",
 			},
 			{
@@ -46,12 +57,11 @@ const MainModeratorsContent: React.FC = () => {
 			<section className={styles["moderators_fitters_section"]}>
 				<div className={styles["search_block"]}>
 					<p className={styles["search_title"]}>Пошук за UID</p>
-					<div>SearchBar</div>
-					{/* <SearchBar
-						onSubmit={onChangeSearchTerm}
-						placeholder="Find your perfect company"
+					<SearchBar
+						onSubmit={(term) => setSearchTerm(term)}
+						placeholder="Введіть UID відгуку"
 						value={searchTerm}
-					/> */}
+					/>
 				</div>
 				<div className={styles["fitters_block"]}>
 					<div className={styles["fitters_block__category"]}>
@@ -62,18 +72,20 @@ const MainModeratorsContent: React.FC = () => {
 					</div>
 					<div className={styles["fitters_block__sort"]}>
 						<p className={styles["fitters_block__sort_title"]}>Сортувати за</p>
-						<div>SortDropdown1</div>
-						<div>SortDropdown2</div>
-						{/* <SortDropdown
-							name="sort"
-							onChange={onChangeSortBy}
-							options={CompaniesSortOptions}
+						<SortDropdown
+							className={styles["dropdown_fullwidth"]}
+							onChange={(sortOption) => {
+								setSortByStatus(sortOption);
+							}}
+							options={moderationsReviewSortOptionsByStatus}
 						/>
 						<SortDropdown
-							name="sort"
-							onChange={onChangeSortBy}
-							options={CompaniesSortOptions}
-						/> */}
+							className={styles["dropdown_fullwidth"]}
+							onChange={(sortOption) => {
+								setSortByPeriod(sortOption);
+							}}
+							options={moderationsReviewSortOptionsByPeriod}
+						/>
 					</div>
 				</div>
 			</section>

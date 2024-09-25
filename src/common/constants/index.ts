@@ -10,6 +10,8 @@ export {
 	CoursesLinksSmartphones,
 	CoursesLinksTablets,
 } from "./courses-links/index";
+export { moderationsReviewSortOptionsByPeriod } from "./moderations-review-period-sort-options";
+export { moderationsReviewSortOptionsByStatus } from "./moderations-review-status-sort-options";
 export { OthersFooterLinks } from "./other-footer-links";
 export { ScreenBreakpoints } from "./screen-breakpoints";
 export { SocialLinks } from "./social-media-links";

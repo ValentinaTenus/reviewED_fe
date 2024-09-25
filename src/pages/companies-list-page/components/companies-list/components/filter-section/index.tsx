@@ -55,7 +55,7 @@ const FilterSection: React.FC<FilterSectionProperties> = ({
 						/>
 						{screenWidth > ScreenBreakpoints.TABLET && (
 							<SortDropdown
-								name="sort"
+								name="Sort by"
 								onChange={onChangeSortBy}
 								options={CompaniesSortOptions}
 							/>

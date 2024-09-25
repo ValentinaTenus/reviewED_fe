@@ -16,8 +16,8 @@ type Properties = {
 	className?: string;
 	isDisabled?: boolean;
 	isIconButton?: boolean;
-	name: string;
-	onChange: (value: number | string) => void;
+	name?: string;
+	onChange: (value: DropdownOption["value"]) => void;
 	options: DropdownOption[];
 };
 
@@ -25,6 +25,7 @@ const SortDropdown: React.FC<Properties> = ({
 	className,
 	isDisabled,
 	isIconButton = false,
+	name,
 	onChange,
 	options,
 }) => {
@@ -63,7 +64,7 @@ const SortDropdown: React.FC<Properties> = ({
 
 	return (
 		<div className={styles["sort_container"]}>
-			<p className={styles["sort_text"]}>Sort by</p>
+			<p className={styles["sort_text"]}>{name}</p>
 			<div
 				className={clsx(
 					styles["dropdown_container"],

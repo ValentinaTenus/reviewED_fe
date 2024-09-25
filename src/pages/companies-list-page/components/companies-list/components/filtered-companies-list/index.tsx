@@ -34,7 +34,7 @@ const FilteredCompaniesList: React.FC<FilteredCompaniesListProperties> = ({
 				<div className={styles["filtered_companies__sort_button"]}>
 					<SortDropdown
 						isIconButton
-						name="sort"
+						name="Sort by"
 						onChange={onChangeSortBy}
 						options={CompaniesSortOptions}
 					/>
