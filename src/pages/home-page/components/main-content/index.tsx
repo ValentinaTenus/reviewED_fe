@@ -37,7 +37,6 @@ const MainContent: React.FC = () => {
 	const updateVisibleItems = () => {
 		const screenWidth = window.innerWidth;
 		setScreenWidth(screenWidth);
-
 		if (screenWidth <= ScreenBreakpoints.MOBILE) {
 			setVisibleItems(VisibleCards.MOBILE);
 		} else if (screenWidth <= ScreenBreakpoints.TABLET) {

@@ -15,5 +15,7 @@ export {
 	type FooterNavigationLink,
 } from "./footer-navigation-links/index";
 export { type GetCompanyAndCourseReviewsByUserIdResponse } from "./review/index";
-export { type GetModerationReviews } from "./review/index";
+export { type GetModerationReviewsRequest } from "./review/index";
+export { type GetModerationReviewsResponse } from "./review/index";
+export { type ModerationReviews } from "./review/index";
 export { type ValueOf } from "./value-of/index";

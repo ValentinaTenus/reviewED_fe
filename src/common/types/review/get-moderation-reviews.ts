@@ -1,16 +1,24 @@
-type GetModerationReviews = {
+type GetModerationReviewsResponse = {
 	count: number;
 	next: null | string;
 	previous: null | string;
 	results: ModerationReviews[];
 };
 
+type GetModerationReviewsRequest = {
+	limit?: number;
+	offset?: number;
+	ordering?: "-time_added" | "time_added";
+	status?: "approved" | "pending" | "rejected";
+	type?: "company" | "course";
+};
+
 type ModerationReviews = {
-	avg_rating: number;
 	author_email: string;
+	author_profile_link: string;
+	avg_rating: number;
 	id: number;
 	logo: string;
-	author_profile_link: string;
 	rating: number;
 	related_entity_name: string;
 	status: string;
@@ -19,4 +27,8 @@ type ModerationReviews = {
 	type: "company_review" | "course_review";
 };
 
-export type { GetModerationReviews, ModerationReviews };
+export type {
+	GetModerationReviewsRequest,
+	GetModerationReviewsResponse,
+	ModerationReviews,
+};

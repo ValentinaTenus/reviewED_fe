@@ -8,19 +8,21 @@
 		flex-direction: column;
 		gap: 24px;
 		margin-bottom: 56px;
-		line-height: 130%;
 
 		.title {
 			font-size: var(--font-size-title);
 			font-weight: var(--font-weight-extra-bold);
+			line-height: 130%;
 		}
 		.sub_title {
 			font-size: var(--font-size-title-h4);
 			font-weight: var(--font-weight-text);
+			line-height: 130%;
 
 			span {
 				font-size: var(--font-size-title-h4);
 				font-weight: var(--font-weight-bold);
+				line-height: 130%;
 			}
 		}
 	}
