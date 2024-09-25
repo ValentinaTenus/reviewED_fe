@@ -1,4 +1,4 @@
-import { httpMethods } from "~/common/enums/index.ts";
+import { HttpMethods } from "~/common/enums/index.ts";
 import {
 	type Company,
 	type GetCompaniesRequestQuery,
@@ -13,7 +13,7 @@ export const companiesApi = api.injectEndpoints({
 		getCompanies: builder.query<Company[], GetCompaniesRequestQuery>({
 			query: (filters: GetCompaniesRequestQuery = {}) => {
 				return {
-					method: httpMethods.GET,
+					method: HttpMethods.GET,
 					params: filters,
 					url: companiesApiPath.ROOT,
 				};
@@ -41,7 +41,7 @@ export const companiesApi = api.injectEndpoints({
 			},
 			query: (filters: GetCompaniesRequestQuery = {}) => {
 				return {
-					method: httpMethods.GET,
+					method: HttpMethods.GET,
 					params: filters,
 					url: companiesApiPath.ROOT,
 				};
@@ -52,7 +52,7 @@ export const companiesApi = api.injectEndpoints({
 		}),
 		getCompanyById: builder.query<Company, string | undefined>({
 			query: (id) => ({
-				method: httpMethods.GET,
+				method: HttpMethods.GET,
 				url: companiesApiPath.ROOT + `/${id}`,
 			}),
 		}),

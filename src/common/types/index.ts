@@ -1,3 +1,9 @@
+export {
+	type AuthResponseDto,
+	type GetTokensResponseDto,
+	type LoginResponseDto,
+	type LogOutRequestDto,
+} from "./auth/index";
 export { type Category } from "./category/index";
 export {
 	type Company,
@@ -16,4 +22,5 @@ export {
 } from "./footer-navigation-links/index";
 export { type GetCompanyAndCourseReviewsByUserIdResponse } from "./review/index";
 export { type GetModerationReviews } from "./review/index";
+export { type User, type UserWithStaff } from "./user/index";
 export { type ValueOf } from "./value-of/index";
