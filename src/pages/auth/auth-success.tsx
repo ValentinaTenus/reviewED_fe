@@ -20,7 +20,7 @@ const AuthSuccess: React.FC = () => {
 
 	const [serverError, setServerError] = useState("");
 
-	const [login, { isLoading }] = useLazyLoginQuery();
+	const [login, { data, isLoading }] = useLazyLoginQuery();
 
 	const sendCode = useCallback(
 		async (code: string) => {
@@ -50,7 +50,7 @@ const AuthSuccess: React.FC = () => {
 		},
 		[dispatch, login, navigate],
 	);
-
+	console.log(code, "code");
 	useEffect(() => {
 		if (code) {
 			sendCode(code);
@@ -60,6 +60,7 @@ const AuthSuccess: React.FC = () => {
 	return (
 		<div className={styles["auth_page"]}>
 			{isLoading && <Spinner variant={SpinnerVariant.MEDIUM} />}
+			{data && <p>Success!</p>}
 			{serverError && (
 				<p className={styles["auth__form_error"]}>{serverError}</p>
 			)}

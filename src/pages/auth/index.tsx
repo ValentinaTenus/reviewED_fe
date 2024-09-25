@@ -17,9 +17,9 @@ const AuthPage: React.FC = () => {
 		try {
 			const response = await getAuthUrl(undefined).unwrap();
 			console.log(response);
-			// if (response.url) {
-			// 	window.location.href = response.url;
-			// }
+			if (response.url) {
+				window.location.href = response.url;
+			}
 		} catch (error: unknown) {
 			const loadError = ((error as FetchBaseQueryError).data as {
 				detail: string;
