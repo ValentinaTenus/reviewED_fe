@@ -77,7 +77,7 @@ export default tseslint.config(
         ],
       'prefer-const': 'error',
       'prettier/prettier': 'warn',
-      // 'no-console': 'error',
+      'no-console': 'error',
       'typesafe/no-await-without-trycatch': 'error',
       '@typescript-eslint/no-explicit-any': 'error',	
       'no-warning-comments': [

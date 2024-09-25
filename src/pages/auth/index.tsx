@@ -16,7 +16,7 @@ const AuthPage: React.FC = () => {
 	const handleLogin = useCallback(async () => {
 		try {
 			const response = await getAuthUrl(undefined).unwrap();
-			console.log(response);
+
 			if (response.url) {
 				window.location.href = response.url;
 			}
