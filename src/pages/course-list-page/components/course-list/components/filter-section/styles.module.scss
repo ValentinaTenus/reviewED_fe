@@ -1,0 +1,49 @@
+.course_filter__container {
+	display: flex;
+	flex-direction: column;
+	font-family: var(--font-family-main);
+	gap: 40px;
+}
+
+.filter-button {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 10px;
+}
+
+.filter-button__icon {
+	height: 22px;
+}
+
+.modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	z-index: 5;
+	background-color: rgba($color: #333, $alpha: 0.6);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.modal__container {
+	background-color: #fff;
+	display: flex;
+	flex-direction: column;
+	min-width: 748px;
+	min-height: 346px;
+	border-radius: 5px;
+}
+
+.modal__header {
+	display: flex;
+	justify-content: space-between;
+	min-height: 30px;
+}
+
+.modal__icon-close {
+	height: 22px;
+}
