@@ -7,6 +7,7 @@ import "~/assets/styles/index.scss";
 
 import { App } from "./app/App.tsx";
 import { AppRoute } from "./common/enums/app-route.enum.ts";
+import { AuthSuccess } from "./pages/auth/auth-success.tsx";
 import { FaqPage } from "./pages/faq-page/index.tsx";
 import {
 	AuthPage,
@@ -26,6 +27,10 @@ const routes = createBrowserRouter([
 			{
 				element: <AuthPage />,
 				path: AppRoute.AUTH,
+			},
+			{
+				element: <AuthSuccess />,
+				path: AppRoute.AUTH_SUCCESS,
 			},
 			{
 				element: <CompaniesListPage />,

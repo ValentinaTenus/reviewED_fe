@@ -108,6 +108,15 @@
   display: block;
 }
 
+.error {
+  color: var(--color-error-red);
+  font-size: var(--font-size-main-text);
+}
+
+.logout__button {
+  padding: 0;
+}
+
 @media (max-width: 768px) {
   .header_wrapper {
     padding: 8px 20px;

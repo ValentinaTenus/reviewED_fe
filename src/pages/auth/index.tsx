@@ -1,28 +1,34 @@
-import React, { useState } from "react";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import React, { useCallback, useState } from "react";
 
 import AuthImage from "~/assets/images/auth-image.png";
 import Logo from "~/assets/images/logo.svg?react";
-import { Button } from "~/common/components/index";
-import { ButtonVariant } from "~/common/enums/index";
-import { useLazyLoginQuery } from "~/redux/auth/auth-api";
+import { Button, Icon, Spinner } from "~/common/components/index";
+import { ButtonVariant, IconName, SpinnerVariant } from "~/common/enums/index";
+import { useLazyGetLoginUrlQuery } from "~/redux/auth/auth-api";
 
 import styles from "./styles.module.scss";
 
 const AuthPage: React.FC = () => {
-	const [auth] = useLazyLoginQuery();
+	const [getAuthUrl, { isLoading }] = useLazyGetLoginUrlQuery();
 	const [serverError, setServerError] = useState("");
 
-	const handleLogin = async () => {
+	const handleLogin = useCallback(async () => {
 		try {
-			const response = await auth(undefined).unwrap();
+			const response = await getAuthUrl(undefined).unwrap();
 
 			if (response.url) {
 				window.location.href = response.url;
 			}
 		} catch (error: unknown) {
-			setServerError((error as Error).message);
+			const loadError = ((error as FetchBaseQueryError).data as {
+				detail: string;
+			})
+				? ((error as FetchBaseQueryError).data as { detail: string })
+				: { detail: "Виникла невідома помилка" };
+			setServerError(loadError?.detail);
 		}
-	};
+	}, [getAuthUrl]);
 
 	return (
 		<div className={styles["auth_page"]}>
@@ -34,14 +40,32 @@ const AuthPage: React.FC = () => {
 				/>
 			</div>
 			<div className={styles["auth_form__container"]}>
-				<div className={styles["auth_form__logo"]}>
-					<Logo />
-					<h2 className={styles["auth__form_title"]}>Log in</h2>
-					<Button onClick={handleLogin} variant={ButtonVariant.OUTLINED}>
-						Linkedin
-					</Button>
-					{serverError && <p>{serverError}</p>}
-				</div>
+				<Logo className={styles["auth_form__logo"]} />
+				<h2 className={styles["auth__form_title"]}>Вхід</h2>
+				<Button
+					aria-label="Login with LinkedIn"
+					className={styles["auth__form_button"]}
+					disabled={isLoading}
+					onClick={handleLogin}
+					prependedIcon={
+						!isLoading && (
+							<Icon
+								className={styles["auth__form_button_icon"]}
+								name={IconName.LINKEDIN_LOGO}
+							/>
+						)
+					}
+					variant={ButtonVariant.SHARE_LINKEDIN}
+				>
+					{isLoading ? (
+						<Spinner variant={SpinnerVariant.SMALL} />
+					) : (
+						"Ввійти із LinkedIn"
+					)}
+				</Button>
+				{serverError && (
+					<p className={styles["auth__form_error"]}>{serverError}</p>
+				)}
 			</div>
 		</div>
 	);

@@ -17,6 +17,11 @@
   padding: 12px 20px 0 20px;
 }
 
+.user_menu__list{
+  display: flex;
+  flex-direction: column;
+}
+
 .user_menu__list_item {
   cursor: pointer;
   padding: 8px 10px;

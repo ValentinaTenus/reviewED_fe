@@ -1,23 +1,54 @@
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import React, { useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import Logo from "~/assets/images/logo.svg?react";
 import LogOutIcon from "~/assets/images/logout.svg?react";
 import MenuIcon from "~/assets/images/menu.svg?react";
 import UserIcon from "~/assets/images/user.svg?react";
 import { Button, IconButton } from "~/common/components/index";
-import { ButtonVariant } from "~/common/enums/index";
+import { AppRoute, ButtonVariant } from "~/common/enums/index";
+import { useLazyLogOutQuery } from "~/redux/auth/auth-api";
+import { logout } from "~/redux/auth/auth-slice";
+import { useAppDispatch, useAppSelector } from "~/redux/hooks.type";
 
 import { BurgerMenu, Search } from "./components/index";
 import styles from "./styles.module.scss";
 
 const Header: React.FC = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const [serverError, setServerError] = useState("");
 
-	const user = true;
+	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
+	const { refresh, user } = useAppSelector((state) => state.auth);
+
+	const [userLogout] = useLazyLogOutQuery();
 
 	const handleToggleMenu = useCallback(() => {
 		setIsMenuOpen(!isMenuOpen);
 	}, [isMenuOpen]);
+
+	const handleRedirectToLogin = useCallback(() => {
+		navigate(AppRoute.AUTH);
+	}, [navigate]);
+
+	const handleLogOut = useCallback(async () => {
+		if (user && refresh) {
+			try {
+				await userLogout({ refresh: refresh });
+				void dispatch(logout());
+				setIsMenuOpen(false);
+			} catch (error: unknown) {
+				const loadError = ((error as FetchBaseQueryError).data as {
+					detail: string;
+				})
+					? ((error as FetchBaseQueryError).data as { detail: string })
+					: { detail: "Виникла невідома помилка" };
+				setServerError(loadError?.detail);
+			}
+		}
+	}, [dispatch, refresh, user, userLogout]);
 
 	return (
 		<div className={styles["header_wrapper"]}>
@@ -35,6 +66,7 @@ const Header: React.FC = () => {
 						<>
 							<Button
 								className={styles["header__button"]}
+								onClick={handleRedirectToLogin}
 								variant={ButtonVariant.LOGIN}
 							>
 								Вхід
@@ -45,7 +77,7 @@ const Header: React.FC = () => {
 							>
 								<MenuIcon className={styles["menu__button_icon"]} />
 							</IconButton>
-							{isMenuOpen && <BurgerMenu />}
+							{isMenuOpen && <BurgerMenu onLogin={handleRedirectToLogin} />}
 						</>
 					)}
 					{user && (
@@ -57,17 +89,26 @@ const Header: React.FC = () => {
 								<div className={styles["user_menu"]}>
 									<ul className={styles["user_menu_list"]}>
 										<li className={styles["user_menu_list_item"]}>
-											<a href="#">Ваші відгуки</a>
+											{user.is_staff ? (
+												<a href="#">Модерація відгуків</a>
+											) : (
+												<a href="#">Ваші відгуки</a>
+											)}
 										</li>
 										<li className={styles["user_menu_list_item"]}>
-											<a href="#">
-												<LogOutIcon />
+											<Button
+												className={styles["logout__button"]}
+												onClick={handleLogOut}
+												prependedIcon={<LogOutIcon />}
+												variant={ButtonVariant.DEFAULT}
+											>
 												Вийти
-											</a>
+											</Button>
 										</li>
 									</ul>
 								</div>
 							)}
+							{serverError && <p className={styles["error"]}>{serverError}</p>}
 						</div>
 					)}
 				</div>

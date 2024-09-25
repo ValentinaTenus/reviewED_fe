@@ -9,6 +9,7 @@ import ArrowUp from "~/assets/images/arrow-up.svg?react";
 import Phone from "~/assets/images/call.svg?react";
 import Facebook from "~/assets/images/facebook.svg?react";
 import Linkedin from "~/assets/images/iconoir_linkedin.svg?react";
+import LinkedInLogo from "~/assets/images/linkedIn-logo.svg?react";
 import ListView from "~/assets/images/list-view.svg?react";
 import Minus from "~/assets/images/minus.svg?react";
 import Plus from "~/assets/images/plus.svg?react";
@@ -34,6 +35,7 @@ const iconNameToSvg: Record<
 	email: Email,
 	facebook: Facebook,
 	linkedin: Linkedin,
+	linkedinLogo: LinkedInLogo,
 	listView: ListView,
 	minus: Minus,
 	phone: Phone,
