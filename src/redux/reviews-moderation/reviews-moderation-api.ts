@@ -1,4 +1,4 @@
-import { httpMethods } from "~/common/enums/index.ts";
+import { HttpMethods } from "~/common/enums/index.ts";
 import { type GetModerationReviews } from "~/common/types/index.ts";
 
 import { api } from "../services.ts";
@@ -8,7 +8,7 @@ export const reviewsModerationApi = api.injectEndpoints({
 	endpoints: (builder) => ({
 		getReviewsModeration: builder.query<GetModerationReviews, void>({
 			query: () => ({
-				method: httpMethods.GET,
+				method: HttpMethods.GET,
 				url: reviewsApiPath.ROOT,
 			}),
 		}),
