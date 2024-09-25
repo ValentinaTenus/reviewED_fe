@@ -9,6 +9,7 @@ import { setRewiews } from "~/redux/reviews-moderation/reviews-moderation-slice"
 
 import { ReviewModeratorsCard } from "./components/index";
 import styles from "./styles.module.scss";
+import { SearchBar, SortDropdown } from "~/common/components";
 
 const MainModeratorsContent: React.FC = () => {
 	// const { data: moderatorsReviews } = useGetReviewsModerationQuery();
@@ -35,15 +36,48 @@ const MainModeratorsContent: React.FC = () => {
 
 	return (
 		<div className={styles["moderators_wrapper"]}>
-			<div className={styles["title_wrapper"]}>
+			<header className={styles["header_wrapper"]}>
 				<h2 className={styles["title"]}>Модерація відгуків</h2>
 				<p className={styles["sub_title"]}>
 					Знайдено: <span>{filteredModeratorsReviews?.count}</span> відгуків
 				</p>
-			</div>
-			<div>
-				<p>Пошук за UID</p>
-			</div>
+			</header>
+
+			<section className={styles["moderators_fitters_section"]}>
+				<div className={styles["search_block"]}>
+					<p className={styles["search_title"]}>Пошук за UID</p>
+					<div>SearchBar</div>
+					{/* <SearchBar
+						onSubmit={onChangeSearchTerm}
+						placeholder="Find your perfect company"
+						value={searchTerm}
+					/> */}
+				</div>
+				<div className={styles["fitters_block"]}>
+					<div className={styles["fitters_block__category"]}>
+						<p className={styles["fitters_block__category_title"]}>
+							Оберіть категорію
+						</p>
+						<div>categori filter</div>
+					</div>
+					<div className={styles["fitters_block__sort"]}>
+						<p className={styles["fitters_block__sort_title"]}>Сортувати за</p>
+						<div>SortDropdown1</div>
+						<div>SortDropdown2</div>
+						{/* <SortDropdown
+							name="sort"
+							onChange={onChangeSortBy}
+							options={CompaniesSortOptions}
+						/>
+						<SortDropdown
+							name="sort"
+							onChange={onChangeSortBy}
+							options={CompaniesSortOptions}
+						/> */}
+					</div>
+				</div>
+			</section>
+
 			{filteredModeratorsReviews?.results.map((review) => (
 				<ReviewModeratorsCard key={review.id} review={review} />
 			))}
