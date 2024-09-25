@@ -24,7 +24,6 @@ import Plus from "~/assets/images/plus.svg?react";
 import Price from "~/assets/images/price.svg?react";
 import SearchIcon from "~/assets/images/search-normal.svg?react";
 import ShieldTick from "~/assets/images/shield-tick.svg?react";
-import ShieldTickGreen from "~/assets/images/shield-tick-green.svg?react";
 import Email from "~/assets/images/sms.svg?react";
 import SortIcon from "~/assets/images/sort.svg?react";
 import Star from "~/assets/images/star.svg?react";
@@ -63,7 +62,6 @@ const iconNameToSvg: Record<
 	price: Price,
 	search: SearchIcon,
 	shieldTick: ShieldTick,
-	shieldTickGreen: ShieldTickGreen,
 	sort: SortIcon,
 	star: Star,
 	tableView: TableView,

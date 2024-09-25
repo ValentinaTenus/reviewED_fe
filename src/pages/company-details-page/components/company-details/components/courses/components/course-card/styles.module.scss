@@ -17,7 +17,7 @@
 	content: "";
 	width: 100%;
 	height: 2px;
-	background-color: #d9d9d9;
+	background-color: var(--color-grey-480);
 	left: 0;
 	bottom: -20px;
 }
@@ -39,11 +39,11 @@
 
 .course_company {
 	text-decoration: underline;
-	color: black !important;
+	color: var(--color-black) !important;
 }
 
 .course_type {
-	color: #339d5d !important;
+	color: var(--color-icon-green) !important;
 }
 
 .course_info-middle {
@@ -71,7 +71,7 @@
 .course_category {
 	padding: 5px 10px 5px 20px;
 	background-color: #ffffc1;
-	color: #cf9d00;
+	color: var(--color-yellow-600);
 	border-radius: 10px;
 	position: relative;
 }
@@ -81,7 +81,7 @@
 	content: "";
 	width: 5px;
 	height: 5px;
-	background-color: #cf9d00;
+	background-color: var(--color-yellow-600);
 	left: 10px;
 	top: 44%;
 	border-radius: 50%;
@@ -117,7 +117,21 @@
 	display: flex;
 	gap: 10px;
 	align-items: center;
-	color: #339d5d;
+	color: var(--color-icon-green);
+}
+
+.course_audience,
+.course_price,
+.course_teacher,
+.course_shield,
+.course_location {
+	width: 24px;
+	height: 24px;
+	color: var(--color-grey-400);
+}
+
+.course_shield {
+	color: var(--color-icon-green);
 }
 
 /*-----------------------------*/
@@ -130,7 +144,7 @@
 
 .body-r {
 	line-height: 1.4;
-	color: #a1a1aa;
+	color: var(--color-grey-400);
 }
 
 .items-center {
@@ -164,6 +178,9 @@
 
 	.course_star {
 		display: block;
+		width: 16px;
+		height: 16px;
+		color: var(--color-yellow-500);
 	}
 
 	.course_bottom {
@@ -176,7 +193,7 @@
 		content: "";
 		width: 100%;
 		height: 2px;
-		background-color: #d9d9d9;
+		background-color: var(--color-grey-480);
 		left: 0;
 		bottom: -10px;
 	}

@@ -15,15 +15,21 @@ const Contacts = forwardRef<HTMLDivElement, { company: Company }>(
 					<h2 className={styles["contacts_heading"]}>Контакти</h2>
 					<ul className={styles["contacts_list"]}>
 						<li className={styles["contacts_item"]}>
-							<Icon name={IconName.LOCATION} />
+							<Icon
+								className={styles["contacts_location"]}
+								name={IconName.LOCATION}
+							/>
 							<span className={styles["p-sb"]}>Online</span>
 						</li>
 						<li className={styles["contacts_item"]}>
-							<Icon name={IconName.BANK} />
+							<Icon className={styles["contacts_bank"]} name={IconName.BANK} />
 							<span className={styles["p-sb"]}>{company.name}</span>
 						</li>
 						<li className={styles["contacts_item"]}>
-							<Icon name={IconName.GLOBAL} />
+							<Icon
+								className={styles["contacts_global"]}
+								name={IconName.GLOBAL}
+							/>
 							<span className={styles["p-sb"]}>{company.website}</span>
 						</li>
 					</ul>

@@ -8,11 +8,11 @@ type Company = {
 	description: string;
 	email: string;
 	id: number;
-	// last_review_authors_avatars: null[] | string;
+	last_review_authors_avatars: null[] | string;
 	logo: string;
 	name: string;
 	phone_numbers: string[];
-	// total_courses: number;
+	total_courses: number;
 	total_reviews_count: number;
 	website: string;
 };

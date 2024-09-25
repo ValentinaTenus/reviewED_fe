@@ -24,7 +24,6 @@ enum IconName {
 	PRICE = "price",
 	SEARCH = "search",
 	SHIELD_TICK = "shieldTick",
-	SHIELD_TICK_GREEN = "shieldTickGreen",
 	SORT = "sort",
 	STAR = "star",
 	TABLE_VIEW = "tableView",

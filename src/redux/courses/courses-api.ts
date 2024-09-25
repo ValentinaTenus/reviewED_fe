@@ -21,9 +21,7 @@ export const coursesApi = api.injectEndpoints({
 				return {
 					method: HttpMethods.GET,
 					params: filters,
-					url:
-						`https://reviewed-api.azurewebsites.net/api/v1/` +
-						coursesApiPath.ROOT,
+					url: coursesApiPath.ROOT,
 				};
 			},
 			serializeQueryArgs: ({ endpointName }) => {
@@ -47,9 +45,7 @@ export const coursesApi = api.injectEndpoints({
 				return {
 					method: HttpMethods.GET,
 					params: filters,
-					url:
-						`https://reviewed-api.azurewebsites.net/api/v1/` +
-						coursesApiPath.ROOT,
+					url: coursesApiPath.ROOT,
 				};
 			},
 			serializeQueryArgs: ({ endpointName }) => {

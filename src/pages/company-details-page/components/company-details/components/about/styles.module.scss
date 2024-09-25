@@ -37,7 +37,7 @@
 }
 
 .subcategory_name {
-	color: #0a66c2;
+	color: var(--color-blue-icons);
 	text-decoration: underline;
 	position: relative;
 	padding-left: 25px;
@@ -48,7 +48,7 @@
 	content: "";
 	width: 5px;
 	height: 5px;
-	background: #0a66c2;
+	background-color: var(--color-blue-icons);
 	border-radius: 50%;
 	left: 10px;
 	top: 30%;
