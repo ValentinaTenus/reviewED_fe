@@ -10,15 +10,12 @@ type ContactProperties = {
 	title: string;
 };
 
-const Contact: React.FC<ContactProperties> = ({
-	iconName,
-	title,
-}) => {
+const Contact: React.FC<ContactProperties> = ({ iconName, title }) => {
 	return (
-		<span className={styles["contact"]}>
+		<div className={styles["contact"]}>
 			<Icon className={styles["contact__icon"]} name={iconName} />
-			{title}
-		</span>
+			<p>{title}</p>
+		</div>
 	);
 };
 

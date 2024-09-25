@@ -1,5 +1,6 @@
 import React from "react";
 
+import { ContactsBar } from "~/common/components/contacts-bar";
 import { useGetCoursesQuery } from "~/redux/courses/courses-api";
 
 import { CategoriesSection } from "./components/categories-list";
@@ -9,14 +10,13 @@ import { PricingBar } from "./components/pricing-bar";
 import { SkillsList } from "./components/skills-list";
 import { TargetGroupSection } from "./components/target-group-section";
 import styles from "./styles.module.scss";
-import { ContactsBar } from "~/common/components/contacts-bar";
 
 const MainContent: React.FC = () => {
 	const { data: courses } = useGetCoursesQuery(undefined);
 
 	const exampleCourseIndex = 0;
 	const mockCourse = courses?.[exampleCourseIndex];
-console.log(mockCourse);
+
 	return (
 		<div className={styles["main_content_wrapper"]}>
 			<div className={styles["main_content"]}>
@@ -28,7 +28,7 @@ console.log(mockCourse);
 				/>
 				<SkillsList />
 				<CategoriesSection />
-				<ContactsBar course={mockCourse}/>
+				<ContactsBar course={mockCourse} />
 			</div>
 		</div>
 	);

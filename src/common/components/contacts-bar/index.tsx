@@ -1,11 +1,11 @@
 import React from "react";
 
-import { IconName } from "~/common/enums/index";
+import { ButtonVariant, IconName } from "~/common/enums/index";
+import { type Course } from "~/common/types";
 
+import { Button } from "../button";
 import { Contact } from "./contact";
 import styles from "./styles.module.scss";
-
-import { type Course } from "~/common/types";
 
 type ContactsBarProperties = {
 	course: Course | undefined;
@@ -21,13 +21,20 @@ const defineLocation = (location: string): string => {
 
 const ContactsBar: React.FC<ContactsBarProperties> = ({ course }) => {
 	return (
-		<div className={styles["main_content"]}>
+		<div className={styles["contacts-bar"]}>
 			<Contact
-				iconName={IconName.PEOPLE}
+				iconName={IconName.LOCATION}
 				title={course ? defineLocation(course.location) : ""}
 			/>
-			<Contact iconName={IconName.PEOPLE} title={course ? course.company : ""} />
-			<Contact iconName={IconName.PEOPLE} title={course ? course.website : ""}  />
+			<Contact
+				iconName={IconName.BUILDING}
+				title={course ? course.company : ""}
+			/>
+			<Contact iconName={IconName.GLOBE} title={course ? course.website : ""} />
+			<aside>
+				<Button variant={ButtonVariant.PRIMARY} />
+				<Button variant={ButtonVariant.OUTLINED} />
+			</aside>
 		</div>
 	);
 };

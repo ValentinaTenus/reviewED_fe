@@ -1,15 +1,12 @@
 .contact {
 	align-items: center;
-	color: var(--color-yellow-600);
-	font-family: var(--font-family-main);
-	font-size: var(--font-size-title-large);
-	font-weight: var(--font-weight-semi-bold);
-	margin-right: 12px;
+	display: flex;
+	height: 24px;
+	letter-spacing: -0.06em;
 }
 
 .contact__icon {
 	height: 24px;
 	margin-right: 8px;
 	width: 24px;
-	vertical-align: middle;
 }
