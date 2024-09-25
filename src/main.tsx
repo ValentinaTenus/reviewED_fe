@@ -43,7 +43,7 @@ const routes = createBrowserRouter([
 			{
 				element: <CourseList />,
 				path: AppRoute.ALL_COURSES,
-			}
+			},
 		],
 		element: <App />,
 		path: AppRoute.ROOT,

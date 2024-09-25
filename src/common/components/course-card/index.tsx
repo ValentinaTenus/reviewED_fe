@@ -1,41 +1,41 @@
 import React, { useState } from "react";
-import clsx from "clsx";
-import styles from "./styles.module.scss";
+
 import { Icon } from "~/common/components/index";
+import { IconName, RatingSize } from "~/common/enums";
+
 import DefaultCompanyImage from "../../../assets/images/default-company-image.png";
 import { StarRating } from "../star-rating";
-import { IconName, RatingSize } from "~/common/enums";
+import styles from "./styles.module.scss";
 
 type CourseCardProps = {
 	className?: string;
-	title: string;
 	company: string;
+	description: string;
+	peopleCategories: string[];
 	price: string;
-	status: string;
 	rating: number;
 	reviewsCount: number;
 	specialization: string;
-	peopleCategories: string[];
+	status: string;
 	techCategories: string[];
-	description: string;
-	onClickDetails: () => void;
+	title: string;
 };
 
 const CourseCard: React.FC<CourseCardProps> = ({
-	className,
-	title,
 	company,
-	price,
-	status,
-	rating,
-	// //   logo,
-	reviewsCount,
-	peopleCategories,
-	techCategories,
 	description,
+	peopleCategories,
+	price,
+	rating,
+	reviewsCount,
 	specialization,
+	status,
+	techCategories,
+	title,
 }) => {
 	const [isExpanded, setIsExpanded] = useState(false);
+	const LAST_INDEX_OFFSET = 1;
+	const START_INDEX = 0;
 
 	const toggleDescription = () => {
 		setIsExpanded(!isExpanded);
@@ -48,11 +48,11 @@ const CourseCard: React.FC<CourseCardProps> = ({
 				<h2 className={styles["course-card__title"]}>{title}</h2>
 				<div className={styles["course-card__logo"]}>
 					<img
+						alt="Company logo"
 						className={styles["course-card__logo-image"]}
 						src={DefaultCompanyImage}
-						alt="Company logo"
 					/>
-					<StarRating size={RatingSize.MEDIUM} averageRating={rating} />
+					<StarRating averageRating={rating} size={RatingSize.MEDIUM} />
 				</div>
 			</div>
 
@@ -88,7 +88,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
 						key={peopleCategory}
 					>
 						{peopleCategory}
-						{index < peopleCategories.length - 1 ? ", " : ""}
+						{index < peopleCategories.length - LAST_INDEX_OFFSET ? ", " : ""}
 					</span>
 				))}
 			</div>
@@ -118,7 +118,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
 				<p className={styles["course-card__description-text"]}>
 					{isExpanded
 						? description
-						: `${description.substring(0, maxLength)}...`}
+						: `${description.substring(START_INDEX, maxLength)}...`}
 					<span
 						className={styles["course-card__description-toggle"]}
 						onClick={toggleDescription}
@@ -138,8 +138,8 @@ const CourseCard: React.FC<CourseCardProps> = ({
 					</span>
 					<span className={styles["course-card__reviews-info-verified"]}>
 						<Icon
-							name={IconName.SHIELD_TICK}
 							className={styles["course-card__reviews-info-verified-icon"]}
+							name={IconName.SHIELD_TICK}
 						/>
 						Verified Via LinkedIn
 					</span>

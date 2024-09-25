@@ -10,6 +10,7 @@ enum IconName {
 	FACEBOOK = "facebook",
 	LINKEDIN = "linkedin",
 	LIST_VIEW = "listView",
+	LOCATION = "location",
 	MINUS = "minus",
 	PEOPLE = "people",
 	PHONE = "phone",
@@ -18,10 +19,9 @@ enum IconName {
 	SHIELD_TICK = "shieldTick",
 	SORT = "sort",
 	TABLE_VIEW = "tableView",
+	TEACHER = "teacher",
 	XRP = "xrp",
 	YOUTUBE = "youtube",
-	LOCATION = "location",
-	TEACHER = "teacher",
 }
 
 export { IconName };

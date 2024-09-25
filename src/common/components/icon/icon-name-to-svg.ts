@@ -11,6 +11,7 @@ import DollarSign from "~/assets/images/dollar-circle.svg?react";
 import Facebook from "~/assets/images/facebook.svg?react";
 import Linkedin from "~/assets/images/iconoir_linkedin.svg?react";
 import ListView from "~/assets/images/list-view.svg?react";
+import Location from "~/assets/images/location.svg?react";
 import Minus from "~/assets/images/minus.svg?react";
 import People from "~/assets/images/people.svg?react";
 import Plus from "~/assets/images/plus.svg?react";
@@ -19,10 +20,9 @@ import ShieldTick from "~/assets/images/shield-tick.svg?react";
 import Email from "~/assets/images/sms.svg?react";
 import SortIcon from "~/assets/images/sort.svg?react";
 import TableView from "~/assets/images/table-view.svg?react";
+import Teacher from "~/assets/images/teacher.svg?react";
 import Xrp from "~/assets/images/xrp-(xrp).svg?react";
 import Youtube from "~/assets/images/youtube.svg?react";
-import Location from "~/assets/images/location.svg?react";
-import Teacher from "~/assets/images/teacher.svg?react";
 import { type IconName } from "~/common/enums/index";
 
 const iconNameToSvg: Record<
@@ -40,6 +40,7 @@ const iconNameToSvg: Record<
 	facebook: Facebook,
 	linkedin: Linkedin,
 	listView: ListView,
+	location: Location,
 	minus: Minus,
 	people: People,
 	phone: Phone,
@@ -48,10 +49,9 @@ const iconNameToSvg: Record<
 	shieldTick: ShieldTick,
 	sort: SortIcon,
 	tableView: TableView,
+	teacher: Teacher,
 	xrp: Xrp,
 	youtube: Youtube,
-	location: Location,
-	teacher: Teacher,
 };
 
 export { iconNameToSvg };
