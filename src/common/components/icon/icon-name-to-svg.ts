@@ -21,6 +21,8 @@ import SortIcon from "~/assets/images/sort.svg?react";
 import TableView from "~/assets/images/table-view.svg?react";
 import Xrp from "~/assets/images/xrp-(xrp).svg?react";
 import Youtube from "~/assets/images/youtube.svg?react";
+import Location from "~/assets/images/location.svg?react";
+import Teacher from "~/assets/images/teacher.svg?react";
 import { type IconName } from "~/common/enums/index";
 
 const iconNameToSvg: Record<
@@ -48,6 +50,8 @@ const iconNameToSvg: Record<
 	tableView: TableView,
 	xrp: Xrp,
 	youtube: Youtube,
+	location: Location,
+	teacher: Teacher,
 };
 
 export { iconNameToSvg };

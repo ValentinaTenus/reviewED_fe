@@ -20,6 +20,8 @@ enum IconName {
 	TABLE_VIEW = "tableView",
 	XRP = "xrp",
 	YOUTUBE = "youtube",
+	LOCATION = "location",
+	TEACHER = "teacher",
 }
 
 export { IconName };
