@@ -30,14 +30,14 @@ const CompanyListCardDesktop: React.FC<Properties> = ({ company }) => {
 			</div>
 
 			<div className={styles["company_list_card__total_courses"]}>
-				{company.total_courses} courses
+				{company.total_courses} курсів
 			</div>
 
 			<div className={styles["company_list_card__reviews_container"]}>
 				<div className={styles["company_list_card__reviews"]}>
 					<div className={styles["company_list_card__reviewer_avatars"]} />
 					<span className={styles["company_list_card__review_amount"]}>
-						{company.total_reviews_count} Reviews
+						{company.total_reviews_count} відгуків
 					</span>
 				</div>
 				<ShieldTick className={styles["company_list_card__review_icon"]} />

@@ -3,20 +3,28 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Button, Dropdown, SearchInput } from "~/common/components/index";
+import { ScreenBreakpoints } from "~/common/constants";
 import {
 	AppRoute,
 	ButtonSize,
 	ButtonType,
 	ButtonVariant,
+	CompaniesPerPageTableView,
 	IconName,
 } from "~/common/enums/index";
 import { useAppForm } from "~/common/hooks/index";
 import { Company, Course, DropdownOption } from "~/common/types/index";
 import { useGetCategoriesQuery } from "~/redux/categories/categories-api";
 import { useGetCompaniesByFilterQuery } from "~/redux/companies/companies-api";
-import { setCompanies } from "~/redux/companies/companies-slice";
+import {
+	clearFilters as clearCompaniesFilters,
+	setFilters as setCompaniesFilters,
+} from "~/redux/companies/companies-slice";
 import { useGetCoursesByFilterQuery } from "~/redux/courses/courses-api";
-import { setCourses } from "~/redux/courses/courses-slice";
+import {
+	clearFilters as clearCoursesFilters,
+	setFilters as setCoursesFilters,
+} from "~/redux/courses/courses-slice";
 import { useAppDispatch } from "~/redux/hooks.type";
 import {
 	useGetCompaniesLocationsQuery,
@@ -57,6 +65,7 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 }) => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
+	const screenWidth = window.innerWidth;
 
 	const [searchTerm, setSearchTerm] = useState("");
 	const [filteredSuggestions, setFilteredSuggestions] = useState<
@@ -102,6 +111,10 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 		useGetCompaniesByFilterQuery(
 			{
 				city: selectedLocation,
+				limit:
+					screenWidth > ScreenBreakpoints.TABLET
+						? CompaniesPerPageTableView.LARGE_SCREEN
+						: CompaniesPerPageTableView.SMALL_SCREEN,
 				name: selectedCompanyFromAll ? selectedCompanyFromAll : searchTerm,
 			},
 			{
@@ -118,6 +131,11 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 		fetchedCategories || [],
 	);
 	const companiesOptions = mapCompanies(companies);
+
+	useEffect(() => {
+		dispatch(clearCompaniesFilters());
+		dispatch(clearCoursesFilters());
+	}, [dispatch]);
 
 	useEffect(() => {
 		if (coursesLocations) {
@@ -140,6 +158,14 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 	const handleInputChange = useCallback(
 		async (value: string) => {
 			setSearchTerm(value);
+
+			if (selectedCategory === categories[INDEX_COURSES].value) {
+				void dispatch(setCompaniesFilters({ name: "" }));
+				void dispatch(setCoursesFilters({ title: value }));
+			} else {
+				void dispatch(setCompaniesFilters({ name: value }));
+				void dispatch(setCoursesFilters({ title: "" }));
+			}
 
 			if (value.trim() === "") {
 				setFilteredSuggestions([]);
@@ -165,28 +191,67 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 				}
 			}
 		},
-		[getCompaniesResponse?.results, filteredCourses, selectedCategory],
+		[
+			dispatch,
+			getCompaniesResponse?.results,
+			filteredCourses,
+			selectedCategory,
+		],
 	);
 
 	const handleSelectCategory = useCallback(
 		({ value }: { value: number | string }) => {
 			setSelectedCategory(value.toString());
+
+			if (value.toLocaleString() === categories[INDEX_COURSES].value) {
+				void dispatch(setCompaniesFilters({ city: "", name: "" }));
+				void dispatch(
+					setCoursesFilters({
+						city: selectedLocation,
+						title: searchTerm,
+					}),
+				);
+			} else {
+				void dispatch(
+					setCoursesFilters({
+						category_by_id: "",
+						city: "",
+						subcategory_by_id: "",
+						title: "",
+					}),
+				);
+				void dispatch(
+					setCompaniesFilters({
+						city: selectedLocation,
+						name: searchTerm,
+					}),
+				);
+			}
 		},
-		[],
+		[dispatch, searchTerm, selectedLocation],
 	);
 
 	const handleSelectLocation = useCallback(
 		({ value }: { value: number | string }) => {
 			setSelectedLocation(value.toString());
+
+			if (selectedCategory === categories[INDEX_COMPANIES].value) {
+				void dispatch(setCompaniesFilters({ city: value.toString() }));
+			}
+
+			if (selectedCategory === categories[INDEX_COURSES].value) {
+				void dispatch(setCoursesFilters({ city: value.toString() }));
+			}
 		},
-		[],
+		[dispatch, selectedCategory],
 	);
 
 	const handleSelectedCompanyFromAll = useCallback(
 		({ value }: { value: number | string }) => {
 			setSelectedCompanyFromAll(value.toString());
+			void dispatch(setCompaniesFilters({ name: value.toString() }));
 		},
-		[],
+		[dispatch],
 	);
 
 	const handleSelectedCoursesCategory = useCallback(
@@ -194,12 +259,24 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 			if (isTitle) {
 				setSelectedCourseSubCategory(null);
 				setSelectedCourseCategory(value.toString());
+				void dispatch(
+					setCoursesFilters({
+						category_by_id: value.toString(),
+						subcategory_by_id: "",
+					}),
+				);
 			} else {
 				setSelectedCourseCategory(null);
 				setSelectedCourseSubCategory(value.toString());
+				void dispatch(
+					setCoursesFilters({
+						category_by_id: "",
+						subcategory_by_id: value.toString(),
+					}),
+				);
 			}
 		},
-		[],
+		[dispatch],
 	);
 
 	const handleSuggestionClick = useCallback((suggestion: number | string) => {
@@ -211,7 +288,6 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 			if (selectedCategory === categories[INDEX_COMPANIES].value) {
 				const { results } = await refetchCompanies().unwrap();
 				onSearch(results);
-				void dispatch(setCompanies(results));
 
 				if (results.length > ZERO_INDEX) {
 					navigate(AppRoute.ALL_COMPANIES);
@@ -219,7 +295,6 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 			} else {
 				const result = await refetchCourses().unwrap();
 				onSearch(result);
-				void dispatch(setCourses(result));
 
 				if (result.length > ZERO_INDEX) {
 					navigate(AppRoute.ALL_COURSES);
@@ -231,14 +306,7 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 				: { message: "Невідома помилка" };
 			setServerError(loadError.message);
 		}
-	}, [
-		dispatch,
-		onSearch,
-		navigate,
-		selectedCategory,
-		refetchCompanies,
-		refetchCourses,
-	]);
+	}, [onSearch, navigate, selectedCategory, refetchCompanies, refetchCourses]);
 
 	const handleFormSubmit = useCallback(
 		async (event_: React.BaseSyntheticEvent): Promise<void> => {

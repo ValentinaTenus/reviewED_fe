@@ -1,11 +1,12 @@
 import React, { useCallback, useState } from "react";
+import { Link } from "react-router-dom";
 
 import Logo from "~/assets/images/logo.svg?react";
 import LogOutIcon from "~/assets/images/logout.svg?react";
 import MenuIcon from "~/assets/images/menu.svg?react";
 import UserIcon from "~/assets/images/user.svg?react";
 import { Button, IconButton } from "~/common/components/index";
-import { ButtonVariant } from "~/common/enums/index";
+import { AppRoute, ButtonVariant } from "~/common/enums/index";
 
 import { BurgerMenu, Search } from "./components/index";
 import styles from "./styles.module.scss";
@@ -23,9 +24,9 @@ const Header: React.FC = () => {
 		<div className={styles["header_wrapper"]}>
 			<div className={styles["header_content"]}>
 				<div className={styles["header_logo_container"]}>
-					<div className={styles["header_logo"]}>
+					<Link className={styles["header_logo"]} to={AppRoute.ROOT}>
 						<Logo />
-					</div>
+					</Link>
 					<div className={styles["header_search"]}>
 						<Search />
 					</div>
