@@ -25,12 +25,23 @@
   background-color: var(--color-yellow-450);
 }
 
-.pagination-container .pagination__button_number:hover:not(.active) {
+.pagination-container .pagination__button_number:hover:not(.active),
+.pagination__arrow_button:hover {
 	background-color: var(--color-grey-100);
 }
 
 .pagination__button_number {
 	cursor: pointer;
+}
+
+.pagination__arrow_button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 52px;
+	padding: 10px;
+  height: 40px;
+  width: 40px;
 }
 
 .pagination__arrow {
