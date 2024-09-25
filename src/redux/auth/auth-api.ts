@@ -8,13 +8,15 @@ import {
 import { api } from "../services.ts";
 import { authApiPath } from "./constants.ts";
 
+const REDIRECT_URI = `${import.meta.env.VITE_AUTH_REDIRECT_URL}`;
+
 export const authApi = api.injectEndpoints({
 	endpoints: (builder) => ({
 		getLoginUrl: builder.query<AuthResponseDto, undefined>({
 			query: () => {
 				return {
 					method: HttpMethods.GET,
-					url: authApiPath.LOGIN,
+					url: `${authApiPath.LOGIN}?redirect_uri=${REDIRECT_URI}`,
 				};
 			},
 		}),
