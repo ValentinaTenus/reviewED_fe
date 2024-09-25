@@ -9,6 +9,7 @@ import { api } from "../services.ts";
 import { authApiPath } from "./constants.ts";
 
 const REDIRECT_URI = `${import.meta.env.VITE_AUTH_REDIRECT_URL}`;
+const BASE_URL = `${import.meta.env.VITE_BASE_URL}`;
 
 export const authApi = api.injectEndpoints({
 	endpoints: (builder) => ({
@@ -16,7 +17,7 @@ export const authApi = api.injectEndpoints({
 			query: () => {
 				return {
 					method: HttpMethods.GET,
-					url: `${authApiPath.LOGIN}?redirect_uri=${REDIRECT_URI}`,
+					url: `${BASE_URL}${authApiPath.LOGIN}?redirect_uri=${REDIRECT_URI}`,
 				};
 			},
 		}),
@@ -24,7 +25,7 @@ export const authApi = api.injectEndpoints({
 			query: ({ code, state }) => {
 				return {
 					method: HttpMethods.GET,
-					url: `${authApiPath.LINKEDIN_CALLBACK}?code=${code}&state=${state}&redirect_uri=${REDIRECT_URI}`,
+					url: `${BASE_URL}${authApiPath.LINKEDIN_CALLBACK}?code=${code}&state=${state}&redirect_uri=${REDIRECT_URI}`,
 				};
 			},
 		}),
@@ -33,7 +34,7 @@ export const authApi = api.injectEndpoints({
 				return {
 					body: refresh,
 					method: HttpMethods.POST,
-					url: `${authApiPath.LOGOUT}`,
+					url: `${BASE_URL}${authApiPath.LOGOUT}`,
 				};
 			},
 		}),
