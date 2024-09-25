@@ -1,4 +1,4 @@
-import { httpMethods } from "~/common/enums/index.ts";
+import { HttpMethods } from "~/common/enums/index.ts";
 import { type Category } from "~/common/types/index.ts";
 
 import { api } from "../services.ts";
@@ -9,7 +9,7 @@ export const categoriesApi = api.injectEndpoints({
 		getCategories: builder.query<Category[], undefined>({
 			query: () => {
 				return {
-					method: httpMethods.GET,
+					method: HttpMethods.GET,
 					url: categoriesApiPath.ROOT,
 				};
 			},

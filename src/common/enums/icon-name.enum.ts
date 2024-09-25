@@ -9,6 +9,7 @@ enum IconName {
 	EMAIL = "email",
 	FACEBOOK = "facebook",
 	LINKEDIN = "linkedin",
+	LINKEDIN_LOGO = "linkedinLogo",
 	LIST_VIEW = "listView",
 	MINUS = "minus",
 	PEOPLE = "people",

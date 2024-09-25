@@ -10,6 +10,7 @@ import Phone from "~/assets/images/call.svg?react";
 import DollarSign from "~/assets/images/dollar-circle.svg?react";
 import Facebook from "~/assets/images/facebook.svg?react";
 import Linkedin from "~/assets/images/iconoir_linkedin.svg?react";
+import LinkedInLogo from "~/assets/images/linkedIn-logo.svg?react";
 import ListView from "~/assets/images/list-view.svg?react";
 import Minus from "~/assets/images/minus.svg?react";
 import People from "~/assets/images/people.svg?react";
@@ -37,6 +38,7 @@ const iconNameToSvg: Record<
 	email: Email,
 	facebook: Facebook,
 	linkedin: Linkedin,
+	linkedinLogo: LinkedInLogo,
 	listView: ListView,
 	minus: Minus,
 	people: People,

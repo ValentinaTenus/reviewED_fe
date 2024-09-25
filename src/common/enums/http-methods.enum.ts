@@ -1,4 +1,4 @@
-enum httpMethods {
+enum HttpMethods {
 	DELETE = "DELETE",
 	GET = "GET",
 	PATCH = "PATCH",
@@ -6,4 +6,4 @@ enum httpMethods {
 	PUT = "PUT",
 }
 
-export { httpMethods };
+export { HttpMethods };

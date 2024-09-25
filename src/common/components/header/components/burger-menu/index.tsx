@@ -1,23 +1,38 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-import { Button } from "~/common/components";
-import { ButtonVariant } from "~/common/enums";
+import { Button } from "~/common/components/index";
+import { AppRoute, ButtonVariant } from "~/common/enums/index";
 
 import { Search } from "../index";
 import styles from "./styles.module.scss";
 
-const BurgerMenu: React.FC = () => {
+type BurgerMenuProperties = {
+	onLogin: () => void;
+};
+
+const BurgerMenu: React.FC<BurgerMenuProperties> = ({ onLogin }) => {
 	return (
 		<div className={styles["user_menu_wrapper"]}>
 			<div className={styles["user_menu"]}>
 				<Search />
 				<ul className={styles["user_menu__list"]}>
-					<li className={styles["user_menu__list_item"]}>Курси</li>
-					<li className={styles["user_menu__list_item"]}>Компанії</li>
+					<Link
+						className={styles["user_menu__list_item"]}
+						to={AppRoute.ALL_COURSES}
+					>
+						Курси
+					</Link>
+					<Link
+						className={styles["user_menu__list_item"]}
+						to={AppRoute.ALL_COMPANIES}
+					>
+						Компанії
+					</Link>
 				</ul>
 			</div>
 			<div className={styles["user_menu__button"]}>
-				<Button isFullWidth variant={ButtonVariant.LOGIN}>
+				<Button isFullWidth onClick={onLogin} variant={ButtonVariant.LOGIN}>
 					Вхід
 				</Button>
 			</div>
