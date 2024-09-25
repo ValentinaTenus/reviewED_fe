@@ -16,10 +16,10 @@ const AuthPage: React.FC = () => {
 	const handleLogin = useCallback(async () => {
 		try {
 			const response = await getAuthUrl(undefined).unwrap();
-
-			if (response.url) {
-				window.location.href = response.url;
-			}
+			console.log(response);
+			// if (response.url) {
+			// 	window.location.href = response.url;
+			// }
 		} catch (error: unknown) {
 			const loadError = ((error as FetchBaseQueryError).data as {
 				detail: string;
