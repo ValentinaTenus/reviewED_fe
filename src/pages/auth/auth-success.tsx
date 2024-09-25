@@ -1,10 +1,10 @@
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import { Spinner } from "~/common/components/index";
-import { AppRoute, SpinnerVariant } from "~/common/enums/index";
+import { SpinnerVariant } from "~/common/enums/index";
 import { useLazyLoginQuery } from "~/redux/auth/auth-api";
 import { setTokens, setUser } from "~/redux/auth/auth-slice";
 
@@ -16,7 +16,6 @@ const AuthSuccess: React.FC = () => {
 	const code = queryParams.get("code");
 
 	const dispatch = useDispatch();
-	const navigate = useNavigate();
 
 	const [serverError, setServerError] = useState("");
 
@@ -37,7 +36,8 @@ const AuthSuccess: React.FC = () => {
 							}),
 						);
 					}
-					navigate(AppRoute.ROOT);
+					// navigate(AppRoute.ROOT);
+					console.log(data, "data");
 				} catch (error: unknown) {
 					const loadError = ((error as FetchBaseQueryError).data as {
 						detail: string;
@@ -48,7 +48,7 @@ const AuthSuccess: React.FC = () => {
 				}
 			}
 		},
-		[dispatch, login, navigate],
+		[dispatch, login],
 	);
 	console.log(code, "code");
 	useEffect(() => {
