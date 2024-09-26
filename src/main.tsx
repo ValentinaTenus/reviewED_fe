@@ -7,8 +7,13 @@ import "~/assets/styles/index.scss";
 
 import { App } from "./app/App.tsx";
 import { AppRoute } from "./common/enums/app-route.enum.ts";
-import { FaqPage } from "./pages/faq-page/index.tsx";
-import { CompaniesListPage, HomePage, ModeratorsPage } from "./pages/index.ts";
+import {
+	CompaniesListPage,
+	FaqPage,
+	HomePage,
+	ModeratorsPage,
+	MyReviewsPage,
+} from "./pages/index.ts";
 import { store } from "./redux/store.ts";
 
 const routes = createBrowserRouter([
@@ -29,6 +34,10 @@ const routes = createBrowserRouter([
 			{
 				element: <FaqPage />,
 				path: AppRoute.FAQ_PAGE,
+			},
+			{
+				element: <MyReviewsPage />,
+				path: AppRoute.MY_REVIEWS_PAGE,
 			},
 		],
 		element: <App />,

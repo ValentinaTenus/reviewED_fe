@@ -14,12 +14,14 @@ type RatingProperties = {
 	averageRating: number;
 	className?: string;
 	isOneStar?: boolean;
+	withNumber?: boolean;
 };
 
 const Rating: React.FC<RatingProperties> = ({
 	averageRating,
 	className,
 	isOneStar,
+	withNumber = true,
 }) => {
 	const totalStars = TOTAL_STARTS;
 
@@ -35,24 +37,24 @@ const Rating: React.FC<RatingProperties> = ({
 					const ratingValue = index + INCREMENT_RATING_NUMBER;
 
 					return (
-						<>
+						<React.Fragment key={index}>
 							{averageRating >= ratingValue ? (
-								<StarIcon className={styles["star"]} key={index} />
+								<StarIcon className={styles["star"]} />
 							) : averageRating >= ratingValue - DECREMENT_RATING_NUMBER ? (
 								<HalfFilledStar
 									className={clsx(styles["star_half_filled"], styles["star"])}
-									key={index}
 								/>
 							) : (
 								<StarIcon
 									className={clsx(styles["star_empty"], styles["star"])}
-									key={index}
 								/>
 							)}
-						</>
+						</React.Fragment>
 					);
 				})}
-			<span className={styles["average_rating"]}>{`(${averageRating})`}</span>
+			{withNumber && (
+				<span className={styles["average_rating"]}>{`(${averageRating})`}</span>
+			)}
 		</div>
 	);
 };

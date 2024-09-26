@@ -11,5 +11,5 @@ export { Rating } from "./rating/index";
 export { SearchBar } from "./search-bar/index";
 export { SearchInput } from "./search-input/index";
 export { SortDropdown } from "./sort-dropdown/index";
-export { ViewTabs } from "./view-tabs/index";
 export { ToggleGroupButtons } from "./toggle-group-buttons/index";
+export { ViewTabs } from "./view-tabs/index";
