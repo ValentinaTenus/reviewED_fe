@@ -53,7 +53,7 @@ export const companiesApi = api.injectEndpoints({
 		getCompanyById: builder.query<Company, string | undefined>({
 			query: (id) => ({
 				method: HttpMethods.GET,
-				url: companiesApiPath.ROOT + `/${id}`,
+				url: `${companiesApiPath.ROOT}/${id}`,
 			}),
 		}),
 	}),

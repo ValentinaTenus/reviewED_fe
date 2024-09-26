@@ -13,7 +13,7 @@ export const coursesApi = api.injectEndpoints({
 		getCourseById: builder.query<Course, string | undefined>({
 			query: (id) => ({
 				method: HttpMethods.GET,
-				url: coursesApiPath.ROOT + `/${id}`,
+				url: `${coursesApiPath.ROOT}/${id}`,
 			}),
 		}),
 		getCourses: builder.query<Course[], undefined>({
@@ -21,7 +21,9 @@ export const coursesApi = api.injectEndpoints({
 				return {
 					method: HttpMethods.GET,
 					params: filters,
-					url: coursesApiPath.ROOT,
+					url:
+						`https://reviewed-api.azurewebsites.net/api/v1/` +
+						coursesApiPath.ROOT,
 				};
 			},
 			serializeQueryArgs: ({ endpointName }) => {
