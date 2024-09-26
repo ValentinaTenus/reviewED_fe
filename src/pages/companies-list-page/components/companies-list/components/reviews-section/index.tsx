@@ -26,7 +26,7 @@ const ReviewsSection: React.FC<ReviewsSectionProperties> = ({
 	const errorMessage =
 		error &&
 		(((error as FetchBaseQueryError).data as { message: string }).message ||
-			"Виникла неввідома помилка");
+			"Виникла невідома помилка");
 
 	return (
 		<div className={styles["reviews__container"]}>
