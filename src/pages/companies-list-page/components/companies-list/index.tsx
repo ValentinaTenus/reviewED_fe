@@ -34,6 +34,7 @@ const ZERO_LENGTH = 0;
 const CompaniesContent: React.FC = () => {
 	const dispatch = useAppDispatch();
 	const { filters } = useAppSelector((state) => state.companies);
+	const { user } = useAppSelector((state) => state.auth);
 
 	const [searchTerm, setSearchTerm] = useState(filters?.name || "");
 	const [pageCount, setPageCount] = useState(DEFAULT_PAGE_COUNT);
@@ -200,7 +201,7 @@ const CompaniesContent: React.FC = () => {
 					</div>
 				)}
 			{error && <div className={styles["error"]}>{serverError}</div>}
-			<ReviewsSection screenWidth={screenWidth} />
+			{user && <ReviewsSection screenWidth={screenWidth} userId={user.id} />}
 		</div>
 	);
 };
