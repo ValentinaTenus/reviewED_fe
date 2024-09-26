@@ -4,3 +4,23 @@
 	gap: 40px;
 	min-height: 100vh;
 }
+
+.course-list__content {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	gap: 64px;
+	padding: 40px 86px;
+}
+
+@media (max-width: 1280px) {
+	.course-list__content {
+		padding: 40px 48px;
+	}
+}
+
+@media (max-width: 768px) {
+	.course-list__content {
+		padding: 40px 20px;
+	}
+}

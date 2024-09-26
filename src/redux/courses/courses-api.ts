@@ -1,4 +1,4 @@
-import { httpMethods } from "~/common/enums/index.ts";
+import { HttpMethods } from "~/common/enums/index.ts";
 import {
 	type Course,
 	type GetCoursesRequestQuery,
@@ -12,14 +12,14 @@ export const coursesApi = api.injectEndpoints({
 	endpoints: (builder) => ({
 		getCourseById: builder.query<Course, string | undefined>({
 			query: (id) => ({
-				method: httpMethods.GET,
+				method: HttpMethods.GET,
 				url: coursesApiPath.ROOT + `/${id}`,
 			}),
 		}),
 		getCourses: builder.query<Course[], undefined>({
 			query: (filters: GetCoursesRequestQuery = {}) => {
 				return {
-					method: httpMethods.GET,
+					method: HttpMethods.GET,
 					params: filters,
 					url: coursesApiPath.ROOT,
 				};
@@ -46,7 +46,7 @@ export const coursesApi = api.injectEndpoints({
 			},
 			query: (filters: GetCoursesRequestQuery = {}) => {
 				return {
-					method: httpMethods.GET,
+					method: HttpMethods.GET,
 					params: filters,
 					url: coursesApiPath.ROOT,
 				};
