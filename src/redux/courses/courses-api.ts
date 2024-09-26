@@ -13,7 +13,7 @@ export const coursesApi = api.injectEndpoints({
 		getCourseById: builder.query<Course, string | undefined>({
 			query: (id) => ({
 				method: HttpMethods.GET,
-				url: coursesApiPath.ROOT + `/${id}`,
+				url: `${coursesApiPath.ROOT}/${id}`,
 			}),
 		}),
 		getCourses: builder.query<Course[], undefined>({
@@ -21,7 +21,9 @@ export const coursesApi = api.injectEndpoints({
 				return {
 					method: HttpMethods.GET,
 					params: filters,
-					url: coursesApiPath.ROOT,
+					url:
+						`https://reviewed-api.azurewebsites.net/api/v1/` +
+						coursesApiPath.ROOT,
 				};
 			},
 			serializeQueryArgs: ({ endpointName }) => {
@@ -37,8 +39,11 @@ export const coursesApi = api.injectEndpoints({
 					currentArg?.title !== previousArg?.title ||
 					currentArg?.category_by_id !== previousArg?.category_by_id ||
 					currentArg?.subcategory_by_id !== previousArg?.subcategory_by_id ||
-					currentArg?.city !== previousArg?.city ||
-					currentArg?.company_id !== previousArg?.company_id
+					currentArg?.limit !== previousArg?.limit ||
+					currentArg?.offset !== previousArg?.offset ||
+					currentArg?.company_id !== previousArg?.company_id ||
+					currentArg?.sort !== previousArg?.sort ||
+					currentArg?.city !== previousArg?.city
 				);
 			},
 			query: (filters: GetCoursesRequestQuery = {}) => {

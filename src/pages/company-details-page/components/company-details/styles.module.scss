@@ -1,18 +1,18 @@
 .company-details_container {
 	padding: 30px 86px 0px;
 	width: 100%;
-	font-family: "Open Sans";
+	font-family: var(--font-family-main);
 	background-color: var(--color-grey-50);
 }
 
 h2 {
-	font-size: 32px;
-	font-weight: bold;
+	font-size: var(--font-size-title-mobile-h1);
+	font-weight: var(--font-weight-bold);
 }
 
 h3 {
-	font-size: 24px;
-	font-weight: 500;
+	font-size: var(--font-size-title-mobile-h2);
+	font-weight: var(--font-weight-semi-bold);
 	line-height: 1.2;
 }
 
@@ -33,6 +33,10 @@ h3 {
 @media (max-width: 768px) {
 	.company-details_container {
 		padding: 30px 50px 0px;
+	}
+
+	h2 {
+		font-size: var(--font-size-title-h4);
 	}
 }
 
