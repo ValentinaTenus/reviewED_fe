@@ -1,0 +1,24 @@
+.contacts-bar {
+	color: var(--grey-950);
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	font-family: var(--font-family-main);
+	font-size: var(--font-size-title-h5);
+	font-weight: var(--font-weight-bold);
+}
+
+.contacts-header {
+	font-family: var(--font-family-main);
+	font-size: var(--font-size-title);
+	font-weight: var(--font-weight-extra-bold);
+}
+
+.contacts__button-container {
+	display: flex;
+	gap: 8px;
+}
+
+.contacts__bold-content {
+	font-weight: var(--font-weight-bold);
+}

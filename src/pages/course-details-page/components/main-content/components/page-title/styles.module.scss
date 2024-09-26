@@ -1,0 +1,21 @@
+.title_wrapper {
+	display: grid;
+	grid-template-areas: "logo title" "logo rating";
+	gap: 12px 20px;
+}
+
+.title_logo {
+	max-height: 68px;
+	grid-area: logo;
+}
+
+.title_name {
+	font-family: var(--font-family-main);
+	font-size: var(--font-size-title-h2);
+	font-weight: var(--font-weight-extra-bold);
+	grid-area: title;
+}
+
+.title_rating {
+	grid-area: rating;
+}
