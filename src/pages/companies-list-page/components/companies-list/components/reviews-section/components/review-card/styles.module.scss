@@ -1,0 +1,114 @@
+.review_card__container {
+  background-color: var(--color-white);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-family-main);
+  gap: 40px;
+  padding: 24px;
+  width: 100%;
+}
+
+.review_card__content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.review_card__header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.review_card__user_data {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+}
+
+.review_card__user_avatar {
+  background-color: var(--color-grey-480);
+  border-radius: 200px;
+  height: 60px;
+  width: 60px;
+}
+
+.review_card__user_info {
+  align-items: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 5px;
+}
+
+.review_card__user_name {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+}
+
+.review_card__name {
+  font-style: var(--font-size-title-large);
+  font-weight: var(--font-weight-bold);
+}
+
+.review_card__user_status {
+  color: var(--color-grey-400);
+  font-size: var(--font-size-main-text);
+}
+
+.review_card__shield_icon {
+  color: var(--color-icon-green);
+  height: 24px;
+  width: 24px;
+}
+
+.review_card__logo_and_rating {
+  align-items: flex-end;
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.review_card__date_and_rating {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.review_card__company_logo {
+  border: 1px solid var(--color-grey-480);
+  border-radius: 4px;
+  height: 60px;
+  width: 120px;
+}
+
+.review_card__date {
+  color: var(--color-grey-460);
+  font-size: var(--font-size-main-text);
+  font-weight: var(--font-weight-text);
+}
+
+.review_card__text {
+  color: var(--color-grey-460);
+  font-size: var(--font-size-title-h5);
+  font-weight: var(--font-weight-text);
+  min-height: 50px;
+  line-height: 18.24px;
+}
+
+.review_card__button {
+  border: 1px solid var(--color-yellow-600);
+  color: var(--color-yellow-600);
+  font-size: var( --font-size-title-h5);
+  font-weight: var( --font-weight-bold);
+  padding: 12px 24px;
+}
+
+
+@media (max-width: 1280px) {
+  .review_card__text {
+    min-height: auto;
+  }
+}

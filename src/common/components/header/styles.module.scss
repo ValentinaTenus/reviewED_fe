@@ -30,6 +30,12 @@
   width: 317px;
 }
 
+.header__button_container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
 .header__button {
   display: block;
 }
@@ -106,6 +112,15 @@
 
 .user_menu {
   display: block;
+}
+
+.error {
+  color: var(--color-error-red);
+  font-size: var(--font-size-main-text);
+}
+
+.logout__button {
+  padding: 0;
 }
 
 @media (max-width: 768px) {

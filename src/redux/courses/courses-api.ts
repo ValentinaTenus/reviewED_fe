@@ -1,4 +1,4 @@
-import { httpMethods } from "~/common/enums/index.ts";
+import { HttpMethods } from "~/common/enums/index.ts";
 import {
 	type Course,
 	type GetCoursesRequestQuery,
@@ -12,16 +12,18 @@ export const coursesApi = api.injectEndpoints({
 	endpoints: (builder) => ({
 		getCourseById: builder.query<Course, string | undefined>({
 			query: (id) => ({
-				method: httpMethods.GET,
-				url: coursesApiPath.ROOT + `/${id}`,
+				method: HttpMethods.GET,
+				url: `${coursesApiPath.ROOT}/${id}`,
 			}),
 		}),
 		getCourses: builder.query<Course[], undefined>({
 			query: (filters: GetCoursesRequestQuery = {}) => {
 				return {
-					method: httpMethods.GET,
+					method: HttpMethods.GET,
 					params: filters,
-					url: coursesApiPath.ROOT,
+					url:
+						`https://reviewed-api.azurewebsites.net/api/v1/` +
+						coursesApiPath.ROOT,
 				};
 			},
 			serializeQueryArgs: ({ endpointName }) => {
@@ -35,12 +37,18 @@ export const coursesApi = api.injectEndpoints({
 			forceRefetch({ currentArg, previousArg }) {
 				return (
 					currentArg?.title !== previousArg?.title ||
+					currentArg?.category_by_id !== previousArg?.category_by_id ||
+					currentArg?.subcategory_by_id !== previousArg?.subcategory_by_id ||
+					currentArg?.limit !== previousArg?.limit ||
+					currentArg?.offset !== previousArg?.offset ||
+					currentArg?.company_id !== previousArg?.company_id ||
+					currentArg?.sort !== previousArg?.sort ||
 					currentArg?.city !== previousArg?.city
 				);
 			},
 			query: (filters: GetCoursesRequestQuery = {}) => {
 				return {
-					method: httpMethods.GET,
+					method: HttpMethods.GET,
 					params: filters,
 					url: coursesApiPath.ROOT,
 				};

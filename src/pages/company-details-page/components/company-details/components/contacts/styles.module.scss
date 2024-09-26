@@ -1,0 +1,49 @@
+.contacts {
+	padding-bottom: 35px;
+}
+
+.contacts_heading {
+	margin-bottom: 25px;
+}
+
+.contacts_list {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	margin-bottom: 15px;
+}
+
+.contacts_item {
+	display: flex;
+	gap: 5px;
+	align-items: center;
+}
+
+.contacts_buttons {
+	display: flex;
+	gap: 20px;
+}
+
+.contacts_location,
+.contacts_bank,
+.contacts_global {
+	width: 24px;
+	height: 24px;
+}
+
+/*-----------------------------*/
+
+.p-sb {
+	line-height: 1.5;
+	max-width: 1000px;
+	font-weight: var(--font-weight-semi-bold);
+}
+
+/*-----------------------------*/
+
+@media (max-width: 768px) {
+	.contacts_buttons {
+		flex-direction: column;
+		gap: 5px;
+	}
+}

@@ -1,7 +1,9 @@
+import { Category } from "../category";
+
 type Course = {
 	age: string;
-	average_rating: number;
-	category: string;
+	avg_rating: number;
+	categories: Category[];
 	company: string;
 	company_logo: string;
 	contact: string;

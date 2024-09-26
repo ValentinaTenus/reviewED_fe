@@ -11,9 +11,11 @@ import {
 import { QuestionAndAnswerItem } from "./components/question-and-answer-item/index";
 import styles from "./styles.module.scss";
 
+const ZERO_INDEX = 0;
+
 const QuestionAndAnswer = () => {
 	const [activeButtonValue, setActiveButtonValue] = useState<DropdownKey>(
-		toggleButtonGroupData[0],
+		toggleButtonGroupData[ZERO_INDEX],
 	);
 	const [questionsAnswers, setQuestionsAnswers] = useState<
 		QuestionAndAnswerProperties[]

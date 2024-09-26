@@ -1,4 +1,4 @@
-import { httpMethods } from "~/common/enums/index.ts";
+import { HttpMethods } from "~/common/enums/index.ts";
 import {
 	type Company,
 	type GetCompaniesRequestQuery,
@@ -13,7 +13,7 @@ export const companiesApi = api.injectEndpoints({
 		getCompanies: builder.query<Company[], GetCompaniesRequestQuery>({
 			query: (filters: GetCompaniesRequestQuery = {}) => {
 				return {
-					method: httpMethods.GET,
+					method: HttpMethods.GET,
 					params: filters,
 					url: companiesApiPath.ROOT,
 				};
@@ -34,13 +34,14 @@ export const companiesApi = api.injectEndpoints({
 					currentArg?.name !== previousArg?.name ||
 					currentArg?.sort !== previousArg?.sort ||
 					currentArg?.category_by_id !== previousArg?.category_by_id ||
-					currentArg?.page !== previousArg?.page ||
+					currentArg?.limit !== previousArg?.limit ||
+					currentArg?.offset !== previousArg?.limit ||
 					currentArg?.city !== previousArg?.city
 				);
 			},
 			query: (filters: GetCompaniesRequestQuery = {}) => {
 				return {
-					method: httpMethods.GET,
+					method: HttpMethods.GET,
 					params: filters,
 					url: companiesApiPath.ROOT,
 				};
@@ -48,14 +49,11 @@ export const companiesApi = api.injectEndpoints({
 			serializeQueryArgs: ({ endpointName }) => {
 				return endpointName;
 			},
-			// 	transformResponse: (response: GetCompaniesResponse) => {
-			// 		return response;
-			// }
 		}),
 		getCompanyById: builder.query<Company, string | undefined>({
 			query: (id) => ({
-				method: httpMethods.GET,
-				url: companiesApiPath.ROOT + `/${id}`,
+				method: HttpMethods.GET,
+				url: `${companiesApiPath.ROOT}/${id}`,
 			}),
 		}),
 	}),

@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 import DefaultCompanyImage from "~/assets/images/default-company-image.png";
 import ShieldTick from "~/assets/images/shield-tick.svg?react";
-import { Rating } from "~/common/components/index";
+import { StarRating } from "~/common/components/index";
 import { ScreenBreakpoints } from "~/common/constants/index";
-import { AppRoute } from "~/common/enums/index";
+import { AppRoute, RatingSize } from "~/common/enums/index";
 import { Company } from "~/common/types/index";
 
 import styles from "./styles.module.scss";
@@ -30,11 +30,14 @@ const CompanyCard: React.FC<CompanyCardProperties> = ({ company }) => {
 					src={DefaultCompanyImage}
 				/>
 				<div className={styles["company_card__rating_container"]}>
-					<Rating
-						averageRating={company.average_rating}
+					<StarRating
+						averageRating={company.avg_overall_rating}
 						isOneStar={screenWidth < ScreenBreakpoints.DESKTOP}
+						size={RatingSize.MEDIUM}
 					/>
-					<p className={styles["company_card__courses_amount"]}>10 courses</p>
+					<p className={styles["company_card__courses_amount"]}>
+						{company.total_courses} курсів
+					</p>
 				</div>
 			</div>
 
@@ -42,7 +45,7 @@ const CompanyCard: React.FC<CompanyCardProperties> = ({ company }) => {
 				<h4 className={styles["company_card__company_name"]}>{company.name}</h4>
 				<div className={styles["company_card__reviews_container"]}>
 					<span className={styles["company_card__reviews_text"]}>
-						100 Reviews
+						{company.total_reviews_count} Відгуків
 					</span>
 					<ShieldTick className={styles["company_card__reviews_icon"]} />
 				</div>

@@ -1,11 +1,12 @@
 import clsx from "clsx";
 import React, { useCallback, useEffect, useState } from "react";
 
-import { Icon, Rating } from "~/common/components/index";
+import { Icon } from "~/common/components/index";
 import { IconName } from "~/common/enums/index";
 import { MyReview } from "~/common/types/my-reviews";
 
 import styles from "./styles.module.scss";
+import { StarRating } from "~/common/components/star-rating";
 
 // Constants for breakpoints and max preview lengths
 const MAX_PREVIEW_LENGTH_DESKTOP = 200;
@@ -144,7 +145,7 @@ const ReviewListItem: React.FC<Properties> = ({ category, review }) => {
 				<div className={styles["item__review"]}>
 					<div className={styles["review-top"]}>
 						<div className={styles["review-top__detail"]}>
-							<Rating averageRating={review.rating} withNumber={false} />
+							<StarRating averageRating={review.rating} isNumberShown={false}/>
 							<span>Review ID:</span>
 							{review.id}
 						</div>

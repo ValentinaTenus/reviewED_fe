@@ -1,8 +1,8 @@
 import React, { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Icon, IconButton, Rating } from "~/common/components/index";
-import { AppRoute, IconName } from "~/common/enums/index";
+import { Icon, IconButton, StarRating } from "~/common/components/index";
+import { AppRoute, IconName, RatingSize } from "~/common/enums/index";
 import { Company } from "~/common/types/index";
 
 import styles from "./styles.module.scss";
@@ -42,13 +42,15 @@ const CompanyListCard: React.FC<Properties> = ({ company }) => {
 			<div className={styles["company_list_card__details"]}>
 				<div className={styles["company_list_card__detail_item"]}>
 					<span className={styles["company_list_card__detail_title"]}>
-						Total courses:
+						Загальна кількість курсів:
 					</span>
-					<span className={styles["company_list_card__detail_value"]}>10</span>
+					<span className={styles["company_list_card__detail_value"]}>
+						{company.total_courses}
+					</span>
 				</div>
 				<div className={styles["company_list_card__detail_item"]}>
 					<span className={styles["company_list_card__detail_title"]}>
-						Reviews:
+						Відгуки:
 					</span>
 					<div className={styles["company_list_card__reviews_details"]}>
 						<Icon
@@ -56,17 +58,18 @@ const CompanyListCard: React.FC<Properties> = ({ company }) => {
 							name={IconName.SHIELD_TICK}
 						/>
 						<span className={styles["company_list_card__detail_value"]}>
-							10 Reviews
+							{company.total_reviews_count} відгуків
 						</span>
 					</div>
 				</div>
 				<div className={styles["company_list_card__detail_item"]}>
 					<span className={styles["company_list_card__detail_title"]}>
-						Rating:
+						Рейтинг:
 					</span>
-					<Rating
-						averageRating={company.average_rating}
-						className={styles["company_list_card__detail_rating"]}
+					<StarRating
+						averageRating={company.avg_overall_rating}
+						className={styles["company_list_card__rating_stars"]}
+						size={RatingSize.LARGE}
 					/>
 				</div>
 			</div>

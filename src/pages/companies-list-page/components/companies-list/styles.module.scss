@@ -4,3 +4,22 @@
   gap: 40px;
   width: 100%;
 }
+
+.spinner {
+  height: 250px;
+  width: 100%;
+}
+
+.error {
+  align-items: center;
+  color: var(--color-error-red);
+  display: flex;
+  font-size: var(--font-size-title-large);
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.not_found__container {
+  margin: 0 auto;
+}
