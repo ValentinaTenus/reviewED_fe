@@ -8,6 +8,8 @@ import { useGetReviewsByUserIdQuery } from "~/redux/reviews/reviews-api";
 import { ReviewCard } from "./components/index";
 import styles from "./styles.module.scss";
 
+const ZERO_LENGTH = 0;
+
 type ReviewsSectionProperties = {
 	screenWidth: number;
 	userId: number;
@@ -18,33 +20,41 @@ const ReviewsSection: React.FC<ReviewsSectionProperties> = ({
 	userId,
 }) => {
 	const {
-		data: recentUserReviews,
-		error,
-		isLoading,
+		data: userReviews,
+		error: reviewsLoadError,
+		isLoading: isReviewLoading,
 	} = useGetReviewsByUserIdQuery(userId);
 
-	const errorMessage =
-		error &&
-		(((error as FetchBaseQueryError).data as { message: string }).message ||
-			"Виникла невідома помилка");
-
-	return (
-		<div className={styles["reviews__container"]}>
-			<h1 className={styles["reviews__title"]}>Нещодавні відгуки</h1>
-			<div className={styles["reviews__content"]}>
-				{isLoading && <Spinner variant={SpinnerVariant.SMALL} />}
-				{recentUserReviews &&
-					recentUserReviews.map((review) => (
-						<ReviewCard
-							key={review.id}
-							screenWidth={screenWidth}
-							userReview={review}
-						/>
-					))}
-				{error && <p>{errorMessage}</p>}
+	if (reviewsLoadError) {
+		return (
+			<div className={styles["error"]}>
+				{(reviewsLoadError as FetchBaseQueryError).status}
+				{JSON.stringify((reviewsLoadError as FetchBaseQueryError).data)}
 			</div>
-		</div>
-	);
+		);
+	}
+
+	if (isReviewLoading) {
+		return <Spinner variant={SpinnerVariant.SMALL} />;
+	}
+
+	if (userReviews && userReviews?.length > ZERO_LENGTH) {
+		return (
+			<div className={styles["reviews__container"]}>
+				<h1 className={styles["reviews__title"]}>Нещодавні відгуки</h1>
+				<div className={styles["reviews__content"]}>
+					{userReviews &&
+						userReviews.map((review) => (
+							<ReviewCard
+								key={review.id}
+								screenWidth={screenWidth}
+								userReview={review}
+							/>
+						))}
+				</div>
+			</div>
+		);
+	}
 };
 
 export { ReviewsSection };

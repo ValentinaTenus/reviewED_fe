@@ -26,4 +26,5 @@ export const reviewsApi = api.injectEndpoints({
 	}),
 });
 
-export const { useGetReviewsByUserIdQuery } = reviewsApi;
+export const { useGetReviewsByUserIdQuery, useLazyGetReviewsByUserIdQuery } =
+	reviewsApi;
