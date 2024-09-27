@@ -70,7 +70,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
 		};
 
 		fetchAvatars();
-	}, []);
+	}, [BASE_URL]);
 
 	const companyLogo =
 		course.company_logo && course.company_logo !== "None"
