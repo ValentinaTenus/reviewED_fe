@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Button, Icon, StarRating } from "~/common/components/index";
 import { ScreenBreakpoints } from "~/common/constants/index";
 import { ButtonVariant, IconName, RatingSize } from "~/common/enums/index";
-import { GetCompanyAndCourseReviewsByUserIdResponse } from "~/common/types/index";
+import { CompanyAndCourseReviewsByUserId } from "~/common/types/index";
 
 import styles from "./styles.module.scss";
 
@@ -12,7 +12,7 @@ const MAX_LENGTH = 120;
 
 type ReviewCardProperties = {
 	screenWidth: number;
-	userReview: GetCompanyAndCourseReviewsByUserIdResponse;
+	userReview: CompanyAndCourseReviewsByUserId;
 };
 
 const ReviewCard: React.FC<ReviewCardProperties> = ({
