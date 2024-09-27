@@ -93,21 +93,6 @@ const CheckDropdown: React.FC<Properties> = ({
 							onClick={handleOptionClick}
 							subOption={subOption}
 						/>,
-						// <div
-						// 	className={clsx(styles["nested_option"], styles["dropdown_item"])}
-						// 	key={`subOption-${subOption.value}`}
-						// 	onClick={() => handleOptionClick(subOption)}
-						// >
-						// 	<div className={styles["checkbox_container"]}>
-						// 		<input
-						// 			checked={isSelected}
-						// 			className={styles["checkbox__input"]}
-						// 			onChange={() => handleOptionClick(subOption)}
-						// 			type="checkbox"
-						// 		/>
-						// 	</div>
-						// 	{subOption.label}
-						// </div>,
 					);
 					itemsCount++;
 				}
