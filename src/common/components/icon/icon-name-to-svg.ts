@@ -9,9 +9,9 @@ import ArrowUp from "~/assets/images/arrow-up.svg?react";
 import Audience from "~/assets/images/audience.svg?react";
 import Bank from "~/assets/images/bank.svg?react";
 import Phone from "~/assets/images/call.svg?react";
-import Edit from "~/assets/images/edit.svg?react";
 import Close from "~/assets/images/close.svg?react";
 import DollarSign from "~/assets/images/dollar-circle.svg?react";
+import Edit from "~/assets/images/edit.svg?react";
 import Facebook from "~/assets/images/facebook.svg?react";
 import Filter from "~/assets/images/filter.svg?react";
 import Global from "~/assets/images/global.svg?react";
@@ -22,9 +22,9 @@ import ListView from "~/assets/images/list-view.svg?react";
 import Location from "~/assets/images/location.svg?react";
 import Minus from "~/assets/images/minus.svg?react";
 import More from "~/assets/images/more.svg?react";
-import PlusSquare from "~/assets/images/plus-square.svg?react";
 import People from "~/assets/images/people.svg?react";
 import Plus from "~/assets/images/plus.svg?react";
+import PlusSquare from "~/assets/images/plus-square.svg?react";
 import Price from "~/assets/images/price.svg?react";
 import SearchIcon from "~/assets/images/search-normal.svg?react";
 import Share from "~/assets/images/share.svg?react";
@@ -33,8 +33,8 @@ import Email from "~/assets/images/sms.svg?react";
 import SortIcon from "~/assets/images/sort.svg?react";
 import Star from "~/assets/images/star.svg?react";
 import TableView from "~/assets/images/table-view.svg?react";
-import Warning from "~/assets/images/warning.svg?react";
 import Teacher from "~/assets/images/teacher.svg?react";
+import Warning from "~/assets/images/warning.svg?react";
 import Xrp from "~/assets/images/xrp-(xrp).svg?react";
 import Youtube from "~/assets/images/youtube.svg?react";
 import { type IconName } from "~/common/enums/index";
@@ -49,26 +49,26 @@ const iconNameToSvg: Record<
 	arrowRightLong: ArrowRightLong,
 	arrowRightWide: ArrowRightWide,
 	arrowUp: ArrowUp,
-	edit: Edit,
-	email: Email,
-	facebook: Facebook,
-	like: Like,
 	audience: Audience,
 	bank: Bank,
 	close: Close,
 	dollarSign: DollarSign,
+	edit: Edit,
+	email: Email,
+	facebook: Facebook,
 	filter: Filter,
 	global: Global,
+	like: Like,
 	linkedin: Linkedin,
 	linkedinLogo: LinkedInLogo,
 	listView: ListView,
 	location: Location,
 	minus: Minus,
 	more: More,
+	people: People,
 	phone: Phone,
 	plus: Plus,
 	plusSquare: PlusSquare,
-	people: People,
 	price: Price,
 	search: SearchIcon,
 	share: Share,
@@ -76,8 +76,8 @@ const iconNameToSvg: Record<
 	sort: SortIcon,
 	star: Star,
 	tableView: TableView,
-	warning: Warning,
 	teacher: Teacher,
+	warning: Warning,
 	xrp: Xrp,
 	youtube: Youtube,
 };

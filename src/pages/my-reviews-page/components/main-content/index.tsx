@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { MyReviewCategory } from "~/common/types/my-reviews";
 
 import { OptionsSection, TopSection } from "./components/index";
-import { MyReviewsList } from "./components/my-reviews-list-section";
+import { MyReviewsListSection } from "./components/my-reviews-list-section/index";
 import styles from "./styles.module.scss";
 
 const MainContent: React.FC = () => {
@@ -18,7 +18,7 @@ const MainContent: React.FC = () => {
 			<div className={styles["main_content"]}>
 				<TopSection />
 				<OptionsSection category={category} handleClick={handleOptionClick} />
-				<MyReviewsList category={category} />
+				<MyReviewsListSection category={category} />
 			</div>
 		</div>
 	);

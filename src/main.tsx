@@ -7,7 +7,6 @@ import "~/assets/styles/index.scss";
 
 import { App } from "./app/App.tsx";
 import { AppRoute } from "./common/enums/app-route.enum.ts";
-
 import { AuthSuccess } from "./pages/auth/auth-success.tsx";
 import { CourseList } from "./pages/course-list-page/index.tsx";
 import { FaqPage } from "./pages/faq-page/index.tsx";
