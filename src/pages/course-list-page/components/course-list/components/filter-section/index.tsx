@@ -50,7 +50,7 @@ const FilterSection: React.FC<FilterSectionProperties> = ({
 				placeholder="Find your perfect course"
 				value={searchTerm}
 			/>
-			{isOpen && <FilterModal onClose={handleCloseFilter} />}
+			{isOpen && <FilterModal isOpen={isOpen} onClose={handleCloseFilter} />}
 			<SortDropdown
 				name="sort"
 				onChange={onChangeSortBy}

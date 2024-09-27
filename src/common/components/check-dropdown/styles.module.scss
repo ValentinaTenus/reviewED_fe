@@ -1,11 +1,18 @@
 .dropdown_container {
+	background-color: var(--color-white);
+	border-bottom: 1px solid var(--color-grey-300);
+	display: flex;
+	flex-direction: column;
+	gap: 40px;
 	width: 100%;
-	position: relative; 
+}
+
+.dropdown_container.open {
+	background-color: var(--color-grey-50);
 }
 
 .dropdown_trigger {
 	align-items: center;
-	background-color: var(--color-white);
 	background: url('~/assets/images/arrow-down.svg') no-repeat right center;
 	border-radius: 4px;
 	background-size: 24px 24px;
@@ -15,8 +22,8 @@
 	justify-content: space-between;
 	font-family: var(--font-family-main);
 	font-size: var(--font-size-title-h4);
-	padding-right: 36px;
-	width: 100%;
+	padding: 24px 48px 24px 24px;
+	width: 96%;
 }
 
 .dropdown_trigger.open {
@@ -29,7 +36,7 @@
 }
 
 .dropdown_trigger_text {
-	-webkit-line-clamp: 1; 
+	-webkit-line-clamp: 1;
 	-webkit-box-orient: vertical;
 	display: -webkit-box;
 	line-clamp: 1;
@@ -37,23 +44,24 @@
 	text-overflow: ellipsis;
 }
 
-.dropdown_menu {
-	color: var(--color-black); 
+.dropdown_menu {	
+	background-color: var(--color-grey-50);
+	color: var(--color-black);
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
 	font-family: var(--font-family-main);
-	left: 0;
 	max-width: 100%;
-	overflow: hidden;
-	padding: 8px 0;
-	position: relative; 
-	top: 2px; 
+	padding: 0px 48px 24px 24px;
 	z-index: 10;
 	width: 100%;
 }
 
 .dropdown_title {
-	cursor: pointer; 
+	cursor: pointer;
 	font-family: var(--font-family-main);
-	font-size: var(--font-size-title-h4);
+	font-size: var( --font-size-title-large);
+	font-weight: var(--font-weight-bold);
 }
 
 .dropdown_item {
@@ -61,8 +69,8 @@
 	color: var(--color-grey-950);
 	cursor: pointer;
 	display: flex;
+	gap: 10px;
 	font-size: var(--font-size-title-h4);
-	padding: 8px 16px;
 }
 
 .dropdown_item:hover {
@@ -71,6 +79,23 @@
 
 .nested_option {
 	cursor: pointer;
-	font-size: var(--font-size-title-h5);     
-	padding: 4px 0 4px 32px;
+	font-size: var(--font-size-title-h5);
+}
+
+.see_more {
+	cursor: pointer;
+	color: var(--color-blue-icons);
+	font-size: var(--font-size-main-text);
+}
+
+
+.checkbox__input {
+	align-self: center;
+	border-radius: 6px;
+	height: 24px;
+	width: 24px;
+}
+
+.checkbox__input:checked {
+	background-color: var(--color-blue-icons);
 }

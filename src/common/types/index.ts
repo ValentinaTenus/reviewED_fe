@@ -20,6 +20,7 @@ export {
 	type FooterNavigationIconLink,
 	type FooterNavigationLink,
 } from "./footer-navigation-links/index";
+export { type ModalHandlers, type ModalProperties } from "./modal/index";
 export { type GetCompanyAndCourseReviewsByUserIdResponse } from "./review/index";
 export { type GetModerationReviews } from "./review/index";
 export { type User, type UserWithStaff } from "./user/index";

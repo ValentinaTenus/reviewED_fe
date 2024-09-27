@@ -1,20 +1,20 @@
 import clsx from "clsx";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { type DropdownOption } from "~/common/types/index";
 
 import styles from "./styles.module.scss";
 
-const ZERO = 0;
+const INITIAL_VISIBLE_COUNT = 5;
+const DEFAULT_OPTIONS_LENGTH = 0;
+const INDEX_ONE = 1;
 
 type Properties = {
 	className?: string;
-	defaultValue?: DropdownOption;
 	isDisabled?: boolean;
-	isTitleClickable?: boolean;
 	label?: string;
 	name: string;
-	onChange: (value: { isTitle: boolean; value: number | string }) => void;
+	onChange: (value: { isTitle: boolean; values: (number | string)[] }) => void;
 	options: DropdownOption[];
 	placeholder?: string;
 };
@@ -22,46 +22,101 @@ type Properties = {
 const CheckDropdown: React.FC<Properties> = ({
 	className,
 	isDisabled,
-	isTitleClickable = true,
-	label,
 	onChange,
 	options,
 	placeholder,
 }) => {
-	const [selectedOption, setSelectedOption] = useState<DropdownOption | null>(
-		null,
-	);
+	const [selectedOptions, setSelectedOptions] = useState<DropdownOption[]>([]);
 	const [isOpen, setIsOpen] = useState(false);
-	const [expandedOptions, setExpandedOptions] = useState<DropdownOption | null>(
-		null,
+	const [visibleItemsCount, setVisibleItemsCount] = useState(
+		INITIAL_VISIBLE_COUNT,
 	);
 
 	const handleOptionClick = (option: DropdownOption) => {
-		const { label, value } = option;
-		setSelectedOption({ label, value });
-		setIsOpen(false);
-		onChange({ isTitle: false, value });
-	};
+		const isSelected = selectedOptions?.some((o) => o.value === option.value);
 
-	const handleTitleClick = (option: DropdownOption) => {
-		if (option.options && option.options.length > ZERO && !isTitleClickable) {
-			setExpandedOptions(expandedOptions === option ? null : option);
+		let updatedSelectedOptions;
+		if (isSelected) {
+			updatedSelectedOptions = selectedOptions?.filter(
+				(o) => o.value !== option.value,
+			);
 		} else {
-			handleOptionClick(option);
+			updatedSelectedOptions = [...selectedOptions, option];
 		}
-		setIsOpen(!isOpen);
-		onChange({ isTitle: true, value: option.value });
+
+		setSelectedOptions(updatedSelectedOptions);
+		onChange({
+			isTitle: false,
+			values: updatedSelectedOptions.map((o) => o.value),
+		});
 	};
 
-	const handleToggleDropdown = useCallback(() => {
+	const handleToggleDropdown = () => {
 		if (!isDisabled) {
 			setIsOpen(!isOpen);
 		}
-	}, [isDisabled, isOpen]);
+	};
 
-	useEffect(() => {
-		setSelectedOption(null);
-	}, [label]);
+	const handleShowMore = () => {
+		setVisibleItemsCount((prevCount) => prevCount + INITIAL_VISIBLE_COUNT);
+	};
+
+	const renderVisibleItems = () => {
+		const renderedItems = [];
+		let itemsCount = DEFAULT_OPTIONS_LENGTH;
+
+		for (const option of options) {
+			if (itemsCount >= visibleItemsCount) break;
+
+			renderedItems.push(
+				<div
+					className={clsx(styles["dropdown_title"], styles["dropdown_item"])}
+					key={`option-${option.value}`}
+				>
+					{option.label}
+				</div>,
+			);
+			itemsCount++;
+
+			if (option.options && option.options.length > DEFAULT_OPTIONS_LENGTH) {
+				for (const subOption of option.options) {
+					if (itemsCount >= visibleItemsCount) break;
+					const isSelected = selectedOptions.some(
+						(o) => o.value === subOption.value,
+					);
+
+					renderedItems.push(
+						<div
+							className={clsx(styles["nested_option"], styles["dropdown_item"])}
+							key={`subOption-${subOption.value}`}
+							onClick={() => handleOptionClick(subOption)}
+						>
+							<div className={styles["checkbox_container"]}>
+								<input
+									checked={isSelected}
+									className={styles["checkbox__input"]}
+									onChange={() => handleOptionClick(subOption)}
+									type="checkbox"
+								/>
+							</div>
+							{subOption.label}
+						</div>,
+					);
+					itemsCount++;
+				}
+			}
+		}
+
+		return renderedItems;
+	};
+
+	const totalItemsCount = options.reduce(
+		(acc, cur) =>
+			acc +
+			(cur.options ? cur.options.length : DEFAULT_OPTIONS_LENGTH) +
+			INDEX_ONE,
+		DEFAULT_OPTIONS_LENGTH,
+	);
 
 	return (
 		<div
@@ -77,39 +132,18 @@ const CheckDropdown: React.FC<Properties> = ({
 				})}
 				onClick={handleToggleDropdown}
 			>
-				<span className={styles["dropdown_trigger_text"]}>
-					{selectedOption ? selectedOption.label : placeholder}
-				</span>
+				<span className={styles["dropdown_trigger_text"]}>{placeholder}</span>
 			</div>
-			{/* Render dropdown menu */}
+
 			{isOpen && !isDisabled && (
 				<div className={styles["dropdown_menu"]}>
-					{options.map((option, index) => (
-						<div key={index}>
-							<div
-								className={clsx(
-									styles["dropdown_title"],
-									styles["dropdown_item"],
-								)}
-								onClick={() => handleTitleClick(option)}
-							>
-								{option.label}
-							</div>
-							{/* Nested options */}
-							{option.options?.map((nestedOption, nestedIndex) => (
-								<div
-									className={clsx(
-										styles["dropdown_item"],
-										styles["nested_option"],
-									)}
-									key={nestedIndex}
-									onClick={() => handleOptionClick(nestedOption)}
-								>
-									{nestedOption.label}
-								</div>
-							))}
+					{renderVisibleItems()}
+
+					{visibleItemsCount < totalItemsCount && (
+						<div className={styles["see_more"]} onClick={handleShowMore}>
+							Дивитись більше
 						</div>
-					))}
+					)}
 				</div>
 			)}
 		</div>

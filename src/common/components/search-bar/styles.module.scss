@@ -67,6 +67,14 @@
   white-space: nowrap;
 }
 
+.filter-button,
+.filter-button:hover,
+.filter-button:focus,
+.filter-button:active {
+  border: none;
+  outline: none;
+}
+
 .filter-button__icon {
 	height: 22px;
 }

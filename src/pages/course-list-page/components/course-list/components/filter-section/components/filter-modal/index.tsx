@@ -1,42 +1,72 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import { CheckDropdown, Icon, IconButton } from "~/common/components/index";
 import { IconName } from "~/common/enums/index";
-import { mapCoursesCategories } from "~/pages/home-page/components/main-content/components/search-block/helpers";
+import { useModal } from "~/common/hooks/use-modal.hook";
+import { DropdownOption } from "~/common/types";
+import {
+	mapCoursesCategories,
+	mapLocations,
+} from "~/pages/home-page/components/main-content/components/search-block/helpers";
 import { useGetCategoriesQuery } from "~/redux/categories/categories-api";
+import { useGetCoursesLocationsQuery } from "~/redux/locations/locations-api";
 
 import styles from "./styles.module.scss";
 
+const OPTIONS_FIRST_ITEM_INDEX = 1;
+
 type FilterModalProperties = {
+	isOpen: boolean;
 	onClose: () => void;
 };
 
-const FilterModal: React.FC<FilterModalProperties> = ({ onClose }) => {
+const FilterModal: React.FC<FilterModalProperties> = ({ isOpen, onClose }) => {
+	const [locationOptions, setLocation] = useState<DropdownOption[]>([]);
+
 	const { data: fetchedCategories } = useGetCategoriesQuery(undefined);
+	const { data: locations } = useGetCoursesLocationsQuery(undefined);
 
 	const coursesCategoriesOptions = mapCoursesCategories(
 		fetchedCategories || [],
 	);
 
-	const handleClickOutside = useCallback(
-		(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-			if (e.target === e.currentTarget) {
-				onClose();
-			}
-		},
-		[onClose],
-	);
+	useEffect(() => {
+		if (locations) {
+			const coursesLocationOptions = mapLocations(locations);
+			setLocation(coursesLocationOptions);
+		}
+	}, [locations]);
 
-	const handleSelectOption = useCallback(
-		(value: { isTitle: boolean; value: number | string }) => {
+	const handleSelectСategory = useCallback(
+		(value: { isTitle: boolean; values: (number | string)[] }) => {
 			return value;
 		},
 		[],
 	);
 
+	const handleSelectLocation = useCallback(
+		(value: { isTitle: boolean; values: (number | string)[] }) => {
+			return value;
+		},
+		[],
+	);
+
+	const { handleOutsideClick, preventModalCloseOnClick } = useModal({
+		isOpen,
+		onClose,
+	});
+
+	if (!isOpen) {
+		return null;
+	}
+
 	return (
-		<div className={styles["modal"]} onClick={handleClickOutside}>
-			<div className={styles["modal__container"]}>
+		<div className={styles["modal"]} onClick={handleOutsideClick}>
+			<div
+				className={styles["modal__container"]}
+				onClick={preventModalCloseOnClick}
+				tabIndex={-1}
+			>
 				<div className={styles["modal__header"]}>
 					<h2 className={styles["modal__title"]}>Фільтр за</h2>
 					<IconButton onClick={onClose}>
@@ -47,15 +77,20 @@ const FilterModal: React.FC<FilterModalProperties> = ({ onClose }) => {
 					</IconButton>
 				</div>
 				<div className={styles["modal__filters_content"]}>
-					{/* <div className={styles['search_dropdown_wrapper']}> */}
 					<CheckDropdown
 						className={styles["search_dropdown"]}
 						name="Види курсів"
-						onChange={handleSelectOption}
-						options={coursesCategoriesOptions}
+						onChange={handleSelectСategory}
+						options={coursesCategoriesOptions.slice(OPTIONS_FIRST_ITEM_INDEX)}
 						placeholder="Види курсів"
 					/>
-					{/* </div> */}
+					<CheckDropdown
+						className={styles["search_dropdown"]}
+						name="Локації"
+						onChange={handleSelectLocation}
+						options={locationOptions.slice(OPTIONS_FIRST_ITEM_INDEX)}
+						placeholder="Локації"
+					/>
 				</div>
 			</div>
 		</div>
