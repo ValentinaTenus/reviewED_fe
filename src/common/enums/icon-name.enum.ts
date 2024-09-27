@@ -12,6 +12,7 @@ enum IconName {
 	EMAIL = "email",
 	FACEBOOK = "facebook",
 	FILTER = "filter",
+	GLOBAL = "global",
 	LINKEDIN = "linkedin",
 	LINKEDIN_LOGO = "linkedinLogo",
 	LIST_VIEW = "listView",

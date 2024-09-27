@@ -1,3 +1,4 @@
+
 import React from "react";
 
 import ArrowLeftLong from "~/assets/images/arrow_left_long_light.svg?react";
@@ -13,6 +14,7 @@ import Close from "~/assets/images/close.svg?react";
 import DollarSign from "~/assets/images/dollar-circle.svg?react";
 import Facebook from "~/assets/images/facebook.svg?react";
 import Filter from "~/assets/images/filter.svg?react";
+import Global from "~/assets/images/global.svg?react";
 import Linkedin from "~/assets/images/iconoir_linkedin.svg?react";
 import LinkedInLogo from "~/assets/images/linkedIn-logo.svg?react";
 import ListView from "~/assets/images/list-view.svg?react";
@@ -42,11 +44,14 @@ const iconNameToSvg: Record<
 	arrowRightLong: ArrowRightLong,
 	arrowRightWide: ArrowRightWide,
 	arrowUp: ArrowUp,
+	audience: Audience,
+	bank: Bank,
 	close: Close,
 	dollarSign: DollarSign,
 	email: Email,
 	facebook: Facebook,
 	filter: Filter,
+	global: Global,
 	linkedin: Linkedin,
 	linkedinLogo: LinkedInLogo,
 	listView: ListView,

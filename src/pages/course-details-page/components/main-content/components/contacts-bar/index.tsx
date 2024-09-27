@@ -30,10 +30,10 @@ const ContactsBar = forwardRef<HTMLDivElement, ContactsBarProperties>(
 				title={course ? defineLocation(course.location) : ""}
 			/>
 			<Contact
-				iconName={IconName.BUILDING}
+				iconName={IconName.BANK}
 				title={course ? course.company : ""}
 			/>
-			<Contact iconName={IconName.GLOBE} title={course ? course.website : ""} />
+			<Contact iconName={IconName.GLOBAL} title={course ? course.website : ""} />
 			<aside className={styles["contacts__button-container"]}>
 				<Button size={ButtonSize.MEDIUM} variant={ButtonVariant.PRIMARY}>Зв'язатися з компанією</Button>
 				<Button size={ButtonSize.MEDIUM} variant={ButtonVariant.OUTLINED}><p className={styles["contacts__bold-content"]}>Показати контакти</p></Button>
