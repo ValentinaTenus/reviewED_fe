@@ -1,9 +1,16 @@
 import { httpMethods } from "~/common/enums/index.ts";
 import { type GetModerationReviewsResponse } from "~/common/types/index.ts";
-import { GetModerationReviewsRequest } from "~/common/types/review/get-moderation-reviews.ts";
+import { ModerationReviews } from "~/common/types/review/get-moderation-reviews.ts";
 
 import { api } from "../services.ts";
 import { reviewsApiPath } from "./constans.ts";
+
+type ModerationReviewsRequest = {
+	id?: string;
+	ordering?: "-time_added" | "time_added";
+	status?: "approved" | "pending" | "rejected";
+	type?: "company" | "course";
+};
 
 export const reviewsModerationApi = api.injectEndpoints({
 	endpoints: (builder) => ({
@@ -15,19 +22,24 @@ export const reviewsModerationApi = api.injectEndpoints({
 		}),
 		getReviewsModerationByFilter: builder.query<
 			GetModerationReviewsResponse,
-			GetModerationReviewsRequest
+			ModerationReviewsRequest
 		>({
 			forceRefetch({ currentArg, previousArg }) {
 				return (
 					currentArg?.type !== previousArg?.type ||
 					currentArg?.status !== previousArg?.status ||
-					currentArg?.ordering !== previousArg?.ordering
+					currentArg?.ordering !== previousArg?.ordering ||
+					currentArg?.id !== previousArg?.id
 				);
 			},
-			query: (filters: GetModerationReviewsRequest = {}) => {
+			query: (filters: ModerationReviewsRequest = {}) => {
 				return {
 					method: httpMethods.GET,
-					params: filters,
+					params: {
+						ordering: filters.ordering,
+						status: filters.status,
+						type: filters.type,
+					},
 					url: reviewsApiPath.ROOT,
 				};
 			},
@@ -38,10 +50,32 @@ export const reviewsModerationApi = api.injectEndpoints({
 			// 	return response.results;
 			// },
 		}),
+		getReviewsModerationById: builder.query<
+			ModerationReviews,
+			{ id: string | undefined; type: ModerationReviewsRequest["type"] }
+		>({
+			forceRefetch({ currentArg, previousArg }) {
+				return (
+					currentArg?.type !== previousArg?.type ||
+					currentArg?.id !== previousArg?.id
+				);
+			},
+			query: ({ id, type }) => {
+				const url =
+					type === "course"
+						? reviewsApiPath.COURSES_ID + `/${id}`
+						: reviewsApiPath.COMPANIES_ID + `/${id}`;
+				return {
+					method: httpMethods.GET,
+					url: url,
+				};
+			},
+		}),
 	}),
 });
 
 export const {
 	useGetReviewsModerationByFilterQuery,
+	useGetReviewsModerationByIdQuery,
 	useGetReviewsModerationQuery,
 } = reviewsModerationApi;
