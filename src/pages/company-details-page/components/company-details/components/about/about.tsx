@@ -1,7 +1,8 @@
-import React, { forwardRef } from "react";
+import { forwardRef } from "react";
 import { Link } from "react-router-dom";
 
 import { Company } from "~/common/types";
+import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
 
 import styles from "./styles.module.scss";
 
@@ -14,7 +15,7 @@ const About = forwardRef<HTMLDivElement, { company: Company }>(
 			<>
 				<div className={styles["about"]} ref={ref}>
 					<h2 className={styles["about_heading"]}>Про компанію</h2>
-					<p className={styles["p-sb"]}>{company.description}</p>
+					<p className={globalStyles["p-sb"]}>{company.description}</p>
 				</div>
 				<div className={styles["categories"]}>
 					<h3 className={styles["categories_heading"]}>

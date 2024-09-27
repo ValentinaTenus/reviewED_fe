@@ -3,6 +3,7 @@ import React, { forwardRef } from "react";
 import { Button, Icon } from "~/common/components";
 import { ButtonVariant, IconName } from "~/common/enums";
 import { Company } from "~/common/types";
+import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
 
 import styles from "./styles.module.scss";
 
@@ -19,18 +20,18 @@ const Contacts = forwardRef<HTMLDivElement, { company: Company }>(
 								className={styles["contacts_location"]}
 								name={IconName.LOCATION}
 							/>
-							<span className={styles["p-sb"]}>Online</span>
+							<span className={globalStyles["p-sb"]}>Online</span>
 						</li>
 						<li className={styles["contacts_item"]}>
 							<Icon className={styles["contacts_bank"]} name={IconName.BANK} />
-							<span className={styles["p-sb"]}>{company.name}</span>
+							<span className={globalStyles["p-sb"]}>{company.name}</span>
 						</li>
 						<li className={styles["contacts_item"]}>
 							<Icon
 								className={styles["contacts_global"]}
 								name={IconName.GLOBAL}
 							/>
-							<span className={styles["p-sb"]}>{company.website}</span>
+							<span className={globalStyles["p-sb"]}>{company.website}</span>
 						</li>
 					</ul>
 					<div className={styles["contacts_buttons"]}>
