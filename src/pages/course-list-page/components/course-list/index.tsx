@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 
 import CourseCard from "~/common/components/course-card";
 import { Spinner } from "~/common/components/index";
+import { ScreenBreakpoints } from "~/common/constants";
 import { SpinnerVariant } from "~/common/enums/index";
 import { Course } from "~/common/types/courses/course.type";
 import { Category } from "~/common/types/index";
@@ -18,8 +19,15 @@ const ALL_CATEGORIES_ID = "0";
 const DEFAULT_CURRENT_PAGE = 1;
 const DEFAULT_COURSES_PER_PAGE = 10;
 const INDEX_ONE = 1;
+const INDEX_ZERO = 0;
+const DESKTOP_COURSES_PER_PAGE = 6;
+const MOBILE_COURSES_PER_PAGE = 5;
 
-const CourseContent: React.FC = () => {
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
+const CourseContent: React.FC<{ CoursesCurrentPage: number }> = ({
+	CoursesCurrentPage,
+}) => {
 	const dispatch = useAppDispatch();
 
 	const { data: categories } = useGetCategoriesQuery(undefined);
@@ -29,7 +37,6 @@ const CourseContent: React.FC = () => {
 	const [sortBy, setSortBy] = useState<string>("");
 
 	const [currentPage, setCurrentPage] = useState(DEFAULT_CURRENT_PAGE);
-
 	const [screenWidth, setScreenWidth] = useState<number>(DEFAULT_SCREEN_WIDTH);
 	const [searchTerm, setSearchTerm] = useState(filters?.title || "");
 
@@ -109,9 +116,7 @@ const CourseContent: React.FC = () => {
 
 	const fetchCourses = async (page: number) => {
 		try {
-			const response = await fetch(
-				`https://reviewed-api.azurewebsites.net/api/v1/courses/?page=${page}`,
-			);
+			const response = await fetch(`${BASE_URL}/courses/?page=${page}`);
 			if (!response.ok) {
 				throw new Error(`HTTP error! Status: ${response.status}`);
 			}
@@ -125,8 +130,14 @@ const CourseContent: React.FC = () => {
 	};
 
 	useEffect(() => {
-		fetchCourses(currentPage);
-	}, [currentPage]);
+		fetchCourses(CoursesCurrentPage);
+	}, [CoursesCurrentPage]);
+
+	// Визначення кількості карток для мобільної або десктопної версії
+	const visibleCourses =
+		screenWidth < ScreenBreakpoints.TABLET
+			? courses.slice(INDEX_ZERO, MOBILE_COURSES_PER_PAGE)
+			: courses.slice(INDEX_ZERO, DESKTOP_COURSES_PER_PAGE);
 
 	return (
 		<div className={styles["courses_list__container"]}>
@@ -146,7 +157,7 @@ const CourseContent: React.FC = () => {
 				selectedCategoryId={selectedCategoryId}
 			/>
 			<div className={styles["course-list__cards"]}>
-				{courses.map((course) => (
+				{visibleCourses.map((course) => (
 					<CourseCard course={course} key={course.id} />
 				))}
 			</div>

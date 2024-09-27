@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 
+import DefaultCompanyImage from "~/assets/images/default-company-image.png";
 import { Icon } from "~/common/components/index";
 import { ScreenBreakpoints } from "~/common/constants/screen-breakpoints";
 import { IconName, RatingSize } from "~/common/enums";
 import { Course } from "~/common/types/courses/course.type";
+import RecentReview from "~/common/types/review/get-recent-review";
 
 import AvatarGroup from "../avatar-group";
 import { StarRating } from "../star-rating";
@@ -19,10 +21,13 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
 	const CHAR_LIMIT_DESKTOP = 303;
 	const LAST_INDEX_OFFSET = 1;
 	const START_INDEX = 0;
+	const BASE_URL = import.meta.env.VITE_BASE_URL;
+	const AVATARS_COUNT = 4;
 
 	const [isExpanded, setIsExpanded] = useState(false);
 	const [isOneStar, setIsOneStar] = useState(false);
 	const [maxLength, setMaxLength] = useState(CHAR_LIMIT_DESKTOP);
+	const [avatars, setAvatars] = useState<string[]>([]);
 
 	const toggleDescription = () => {
 		setIsExpanded(!isExpanded);
@@ -47,6 +52,31 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
 		};
 	}, []);
 
+	useEffect(() => {
+		const fetchAvatars = async () => {
+			try {
+				const response = await fetch(
+					`${BASE_URL}/reviews/recent?count=${AVATARS_COUNT}`,
+				);
+				const data = await response.json();
+				const avatarsList = data.map(
+					(review: RecentReview) => review.author_avatar,
+				);
+				setAvatars(avatarsList);
+			} catch (error) {
+				// eslint-disable-next-line no-console
+				console.error("Failed to fetch avatars:", error);
+			}
+		};
+
+		fetchAvatars();
+	}, []);
+
+	const companyLogo =
+		course.company_logo && course.company_logo !== "None"
+			? course.company_logo
+			: DefaultCompanyImage;
+
 	return (
 		<div className={styles["course-card"]}>
 			<div className={styles["course-card__head"]}>
@@ -55,7 +85,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
 					<img
 						alt="Company logo"
 						className={styles["course-card__logo-image"]}
-						src={course.company_logo || "/default-company-image.png"}
+						src={companyLogo}
 					/>
 					<StarRating
 						averageRating={course.avg_rating}
@@ -116,7 +146,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
 			<div className={styles["course-card__reviews"]}>
 				<div className={styles["course-card__reviews-info"]}>
 					<AvatarGroup
-						avatars={["/path/to/avatar1.png", "/path/to/avatar2.png"]}
+						avatars={avatars}
 						className={styles["course-card__reviews-info-avatar"]}
 					/>
 					<span className={styles["course-card__reviews-info-count"]}>
