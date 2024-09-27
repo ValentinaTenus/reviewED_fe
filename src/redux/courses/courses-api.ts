@@ -49,16 +49,16 @@ export const coursesApi = api.injectEndpoints({
 			},
 			query: (filters: GetCoursesRequestQuery = {}) => {
 				const queryCities = filters?.city
-					?.map((city) => `cities[]=${encodeURIComponent(city)}`)
+					?.map((city) => `city=${encodeURIComponent(city)}`)
 					.join("&");
 				const querySubcategories =
 					filters?.subcategory_by_id
 						?.map((subcategory) => {
-							return `subcategory_by_id[]=${encodeURIComponent(subcategory)}`;
+							return `subcategory_by_id=${encodeURIComponent(subcategory)}`;
 						})
 						.join("&") ?? "";
 
-				const query = queryCities + querySubcategories;
+				const query = `${queryCities}&${querySubcategories}`;
 				return {
 					method: HttpMethods.GET,
 					url: `${coursesApiPath.ROOT}?${query}`,

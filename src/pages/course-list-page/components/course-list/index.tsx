@@ -38,7 +38,7 @@ const CourseContent: React.FC = () => {
 	);
 	const [selectedSubCategoryIds, setSelectedSubCategoryIds] = useState<
 		string[]
-	>([ALL_CATEGORIES_ID]);
+	>(filters?.subcategory_by_id || []);
 	const [selectedLocations, setSelectedLocations] = useState<string[]>(
 		filters?.city || [ALL_CATEGORIES_ID],
 	);
@@ -79,10 +79,7 @@ const CourseContent: React.FC = () => {
 			if (selectedSubCategoryIds.includes(ALL_CATEGORIES_ID)) {
 				setSelectedSubCategoryIds(chosenSubCategories);
 			} else {
-				setSelectedSubCategoryIds([
-					...selectedSubCategoryIds,
-					...chosenSubCategories,
-				]);
+				setSelectedSubCategoryIds([...chosenSubCategories]);
 			}
 			setSelectedCategoryIds([]);
 			setCurrentPage(DEFAULT_CURRENT_PAGE);
