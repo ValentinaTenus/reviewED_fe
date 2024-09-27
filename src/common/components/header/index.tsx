@@ -1,41 +1,79 @@
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import React, { useCallback, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 import Logo from "~/assets/images/logo.svg?react";
 import LogOutIcon from "~/assets/images/logout.svg?react";
 import MenuIcon from "~/assets/images/menu.svg?react";
 import UserIcon from "~/assets/images/user.svg?react";
 import { Button, IconButton } from "~/common/components/index";
-import { ButtonVariant } from "~/common/enums/index";
+import { AppRoute, ButtonVariant } from "~/common/enums/index";
+import { useLazyLogOutQuery } from "~/redux/auth/auth-api";
+import { logout } from "~/redux/auth/auth-slice";
+import { useAppDispatch, useAppSelector } from "~/redux/hooks.type";
 
 import { BurgerMenu, Search } from "./components/index";
 import styles from "./styles.module.scss";
 
 const Header: React.FC = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const [serverError, setServerError] = useState("");
+	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
+	const { refresh, user } = useAppSelector((state) => state.auth);
 
-	const user = true;
-	const isModerator = true;
+	const [userLogout] = useLazyLogOutQuery();
 
 	const handleToggleMenu = useCallback(() => {
 		setIsMenuOpen(!isMenuOpen);
 	}, [isMenuOpen]);
 
+	const handleRedirectToLogin = useCallback(() => {
+		navigate(AppRoute.AUTH);
+	}, [navigate]);
+
+	const handleLogOut = useCallback(async () => {
+		setIsMenuOpen(false);
+
+		if (user && refresh) {
+			try {
+				const response = await userLogout({ refresh });
+
+				if (response?.isSuccess) {
+					void dispatch(logout());
+				} else if (response?.error) {
+					throw new Error(
+						(response.error as { error: string }).error || "Hевідома помилка",
+					);
+				}
+			} catch (error: unknown) {
+				const loadError = ((error as FetchBaseQueryError).data as {
+					detail: string;
+				})
+					? ((error as FetchBaseQueryError).data as { detail: string })
+					: { detail: (error as Error).message };
+				setServerError(loadError?.detail);
+			}
+		}
+	}, [dispatch, refresh, user, userLogout]);
+
 	return (
 		<div className={styles["header_wrapper"]}>
 			<div className={styles["header_content"]}>
 				<div className={styles["header_logo_container"]}>
-					<div className={styles["header_logo"]}>
+					<Link className={styles["header_logo"]} to={AppRoute.ROOT}>
 						<Logo />
-					</div>
+					</Link>
 					<div className={styles["header_search"]}>
 						<Search />
 					</div>
 				</div>
-				<div>
+				<div className={styles["header__button_container"]}>
 					{!user && (
 						<>
 							<Button
 								className={styles["header__button"]}
+								onClick={handleRedirectToLogin}
 								variant={ButtonVariant.LOGIN}
 							>
 								Вхід
@@ -46,7 +84,7 @@ const Header: React.FC = () => {
 							>
 								<MenuIcon className={styles["menu__button_icon"]} />
 							</IconButton>
-							{isMenuOpen && <BurgerMenu />}
+							{isMenuOpen && <BurgerMenu onLogin={handleRedirectToLogin} />}
 						</>
 					)}
 					{user && (
@@ -58,29 +96,28 @@ const Header: React.FC = () => {
 								<div className={styles["user_menu"]}>
 									<ul className={styles["user_menu_list"]}>
 										<li className={styles["user_menu_list_item"]}>
-											<a href="#">Ваші відгуки</a>
+											{user.is_staff ? (
+												<a href="#">Модерація відгуків</a>
+											) : (
+												<a href="#">Ваші відгуки</a>
+											)}
 										</li>
-										{isModerator && (
-											<>
-												<li className={styles["user_menu_list_item"]}>
-													<a href="/moderators-page">Модерація</a>
-												</li>
-												<li className={styles["user_menu_list_item"]}>
-													<a href="#">Звернення користувачів</a>
-												</li>
-											</>
-										)}
 										<li className={styles["user_menu_list_item"]}>
-											<a href="#">
-												<LogOutIcon />
+											<Button
+												className={styles["logout__button"]}
+												onClick={handleLogOut}
+												prependedIcon={<LogOutIcon />}
+												variant={ButtonVariant.DEFAULT}
+											>
 												Вийти
-											</a>
+											</Button>
 										</li>
 									</ul>
 								</div>
 							)}
 						</div>
 					)}
+					{serverError && <p className={styles["error"]}>{serverError}</p>}
 				</div>
 			</div>
 		</div>

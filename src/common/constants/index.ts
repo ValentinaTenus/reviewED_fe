@@ -10,6 +10,7 @@ export {
 	CoursesLinksSmartphones,
 	CoursesLinksTablets,
 } from "./courses-links/index";
+export { CoursesSortOptions } from "./courses-sort-options";
 export { moderationsReviewSortOptionsByPeriod } from "./moderations-review-period-sort-options";
 export { moderationsReviewSortOptionsByStatus } from "./moderations-review-status-sort-options";
 export { OthersFooterLinks } from "./other-footer-links";

@@ -42,7 +42,7 @@ const CompanyListCard: React.FC<Properties> = ({ company }) => {
 			<div className={styles["company_list_card__details"]}>
 				<div className={styles["company_list_card__detail_item"]}>
 					<span className={styles["company_list_card__detail_title"]}>
-						Total courses:
+						Загальна кількість курсів:
 					</span>
 					<span className={styles["company_list_card__detail_value"]}>
 						{company.total_courses}
@@ -50,7 +50,7 @@ const CompanyListCard: React.FC<Properties> = ({ company }) => {
 				</div>
 				<div className={styles["company_list_card__detail_item"]}>
 					<span className={styles["company_list_card__detail_title"]}>
-						Reviews:
+						Відгуки:
 					</span>
 					<div className={styles["company_list_card__reviews_details"]}>
 						<Icon
@@ -58,13 +58,13 @@ const CompanyListCard: React.FC<Properties> = ({ company }) => {
 							name={IconName.SHIELD_TICK}
 						/>
 						<span className={styles["company_list_card__detail_value"]}>
-							{company.total_reviews_count} Reviews
+							{company.total_reviews_count} відгуків
 						</span>
 					</div>
 				</div>
 				<div className={styles["company_list_card__detail_item"]}>
 					<span className={styles["company_list_card__detail_title"]}>
-						Rating:
+						Рейтинг:
 					</span>
 					<StarRating
 						averageRating={company.avg_overall_rating}

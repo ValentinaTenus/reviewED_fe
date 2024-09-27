@@ -5,7 +5,7 @@ import { Company } from "~/common/types/index";
 import { CompanyListCard, CompanyListCardDesktop } from "./components";
 import styles from "./styles.module.scss";
 
-const TableHeaders = ["Company", "Total courses", "Reviews", "Rating"];
+const TableHeaders = ["Компанії", "Кількість курсів", "Відгуки", "Рейтинг"];
 
 type CompaniesListProperties = {
 	companies: Company[];

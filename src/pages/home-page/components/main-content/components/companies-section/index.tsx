@@ -24,7 +24,7 @@ const CompaniesSection: React.FC<CompaniesSectionProperties> = ({
 	const navigate = useNavigate();
 
 	const handleSeeAllClick = useCallback(() => {
-		navigate(AppRoute.TOP_COMPANIES);
+		navigate(AppRoute.ALL_COMPANIES);
 	}, [navigate]);
 
 	return (

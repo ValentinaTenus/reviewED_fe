@@ -1,4 +1,4 @@
-import { httpMethods } from "~/common/enums/index.ts";
+import { HttpMethods } from "~/common/enums/index.ts";
 import { type GetModerationReviewsResponse } from "~/common/types/index.ts";
 import { ModerationReviews } from "~/common/types/review/get-moderation-reviews.ts";
 
@@ -16,7 +16,7 @@ export const reviewsModerationApi = api.injectEndpoints({
 	endpoints: (builder) => ({
 		getReviewsModeration: builder.query<GetModerationReviewsResponse, void>({
 			query: () => ({
-				method: httpMethods.GET,
+				method: HttpMethods.GET,
 				url: reviewsApiPath.ROOT,
 			}),
 		}),
@@ -34,7 +34,7 @@ export const reviewsModerationApi = api.injectEndpoints({
 			},
 			query: (filters: ModerationReviewsRequest = {}) => {
 				return {
-					method: httpMethods.GET,
+					method: HttpMethods.GET,
 					params: {
 						ordering: filters.ordering,
 						status: filters.status,
@@ -66,7 +66,7 @@ export const reviewsModerationApi = api.injectEndpoints({
 						? reviewsApiPath.COURSES_ID + `/${id}`
 						: reviewsApiPath.COMPANIES_ID + `/${id}`;
 				return {
-					method: httpMethods.GET,
+					method: HttpMethods.GET,
 					url: url,
 				};
 			},

@@ -14,7 +14,7 @@ const ReviewsSection: React.FC<ReviewsSectionProperties> = ({
 }) => {
 	return (
 		<div className={styles["reviews__container"]}>
-			<h1 className={styles["reviews__title"]}>Recent reviews</h1>
+			<h1 className={styles["reviews__title"]}>Нещодавні відгуки</h1>
 			<div className={styles["reviews__content"]}>
 				{UserReviews.map((review) => (
 					<ReviewCard
