@@ -23,3 +23,11 @@
 .not_found__container {
 	margin: 0 auto;
 }
+
+.course-list__cards {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	gap: 40px;
+   
+}

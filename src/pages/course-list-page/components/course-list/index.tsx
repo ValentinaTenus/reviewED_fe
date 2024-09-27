@@ -1,7 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 
+import CourseCard from "~/common/components/course-card";
 import { Spinner } from "~/common/components/index";
 import { SpinnerVariant } from "~/common/enums/index";
+import { Course } from "~/common/types/courses/course.type";
 import { Category } from "~/common/types/index";
 import { useGetCategoriesQuery } from "~/redux/categories/categories-api";
 import { setFilters } from "~/redux/companies/companies-slice";
@@ -23,6 +25,7 @@ const CourseContent: React.FC = () => {
 	const { data: categories } = useGetCategoriesQuery(undefined);
 	const { filters } = useAppSelector((state) => state.courses);
 
+	const [courses, setCourses] = useState<Course[]>([]);
 	const [sortBy, setSortBy] = useState<string>("");
 
 	const [currentPage, setCurrentPage] = useState(DEFAULT_CURRENT_PAGE);
@@ -104,6 +107,27 @@ const CourseContent: React.FC = () => {
 		? [{ id: 0, name: "All", subcategories: [] }, ...categories]
 		: [];
 
+	const fetchCourses = async (page: number) => {
+		try {
+			const response = await fetch(
+				`https://reviewed-api.azurewebsites.net/api/v1/courses/?page=${page}`,
+			);
+			if (!response.ok) {
+				throw new Error(`HTTP error! Status: ${response.status}`);
+			}
+
+			const data = await response.json();
+			setCourses(data.results);
+		} catch (error) {
+			// eslint-disable-next-line no-console
+			console.error("Error fetching courses:", error);
+		}
+	};
+
+	useEffect(() => {
+		fetchCourses(currentPage);
+	}, [currentPage]);
+
 	return (
 		<div className={styles["courses_list__container"]}>
 			{isLoading && (
@@ -121,6 +145,11 @@ const CourseContent: React.FC = () => {
 				searchTerm={searchTerm}
 				selectedCategoryId={selectedCategoryId}
 			/>
+			<div className={styles["course-list__cards"]}>
+				{courses.map((course) => (
+					<CourseCard course={course} key={course.id} />
+				))}
+			</div>
 		</div>
 	);
 };

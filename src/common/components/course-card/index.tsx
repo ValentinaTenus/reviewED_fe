@@ -3,41 +3,23 @@ import React, { useEffect, useState } from "react";
 import { Icon } from "~/common/components/index";
 import { ScreenBreakpoints } from "~/common/constants/screen-breakpoints";
 import { IconName, RatingSize } from "~/common/enums";
+import { Course } from "~/common/types/courses/course.type";
 
-import DefaultCompanyImage from "../../../assets/images/default-company-image.png";
+import AvatarGroup from "../avatar-group";
 import { StarRating } from "../star-rating";
 import styles from "./styles.module.scss";
 
 type CourseCardProps = {
 	className?: string;
-	company: string;
-	description: string;
-	peopleCategories: string[];
-	price: string;
-	rating: number;
-	reviewsCount: number;
-	specialization: string;
-	status: string;
-	techCategories: string[];
-	title: string;
+	course: Course;
 };
 
-const CourseCard: React.FC<CourseCardProps> = ({
-	company,
-	description,
-	peopleCategories,
-	price,
-	rating,
-	reviewsCount,
-	specialization,
-	status,
-	techCategories,
-	title,
-}) => {
+const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
 	const CHAR_LIMIT_MOBILE = 107;
 	const CHAR_LIMIT_DESKTOP = 303;
 	const LAST_INDEX_OFFSET = 1;
 	const START_INDEX = 0;
+
 	const [isExpanded, setIsExpanded] = useState(false);
 	const [isOneStar, setIsOneStar] = useState(false);
 	const [maxLength, setMaxLength] = useState(CHAR_LIMIT_DESKTOP);
@@ -64,18 +46,19 @@ const CourseCard: React.FC<CourseCardProps> = ({
 			window.removeEventListener("resize", handleResize);
 		};
 	}, []);
+
 	return (
 		<div className={styles["course-card"]}>
 			<div className={styles["course-card__head"]}>
-				<h2 className={styles["course-card__title"]}>{title}</h2>
+				<h2 className={styles["course-card__title"]}>{course.title}</h2>
 				<div className={styles["course-card__logo"]}>
 					<img
 						alt="Company logo"
 						className={styles["course-card__logo-image"]}
-						src={DefaultCompanyImage}
+						src={course.company_logo || "/default-company-image.png"}
 					/>
 					<StarRating
-						averageRating={rating}
+						averageRating={course.avg_rating}
 						isOneStar={isOneStar}
 						size={RatingSize.MEDIUM}
 					/>
@@ -85,21 +68,16 @@ const CourseCard: React.FC<CourseCardProps> = ({
 			<div className={styles["course-card__data"]}>
 				<div className={styles["course-card__company"]}>
 					By:
-					<span className={styles["course-card__company-name"]}>{company}</span>
-				</div>
-				<div className={styles["course-card__status"]}>
-					<Icon
-						className={styles["course-card__status-icon"]}
-						name={IconName.LOCATION}
-					/>
-					<span className={styles["course-card__status-text"]}>{status}</span>
+					<span className={styles["course-card__company-name"]}>
+						{course.company}
+					</span>
 				</div>
 				<div className={styles["course-card__price"]}>
 					<Icon
 						className={styles["course-card__price-icon"]}
 						name={IconName.DOLLAR_SIGN}
 					/>
-					UAH {price} per course
+					UAH {course.price} per course
 				</div>
 			</div>
 
@@ -109,44 +87,23 @@ const CourseCard: React.FC<CourseCardProps> = ({
 					name={IconName.PEOPLE}
 				/>
 				<div className={styles["course-card__categories-list"]}>
-					{peopleCategories.map((peopleCategory, index) => (
+					{course.categories.map((category, index) => (
 						<span
 							className={styles["course-card__categories-item"]}
-							key={peopleCategory}
+							key={category.id}
 						>
-							{peopleCategory}
-							{index < peopleCategories.length - LAST_INDEX_OFFSET ? ", " : ""}
+							{category.name}
+							{index < course.categories.length - LAST_INDEX_OFFSET ? ", " : ""}
 						</span>
 					))}
 				</div>
 			</div>
 
 			<div className={styles["course-card__description"]}>
-				<div className={styles["course-card__description-categories"]}>
-					<Icon
-						className={styles["course-card__description-categories-icon"]}
-						name={IconName.TEACHER}
-					/>
-					<span
-						className={
-							styles["course-card__description-categories-specialization"]
-						}
-					>
-						{specialization}:
-					</span>
-					{techCategories.map((techCategory) => (
-						<span
-							className={styles["course-card__description-categories-tag"]}
-							key={techCategory}
-						>
-							{techCategory}
-						</span>
-					))}
-				</div>
 				<p className={styles["course-card__description-text"]}>
 					{isExpanded
-						? description
-						: `${description.substring(START_INDEX, maxLength)}...`}
+						? course.description
+						: `${course.description.substring(START_INDEX, maxLength)}...`}
 					<span
 						className={styles["course-card__description-toggle"]}
 						onClick={toggleDescription}
@@ -158,11 +115,12 @@ const CourseCard: React.FC<CourseCardProps> = ({
 
 			<div className={styles["course-card__reviews"]}>
 				<div className={styles["course-card__reviews-info"]}>
-					<div className={styles["course-card__reviews-info-avatar"]}>
-						<img src="https://via.placeholder.com/98x32" />
-					</div>
+					<AvatarGroup
+						avatars={["/path/to/avatar1.png", "/path/to/avatar2.png"]}
+						className={styles["course-card__reviews-info-avatar"]}
+					/>
 					<span className={styles["course-card__reviews-info-count"]}>
-						{reviewsCount} Reviews
+						{course.reviews_count} Reviews
 					</span>
 					<span className={styles["course-card__reviews-info-verified"]}>
 						<Icon
