@@ -3,6 +3,7 @@ import React, { useState } from "react";
 
 import { type DropdownOption } from "~/common/types/index";
 
+import { SubcategoryItem } from "./components/index";
 import styles from "./styles.module.scss";
 
 const INITIAL_VISIBLE_COUNT = 5;
@@ -14,7 +15,7 @@ type Properties = {
 	isDisabled?: boolean;
 	label?: string;
 	name: string;
-	onChange: (value: { isTitle: boolean; values: (number | string)[] }) => void;
+	onChange: (value: { isTitle: boolean; values: string[] }) => void;
 	options: DropdownOption[];
 	placeholder?: string;
 };
@@ -47,7 +48,7 @@ const CheckDropdown: React.FC<Properties> = ({
 		setSelectedOptions(updatedSelectedOptions);
 		onChange({
 			isTitle: false,
-			values: updatedSelectedOptions.map((o) => o.value),
+			values: updatedSelectedOptions.map((o) => o.value.toString()),
 		});
 	};
 
@@ -86,21 +87,27 @@ const CheckDropdown: React.FC<Properties> = ({
 					);
 
 					renderedItems.push(
-						<div
-							className={clsx(styles["nested_option"], styles["dropdown_item"])}
-							key={`subOption-${subOption.value}`}
-							onClick={() => handleOptionClick(subOption)}
-						>
-							<div className={styles["checkbox_container"]}>
-								<input
-									checked={isSelected}
-									className={styles["checkbox__input"]}
-									onChange={() => handleOptionClick(subOption)}
-									type="checkbox"
-								/>
-							</div>
-							{subOption.label}
-						</div>,
+						<SubcategoryItem
+							className={styles["dropdown_item"]}
+							isSelected={isSelected}
+							onClick={handleOptionClick}
+							subOption={subOption}
+						/>,
+						// <div
+						// 	className={clsx(styles["nested_option"], styles["dropdown_item"])}
+						// 	key={`subOption-${subOption.value}`}
+						// 	onClick={() => handleOptionClick(subOption)}
+						// >
+						// 	<div className={styles["checkbox_container"]}>
+						// 		<input
+						// 			checked={isSelected}
+						// 			className={styles["checkbox__input"]}
+						// 			onChange={() => handleOptionClick(subOption)}
+						// 			type="checkbox"
+						// 		/>
+						// 	</div>
+						// 	{subOption.label}
+						// </div>,
 					);
 					itemsCount++;
 				}

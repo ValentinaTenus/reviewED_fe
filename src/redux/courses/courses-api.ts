@@ -31,7 +31,10 @@ export const coursesApi = api.injectEndpoints({
 				return response.results;
 			},
 		}),
-		getCoursesByFilter: builder.query<Course[], GetCoursesRequestQuery>({
+		getCoursesByFilter: builder.query<
+			GetCoursesResponse,
+			GetCoursesRequestQuery
+		>({
 			forceRefetch({ currentArg, previousArg }) {
 				return (
 					currentArg?.title !== previousArg?.title ||
@@ -45,17 +48,24 @@ export const coursesApi = api.injectEndpoints({
 				);
 			},
 			query: (filters: GetCoursesRequestQuery = {}) => {
+				const queryCities = filters?.city
+					?.map((city) => `cities[]=${encodeURIComponent(city)}`)
+					.join("&");
+				const querySubcategories =
+					filters?.subcategory_by_id
+						?.map((subcategory) => {
+							return `subcategory_by_id[]=${encodeURIComponent(subcategory)}`;
+						})
+						.join("&") ?? "";
+
+				const query = queryCities + querySubcategories;
 				return {
 					method: HttpMethods.GET,
-					params: filters,
-					url: coursesApiPath.ROOT,
+					url: `${coursesApiPath.ROOT}?${query}`,
 				};
 			},
 			serializeQueryArgs: ({ endpointName }) => {
 				return endpointName;
-			},
-			transformResponse: (response: GetCoursesResponse) => {
-				return response.results;
 			},
 		}),
 	}),

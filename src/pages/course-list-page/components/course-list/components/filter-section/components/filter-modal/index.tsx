@@ -1,13 +1,15 @@
 import React, { useCallback, useEffect, useState } from "react";
 
-import { CheckDropdown, Icon, IconButton } from "~/common/components/index";
-import { IconName } from "~/common/enums/index";
-import { useModal } from "~/common/hooks/use-modal.hook";
-import { DropdownOption } from "~/common/types";
 import {
-	mapCoursesCategories,
-	mapLocations,
-} from "~/pages/home-page/components/main-content/components/search-block/helpers";
+	Button,
+	CheckDropdown,
+	Icon,
+	IconButton,
+} from "~/common/components/index";
+import { ButtonVariant, IconName } from "~/common/enums/index";
+import { useModal } from "~/common/hooks/index";
+import { DropdownOption } from "~/common/types/index";
+import { mapCoursesCategories } from "~/pages/home-page/components/main-content/components/search-block/helpers";
 import { useGetCategoriesQuery } from "~/redux/categories/categories-api";
 import { useGetCoursesLocationsQuery } from "~/redux/locations/locations-api";
 
@@ -17,10 +19,17 @@ const OPTIONS_FIRST_ITEM_INDEX = 1;
 
 type FilterModalProperties = {
 	isOpen: boolean;
+	onChooseLocation: (locations: string[]) => void;
+	onChooseSubCategory: (categoryIds: string[]) => void;
 	onClose: () => void;
 };
 
-const FilterModal: React.FC<FilterModalProperties> = ({ isOpen, onClose }) => {
+const FilterModal: React.FC<FilterModalProperties> = ({
+	isOpen,
+	onChooseLocation,
+	onChooseSubCategory,
+	onClose,
+}) => {
 	const [locationOptions, setLocation] = useState<DropdownOption[]>([]);
 
 	const { data: fetchedCategories } = useGetCategoriesQuery(undefined);
@@ -32,23 +41,41 @@ const FilterModal: React.FC<FilterModalProperties> = ({ isOpen, onClose }) => {
 
 	useEffect(() => {
 		if (locations) {
-			const coursesLocationOptions = mapLocations(locations);
-			setLocation(coursesLocationOptions);
+			const coursesLocationOptions: DropdownOption[] = locations.map(
+				(location) => ({
+					label: location,
+					value: location,
+				}),
+			);
+			const options = [
+				{
+					label: "",
+					options: [
+						{
+							label: "Всі міста",
+							value: "0",
+						},
+						...coursesLocationOptions,
+					],
+					value: "",
+				},
+			];
+			setLocation(options);
 		}
 	}, [locations]);
 
-	const handleSelectСategory = useCallback(
-		(value: { isTitle: boolean; values: (number | string)[] }) => {
-			return value;
+	const handleSelectCategory = useCallback(
+		(value: { isTitle: boolean; values: string[] }) => {
+			onChooseSubCategory(value.values);
 		},
-		[],
+		[onChooseSubCategory],
 	);
 
 	const handleSelectLocation = useCallback(
-		(value: { isTitle: boolean; values: (number | string)[] }) => {
-			return value;
+		(value: { isTitle: boolean; values: string[] }) => {
+			onChooseLocation(value.values);
 		},
-		[],
+		[onChooseLocation],
 	);
 
 	const { handleOutsideClick, preventModalCloseOnClick } = useModal({
@@ -80,7 +107,7 @@ const FilterModal: React.FC<FilterModalProperties> = ({ isOpen, onClose }) => {
 					<CheckDropdown
 						className={styles["search_dropdown"]}
 						name="Види курсів"
-						onChange={handleSelectСategory}
+						onChange={handleSelectCategory}
 						options={coursesCategoriesOptions.slice(OPTIONS_FIRST_ITEM_INDEX)}
 						placeholder="Види курсів"
 					/>
@@ -88,9 +115,23 @@ const FilterModal: React.FC<FilterModalProperties> = ({ isOpen, onClose }) => {
 						className={styles["search_dropdown"]}
 						name="Локації"
 						onChange={handleSelectLocation}
-						options={locationOptions.slice(OPTIONS_FIRST_ITEM_INDEX)}
+						options={locationOptions}
 						placeholder="Локації"
 					/>
+				</div>
+				<div className={styles["modal__buttons_container"]}>
+					<Button
+						className={styles["modal__clear_button"]}
+						variant={ButtonVariant.DEFAULT}
+					>
+						Очистити все
+					</Button>
+					<Button
+						className={styles["modal__clear_button"]}
+						variant={ButtonVariant.PRIMARY}
+					>
+						Застосувати
+					</Button>
 				</div>
 			</div>
 		</div>

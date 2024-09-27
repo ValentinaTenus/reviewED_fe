@@ -10,8 +10,9 @@ type CoursesState = {
 const initialState: CoursesState = {
 	courses: null,
 	filters: {
-		category_by_id: "",
-		city: "",
+		category_by_id: [],
+		city: [],
+		subcategory_by_id: [],
 		title: "",
 	},
 };

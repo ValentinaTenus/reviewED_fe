@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 
 import { BreadCrumb, SearchBar, SortDropdown } from "~/common/components/index";
-import { CoursesSortOptions } from "~/common/constants";
+import { CoursesSortOptions } from "~/common/constants/index";
 import { AppRoute } from "~/common/enums/index";
 import { Category } from "~/common/types/index";
 
@@ -17,16 +17,17 @@ type FilterSectionProperties = {
 	categories: Category[];
 	onChangeSearchTerm: (searchTerm: string) => void;
 	onChangeSortBy: (sortBy: number | string) => void;
-	onChooseCategory: (categoryId: string) => void;
-	onChooseSubCategory: (categoryId: string) => void;
+	onChooseLocation: (locations: string[]) => void;
+	onChooseSubCategory: (subcategories: string[]) => void;
 	screenWidth: number;
 	searchTerm: string;
-	selectedCategoryId: string;
 };
 
 const FilterSection: React.FC<FilterSectionProperties> = ({
 	onChangeSearchTerm,
 	onChangeSortBy,
+	onChooseLocation,
+	onChooseSubCategory,
 	searchTerm,
 }) => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -50,7 +51,14 @@ const FilterSection: React.FC<FilterSectionProperties> = ({
 				placeholder="Find your perfect course"
 				value={searchTerm}
 			/>
-			{isOpen && <FilterModal isOpen={isOpen} onClose={handleCloseFilter} />}
+			{isOpen && (
+				<FilterModal
+					isOpen={isOpen}
+					onChooseLocation={onChooseLocation}
+					onChooseSubCategory={onChooseSubCategory}
+					onClose={handleCloseFilter}
+				/>
+			)}
 			<SortDropdown
 				name="sort"
 				onChange={onChangeSortBy}
