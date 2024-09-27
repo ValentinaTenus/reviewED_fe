@@ -199,6 +199,7 @@ const CompanyDetails: React.FC<{ companyId: string }> = ({ companyId }) => {
 	const contactsRef = useRef(null);
 	const aboutRef = useRef(null);
 	const coursesRef = useRef(null);
+	const reviewsRef = useRef(null);
 
 	const { data: reviews } = useGetReviewsByCompanyIdQuery(companyId);
 
@@ -210,11 +211,12 @@ const CompanyDetails: React.FC<{ companyId: string }> = ({ companyId }) => {
 					aboutRef={aboutRef}
 					contactsRef={contactsRef}
 					coursesRef={coursesRef}
+					reviewsRef={reviewsRef}
 				/>
 				<Contacts company={company} ref={contactsRef} />
 				<About company={company} ref={aboutRef} />
 				<Courses company={company} courses={courses} ref={coursesRef} />
-				<Reviews reviews={reviews} />
+				<Reviews ref={reviewsRef} reviews={reviews} />
 			</div>
 		);
 	}
