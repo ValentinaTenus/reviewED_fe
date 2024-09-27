@@ -63,7 +63,7 @@ const StarRating: React.FC<RatingProperties> = ({
 						const ratingValue = index + INCREMENT_RATING_NUMBER;
 
 						return (
-							<span key={index}>
+							<span className={styles["rating_stars"]} key={index}>
 								{averageRating >= ratingValue ? (
 									<StarIcon className={styles["star"]} key={index} />
 								) : averageRating >= ratingValue - DECREMENT_RATING_NUMBER ? (

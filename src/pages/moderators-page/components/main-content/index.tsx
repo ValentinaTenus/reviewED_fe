@@ -26,9 +26,12 @@ const MainModeratorsContent: React.FC = () => {
 			<div>
 				<p>Пошук за UID</p>
 			</div>
-			{moderatorsReviews?.results.map((review) => (
+			{[{ id: 1 }].map((review) => (
 				<ReviewModeratorsCard key={review.id} review={review} />
 			))}
+			{/* {moderatorsReviews?.results.map((review) => (
+				<ReviewModeratorsCard key={review.id} review={review} />
+			))} */}
 		</div>
 	);
 };
