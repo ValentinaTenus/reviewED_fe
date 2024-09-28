@@ -54,7 +54,23 @@ const baseQueryWithReauth: BaseQueryFn<
 			if (refreshResult.data) {
 				const data = refreshResult.data as GetTokensResponseDto;
 				api.dispatch(setTokens(data));
-				result = await baseQuery(args, api, extraOptions);
+
+				const newState = api.getState() as RootState;
+				const newAccessToken = newState.auth.access;
+
+				result = await baseQuery(
+					typeof args === "string"
+						? args
+						: {
+								...args,
+								headers: {
+									...args.headers,
+									authorization: `Bearer ${newAccessToken}`,
+								},
+							},
+					api,
+					extraOptions,
+				);
 			} else {
 				api.dispatch(logout());
 			}

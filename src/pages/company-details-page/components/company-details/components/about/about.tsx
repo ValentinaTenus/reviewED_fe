@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 import { Company } from "~/common/types";
@@ -6,8 +6,7 @@ import globalStyles from "~/pages/company-details-page/components/company-detail
 
 import styles from "./styles.module.scss";
 
-// eslint-disable-next-line react/display-name
-const About = forwardRef<HTMLDivElement, { company: Company }>(
+const About = React.forwardRef<HTMLDivElement, { company: Company }>(
 	({ company }, ref) => {
 		const MIN_SUBCATEGORIES = 0;
 
@@ -47,5 +46,7 @@ const About = forwardRef<HTMLDivElement, { company: Company }>(
 		);
 	},
 );
+
+About.displayName = "About";
 
 export { About };

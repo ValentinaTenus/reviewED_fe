@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import React from "react";
 
 import { Button, Icon } from "~/common/components";
 import { ButtonVariant, IconName } from "~/common/enums";
@@ -7,8 +7,7 @@ import globalStyles from "~/pages/company-details-page/components/company-detail
 
 import styles from "./styles.module.scss";
 
-// eslint-disable-next-line react/display-name
-const Contacts = forwardRef<HTMLDivElement, { company: Company }>(
+const Contacts = React.forwardRef<HTMLDivElement, { company: Company }>(
 	({ company }, ref) => {
 		return (
 			<>
@@ -45,5 +44,7 @@ const Contacts = forwardRef<HTMLDivElement, { company: Company }>(
 		);
 	},
 );
+
+Contacts.displayName = "Contacts";
 
 export { Contacts };

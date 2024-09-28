@@ -1,12 +1,10 @@
+import { type CompanyAndCourseReviewsByUserId } from "./company-and-courses-review-by-user-id.type";
+
 type GetCompanyAndCourseReviewsByUserIdResponse = {
-	id: number;
-	logo: string;
-	rating: number;
-	related_entity_name: string;
-	short_description: string;
-	status: string;
-	time_added: string;
-	user_name: string;
+	count: number;
+	next: null | number;
+	previous: null | number;
+	results: CompanyAndCourseReviewsByUserId[];
 };
 
 export { type GetCompanyAndCourseReviewsByUserIdResponse };

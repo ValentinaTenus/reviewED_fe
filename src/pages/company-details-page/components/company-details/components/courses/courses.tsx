@@ -1,4 +1,4 @@
-import { forwardRef, useState } from "react";
+import React, { useState } from "react";
 
 import { Button, Icon } from "~/common/components";
 import { ButtonVariant, IconName } from "~/common/enums";
@@ -7,8 +7,7 @@ import { Company, Course } from "~/common/types";
 import { CourseCard } from "./components/course-card/course-card";
 import styles from "./styles.module.scss";
 
-// eslint-disable-next-line react/display-name
-const Courses = forwardRef<
+const Courses = React.forwardRef<
 	HTMLDivElement,
 	{ company: Company; courses: Course[] }
 >(({ company, courses }, ref) => {
@@ -44,5 +43,7 @@ const Courses = forwardRef<
 		</div>
 	);
 });
+
+Courses.displayName = "Courses";
 
 export { Courses };
