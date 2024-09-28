@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React, { useCallback, useEffect, useState } from "react";
 
 import {
@@ -6,6 +7,7 @@ import {
 	Icon,
 	IconButton,
 } from "~/common/components/index";
+import { ScreenBreakpoints } from "~/common/constants";
 import { ButtonVariant, IconName } from "~/common/enums/index";
 import { useModal } from "~/common/hooks/index";
 import { DropdownOption, FilterType } from "~/common/types/index";
@@ -119,7 +121,6 @@ const FilterModal: React.FC<FilterModalProperties> = ({
 				<div className={styles["modal__filters_content"]}>
 					<CheckDropdown
 						className={styles["search_dropdown"]}
-						isShowMore
 						name="Види курсів"
 						onChange={handleSelectSubCategory}
 						options={coursesCategoriesOptions.slice(OPTIONS_FIRST_ITEM_INDEX)}
@@ -128,7 +129,6 @@ const FilterModal: React.FC<FilterModalProperties> = ({
 					/>
 					<CheckDropdown
 						className={styles["search_dropdown"]}
-						isShowMore
 						name="Локації"
 						onChange={handleSelectLocation}
 						options={locationOptions}

@@ -24,7 +24,6 @@ type Properties = {
 const CheckDropdown: React.FC<Properties> = ({
 	className,
 	isDisabled,
-	isShowMore,
 	onChange,
 	options,
 	placeholder,
@@ -47,7 +46,6 @@ const CheckDropdown: React.FC<Properties> = ({
 
 		return selectedOptions;
 	}, [options, selectedItems]);
-
 	const [isOpen, setIsOpen] = useState(false);
 	const [visibleItemsCount, setVisibleItemsCount] = useState(
 		INITIAL_VISIBLE_COUNT,
