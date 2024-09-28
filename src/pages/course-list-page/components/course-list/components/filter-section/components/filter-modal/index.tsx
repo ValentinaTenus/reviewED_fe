@@ -119,6 +119,7 @@ const FilterModal: React.FC<FilterModalProperties> = ({
 				<div className={styles["modal__filters_content"]}>
 					<CheckDropdown
 						className={styles["search_dropdown"]}
+						isShowMore
 						name="Види курсів"
 						onChange={handleSelectSubCategory}
 						options={coursesCategoriesOptions.slice(OPTIONS_FIRST_ITEM_INDEX)}
@@ -127,6 +128,7 @@ const FilterModal: React.FC<FilterModalProperties> = ({
 					/>
 					<CheckDropdown
 						className={styles["search_dropdown"]}
+						isShowMore
 						name="Локації"
 						onChange={handleSelectLocation}
 						options={locationOptions}

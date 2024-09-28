@@ -24,6 +24,7 @@ type Properties = {
 const CheckDropdown: React.FC<Properties> = ({
 	className,
 	isDisabled,
+	isShowMore,
 	onChange,
 	options,
 	placeholder,
