@@ -1,0 +1,43 @@
+.reviews {
+	padding-bottom: 40px;
+}
+
+.reviews_heading {
+	margin-bottom: 40px;
+}
+
+.review:not(:last-child) {
+	position: relative;
+	margin-bottom: 60px;
+}
+
+.review:not(:last-child)::after {
+	position: absolute;
+	content: "";
+	width: 100%;
+	height: 2px;
+	background-color: var(--color-grey-480);
+	bottom: -30px;
+}
+
+.no-reviews_container {
+	padding-bottom: 40px;
+}
+
+.no-reviews {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.no-reviews_title {
+	margin-bottom: 30px;
+}
+
+.no-reviews_title {
+	color: var(--color-grey-480);
+	margin-bottom: 10px;
+}
+
+/*-----------------------------*/

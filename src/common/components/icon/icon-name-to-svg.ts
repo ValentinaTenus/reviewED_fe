@@ -13,8 +13,10 @@ import Close from "~/assets/images/close.svg?react";
 import DollarSign from "~/assets/images/dollar-circle.svg?react";
 import Facebook from "~/assets/images/facebook.svg?react";
 import Filter from "~/assets/images/filter.svg?react";
+import Flag from "~/assets/images/flag.svg?react";
 import Global from "~/assets/images/global.svg?react";
 import Linkedin from "~/assets/images/iconoir_linkedin.svg?react";
+import Like from "~/assets/images/like.svg?react";
 import LinkedInLogo from "~/assets/images/linkedIn-logo.svg?react";
 import ListView from "~/assets/images/list-view.svg?react";
 import Location from "~/assets/images/location.svg?react";
@@ -23,6 +25,7 @@ import People from "~/assets/images/people.svg?react";
 import Plus from "~/assets/images/plus.svg?react";
 import Price from "~/assets/images/price.svg?react";
 import SearchIcon from "~/assets/images/search-normal.svg?react";
+import Share from "~/assets/images/share.svg?react";
 import ShieldTick from "~/assets/images/shield-tick.svg?react";
 import Email from "~/assets/images/sms.svg?react";
 import SortIcon from "~/assets/images/sort.svg?react";
@@ -50,7 +53,9 @@ const iconNameToSvg: Record<
 	email: Email,
 	facebook: Facebook,
 	filter: Filter,
+	flag: Flag,
 	global: Global,
+	like: Like,
 	linkedin: Linkedin,
 	linkedinLogo: LinkedInLogo,
 	listView: ListView,
@@ -61,6 +66,7 @@ const iconNameToSvg: Record<
 	plus: Plus,
 	price: Price,
 	search: SearchIcon,
+	share: Share,
 	shieldTick: ShieldTick,
 	sort: SortIcon,
 	star: Star,
