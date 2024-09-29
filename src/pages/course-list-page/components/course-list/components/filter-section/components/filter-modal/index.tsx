@@ -19,16 +19,24 @@ const OPTIONS_FIRST_ITEM_INDEX = 1;
 
 type FilterModalProperties = {
 	isOpen: boolean;
+	onApplyFiltersAndSearch: () => void;
 	onChooseLocation: (locations: string[]) => void;
 	onChooseSubCategory: (categoryIds: string[]) => void;
+	onClearFilters: () => void;
 	onClose: () => void;
+	selectedLocations: string[];
+	selectedSubCategories: string[];
 };
 
 const FilterModal: React.FC<FilterModalProperties> = ({
 	isOpen,
+	onApplyFiltersAndSearch,
 	onChooseLocation,
 	onChooseSubCategory,
+	onClearFilters,
 	onClose,
+	selectedLocations,
+	selectedSubCategories,
 }) => {
 	const [locationOptions, setLocation] = useState<DropdownOption[]>([]);
 
@@ -38,6 +46,11 @@ const FilterModal: React.FC<FilterModalProperties> = ({
 	const coursesCategoriesOptions = mapCoursesCategories(
 		fetchedCategories || [],
 	);
+
+	const { handleOutsideClick, preventModalCloseOnClick } = useModal({
+		isOpen,
+		onClose,
+	});
 
 	useEffect(() => {
 		if (locations) {
@@ -64,7 +77,7 @@ const FilterModal: React.FC<FilterModalProperties> = ({
 		}
 	}, [locations]);
 
-	const handleSelectCategory = useCallback(
+	const handleSelectSubCategory = useCallback(
 		(value: { isTitle: boolean; values: string[] }) => {
 			onChooseSubCategory(value.values);
 		},
@@ -78,10 +91,10 @@ const FilterModal: React.FC<FilterModalProperties> = ({
 		[onChooseLocation],
 	);
 
-	const { handleOutsideClick, preventModalCloseOnClick } = useModal({
-		isOpen,
-		onClose,
-	});
+	const handleApplyFilters = useCallback(() => {
+		onApplyFiltersAndSearch();
+		onClose();
+	}, [onApplyFiltersAndSearch, onClose]);
 
 	if (!isOpen) {
 		return null;
@@ -107,9 +120,10 @@ const FilterModal: React.FC<FilterModalProperties> = ({
 					<CheckDropdown
 						className={styles["search_dropdown"]}
 						name="Види курсів"
-						onChange={handleSelectCategory}
+						onChange={handleSelectSubCategory}
 						options={coursesCategoriesOptions.slice(OPTIONS_FIRST_ITEM_INDEX)}
 						placeholder="Види курсів"
+						selectedItems={selectedSubCategories}
 					/>
 					<CheckDropdown
 						className={styles["search_dropdown"]}
@@ -117,17 +131,20 @@ const FilterModal: React.FC<FilterModalProperties> = ({
 						onChange={handleSelectLocation}
 						options={locationOptions}
 						placeholder="Локації"
+						selectedItems={selectedLocations}
 					/>
 				</div>
 				<div className={styles["modal__buttons_container"]}>
 					<Button
 						className={styles["modal__clear_button"]}
+						onClick={onClearFilters}
 						variant={ButtonVariant.DEFAULT}
 					>
 						Очистити все
 					</Button>
 					<Button
 						className={styles["modal__clear_button"]}
+						onClick={handleApplyFilters}
 						variant={ButtonVariant.PRIMARY}
 					>
 						Застосувати

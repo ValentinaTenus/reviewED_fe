@@ -1,7 +1,7 @@
 import clsx from "clsx";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 
-import { type DropdownOption } from "~/common/types/index";
+import { DropdownOption } from "~/common/types/index";
 
 import { SubcategoryItem } from "./components/index";
 import styles from "./styles.module.scss";
@@ -18,6 +18,7 @@ type Properties = {
 	onChange: (value: { isTitle: boolean; values: string[] }) => void;
 	options: DropdownOption[];
 	placeholder?: string;
+	selectedItems: string[];
 };
 
 const CheckDropdown: React.FC<Properties> = ({
@@ -26,8 +27,28 @@ const CheckDropdown: React.FC<Properties> = ({
 	onChange,
 	options,
 	placeholder,
+	selectedItems,
 }) => {
-	const [selectedOptions, setSelectedOptions] = useState<DropdownOption[]>([]);
+	const selectedOptions = useMemo(() => {
+		const selectedOptions: DropdownOption[] = [];
+
+		options.forEach((option) => {
+			if (selectedItems.includes(option.value.toString())) {
+				selectedOptions.push(option);
+			}
+
+			if (option.options) {
+				option.options.forEach((subOption) => {
+					if (selectedItems.includes(subOption.value.toString())) {
+						selectedOptions.push(subOption);
+					}
+				});
+			}
+		});
+
+		return selectedOptions;
+	}, [options, selectedItems]);
+
 	const [isOpen, setIsOpen] = useState(false);
 	const [visibleItemsCount, setVisibleItemsCount] = useState(
 		INITIAL_VISIBLE_COUNT,
@@ -45,7 +66,6 @@ const CheckDropdown: React.FC<Properties> = ({
 			updatedSelectedOptions = [...selectedOptions, option];
 		}
 
-		setSelectedOptions(updatedSelectedOptions);
 		onChange({
 			isTitle: false,
 			values: updatedSelectedOptions.map((o) => o.value.toString()),

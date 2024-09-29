@@ -48,24 +48,38 @@ export const coursesApi = api.injectEndpoints({
 				);
 			},
 			query: (filters: GetCoursesRequestQuery = {}) => {
-				const queryCities = filters?.city
-					?.map((city) => `city=${encodeURIComponent(city)}`)
-					.join("&");
-				const querySubcategories =
-					filters?.subcategory_by_id
-						?.map((subcategory) => {
-							return `subcategory_by_id=${encodeURIComponent(subcategory)}`;
-						})
-						.join("&") ?? "";
+				const {
+					category_by_id = [],
+					city = [],
+					company_id,
+					limit,
+					offset,
+					sort,
+					subcategory_by_id = [],
+					title = "",
+				} = filters;
 
-				const query = `${queryCities}&${querySubcategories}`;
+				const queryParams = [
+					...city.map((c) => `city=${encodeURIComponent(c)}`),
+					...subcategory_by_id.map(
+						(sc) => `subcategory_by_id=${encodeURIComponent(sc)}`,
+					),
+					...category_by_id.map(
+						(c) => `category_by_id=${encodeURIComponent(c)}`,
+					),
+					title ? `title=${encodeURIComponent(title)}` : "",
+					limit ? `limit=${limit}` : "",
+					offset ? `offset=${offset}` : "",
+					company_id ? `company_id=${company_id}` : "",
+					sort ? `sort=${sort}` : "",
+				]
+					.filter(Boolean)
+					.join("&");
+
 				return {
 					method: HttpMethods.GET,
-					url: `${coursesApiPath.ROOT}?${query}`,
+					url: `${coursesApiPath.ROOT}?${queryParams}`,
 				};
-			},
-			serializeQueryArgs: ({ endpointName }) => {
-				return endpointName;
 			},
 		}),
 	}),

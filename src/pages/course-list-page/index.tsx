@@ -2,7 +2,7 @@ import React from "react";
 
 import { Footer, Header } from "~/common/components/index";
 
-import { CourseContent } from "./components";
+import { CourseContent } from "./components/index";
 import styles from "./styles.module.scss";
 
 const CourseList: React.FC = () => {

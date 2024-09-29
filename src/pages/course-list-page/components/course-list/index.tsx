@@ -2,11 +2,8 @@ import React, { useCallback, useEffect, useState } from "react";
 
 import { Pagination, Spinner } from "~/common/components/index";
 import { SpinnerVariant } from "~/common/enums/index";
-import { Category } from "~/common/types/index";
-import { useGetCategoriesQuery } from "~/redux/categories/categories-api";
-import { setFilters } from "~/redux/companies/companies-slice";
-import { useGetCoursesByFilterQuery } from "~/redux/courses/courses-api";
-import { useAppDispatch, useAppSelector } from "~/redux/hooks.type";
+import { useLazyGetCoursesByFilterQuery } from "~/redux/courses/courses-api";
+import { useAppSelector } from "~/redux/hooks.type";
 
 import { FilterSection } from "./components/index";
 import styles from "./styles.module.scss";
@@ -20,9 +17,6 @@ const INDEX_ONE = 1;
 const ZERO_LENGTH = 0;
 
 const CourseContent: React.FC = () => {
-	const dispatch = useAppDispatch();
-
-	const { data: categories } = useGetCategoriesQuery(undefined);
 	const { filters } = useAppSelector((state) => state.courses);
 
 	const [sortBy, setSortBy] = useState<string>("");
@@ -40,35 +34,11 @@ const CourseContent: React.FC = () => {
 		string[]
 	>(filters?.subcategory_by_id || []);
 	const [selectedLocations, setSelectedLocations] = useState<string[]>(
-		filters?.city || [ALL_CATEGORIES_ID],
+		filters?.city || [],
 	);
 
-	const { data: coursesResponse, isLoading } = useGetCoursesByFilterQuery(
-		{
-			category_by_id: selectedCategoryIds.includes(ALL_CATEGORIES_ID)
-				? undefined
-				: selectedCategoryIds,
-			city: selectedLocations,
-			limit: DEFAULT_COURSES_PER_PAGE,
-			offset: (currentPage - INDEX_ONE) * DEFAULT_COURSES_PER_PAGE,
-			sort: sortBy,
-			subcategory_by_id: selectedSubCategoryIds.includes(ALL_CATEGORIES_ID)
-				? undefined
-				: selectedSubCategoryIds,
-			title: searchTerm,
-		},
-		{
-			refetchOnMountOrArgChange: true,
-		},
-	);
-
-	const handleChangeSearchTerm = useCallback(
-		(newSearchTerm: string) => {
-			setSearchTerm(newSearchTerm);
-			void dispatch(setFilters({ city: "" }));
-		},
-		[dispatch],
-	);
+	const [getCourses, { data: coursesResponse, isLoading }] =
+		useLazyGetCoursesByFilterQuery();
 
 	const handleChangeSortBy = useCallback((newSortBy: number | string) => {
 		setSortBy(newSortBy.toString());
@@ -87,17 +57,55 @@ const CourseContent: React.FC = () => {
 		[selectedSubCategoryIds],
 	);
 
-	const handleSelectLocation = useCallback(
-		(chosenLocations: string[]) => {
-			if (chosenLocations.includes(ALL_CATEGORIES_ID)) {
-				setSelectedLocations([ALL_CATEGORIES_ID]);
-			} else {
-				setSelectedLocations([...selectedLocations, ...chosenLocations]);
-			}
-			setSelectedCategoryIds([]);
-			setCurrentPage(DEFAULT_CURRENT_PAGE);
+	const handleSelectLocation = useCallback((chosenLocations: string[]) => {
+		if (chosenLocations.includes(ALL_CATEGORIES_ID)) {
+			setSelectedLocations([ALL_CATEGORIES_ID]);
+		} else {
+			setSelectedLocations([...chosenLocations]);
+		}
+		setSelectedCategoryIds([]);
+		setCurrentPage(DEFAULT_CURRENT_PAGE);
+	}, []);
+
+	const handleClearFilters = useCallback(() => {
+		setSelectedCategoryIds([]);
+		setSelectedSubCategoryIds([]);
+		setSelectedLocations([]);
+	}, []);
+
+	const handleApplyFiltersAndSearch = useCallback(
+		(newSearchTerm?: string) => {
+			getCourses({
+				category_by_id: selectedCategoryIds.includes(ALL_CATEGORIES_ID)
+					? undefined
+					: selectedCategoryIds,
+				city: selectedLocations,
+				limit: DEFAULT_COURSES_PER_PAGE,
+				offset: (currentPage - INDEX_ONE) * DEFAULT_COURSES_PER_PAGE,
+				sort: sortBy,
+				subcategory_by_id: selectedSubCategoryIds.includes(ALL_CATEGORIES_ID)
+					? undefined
+					: selectedSubCategoryIds,
+				title: newSearchTerm || searchTerm,
+			});
 		},
-		[selectedLocations],
+		[
+			currentPage,
+			getCourses,
+			selectedCategoryIds,
+			selectedLocations,
+			selectedSubCategoryIds,
+			searchTerm,
+			sortBy,
+		],
+	);
+
+	const handleChangeSearchTerm = useCallback(
+		(newSearchTerm: string) => {
+			setSearchTerm(newSearchTerm);
+			handleApplyFiltersAndSearch(newSearchTerm);
+		},
+		[handleApplyFiltersAndSearch],
 	);
 
 	const updateScreenWidth = () => {
@@ -122,10 +130,6 @@ const CourseContent: React.FC = () => {
 		return () => window.removeEventListener("resize", updateScreenWidth);
 	}, []);
 
-	const allCategories: Category[] = categories
-		? [{ id: 0, name: "All", subcategories: [] }, ...categories]
-		: [];
-
 	return (
 		<>
 			<div className={styles["courses_list__container"]}>
@@ -135,13 +139,16 @@ const CourseContent: React.FC = () => {
 					</div>
 				)}
 				<FilterSection
-					categories={allCategories}
+					onApplyFiltersAndSearch={handleApplyFiltersAndSearch}
 					onChangeSearchTerm={handleChangeSearchTerm}
 					onChangeSortBy={handleChangeSortBy}
 					onChooseLocation={handleSelectLocation}
 					onChooseSubCategory={handleSelectSubCategory}
+					onClearFilters={handleClearFilters}
 					screenWidth={screenWidth}
 					searchTerm={searchTerm}
+					selectedLocations={selectedLocations}
+					selectedSubCategories={selectedSubCategoryIds}
 				/>
 			</div>
 			{coursesResponse && coursesResponse.results.length > ZERO_LENGTH && (
