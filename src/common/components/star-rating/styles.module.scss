@@ -47,11 +47,6 @@
   height: 16px;
 }
 
-.size__medium .star {
-  width: 16px;
-  height: 16px;
-}
-
 .size__small .average_rating {
   font-size: var(--font-size-main-text);
   font-weight: var(--font-weight-text);
@@ -62,17 +57,7 @@
   height: 18px;
 }
 
-.size__small .average_rating {
-  font-size: var(--font-size-main-text);
-  font-weight: var(--font-weight-bold);
-}
-
 .size__large .star {
   width: 24px;
   height: 24px;
-}
-
-.size__small .average_rating {
-  font-size: var(--font-size-main-text);
-  font-weight: var(--font-weight-bold);
 }
