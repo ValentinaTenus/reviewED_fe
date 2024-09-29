@@ -22,8 +22,11 @@ const ReviewModeratorsCard: React.FC<ReviewModeratorsCardProps> = ({
 	review,
 }) => {
 	const [isTruncated, setIsTruncated] = useState(true);
-	const visib = true;
-	const novisib = false;
+	const status = {
+		pending: true,
+		published: false,
+		removed: false,
+	};
 
 	const handleTruncatedText = () => setIsTruncated(!isTruncated);
 
@@ -33,14 +36,14 @@ const ReviewModeratorsCard: React.FC<ReviewModeratorsCardProps> = ({
 			<div className={style.card}>
 				<div
 					className={clsx(style["card__state"], {
-						[style["card__state--pending"]]: novisib,
-						[style["card__state--published"]]: visib,
-						[style["card__state--removed"]]: novisib,
+						[style["card__state--pending"]]: status.pending,
+						[style["card__state--published"]]: status.published,
+						[style["card__state--removed"]]: status.removed,
 					})}
 				>
-					{novisib && "В очікуванні"}
-					{visib && "Опубліковано"}
-					{novisib && "Вилучено з публікації"}
+					{status.pending && "В очікуванні"}
+					{status.published && "Опубліковано"}
+					{status.removed && "Вилучено з публікації"}
 				</div>
 				<div className={style.info}>
 					<p className={style["info__UID-text"]}>
@@ -83,7 +86,8 @@ const ReviewModeratorsCard: React.FC<ReviewModeratorsCardProps> = ({
 				<div className={clsx(style["content"], style["card__content"])}>
 					<div className={style["content__info"]}>
 						<div className={style["content__date"]}>
-							01/ 09/ 2024,<span className={style["content__time"]}>15:33</span>
+							01/ 09/ 2024,{" "}
+							<span className={style["content__time"]}>15 : 33</span>
 						</div>
 						<StarRating
 							averageRating={4.5}
@@ -129,7 +133,7 @@ const ReviewModeratorsCard: React.FC<ReviewModeratorsCardProps> = ({
 					</button>
 				</div>
 				<div className={style["card__buttons"]}>
-					{visib && (
+					{(status.pending || status.removed) && (
 						<Button
 							className={style["button_fixed"]}
 							isFullWidth
@@ -140,7 +144,7 @@ const ReviewModeratorsCard: React.FC<ReviewModeratorsCardProps> = ({
 							Опубліковати
 						</Button>
 					)}
-					{visib && (
+					{(status.published || status.pending) && (
 						<Button
 							className={style["button_fixed"]}
 							isFullWidth
