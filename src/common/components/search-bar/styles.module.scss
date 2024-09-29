@@ -58,6 +58,27 @@
   width: 24px;
 }
 
+.filter-button {
+	align-items: center;
+	display: flex;
+  justify-content: center;
+  gap: 10px;
+  min-width: fit-content;
+  white-space: nowrap;
+}
+
+.filter-button,
+.filter-button:hover,
+.filter-button:focus,
+.filter-button:active {
+  border: none;
+  outline: none;
+}
+
+.filter-button__icon {
+	height: 22px;
+}
+
 @media (max-width: 768px) {
   .search__input input {
     padding-right: 16px;

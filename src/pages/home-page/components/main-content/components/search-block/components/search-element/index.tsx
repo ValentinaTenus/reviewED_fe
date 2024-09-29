@@ -93,12 +93,14 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 
 	const [serverError, setServerError] = useState("");
 
-	const { data: filteredCourses, refetch: refetchCourses } =
+	const { data: filteredCoursesResponse, refetch: refetchCourses } =
 		useGetCoursesByFilterQuery(
 			{
-				category_by_id: selectedCourseCategory || "",
-				city: selectedLocation,
-				subcategory_by_id: selectedCourseSubCategory || "",
+				category_by_id: selectedCourseCategory ? [selectedCourseCategory] : [],
+				city: selectedLocation ? [selectedLocation] : [],
+				subcategory_by_id: selectedCourseSubCategory
+					? [selectedCourseSubCategory]
+					: [],
 				title: selectedCompanyFromAll ? selectedCompanyFromAll : searchTerm,
 			},
 			{
@@ -172,10 +174,10 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 			} else {
 				if (
 					selectedCategory === categories[INDEX_COURSES].value &&
-					filteredCourses
+					filteredCoursesResponse?.results
 				) {
 					const mappedCourses = getDropdownOptionsFormat({
-						courses: filteredCourses,
+						courses: filteredCoursesResponse.results,
 					});
 					setFilteredSuggestions(mappedCourses);
 				}
@@ -194,7 +196,7 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 		[
 			dispatch,
 			getCompaniesResponse?.results,
-			filteredCourses,
+			filteredCoursesResponse?.results,
 			selectedCategory,
 		],
 	);
@@ -207,16 +209,16 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 				void dispatch(setCompaniesFilters({ city: "", name: "" }));
 				void dispatch(
 					setCoursesFilters({
-						city: selectedLocation,
+						city: [selectedLocation],
 						title: searchTerm,
 					}),
 				);
 			} else {
 				void dispatch(
 					setCoursesFilters({
-						category_by_id: "",
-						city: "",
-						subcategory_by_id: "",
+						category_by_id: [""],
+						city: [""],
+						subcategory_by_id: [""],
 						title: "",
 					}),
 				);
@@ -240,7 +242,7 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 			}
 
 			if (selectedCategory === categories[INDEX_COURSES].value) {
-				void dispatch(setCoursesFilters({ city: value.toString() }));
+				void dispatch(setCoursesFilters({ city: [value.toString()] }));
 			}
 		},
 		[dispatch, selectedCategory],
@@ -261,8 +263,8 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 				setSelectedCourseCategory(value.toString());
 				void dispatch(
 					setCoursesFilters({
-						category_by_id: value.toString(),
-						subcategory_by_id: "",
+						category_by_id: [value.toString()],
+						subcategory_by_id: [""],
 					}),
 				);
 			} else {
@@ -270,8 +272,8 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 				setSelectedCourseSubCategory(value.toString());
 				void dispatch(
 					setCoursesFilters({
-						category_by_id: "",
-						subcategory_by_id: value.toString(),
+						category_by_id: [""],
+						subcategory_by_id: [value.toString()],
 					}),
 				);
 			}
@@ -293,10 +295,10 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 					navigate(AppRoute.ALL_COMPANIES);
 				}
 			} else {
-				const result = await refetchCourses().unwrap();
-				onSearch(result);
+				const response = await refetchCourses().unwrap();
+				onSearch(response.results);
 
-				if (result.length > ZERO_INDEX) {
+				if (response.results.length > ZERO_INDEX) {
 					navigate(AppRoute.ALL_COURSES);
 				}
 			}
