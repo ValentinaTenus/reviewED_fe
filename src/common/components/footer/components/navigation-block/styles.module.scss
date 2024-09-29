@@ -20,11 +20,11 @@
   color: var(--color-grey-50);
   font-size: var(--font-size-title-large);
   font-weight: var(--font-weight-semi-bold);
-}
-
-.footer_content__contact_link{
+  border-bottom: 1px solid transparent;
+  width: max-content;
+  transition: border-color 0.3s;
   &:hover {
-    text-decoration: underline; 
+    border-color: var(--color-grey-50); 
   }
 }
 

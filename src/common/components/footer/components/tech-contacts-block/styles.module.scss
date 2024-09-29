@@ -34,8 +34,11 @@
 .footer_content__contact-link {
   text-decoration: none; 
   color: inherit; 
+  border-bottom: 1px solid transparent;
+  width: max-content;
+  transition: border-color 0.3s;
   
   &:hover {
-    text-decoration: underline; 
+    border-color: var(--color-grey-50); 
   }
 }
