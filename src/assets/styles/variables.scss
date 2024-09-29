@@ -1,79 +1,78 @@
 :root {
+	//COLORS
 
-  //COLORS
+	--color-white: #ffffff;
+	--color-black: #000000;
 
-  --color-white: #ffffff;
-  --color-black: #000000;
+	--color-yellow-100: #ffffc1;
+	--color-yellow-200: #fffc87;
+	--color-yellow-300: #fff342;
+	--color-yellow-400: #ffe40f;
+	--color-yellow-450: #fbe34f;
+	--color-yellow-500: #fdd503;
+	--color-yellow-600: #cf9d00;
+	--color-yellow-700: #a57103;
+	--color-yellow-800: #88570b;
+	--color-yellow-900: #74470f;
+	--color-yellow-950: #442504;
 
-  --color-yellow-100: #FFFFC1;
-  --color-yellow-200: #FFFC87;
-  --color-yellow-300: #FFF342;
-  --color-yellow-400: #FFE40F;
-  --color-yellow-450: #FBE34F;
-  --color-yellow-500: #FDD503;
-  --color-yellow-600: #CF9D00;
-  --color-yellow-700: #A57103;
-  --color-yellow-800: #88570B;
-  --color-yellow-900: #74470F;
-  --color-yellow-950: #442504;
+	--color-grey-50: #fafafa;
+	--color-grey-100: #f4f4f5;
+	--color-grey-200: #e4e4e7;
+	--color-grey-300: #d4d4d8;
+	--color-grey-350: #c7c7c7;
+	--color-grey-400: #a1a1aa;
+	--color-grey-450: #b3b3b3;
+	--color-grey-460: #8c8c8c;
+	--color-grey-470: #808080;
+	--color-grey-480: #9d9d9d;
+	--color-grey-490: #828282;
+	--color-grey-500: #71717a;
+	--color-grey-600: #52525b;
+	--color-grey-700: #3f3f46;
+	--color-grey-800: #27272a;
+	--color-grey-900: #18181b;
+	--color-grey-910: #080808;
+	--color-grey-950: #09090b;
+	--color-grey-1000: #232323;
 
-  --color-grey-50: #FAFAFA;
-  --color-grey-100: #F4F4F5;
-  --color-grey-200: #E4E4E7;
-  --color-grey-300: #D4D4D8;
-  --color-grey-350: #C7C7C7;
-  --color-grey-400: #A1A1AA;
-  --color-grey-450: #B3B3B3;
-  --color-grey-460: #8C8C8C;
-  --color-grey-470: #808080;
-  --color-grey-480: #9D9D9D;
-  --color-grey-490: #828282;
-  --color-grey-500: #71717A;
-  --color-grey-600: #52525B;
-  --color-grey-700: #3F3F46;
-  --color-grey-800: #27272A;
-  --color-grey-900: #18181B;
-  --color-grey-910: #080808;
-  --color-grey-950: #09090B;
-  --color-grey-1000: #232323;
+	--color-button-blue: #0077b5;
+	--color-button-light-blue: #2296d2;
+	--color-button-facebook-blue: #4267b2;
+	--color-button-facebook-light-blue: #6d85b7;
+	--color-blue-icons: #0a66c2;
+	--color-light-blue-selected-items: #82bef7;
 
-  --color-button-blue: #0077B5;
-  --color-button-light-blue: #2296D2;
-  --color-button-facebook-blue: #4267B2;
-  --color-button-facebook-light-blue: #6D85B7;
-  --color-blue-icons: #0A66C2;
-  --color-light-blue-selected-items: #82BEF7;
+	--color-error-red: #e22138;
 
-  --color-error-red: #E22138;
+	--color-icon-green: #33d95d;
 
-  --color-icon-green: #33D95D;
+	--color-shadow-brown: rgb(165, 113, 3, 0.25);
+	--color-shadow-grey: rgb(0, 0, 0, 0.25);
+	--color-shadow-light-grey: rgb(0, 0, 0, 0.1);
 
-  --color-shadow-brown: rgb(165, 113, 3, 0.25);
-  --color-shadow-grey: rgb(0, 0, 0, 0.25);
-  --color-shadow-light-grey: rgb(0, 0, 0, 0.1);
+	//FONT FAMILY
+	--font-family-main: "Open Sans", sans-serif;
+	--font-family-roboto: "Roboto", sans-serif;
 
-  //FONT FAMILY
-  --font-family-main: 'Open Sans', sans-serif;
-  --font-family-roboto: 'Roboto', sans-serif;
- 
-  //FONT WEIGHT
+	//FONT WEIGHT
 
-  --font-weight-extra-bold: 700;
-  --font-weight-bold: 600;
-  --font-weight-semi-bold: 500;
-  --font-weight-text: 400;
+	--font-weight-extra-bold: 700;
+	--font-weight-bold: 600;
+	--font-weight-semi-bold: 500;
+	--font-weight-text: 400;
 
-  //FONT SIZE
+	//FONT SIZE
 
-  --font-size-title-h1: 48px;
-  --font-size-title: 36px;
-  --font-size-title-mobile-h1: 32px;
-  --font-size-title-h2: 28px;
-  --font-size-title-mobile-h2: 24px;
-  --font-size-title-h3: 22px;
-  --font-size-title-h4: 20px;
-  --font-size-title-large: 18px;
-  --font-size-title-h5: 16px;
-  --font-size-main-text: 14px;
-  --font-size-secondary-text: 12px;
+	--font-size-title-h1: 48px;
+	--font-size-title: 36px;
+	--font-size-title-mobile-h1: 32px;
+	--font-size-title-h2: 28px;
+	--font-size-title-mobile-h2: 24px;
+	--font-size-title-h3: 22px;
+	--font-size-title-h4: 20px;
+	--font-size-title-large: 18px;
+	--font-size-title-h5: 16px;
+	--font-size-main-text: 14px;
+	--font-size-secondary-text: 12px;
 }
