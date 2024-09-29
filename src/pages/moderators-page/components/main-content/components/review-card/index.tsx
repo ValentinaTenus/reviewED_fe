@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-magic-numbers */
-import cn from "classnames";
 import clsx from "clsx";
 import React, { useState } from "react";
 
@@ -23,16 +21,18 @@ type ReviewModeratorsCardProps = {
 const ReviewModeratorsCard: React.FC<ReviewModeratorsCardProps> = ({
 	review,
 }) => {
-	const [istruncated, setIsTruncated] = useState(false);
+	const [isTruncated, setIsTruncated] = useState(true);
 	const visib = true;
 	const novisib = false;
+
+	const handleTruncatedText = () => setIsTruncated(!isTruncated);
 
 	return (
 		<div>
 			{review.email}
 			<div className={style.card}>
 				<div
-					className={cn(style["card__state"], {
+					className={clsx(style["card__state"], {
 						[style["card__state--pending"]]: novisib,
 						[style["card__state--published"]]: visib,
 						[style["card__state--removed"]]: novisib,
@@ -64,7 +64,7 @@ const ReviewModeratorsCard: React.FC<ReviewModeratorsCardProps> = ({
 						</p>
 					</div>
 				</div>
-				<div className={`${style["card__title"]} ${style["title"]}`}>
+				<div className={clsx(style["card__title"], style["title"])}>
 					<img
 						alt="logo"
 						className={style["title__img"]}
@@ -92,8 +92,8 @@ const ReviewModeratorsCard: React.FC<ReviewModeratorsCardProps> = ({
 						/>
 					</div>
 					<p
-						className={cn(style["content__text"], {
-							[style["content__text--truncated"]]: istruncated,
+						className={clsx(style["content__text"], {
+							[style["content__text--truncated"]]: isTruncated,
 						})}
 					>
 						Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugiat,
@@ -123,15 +123,15 @@ const ReviewModeratorsCard: React.FC<ReviewModeratorsCardProps> = ({
 					</p>
 					<button
 						className={style["content__text_button"]}
-						onClick={() => setIsTruncated(!istruncated)}
+						onClick={handleTruncatedText}
 					>
-						{!istruncated ? "Приховати" : "Показати повністю"}
+						{!isTruncated ? "Приховати" : "Показати повністю"}
 					</button>
 				</div>
 				<div className={style["card__buttons"]}>
 					{visib && (
 						<Button
-							className={clsx(style["button_fixed"])}
+							className={style["button_fixed"]}
 							isFullWidth
 							size={ButtonSize.SMALL}
 							type={ButtonType.BUTTON}
@@ -142,7 +142,7 @@ const ReviewModeratorsCard: React.FC<ReviewModeratorsCardProps> = ({
 					)}
 					{visib && (
 						<Button
-							className={clsx(style["button_fixed"])}
+							className={style["button_fixed"]}
 							isFullWidth
 							size={ButtonSize.SMALL}
 							type={ButtonType.BUTTON}
