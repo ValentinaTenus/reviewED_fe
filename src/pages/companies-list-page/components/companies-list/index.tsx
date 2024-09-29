@@ -201,7 +201,9 @@ const CompaniesContent: React.FC = () => {
 					</div>
 				)}
 			{error && <div className={styles["error"]}>{serverError}</div>}
-			{user && <ReviewsSection screenWidth={screenWidth} userId={user.id} />}
+			{user && user.id && (
+				<ReviewsSection screenWidth={screenWidth} userId={user.id} />
+			)}
 		</div>
 	);
 };
