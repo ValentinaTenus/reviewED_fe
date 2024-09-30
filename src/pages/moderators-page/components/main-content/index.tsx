@@ -1,17 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
-import {
-	SearchBar,
-	SortDropdown,
-	Spinner,
-	ToggleGroupButtons,
-} from "~/common/components";
-import {
-	moderationsReviewSortOptionsByPeriod,
-	moderationsReviewSortOptionsByStatus,
-	ScreenBreakpoints,
-} from "~/common/constants";
+import { SearchBar, Spinner } from "~/common/components";
+import { ScreenBreakpoints } from "~/common/constants";
 import { ButtonGroupData, SpinnerVariant } from "~/common/enums";
 import { useGetScreenWidth } from "~/common/hooks";
 import { DropdownOption, GetModerationReviewsRequest } from "~/common/types";
@@ -20,7 +11,10 @@ import { NotFound } from "~/pages/home-page/components/main-content/components/s
 import useReviewModerationApi from "~/redux/reviews-moderation/hookUseReviewModerationApi";
 import { setRewiews } from "~/redux/reviews-moderation/reviews-moderation-slice";
 
-import { ReviewModeratorsCard } from "./components/index";
+import {
+	ModeratorsReviewFilterSection,
+	ReviewModeratorsCard,
+} from "./components/index";
 import styles from "./styles.module.scss";
 
 const INDEX_ZERO = 0;
@@ -97,35 +91,12 @@ const MainModeratorsContent: React.FC = () => {
 					/>
 				</div>
 				{useGetScreenWidth() > ScreenBreakpoints.TABLET && (
-					<div className={styles["fitters_block"]}>
-						<div className={styles["fitters_block__category"]}>
-							<p className={styles["fitters_block__category_title"]}>
-								Оберіть категорію
-							</p>
-							<ToggleGroupButtons
-								activeButtonValue={filterByType}
-								handleButtonClick={(type) =>
-									setFilterByType(type as keyof typeof ButtonGroupData)
-								}
-								toggleButtonGroupData={["Компанії", "Курси"]}
-							/>
-						</div>
-						<div className={styles["fitters_block__sort"]}>
-							<p className={styles["fitters_block__sort_title"]}>
-								Сортувати за
-							</p>
-							<SortDropdown
-								className={styles["dropdown_fullwidth"]}
-								onChange={handleSetFilterByStatus}
-								options={moderationsReviewSortOptionsByStatus}
-							/>
-							<SortDropdown
-								className={styles["dropdown_fullwidth"]}
-								onChange={handleSetSortByPeriod}
-								options={moderationsReviewSortOptionsByPeriod}
-							/>
-						</div>
-					</div>
+					<ModeratorsReviewFilterSection
+						filterByType={filterByType}
+						handleSetFilterByStatus={handleSetFilterByStatus}
+						handleSetSortByPeriod={handleSetSortByPeriod}
+						setFilterByType={setFilterByType}
+					/>
 				)}
 			</section>
 
