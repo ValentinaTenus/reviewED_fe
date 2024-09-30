@@ -17,14 +17,15 @@
 }
 
 .footer_content__contact_link {
+  border-bottom: 1px solid transparent;
   color: var(--color-grey-50);
   font-size: var(--font-size-title-large);
   font-weight: var(--font-weight-semi-bold);
-}
+  transition: border-color 0.3s;
+  width: max-content;
 
-.footer_content__contact_link{
   &:hover {
-    text-decoration: underline; 
+    border-color: var(--color-grey-50); 
   }
 }
 

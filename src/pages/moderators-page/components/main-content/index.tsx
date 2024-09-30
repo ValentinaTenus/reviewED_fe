@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { SearchBar, Spinner } from "~/common/components";
+import { Modal, SearchBar, Spinner } from "~/common/components";
 import { ScreenBreakpoints } from "~/common/constants";
 import { ButtonGroupData, SpinnerVariant } from "~/common/enums";
 import { useGetScreenWidth } from "~/common/hooks";
 import { DropdownOption, GetModerationReviewsRequest } from "~/common/types";
-import { FilterModal } from "~/pages/course-list-page/components/course-list/components/filter-section/components";
 import { NotFound } from "~/pages/home-page/components/main-content/components/search-block/components";
 import useReviewModerationApi from "~/redux/reviews-moderation/hookUseReviewModerationApi";
 import { setRewiews } from "~/redux/reviews-moderation/reviews-moderation-slice";
@@ -67,6 +66,7 @@ const MainModeratorsContent: React.FC = () => {
 
 	return (
 		<div className={styles["moderators_wrapper"]}>
+			{/* <<<<<<< HEAD */}
 			<header className={styles["header_wrapper"]}>
 				<h2 className={styles["title"]}>Модерація відгуків</h2>
 				<p className={styles["sub_title"]}>
@@ -116,10 +116,27 @@ const MainModeratorsContent: React.FC = () => {
 					))}
 			</main>
 			{isOpenSerchFiltersModal && (
-				<FilterModal
+				<Modal
+					isOpen={isOpenSerchFiltersModal}
 					onClose={() => setIsOpenSerchFiltersModal((prev) => !prev)}
-				/>
+				>
+					<ModeratorsReviewFilterSection
+						filterByType={filterByType}
+						handleSetFilterByStatus={handleSetFilterByStatus}
+						handleSetSortByPeriod={handleSetSortByPeriod}
+						setFilterByType={setFilterByType}
+					/>
+				</Modal>
 			)}
+			{/* =======
+			<div className={styles["title_wrapper"]}>
+				<p>Модерація відгуків</p>
+				<p>Знайдено: {moderatorsReviews?.count} відгуків</p>
+			</div>
+			<div>
+				<p>Пошук за UID</p>
+			</div>
+>>>>>>> main */}
 		</div>
 	);
 };

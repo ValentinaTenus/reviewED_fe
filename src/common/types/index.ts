@@ -12,6 +12,7 @@ export {
 } from "./company/index";
 export {
 	type Course,
+	type FilterType,
 	type GetCoursesRequestQuery,
 	type GetCoursesResponse,
 } from "./courses/index";
@@ -20,13 +21,16 @@ export {
 	type FooterNavigationIconLink,
 	type FooterNavigationLink,
 } from "./footer-navigation-links/index";
+export { type ModalHandlers, type ModalProperties } from "./modal/index";
 export {
 	type CompanyAndCourseReviewsByUserId,
 	type GetCompanyAndCourseReviewsByUserIdResponse,
 	type GetModerationReviewsRequest,
 	type GetModerationReviewsResponse,
+	type GetReviewsResponse,
 	type ModerationReviews,
 	type RecentReview,
+	type Review,
 } from "./review/index";
 export { type User, type UserWithStaff } from "./user/index";
 export { type ValueOf } from "./value-of/index";

@@ -5,4 +5,6 @@ export {
 	type GetModerationReviewsResponse,
 	type ModerationReviews,
 } from "./get-moderation-reviews";
+export { type GetReviewsResponse } from "./get-reviews-response.type";
 export { type RecentReview } from "./recent-review";
+export { type Review } from "./review.type";
