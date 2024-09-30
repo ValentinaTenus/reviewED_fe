@@ -4,9 +4,20 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Icon } from "~/common/components/index";
 import { StarRating } from "~/common/components/star-rating";
 import { IconName } from "~/common/enums/index";
-import { MyReview } from "~/common/types/my-reviews";
+import {
+	MyReview,
+	MyReviewCategory,
+	PopupMenuOption,
+} from "~/common/types/my-reviews";
 
 import styles from "./styles.module.scss";
+import { PopupMenu } from "../popup-menu";
+
+const POPUP_OPTIONS: PopupMenuOption[] = [
+	{ value: "edit", iconName: IconName.EDIT },
+	{ value: "contact moderator", iconName: IconName.MESSAGES },
+	{ value: "delete", iconName: IconName.DELETE },
+];
 
 // Constants for breakpoints and max preview lengths
 const MAX_PREVIEW_LENGTH_DESKTOP = 200;
@@ -20,15 +31,53 @@ const LARGE_SCREEN_BREAKPOINT = 888;
 const ZERO_NUMBER = 0;
 
 interface Properties {
-	category: "company" | "course";
+	category: MyReviewCategory;
 	review: MyReview;
+	activePopup: number | null;
+	handleTogglePopup: (item: number | null) => void;
+	handleDeleteReview: (reviewId: number) => void;
+	handleEditReview: ({
+		reviewId,
+		text,
+	}: {
+		reviewId: number;
+		text: string;
+	}) => void;
 }
 
-const ReviewListItem: React.FC<Properties> = ({ category, review }) => {
+const ReviewListItem: React.FC<Properties> = ({
+	category,
+	review,
+	handleEditReview,
+	handleDeleteReview,
+	handleTogglePopup,
+	activePopup,
+}) => {
 	const [showFullText, setShowFullText] = useState(false);
 	const [maxPreviewLength, setMaxPreviewLength] = useState(
 		MAX_PREVIEW_LENGTH_DESKTOP,
 	);
+
+	const togglePopup = () => {
+		// If the popup is already active for this review, close it
+		if (activePopup === review.id) {
+			handleTogglePopup(null);
+		} else {
+			handleTogglePopup(review.id);
+		}
+	};
+
+	const handleSelect = (option: string) => {
+		if (option === "edit") {
+			handleEditReview({ reviewId: review.id, text: review.text });
+		}
+
+		if (option === "delete") {
+			handleDeleteReview(review.id);
+		}
+
+		handleTogglePopup(null);
+	};
 
 	const toggleText = () => setShowFullText(!showFullText);
 
@@ -58,10 +107,17 @@ const ReviewListItem: React.FC<Properties> = ({ category, review }) => {
 
 	return (
 		<li className={styles["list__item"]}>
-			<div className={clsx(styles["item__elem"], styles["icon-more"])}>
-				<span className={styles["icon-more"]}>
+			<div className={clsx(styles["item__elem"], styles["more-options"])}>
+				<span className={styles["icon-more"]} onClick={togglePopup}>
 					<Icon name={IconName.MORE} />
 				</span>
+				<div
+					className={clsx(styles["popup-menu"], styles["popup-menu-mobile"])}
+				>
+					{activePopup === review.id && (
+						<PopupMenu options={POPUP_OPTIONS} onSelect={handleSelect} />
+					)}
+				</div>
 			</div>
 
 			<div className={styles["item__elem"]}>
@@ -203,12 +259,22 @@ const ReviewListItem: React.FC<Properties> = ({ category, review }) => {
 						{review.status === "removed" ? "Unsuccessful" : review.status}
 					</div>
 					<div className={styles["status-icons"]}>
-						<span className={styles["icon-warning"]}>
+						<div className={styles["icon-warning"]}>
 							{review.status === "removed" && <Icon name={IconName.WARNING} />}
-						</span>
-						<span className={styles["icon-more"]}>
+						</div>
+						<div className={styles["icon-more"]} onClick={togglePopup}>
 							<Icon name={IconName.MORE} />
-						</span>
+							<div
+								className={clsx(
+									styles["popup-menu"],
+									styles["popup-menu-desktop"],
+								)}
+							>
+								{activePopup === review.id && (
+									<PopupMenu options={POPUP_OPTIONS} onSelect={handleSelect} />
+								)}
+							</div>
+						</div>
 					</div>
 				</div>
 

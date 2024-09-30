@@ -36,6 +36,22 @@
 	}
 }
 
+.more-options {
+	position: relative;
+
+	.icon-more {
+		svg {
+			transform: rotate(90deg);
+		}
+	}
+
+	.popup-menu-mobile {
+		position: absolute;
+		right: 190px;
+		top: 36px;
+	}
+}
+
 .item__info-wrapper {
 	display: flex;
 	flex-direction: column;
@@ -238,10 +254,14 @@
 	}
 
 	&-icons {
+		display: flex;
+		gap: 10px;
 		cursor: pointer;
 
-		span + span {
-			margin-left: 10px;
+		.popup-menu-desktop {
+			position: relative;
+			right: 160px;
+			top: 10px;
 		}
 	}
 }
@@ -269,7 +289,6 @@
 			position: absolute;
 			right: 10px;
 			top: 15px;
-			transform: rotate(90deg);
 		}
 	}
 

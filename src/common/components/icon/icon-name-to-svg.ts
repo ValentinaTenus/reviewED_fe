@@ -37,6 +37,8 @@ import Teacher from "~/assets/images/teacher.svg?react";
 import Warning from "~/assets/images/warning.svg?react";
 import Xrp from "~/assets/images/xrp-(xrp).svg?react";
 import Youtube from "~/assets/images/youtube.svg?react";
+import Delete from "~/assets/images/delete.svg?react";
+import Messages from "~/assets/images/messages.svg?react";
 import { type IconName } from "~/common/enums/index";
 
 const iconNameToSvg: Record<
@@ -80,6 +82,8 @@ const iconNameToSvg: Record<
 	warning: Warning,
 	xrp: Xrp,
 	youtube: Youtube,
+	delete: Delete,
+	messages: Messages,
 };
 
 export { iconNameToSvg };

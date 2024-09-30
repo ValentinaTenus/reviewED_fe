@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 
 import { Pagination, Spinner } from "~/common/components";
 import { SpinnerVariant } from "~/common/enums";
-import { MyReviewCategory } from "~/common/types/my-reviews";
+import { MyReview, MyReviewCategory } from "~/common/types/my-reviews";
 import { useGetMyReviewsQuery } from "~/redux/my-reviews/my-reviews-api";
 import { useGetUserQuery } from "~/redux/user/user-api";
 
@@ -69,7 +69,7 @@ const MyReviewsListSection: React.FC<Properties> = ({ category }) => {
 
 			<div className={styles["my-reviews-list__content"]}>
 				{reviews?.results && reviews.results.length > ZERO_LENGTH && (
-					<MyReviewsList category={category} myReviews={reviews.results} />
+					<MyReviewsList category={category} reviews={reviews.results} />
 				)}
 
 				{reviews?.results && reviews.results.length === ZERO_LENGTH && (
@@ -78,6 +78,8 @@ const MyReviewsListSection: React.FC<Properties> = ({ category }) => {
 
 				{isLoading && <Spinner variant={SpinnerVariant.SMALL} />}
 				{serverError && <div className={styles["error"]}>{serverError}</div>}
+
+				{/* <MyReviewsList category={category} reviews={[] as MyReview[]} /> */}
 			</div>
 
 			{reviews?.results && reviews.results.length > ZERO_LENGTH && (

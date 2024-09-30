@@ -36,6 +36,8 @@ enum IconName {
 	WARNING = "warning",
 	XRP = "xrp",
 	YOUTUBE = "youtube",
+	DELETE = "delete",
+	MESSAGES = "messages"
 }
 
 export { IconName };
