@@ -161,9 +161,9 @@ const CourseContent: React.FC = () => {
 	);
 
 	const handleClearAllFilters = useCallback(() => {
-		dispatch(clearFilters());
+		handleClearFilters();
 		handleApplyFiltersAndSearch();
-	}, [dispatch, handleApplyFiltersAndSearch]);
+	}, [handleClearFilters, handleApplyFiltersAndSearch]);
 
 	return (
 		<>
