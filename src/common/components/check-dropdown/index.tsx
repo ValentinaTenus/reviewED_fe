@@ -1,6 +1,8 @@
 import clsx from "clsx";
 import React, { useMemo, useState } from "react";
 
+import { ScreenBreakpoints } from "~/common/constants";
+import { useGetScreenWidth } from "~/common/hooks";
 import { type DropdownOption, type FilterType } from "~/common/types/index";
 
 import { SubcategoryItem } from "./components/index";
@@ -47,6 +49,7 @@ const CheckDropdown: React.FC<Properties> = ({
 		return selectedOptions;
 	}, [options, selectedItems]);
 	const [isOpen, setIsOpen] = useState(false);
+	const screenWidth = useGetScreenWidth();
 	const [visibleItemsCount, setVisibleItemsCount] = useState(
 		INITIAL_VISIBLE_COUNT,
 	);
@@ -87,7 +90,11 @@ const CheckDropdown: React.FC<Properties> = ({
 		let itemsCount = DEFAULT_OPTIONS_LENGTH;
 
 		for (const option of options) {
-			if (itemsCount >= visibleItemsCount) break;
+			if (
+				screenWidth > ScreenBreakpoints.MOBILE &&
+				itemsCount >= visibleItemsCount
+			)
+				break;
 
 			renderedItems.push(
 				<div
@@ -102,7 +109,11 @@ const CheckDropdown: React.FC<Properties> = ({
 
 			if (option.options && option.options.length > DEFAULT_OPTIONS_LENGTH) {
 				for (const subOption of option.options) {
-					if (itemsCount >= visibleItemsCount) break;
+					if (
+						screenWidth > ScreenBreakpoints.MOBILE &&
+						itemsCount >= visibleItemsCount
+					)
+						break;
 
 					const isSelected = selectedOptions.some(
 						(o) => o.value === subOption.value,
@@ -154,11 +165,12 @@ const CheckDropdown: React.FC<Properties> = ({
 				<div className={styles["dropdown_menu"]}>
 					{renderVisibleItems()}
 
-					{visibleItemsCount < totalItemsCount && (
-						<div className={styles["see_more"]} onClick={handleShowMore}>
-							Дивитись більше
-						</div>
-					)}
+					{screenWidth > ScreenBreakpoints.MOBILE &&
+						visibleItemsCount < totalItemsCount && (
+							<div className={styles["see_more"]} onClick={handleShowMore}>
+								Дивитись більше
+							</div>
+						)}
 				</div>
 			)}
 		</div>

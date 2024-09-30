@@ -9,7 +9,7 @@ import {
 } from "~/common/components/index";
 import { ScreenBreakpoints } from "~/common/constants";
 import { ButtonVariant, IconName } from "~/common/enums/index";
-import { useModal } from "~/common/hooks/index";
+import { useGetScreenWidth, useModal } from "~/common/hooks/index";
 import { DropdownOption, FilterType } from "~/common/types/index";
 import { mapCoursesCategories } from "~/pages/home-page/components/main-content/components/search-block/helpers";
 import { useGetCategoriesQuery } from "~/redux/categories/categories-api";
@@ -41,6 +41,7 @@ const FilterModal: React.FC<FilterModalProperties> = ({
 	selectedSubCategories,
 }) => {
 	const [locationOptions, setLocation] = useState<DropdownOption[]>([]);
+	const screenWidth = useGetScreenWidth();
 
 	const { data: fetchedCategories } = useGetCategoriesQuery(undefined);
 	const { data: locations } = useGetCoursesLocationsQuery(undefined);
@@ -103,9 +104,22 @@ const FilterModal: React.FC<FilterModalProperties> = ({
 	}
 
 	return (
-		<div className={styles["modal"]} onClick={handleOutsideClick}>
+		<div
+			className={clsx(
+				screenWidth > ScreenBreakpoints.MOBILE ? styles["modal"] : "",
+				screenWidth <= ScreenBreakpoints.MOBILE ? styles["modal_mobile"] : "",
+			)}
+			onClick={handleOutsideClick}
+		>
 			<div
-				className={styles["modal__container"]}
+				className={clsx(
+					screenWidth > ScreenBreakpoints.MOBILE
+						? styles["modal__container"]
+						: "",
+					screenWidth <= ScreenBreakpoints.MOBILE
+						? styles["modal__container_mobile"]
+						: "",
+				)}
 				onClick={preventModalCloseOnClick}
 				tabIndex={-1}
 			>

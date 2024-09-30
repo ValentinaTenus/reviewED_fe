@@ -2,11 +2,11 @@ import React, { useCallback, useEffect, useState } from "react";
 
 import { Pagination, Spinner } from "~/common/components/index";
 import { CoursesFilterType, SpinnerVariant } from "~/common/enums/index";
+import { useGetScreenWidth } from "~/common/hooks";
 import { FilterType } from "~/common/types";
 import { useLazyGetCoursesByFilterQuery } from "~/redux/courses/courses-api";
 import { clearFilters } from "~/redux/courses/courses-slice";
 import { useAppDispatch, useAppSelector } from "~/redux/hooks.type";
-import { useGetScreenWidth } from "~/common/hooks";
 
 import {
 	FilterResultItems,
@@ -44,7 +44,6 @@ const CourseContent: React.FC = () => {
 
 	const [getCourses, { data: coursesResponse, isLoading }] =
 		useLazyGetCoursesByFilterQuery();
-
 	const handleSelectSubCategory = useCallback(
 		(chosenSubCategories: FilterType[]) => {
 			setSelectedSubCategories([...chosenSubCategories]);
@@ -121,13 +120,6 @@ const CourseContent: React.FC = () => {
 		handleApplyFiltersAndSearch();
 	}, [handleApplyFiltersAndSearch]);
 
-	/*useEffect(() => {
-		updateScreenWidth();
-		window.addEventListener("resize", updateScreenWidth);
-
-		return () => window.removeEventListener("resize", updateScreenWidth);
-	}, []);*/
-
 	const handleRemoveFilter = useCallback(
 		(filterType: CoursesFilterType, id: string) => {
 			if (filterType === CoursesFilterType.LOCATIONS) {
@@ -174,7 +166,6 @@ const CourseContent: React.FC = () => {
 					onChooseLocation={handleSelectLocation}
 					onChooseSubCategory={handleSelectSubCategory}
 					onClearFilters={handleClearFilters}
-					screenWidth={screenWidth}
 					searchTerm={searchTerm}
 					selectedLocations={selectedLocations}
 					selectedSubCategories={selectedSubCategories}
@@ -190,6 +181,7 @@ const CourseContent: React.FC = () => {
 						resultCount={
 							coursesResponse?.count ? coursesResponse.count : ZERO_LENGTH
 						}
+						resultTerm={searchTerm}
 					/>
 				</div>
 			</div>
