@@ -95,13 +95,20 @@ const Header: React.FC = () => {
 							{isMenuOpen && (
 								<div className={styles["user_menu"]}>
 									<ul className={styles["user_menu_list"]}>
-										<li className={styles["user_menu_list_item"]}>
-											{user.is_staff ? (
-												<a href="#">Модерація відгуків</a>
-											) : (
-												<a href="#">Ваші відгуки</a>
-											)}
-										</li>
+										{user.is_staff ? (
+											<>
+												<li className={styles["user_menu_list_item"]}>
+													<Link to="/moderators-page">Модерація відгуків</Link>
+												</li>
+												<li className={styles["user_menu_list_item"]}>
+													<Link to="#">Звернення користувачів</Link>
+												</li>
+											</>
+										) : (
+											<li className={styles["user_menu_list_item"]}>
+												<Link to="#">Ваші відгуки</Link>
+											</li>
+										)}
 										<li className={styles["user_menu_list_item"]}>
 											<Button
 												className={styles["logout__button"]}

@@ -1,6 +1,6 @@
 enum ButtonGroupData {
-	company = "Компанії",
-	course = "Курси",
+	"Компанії" = "company",
+	"Курси" = "course",
 }
 
 export { ButtonGroupData };

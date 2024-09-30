@@ -11,6 +11,9 @@ type Params = {
 	status: GetModerationReviewsRequest["status"];
 	type: GetModerationReviewsRequest["type"];
 };
+
+const INDEX_ONE = 1;
+
 const useReviewModerationApi = (filters: Params) => {
 	const {
 		data: moderatorsReviewById,
@@ -44,13 +47,20 @@ const useReviewModerationApi = (filters: Params) => {
 		return {
 			error: errorById,
 			isFetching: isFetchingById,
-			reviews: moderatorsReviewById ? [moderatorsReviewById] : undefined,
+			reviews: moderatorsReviewById
+				? {
+						count: INDEX_ONE,
+						next: null,
+						previous: null,
+						results: [moderatorsReviewById],
+					}
+				: undefined,
 		};
 	} else {
 		return {
 			error: errorByFilter,
 			isFetching: isFetchingByFilter,
-			reviews: filteredModeratorsReviews?.results,
+			reviews: filteredModeratorsReviews,
 		};
 	}
 };
