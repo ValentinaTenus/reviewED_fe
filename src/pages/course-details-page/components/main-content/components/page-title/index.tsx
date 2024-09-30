@@ -4,6 +4,9 @@ import styles from "./styles.module.scss";
 import { type Course } from "~/common/types";
 import { StarRating } from "~/common/components";
 
+// type CustomCourse = Omit<Course, "company"> {company: {id: string };
+// }
+
 type PageTitleProperties = {
 	course: Course;
 };

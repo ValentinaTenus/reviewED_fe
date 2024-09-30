@@ -1,5 +1,7 @@
 export { type CompanyAndCourseReviewsByUserId } from "./company-and-courses-review-by-user-id.type";
+export { type CourseReview } from "./course-reviews.type";
 export { type GetCompanyAndCourseReviewsByUserIdResponse } from "./get-company-and-course-review-by-user-response-dto.type";
+export { type GetCourseReviewsResponse } from "./get-course-reviews-response-dto.type";
 export {
 	type GetModerationReviews,
 	type ModerationReviews,

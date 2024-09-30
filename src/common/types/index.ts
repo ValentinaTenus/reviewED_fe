@@ -22,7 +22,9 @@ export {
 } from "./footer-navigation-links/index";
 export {
 	type CompanyAndCourseReviewsByUserId,
+	type CourseReview,
 	type GetCompanyAndCourseReviewsByUserIdResponse,
+	type GetCourseReviewsResponse,
 	type GetModerationReviews,
 	type RecentReview,
 } from "./review/index";
