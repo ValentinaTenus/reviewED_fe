@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import React from "react";
+import React, { Fragment } from "react";
 
 import HalfFilledStar from "~/assets/images/half-filled-star.svg?react";
 import StarIcon from "~/assets/images/star.svg?react";
@@ -63,7 +63,7 @@ const StarRating: React.FC<RatingProperties> = ({
 						const ratingValue = index + INCREMENT_RATING_NUMBER;
 
 						return (
-							<span className={styles["rating_stars"]} key={index}>
+							<Fragment key={index}>
 								{averageRating >= ratingValue ? (
 									<StarIcon className={styles["star"]} key={index} />
 								) : averageRating >= ratingValue - DECREMENT_RATING_NUMBER ? (
@@ -77,7 +77,7 @@ const StarRating: React.FC<RatingProperties> = ({
 										key={index}
 									/>
 								)}
-							</span>
+							</Fragment>
 						);
 					})}
 			</div>
