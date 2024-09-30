@@ -6,7 +6,8 @@ const Menu: React.FC<{
 	aboutRef: React.RefObject<HTMLDivElement>;
 	contactsRef: React.RefObject<HTMLDivElement>;
 	coursesRef: React.RefObject<HTMLDivElement>;
-}> = ({ aboutRef, contactsRef, coursesRef }) => {
+	reviewsRef: React.RefObject<HTMLDivElement>;
+}> = ({ aboutRef, contactsRef, coursesRef, reviewsRef }) => {
 	const [active, setActive] = useState("Контакти");
 
 	const scrollToSection = (sectionRef: React.RefObject<HTMLDivElement>) => {
@@ -48,7 +49,10 @@ const Menu: React.FC<{
 					</li>
 					<li
 						className={`${styles["menu_item"]} ${active === "Відгуки" ? styles["item_active"] : ""}`}
-						onClick={() => setActive("Відгуки")}
+						onClick={() => {
+							setActive("Відгуки");
+							scrollToSection(reviewsRef);
+						}}
 					>
 						Відгуки
 					</li>

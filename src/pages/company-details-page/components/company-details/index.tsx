@@ -2,11 +2,13 @@ import React, { useRef } from "react";
 
 import { useGetCompanyByIdQuery } from "~/redux/companies/companies-api";
 import { useGetCoursesByFilterQuery } from "~/redux/courses/courses-api";
+import { useGetReviewsByCompanyIdQuery } from "~/redux/reviews/reviews-companies-api";
 
 import { About } from "./components/about/about";
 import { Contacts } from "./components/contacts/contacts";
 import { Courses } from "./components/courses/courses";
 import { Menu } from "./components/menu/menu";
+import { Reviews } from "./components/reviews/reviews";
 import { TitleLogo } from "./components/title-logo/title-logo";
 import styles from "./styles.module.scss";
 
@@ -197,6 +199,9 @@ const CompanyDetails: React.FC<{ companyId: string }> = ({ companyId }) => {
 	const contactsRef = useRef(null);
 	const aboutRef = useRef(null);
 	const coursesRef = useRef(null);
+	const reviewsRef = useRef(null);
+
+	const { data: reviews } = useGetReviewsByCompanyIdQuery(companyId);
 
 	if (company && courses) {
 		return (
@@ -206,10 +211,12 @@ const CompanyDetails: React.FC<{ companyId: string }> = ({ companyId }) => {
 					aboutRef={aboutRef}
 					contactsRef={contactsRef}
 					coursesRef={coursesRef}
+					reviewsRef={reviewsRef}
 				/>
 				<Contacts company={company} ref={contactsRef} />
 				<About company={company} ref={aboutRef} />
 				<Courses company={company} courses={courses} ref={coursesRef} />
+				<Reviews ref={reviewsRef} reviews={reviews} />
 			</div>
 		);
 	}

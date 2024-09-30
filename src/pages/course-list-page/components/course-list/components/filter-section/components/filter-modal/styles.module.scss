@@ -1,15 +1,16 @@
 .modal {
-	position: fixed;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;
-	z-index: 5;
-	background-color: rgba($color: #333, $alpha: 0.6);
-	display: flex;
 	align-items: center;
+	background-color: rgba($color: #333, $alpha: 0.6);
+	box-shadow: 2px 2px 12px 0 var(--color-shadow-grey);
+	bottom: 0;
+	display: flex;
+	font-family: var(--font-family-main);
 	justify-content: center;
-	z-index: 1000;
+	left: 0;
+	position: fixed;
+	right: 0;
+	top: 0;
+	z-index: 100;
 }
 
 .modal__container {
@@ -18,13 +19,13 @@
 	display: flex;
 	flex-direction: column;
 	font-family: var(--font-family-main);
-	gap: 10px;
 	min-width: 748px;
 	z-index: 1010; 
 }
 
 .modal__header {
 	align-items: center;
+	border-bottom: 1px solid var(--color-grey-300);
 	display: flex;
 	justify-content: space-between;
 	padding: 32px 24px;
@@ -40,4 +41,35 @@
 	color: var(--color-grey-900);
 	height: 32px;
 	width: 32px;
+}
+
+.modal__filters_content {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	max-height: 510px;
+	overflow: auto;
+	width: 100%;
+}
+
+.search_dropdown_wrapper {
+  border: none;
+}
+
+.search_dropdown {
+  width: 100%;
+}
+
+.modal__buttons_container {
+	align-items: center;
+	display: flex;
+	justify-content: space-between;
+	padding: 32px 24px;
+}
+
+.modal__clear_button {
+	font-size: var(--font-size-title-h5);
+	font-weight: var(--font-weight-bold);
+	line-height: 24px;
+	padding: 12px 24px;
 }

@@ -1,0 +1,146 @@
+.review_top {
+	margin-bottom: 25px;
+	display: flex;
+	justify-content: space-between;
+	gap: 10px;
+}
+
+.review_profile {
+	display: flex;
+	position: relative;
+	padding-left: 70px;
+	height: 60px;
+}
+
+.review_profile::before {
+	position: absolute;
+	content: "";
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+	background-color: var(--color-grey-480);
+	left: 0;
+}
+
+.review_profile-name-verified {
+	display: flex;
+	gap: 10px;
+}
+
+.review_profile-info {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	gap: 5px;
+}
+
+.review_top-right {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 60px;
+	gap: 5px;
+}
+
+.review_date {
+	text-align: right;
+	display: inline-block;
+	margin-top: 3px;
+}
+
+.review_flag,
+.review_share,
+.review_like {
+	width: 24px;
+	height: 24px;
+}
+
+.review_text {
+	margin-bottom: 20px;
+}
+
+.review_bottom {
+	display: flex;
+	justify-content: space-between;
+}
+
+.review_icon-text {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.review_share-like {
+	display: flex;
+	gap: 15px;
+	align-items: center;
+}
+
+.review_star {
+	display: none;
+}
+
+.review_rating {
+	font-weight: var(--font-weight-semi-bold);
+	display: none;
+}
+
+/*-----------------------------*/
+
+.phone_verified {
+	display: none;
+}
+
+/*-----------------------------*/
+
+@media (max-width: 768px) {
+	.desktop_verified {
+		display: none;
+	}
+
+	.phone_verified {
+		display: flex;
+		margin-bottom: 15px;
+	}
+
+	.phone_verified-span {
+		display: inline !important;
+	}
+}
+
+@media (max-width: 450px) {
+	.review_profile,
+	.review_top-right {
+		height: 50px;
+	}
+
+	.review_profile {
+		padding-left: 55px;
+	}
+
+	.review_profile::before {
+		width: 50px;
+		height: 50px;
+	}
+
+	.rating_stars {
+		display: none;
+	}
+
+	.review_star {
+		display: block;
+		width: 16px;
+		height: 16px;
+		color: var(--color-yellow-500);
+	}
+
+	.review_rating {
+		display: inline;
+	}
+
+	.review_phone-rating {
+		display: flex;
+		gap: 5px;
+		justify-content: flex-end;
+	}
+}

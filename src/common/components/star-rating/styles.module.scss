@@ -38,15 +38,11 @@
   font-family: var(--font-family-main);
   font-size: var(--font-size-main-text);
   font-weight: var(--font-weight-bold);
+  color: var(--color-grey-950);
 }
 
 
 .size__small .star {
-  width: 16px;
-  height: 16px;
-}
-
-.size__medium .star {
   width: 16px;
   height: 16px;
 }
@@ -61,8 +57,8 @@
   height: 18px;
 }
 
-.size__small .average_rating {
-  font-size: var(--font-size-main-text);
+.size__medium .average_rating {
+  font-size: var(--font-size-title-large);
   font-weight: var(--font-weight-bold);
 }
 
