@@ -1,11 +1,17 @@
 import React, { useCallback, useEffect, useState } from "react";
 
 import { Pagination, Spinner } from "~/common/components/index";
-import { SpinnerVariant } from "~/common/enums/index";
+import { CoursesFilterType, SpinnerVariant } from "~/common/enums/index";
+import { FilterType } from "~/common/types";
 import { useLazyGetCoursesByFilterQuery } from "~/redux/courses/courses-api";
-import { useAppSelector } from "~/redux/hooks.type";
+import { clearFilters } from "~/redux/courses/courses-slice";
+import { useAppDispatch, useAppSelector } from "~/redux/hooks.type";
 
-import { FilterSection } from "./components/index";
+import {
+	FilterResultItems,
+	FilterResultTitle,
+	FilterSection,
+} from "./components/index";
 import styles from "./styles.module.scss";
 
 const DEFAULT_SCREEN_WIDTH = 0;
@@ -17,9 +23,8 @@ const INDEX_ONE = 1;
 const ZERO_LENGTH = 0;
 
 const CourseContent: React.FC = () => {
+	const dispatch = useAppDispatch();
 	const { filters } = useAppSelector((state) => state.courses);
-
-	const [sortBy, setSortBy] = useState<string>("");
 
 	const [currentPage, setCurrentPage] = useState(DEFAULT_CURRENT_PAGE);
 	const [pageCount, setPageCount] = useState(DEFAULT_PAGE_COUNT);
@@ -30,48 +35,40 @@ const CourseContent: React.FC = () => {
 	const [selectedCategoryIds, setSelectedCategoryIds] = useState<string[]>(
 		filters?.category_by_id || [],
 	);
-	const [selectedSubCategoryIds, setSelectedSubCategoryIds] = useState<
-		string[]
+	const [selectedSubCategories, setSelectedSubCategories] = useState<
+		{ id: string; name: string }[]
 	>(filters?.subcategory_by_id || []);
-	const [selectedLocations, setSelectedLocations] = useState<string[]>(
-		filters?.city || [],
-	);
+	const [selectedLocations, setSelectedLocations] = useState<
+		{ id: string; name: string }[]
+	>(filters?.city || []);
 
 	const [getCourses, { data: coursesResponse, isLoading }] =
 		useLazyGetCoursesByFilterQuery();
 
-	const handleChangeSortBy = useCallback((newSortBy: number | string) => {
-		setSortBy(newSortBy.toString());
-	}, []);
-
 	const handleSelectSubCategory = useCallback(
-		(chosenSubCategories: string[]) => {
-			if (selectedSubCategoryIds.includes(ALL_CATEGORIES_ID)) {
-				setSelectedSubCategoryIds(chosenSubCategories);
-			} else {
-				setSelectedSubCategoryIds([...chosenSubCategories]);
-			}
-			setSelectedCategoryIds([]);
+		(chosenSubCategories: FilterType[]) => {
+			setSelectedSubCategories([...chosenSubCategories]);
+			dispatch(clearFilters());
 			setCurrentPage(DEFAULT_CURRENT_PAGE);
 		},
-		[selectedSubCategoryIds],
+		[dispatch],
 	);
 
-	const handleSelectLocation = useCallback((chosenLocations: string[]) => {
-		if (chosenLocations.includes(ALL_CATEGORIES_ID)) {
-			setSelectedLocations([ALL_CATEGORIES_ID]);
-		} else {
+	const handleSelectLocation = useCallback(
+		(chosenLocations: FilterType[]) => {
 			setSelectedLocations([...chosenLocations]);
-		}
-		setSelectedCategoryIds([]);
-		setCurrentPage(DEFAULT_CURRENT_PAGE);
-	}, []);
+			dispatch(clearFilters());
+			setCurrentPage(DEFAULT_CURRENT_PAGE);
+		},
+		[dispatch],
+	);
 
 	const handleClearFilters = useCallback(() => {
 		setSelectedCategoryIds([]);
-		setSelectedSubCategoryIds([]);
+		setSelectedSubCategories([]);
 		setSelectedLocations([]);
-	}, []);
+		dispatch(clearFilters());
+	}, [dispatch]);
 
 	const handleApplyFiltersAndSearch = useCallback(
 		(newSearchTerm?: string) => {
@@ -79,13 +76,16 @@ const CourseContent: React.FC = () => {
 				category_by_id: selectedCategoryIds.includes(ALL_CATEGORIES_ID)
 					? undefined
 					: selectedCategoryIds,
-				city: selectedLocations,
+				city: selectedLocations.find((sl) => sl.id === ALL_CATEGORIES_ID)
+					? [""]
+					: selectedLocations.map((c) => c.id),
 				limit: DEFAULT_COURSES_PER_PAGE,
 				offset: (currentPage - INDEX_ONE) * DEFAULT_COURSES_PER_PAGE,
-				sort: sortBy,
-				subcategory_by_id: selectedSubCategoryIds.includes(ALL_CATEGORIES_ID)
+				subcategory_by_id: selectedSubCategories.find(
+					(sb) => sb.id === ALL_CATEGORIES_ID,
+				)
 					? undefined
-					: selectedSubCategoryIds,
+					: selectedSubCategories.map((sb) => sb.id),
 				title: newSearchTerm || searchTerm,
 			});
 		},
@@ -94,9 +94,8 @@ const CourseContent: React.FC = () => {
 			getCourses,
 			selectedCategoryIds,
 			selectedLocations,
-			selectedSubCategoryIds,
+			selectedSubCategories,
 			searchTerm,
-			sortBy,
 		],
 	);
 
@@ -124,11 +123,47 @@ const CourseContent: React.FC = () => {
 	}, [coursesResponse, screenWidth, updateCoursesPageCount]);
 
 	useEffect(() => {
+		handleApplyFiltersAndSearch();
+	}, [handleApplyFiltersAndSearch]);
+
+	useEffect(() => {
 		updateScreenWidth();
 		window.addEventListener("resize", updateScreenWidth);
 
 		return () => window.removeEventListener("resize", updateScreenWidth);
 	}, []);
+
+	const handleRemoveFilter = useCallback(
+		(filterType: CoursesFilterType, id: string) => {
+			if (filterType === CoursesFilterType.LOCATIONS) {
+				const filteredLocations = selectedLocations.filter(
+					(sl) => sl.id !== id,
+				);
+				setSelectedLocations(filteredLocations);
+			}
+
+			if (filterType === CoursesFilterType.SUBCATEGORIES) {
+				const filteredSubCategories = selectedSubCategories.filter(
+					(sc) => sc.id !== id,
+				);
+				setSelectedSubCategories(filteredSubCategories);
+			}
+
+			handleApplyFiltersAndSearch();
+			dispatch(clearFilters());
+		},
+		[
+			dispatch,
+			handleApplyFiltersAndSearch,
+			selectedLocations,
+			selectedSubCategories,
+		],
+	);
+
+	const handleClearAllFilters = useCallback(() => {
+		handleClearFilters();
+		handleApplyFiltersAndSearch();
+	}, [handleClearFilters, handleApplyFiltersAndSearch]);
 
 	return (
 		<>
@@ -141,15 +176,27 @@ const CourseContent: React.FC = () => {
 				<FilterSection
 					onApplyFiltersAndSearch={handleApplyFiltersAndSearch}
 					onChangeSearchTerm={handleChangeSearchTerm}
-					onChangeSortBy={handleChangeSortBy}
 					onChooseLocation={handleSelectLocation}
 					onChooseSubCategory={handleSelectSubCategory}
 					onClearFilters={handleClearFilters}
 					screenWidth={screenWidth}
 					searchTerm={searchTerm}
 					selectedLocations={selectedLocations}
-					selectedSubCategories={selectedSubCategoryIds}
+					selectedSubCategories={selectedSubCategories}
 				/>
+				<div className={styles["filter_items_and_title"]}>
+					<FilterResultItems
+						onClearFilters={handleClearAllFilters}
+						onRemoveFilter={handleRemoveFilter}
+						selectedLocations={selectedLocations}
+						selectedSubCategories={selectedSubCategories}
+					/>
+					<FilterResultTitle
+						resultCount={
+							coursesResponse?.count ? coursesResponse.count : ZERO_LENGTH
+						}
+					/>
+				</div>
 			</div>
 			{coursesResponse && coursesResponse.results.length > ZERO_LENGTH && (
 				<Pagination

@@ -4,6 +4,7 @@ export { ButtonType } from "./button-types.enum";
 export { ButtonVariant } from "./button-variants.enum";
 export { CompaniesPerPageListView } from "./companies-per-page-list-view.enum";
 export { CompaniesPerPageTableView } from "./companies-per-page-table-view.enum";
+export { CoursesFilterType } from "./courses-filter-type.enum";
 export { HttpMethods } from "./http-methods.enum";
 export { HttpStatusCode } from "./http-status-code.enum";
 export { IconName } from "./icon-name.enum";

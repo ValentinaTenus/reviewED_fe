@@ -23,3 +23,9 @@
 .not_found__container {
 	margin: 0 auto;
 }
+
+.filter_items_and_title {
+	display: flex;
+	flex-direction: column;
+	gap: 32px;
+}
