@@ -32,10 +32,13 @@
 }
 
 .footer_content__contact-link {
+  border-bottom: 1px solid transparent;
   text-decoration: none; 
   color: inherit; 
+  transition: border-color 0.3s;
+  width: max-content;
   
   &:hover {
-    text-decoration: underline; 
+    border-color: var(--color-grey-50); 
   }
 }

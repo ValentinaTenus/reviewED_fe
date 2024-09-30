@@ -1,7 +1,11 @@
 const CompaniesSortOptions = [
 	{
-		label: "Найнадійніші",
+		label: "Найпопулярніші",
 		value: "avg_overall_rating",
+	},
+	{
+		label: "Найменшпопулярні",
+		value: "-avg_overall_rating",
 	},
 ];
 

@@ -1,0 +1,16 @@
+.filter_items__container {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.clear_filters__button {
+  align-items: center;
+  color: var(--color-blue-icons);
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px 16px;
+  min-width: fit-content;
+}

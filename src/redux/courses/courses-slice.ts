@@ -1,10 +1,20 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { type Course, type GetCoursesRequestQuery } from "~/common/types/index";
+import { type Course } from "~/common/types/index";
+
+type CourseFilter = {
+	category_by_id?: string[];
+	city?: { id: string; name: string }[];
+	limit?: number;
+	offset?: number;
+	sort?: string;
+	subcategory_by_id?: { id: string; name: string }[];
+	title?: string;
+};
 
 type CoursesState = {
 	courses: Course[] | null;
-	filters: GetCoursesRequestQuery | null;
+	filters: CourseFilter | null;
 };
 
 const initialState: CoursesState = {
@@ -27,7 +37,7 @@ const coursesSlice = createSlice({
 		setCourses: (state, action: PayloadAction<Course[]>) => {
 			state.courses = action.payload;
 		},
-		setFilters: (state, action: PayloadAction<GetCoursesRequestQuery>) => {
+		setFilters: (state, action: PayloadAction<CourseFilter>) => {
 			state.filters = { ...state.filters, ...action.payload };
 		},
 	},
