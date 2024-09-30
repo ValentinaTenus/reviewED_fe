@@ -13,7 +13,12 @@ import {
 	IconName,
 } from "~/common/enums/index";
 import { useAppForm } from "~/common/hooks/index";
-import { Company, Course, DropdownOption, FilterType } from "~/common/types/index";
+import {
+	Company,
+	Course,
+	DropdownOption,
+	FilterType,
+} from "~/common/types/index";
 import { useGetCategoriesQuery } from "~/redux/categories/categories-api";
 import { useGetCompaniesByFilterQuery } from "~/redux/companies/companies-api";
 import {
@@ -74,7 +79,10 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 	const [selectedCategory, setSelectedCategory] = useState<string>(
 		categories[INDEX_COMPANIES].value,
 	);
-	const [selectedLocation, setSelectedLocation] = useState<FilterType>({ id: "", name: "" });
+	const [selectedLocation, setSelectedLocation] = useState<FilterType>({
+		id: "",
+		name: "",
+	});
 	const [selectedCompanyFromAll, setSelectedCompanyFromAll] =
 		useState<string>("");
 	const [selectedCourseCategory, setSelectedCourseCategory] = useState<
