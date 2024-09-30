@@ -12,6 +12,7 @@ export {
 } from "./company/index";
 export {
 	type Course,
+	type FilterType,
 	type GetCoursesRequestQuery,
 	type GetCoursesResponse,
 } from "./courses/index";

@@ -8,7 +8,7 @@ import {
 } from "~/common/components/index";
 import { ButtonVariant, IconName } from "~/common/enums/index";
 import { useModal } from "~/common/hooks/index";
-import { DropdownOption } from "~/common/types/index";
+import { DropdownOption, FilterType } from "~/common/types/index";
 import { mapCoursesCategories } from "~/pages/home-page/components/main-content/components/search-block/helpers";
 import { useGetCategoriesQuery } from "~/redux/categories/categories-api";
 import { useGetCoursesLocationsQuery } from "~/redux/locations/locations-api";
@@ -20,12 +20,12 @@ const OPTIONS_FIRST_ITEM_INDEX = 1;
 type FilterModalProperties = {
 	isOpen: boolean;
 	onApplyFiltersAndSearch: () => void;
-	onChooseLocation: (locations: string[]) => void;
-	onChooseSubCategory: (categoryIds: string[]) => void;
+	onChooseLocation: (locations: FilterType[]) => void;
+	onChooseSubCategory: (categoryIds: FilterType[]) => void;
 	onClearFilters: () => void;
 	onClose: () => void;
-	selectedLocations: string[];
-	selectedSubCategories: string[];
+	selectedLocations: FilterType[];
+	selectedSubCategories: FilterType[];
 };
 
 const FilterModal: React.FC<FilterModalProperties> = ({
@@ -78,14 +78,14 @@ const FilterModal: React.FC<FilterModalProperties> = ({
 	}, [locations]);
 
 	const handleSelectSubCategory = useCallback(
-		(value: { isTitle: boolean; values: string[] }) => {
+		(value: { isTitle: boolean; values: FilterType[] }) => {
 			onChooseSubCategory(value.values);
 		},
 		[onChooseSubCategory],
 	);
 
 	const handleSelectLocation = useCallback(
-		(value: { isTitle: boolean; values: string[] }) => {
+		(value: { isTitle: boolean; values: FilterType[] }) => {
 			onChooseLocation(value.values);
 		},
 		[onChooseLocation],

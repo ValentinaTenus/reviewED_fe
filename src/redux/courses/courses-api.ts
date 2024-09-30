@@ -8,6 +8,8 @@ import {
 import { api } from "../services.ts";
 import { coursesApiPath } from "./constants.ts";
 
+const ZERO_LENGTH = 0;
+
 export const coursesApi = api.injectEndpoints({
 	endpoints: (builder) => ({
 		getCourseById: builder.query<Course, string | undefined>({
@@ -62,13 +64,15 @@ export const coursesApi = api.injectEndpoints({
 				} = filters;
 
 				const queryParams = [
-					...city.map((c) => `city=${encodeURIComponent(c)}`),
-					...subcategory_by_id.map(
-						(sc) => `subcategory_by_id=${encodeURIComponent(sc)}`,
-					),
-					...category_by_id.map(
-						(c) => `category_by_id=${encodeURIComponent(c)}`,
-					),
+					city.length > ZERO_LENGTH
+						? `city=${encodeURIComponent(city.join(","))}`
+						: "",
+					subcategory_by_id.length > ZERO_LENGTH
+						? `subcategory_by_id=${encodeURIComponent(subcategory_by_id.join(","))}`
+						: "",
+					category_by_id.length > ZERO_LENGTH
+						? `category_by_id=${encodeURIComponent(category_by_id.join(","))}`
+						: "",
 					title ? `title=${encodeURIComponent(title)}` : "",
 					limit ? `limit=${limit}` : "",
 					offset ? `offset=${offset}` : "",
