@@ -1,6 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
 
-import { Button, CheckDropdown, Modal } from "~/common/components/index";
+import {
+	Button,
+	CheckDropdown,
+	Modal
+} from "~/common/components/index";
 import { ButtonVariant } from "~/common/enums/index";
 import { DropdownOption, FilterType } from "~/common/types/index";
 import { mapCoursesCategories } from "~/pages/home-page/components/main-content/components/search-block/helpers";
