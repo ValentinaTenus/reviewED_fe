@@ -1,0 +1,22 @@
+.expandable-description {
+	border: 1px solid var(--color-grey-350);
+	border-radius: 4px;
+	padding: 8px 16px;
+	font-family: var(--font-family-main);
+	color: var(--color-grey-500);
+
+	&__text {
+		font-family: var(--font-family-main);
+		font-size: var(--font-size-title-h5);
+		font-weight: var(--font-weight-regular);
+		line-height: 140%;
+		color: var(--color-grey-490);
+	}
+
+	&__toggle {
+		color: var(--color-grey-800);
+		white-space: nowrap;
+		display: inline;
+		cursor: pointer;
+	}
+}

@@ -57,19 +57,15 @@
 		}
 	}
 
-	&__status {
+	&__location {
 		gap: 8px;
 		display: flex;
 		align-items: end;
-
-		&-text {
-			color: var(--color-icon-green);
-		}
+		color: var(--color-icon-green);
 
 		&-icon {
 			width: 24px;
-			height: 24px;
-			color: var(--color-grey-500);
+			height: 24px
 		}
 	}
 
