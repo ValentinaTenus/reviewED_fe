@@ -11,7 +11,7 @@ type ModalProperties = {
 	footer?: React.ReactNode;
 	isOpen: boolean;
 	onClose: () => void;
-	title: string;
+	title?: string;
 };
 
 const Modal: React.FC<ModalProperties> = ({
@@ -38,7 +38,7 @@ const Modal: React.FC<ModalProperties> = ({
 				tabIndex={-1}
 			>
 				<div className={styles["modal__header"]}>
-					<h2 className={styles["modal__title"]}>{title}</h2>
+					{title && <h2 className={styles["modal__title"]}>{title}</h2>}
 					<IconButton
 						className={styles["modal__close_button"]}
 						onClick={onClose}
