@@ -39,14 +39,17 @@ const Modal: React.FC<ModalProperties> = ({
 			>
 				<div className={styles["modal__header"]}>
 					<h2 className={styles["modal__title"]}>{title}</h2>
-					<IconButton onClick={onClose}>
+					<IconButton
+						className={styles["modal__close_button"]}
+						onClick={onClose}
+					>
 						<Icon
 							className={styles["modal__icon-close"]}
 							name={IconName.CLOSE}
 						/>
 					</IconButton>
 				</div>
-				<div className={styles["modal__filters_content"]}>{children}</div>
+				<div className={styles["modal__content"]}>{children}</div>
 				{footer && <div className={styles["modal__footer"]}>{footer}</div>}
 			</div>
 		</div>
