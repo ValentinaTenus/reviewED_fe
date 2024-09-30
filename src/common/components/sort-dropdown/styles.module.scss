@@ -1,133 +1,140 @@
 .sort_container {
-  align-items: end;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+	align-items: end;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.ai-end {
+	align-items: end;
+}
+
+.ai-start {
+	align-items: start;
 }
 
 .sort_text {
-  color: var(--color-grey-470);
-  display: inline;
-  font-size: var(--font-size-title-h5);
+	color: var(--color-grey-470);
+	display: inline;
+	font-size: var(--font-size-title-h5);
 }
 
 .dropdown_container {
-  overflow: visible;
-  position: relative;
+	overflow: visible;
+	position: relative;
 }
 
 .sort__button {
-  height: 24px;
-  width: 24px;
+	height: 24px;
+	width: 24px;
 }
 
 .sort__button_icon {
-  color: var(--color-black);
-  height: 100%;
-  width: 100%;
+	color: var(--color-black);
+	height: 100%;
+	width: 100%;
 }
 
-.sort__button_icon:hover{
-  color: var(--color-yellow-600);
+.sort__button_icon:hover {
+	color: var(--color-yellow-600);
 }
 
 .sort__button_icon:focus,
 .sort__button_icon:active {
-  color: var(--color-black); 
+	color: var(--color-black);
 }
 
 .dropdown_trigger {
-  align-items: center;
-  background-color: var(--color-white);
-  border: 1px solid var(--color-grey-300);
-  border-radius: 24px;
-  color: var(--color-grey-950);
-  cursor: pointer;
-  display: flex;
-  gap: 4px;
-  height: 100%;
-  justify-content: space-between;
-  font-family: var(--font-family-main);
-  font-size: var( --font-size-title-h5);
-  font-weight: var( --font-weight-bold);
-  padding: 12px 24px;
-  min-width: 200px;
+	align-items: center;
+	background-color: var(--color-white);
+	border: 1px solid var(--color-grey-300);
+	border-radius: 24px;
+	color: var(--color-grey-950);
+	cursor: pointer;
+	display: flex;
+	gap: 4px;
+	height: 100%;
+	justify-content: space-between;
+	font-family: var(--font-family-main);
+	font-size: var(--font-size-title-h5);
+	font-weight: var(--font-weight-bold);
+	padding: 12px 24px;
+	min-width: 200px;
 }
 
 .dropdown_trigger.disabled {
-  color: var(--color-grey-500);
-  cursor: not-allowed;
+	color: var(--color-grey-500);
+	cursor: not-allowed;
 }
 
 .dropdown_trigger.open {
-  border-radius: 24px 24px 0 0;
+	border-radius: 24px 24px 0 0;
 }
 
 .dropdown_icon {
-  width: 24px;
-  height: 24px;
+	width: 24px;
+	height: 24px;
 }
 
 .dropdown_menu {
-  background-color: var(--color-white);
-  border: 1px solid var(--color-grey-300); 
-  border-radius: 0 0 24px 24px;
-  color: var(--color-grey-950); 
-  font-family: var(--font-family-main);
-  left: 0;
-  max-width: 100%;
-  position: absolute;
-  top: 100%;
-  z-index: 10; 
-  width: 100%;
+	background-color: var(--color-white);
+	border: 1px solid var(--color-grey-300);
+	border-radius: 0 0 24px 24px;
+	color: var(--color-grey-950);
+	font-family: var(--font-family-main);
+	left: 0;
+	max-width: 100%;
+	position: absolute;
+	top: 100%;
+	z-index: 10;
+	width: 100%;
 }
 
-
 .dropdown_item {
-  align-items: center;
-  color: var(--color-grey-950);
-  cursor: pointer;
-  display: flex;
-  font-size: var(--font-size-title-h5);
-  font-weight: var(--font-weight-semi-bold);
-  padding: 12px 24px;
+	align-items: center;
+	color: var(--color-grey-950);
+	cursor: pointer;
+	display: flex;
+	font-size: var(--font-size-title-h5);
+	font-weight: var(--font-weight-semi-bold);
+	padding: 12px 24px;
 }
 
 .dropdown_item:first-child {
-  border-radius: 0px;
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
+	border-radius: 0px;
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
 }
 
 .dropdown_item:last-child {
-  border-radius: 0 0 24px 24px;
+	border-radius: 0 0 24px 24px;
 }
 
 .dropdown_item:hover {
-  background-color: var(--color-grey-100);
+	background-color: var(--color-grey-100);
 }
 
 .icon_button__menu {
-  border-radius: 24px;
+	border-radius: 24px;
 }
 
 .icon_button__menu_item:first-child {
-  border-radius: 24px 24px 0 0;
+	border-radius: 24px 24px 0 0;
 }
 
 @media (max-width: 768px) {
-  .dropdown_container {
-    position: static;
-  }  
+	.dropdown_container {
+		position: static;
+	}
 
-  .icon_button__menu  {
-    right: 0;
-    top: calc(100% + 12px);
-    z-index: 10; 
-  }
+	.icon_button__menu {
+		right: 0;
+		top: calc(100% + 12px);
+		z-index: 10;
+	}
 
-  .sort_text {
-    display: none;
-  }
+	.sort_text {
+		display: none;
+	}
 }

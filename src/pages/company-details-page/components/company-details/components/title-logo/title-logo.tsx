@@ -12,7 +12,10 @@ const TitleLogo: React.FC<{
 	if (company) {
 		const RATING_SCALE = 1.0;
 
-		const companyImage = `https://reviewed-api.azurewebsites.net/api/v1/companies/upload/${company.logo}`;
+		const companyImage =
+			company.logo != "None"
+				? `https://reviewed-api.azurewebsites.net/api/v1/companies/upload/${company.logo}`
+				: `https://reviewed-api.azurewebsites.net/api/v1/companies/upload/__e45c0233a58e4b94ac32cc2a8b9c3429.png`;
 		const formattedRating = (company.avg_overall_rating / RATING_SCALE).toFixed(
 			RATING_SCALE,
 		);
@@ -34,7 +37,7 @@ const TitleLogo: React.FC<{
 								name="half-rating-read"
 								precision={0.5}
 								readOnly
-								value={company?.avg_overall_rating}
+								value={company?.avg_rating}
 							/>
 							<span>({formattedRating})</span>
 						</div>

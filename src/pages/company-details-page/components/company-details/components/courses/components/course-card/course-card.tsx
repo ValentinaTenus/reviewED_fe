@@ -25,7 +25,7 @@ const CourseCard: React.FC<{
 							name="half-rating-read"
 							precision={0.5}
 							readOnly
-							value={company?.avg_overall_rating}
+							value={course?.avg_rating}
 						/>
 					</div>
 					<Icon className={styles["course_star"]} name={IconName.STAR} />
@@ -84,7 +84,7 @@ const CourseCard: React.FC<{
 							<img alt="" src="/src/assets/images/profile_pics.png" />
 						</div>
 						<span className={globalStyles["body-r"]}>
-							{company.total_reviews_count} Reviews
+							{course.reviews_count} Reviews
 						</span>
 					</div>
 					<div className={globalStyles["_verified"]}>
