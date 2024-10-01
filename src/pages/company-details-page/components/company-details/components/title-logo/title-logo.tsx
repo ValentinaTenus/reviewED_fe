@@ -13,9 +13,9 @@ const TitleLogo: React.FC<{
 		const RATING_SCALE = 1.0;
 
 		const companyImage =
-			company.logo != "None"
-				? `https://reviewed-api.azurewebsites.net/api/v1/companies/upload/${company.logo}`
-				: `https://reviewed-api.azurewebsites.net/api/v1/companies/upload/__e45c0233a58e4b94ac32cc2a8b9c3429.png`;
+			company.logo !== "None"
+				? `${import.meta.env.VITE_COMPANY_LOGO_BASE_URL}/${company.logo}`
+				: `${import.meta.env.VITE_COMPANY_LOGO_BASE_URL_DEFAULT}`;
 		const formattedRating = (company.avg_overall_rating / RATING_SCALE).toFixed(
 			RATING_SCALE,
 		);
