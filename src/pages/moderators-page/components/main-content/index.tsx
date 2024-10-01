@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { Modal, SearchBar, Spinner } from "~/common/components";
@@ -7,8 +7,8 @@ import { ButtonGroupData, SpinnerVariant } from "~/common/enums";
 import { useGetScreenWidth } from "~/common/hooks";
 import { DropdownOption, GetModerationReviewsRequest } from "~/common/types";
 import { NotFound } from "~/pages/home-page/components/main-content/components/search-block/components";
-import useReviewModerationApi from "~/redux/reviews-moderation/hookUseReviewModerationApi";
 import { setRewiews } from "~/redux/reviews-moderation/reviews-moderation-slice";
+import useReviewModerationApi from "~/redux/reviews-moderation/use-review-moderation-api.hook";
 
 import {
 	ModeratorsReviewFilterSection,
@@ -28,22 +28,31 @@ const MainModeratorsContent: React.FC = () => {
 	const [isOpenSerchFiltersModal, setIsOpenSerchFiltersModal] = useState(false);
 	const screenWidth = useGetScreenWidth();
 
-	const handleSetSearchTerm = (term: string) => {
-		setSearchTerm(term);
-	};
+	const handleSetSearchTerm = useCallback(
+		(term: string) => {
+			setSearchTerm(term);
+		},
+		[setSearchTerm],
+	);
 
-	// const handleOpenSearchFilter = () => {
-	// 	setIsOpenSerchFiltersModal(true);
-	// };
-
-	const handleSetFilterByStatus = (sortOption: DropdownOption["value"]) => {
-		if (sortOption) setFilterByStatus(sortOption);
-		if (!sortOption) setFilterByStatus(undefined);
-	};
-	const handleSetSortByPeriod = (sortOption: DropdownOption["value"]) => {
-		if (sortOption) setSortByPeriod(sortOption);
-		if (!sortOption) setSortByPeriod(undefined);
-	};
+	const handleSetFilterByStatus = useCallback(
+		(sortOption: DropdownOption["value"]) => {
+			if (sortOption) setFilterByStatus(sortOption);
+			if (!sortOption) setFilterByStatus(undefined);
+		},
+		[setFilterByStatus],
+	);
+	const handleSetSortByPeriod = useCallback(
+		(sortOption: DropdownOption["value"]) => {
+			if (sortOption) setSortByPeriod(sortOption);
+			if (!sortOption) setSortByPeriod(undefined);
+		},
+		[setSortByPeriod],
+	);
+	const handleSetIsOpenSerchFiltersModal = useCallback(
+		() => setIsOpenSerchFiltersModal((prev) => !prev),
+		[setIsOpenSerchFiltersModal],
+	);
 
 	const fetchResult = useReviewModerationApi({
 		id: searchTerm,
@@ -85,7 +94,7 @@ const MainModeratorsContent: React.FC = () => {
 						filterButtonText=" "
 						filtersLength={3}
 						isFilterButton={screenWidth <= ScreenBreakpoints.MOBILE}
-						onOpenFilter={() => setIsOpenSerchFiltersModal((prev) => !prev)}
+						onOpenFilter={handleSetIsOpenSerchFiltersModal}
 						onSubmit={handleSetSearchTerm}
 						placeholder="Введіть UID відгуку"
 						value={searchTerm}
@@ -121,7 +130,7 @@ const MainModeratorsContent: React.FC = () => {
 			{isOpenSerchFiltersModal && screenWidth <= ScreenBreakpoints.MOBILE && (
 				<Modal
 					isOpen={isOpenSerchFiltersModal}
-					onClose={() => setIsOpenSerchFiltersModal((prev) => !prev)}
+					onClose={handleSetIsOpenSerchFiltersModal}
 				>
 					<ModeratorsReviewFilterSection
 						filterByType={filterByType}

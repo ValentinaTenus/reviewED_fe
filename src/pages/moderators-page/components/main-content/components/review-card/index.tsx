@@ -72,7 +72,7 @@ const ReviewModeratorsCard: React.FC<ReviewModeratorsCardProps> = ({
 					<Logo
 						className={style["title__img"]}
 						logo={review.logo}
-						name="logo"
+						name={review.related_entity_name}
 					/>
 					<h4 className={style["title__text"]}>{review.related_entity_name}</h4>
 					<div className={style["title__stars"]}>

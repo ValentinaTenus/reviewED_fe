@@ -98,7 +98,9 @@ const Header: React.FC = () => {
 										{user.is_staff ? (
 											<>
 												<li className={styles["user_menu_list_item"]}>
-													<Link to="/moderators-page">Модерація відгуків</Link>
+													<Link to={AppRoute.MODERATORS_PAGE}>
+														Модерація відгуків
+													</Link>
 												</li>
 												<li className={styles["user_menu_list_item"]}>
 													<Link to="#">Звернення користувачів</Link>

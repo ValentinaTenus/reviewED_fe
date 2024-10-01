@@ -46,9 +46,6 @@ export const reviewsModerationApi = api.injectEndpoints({
 			serializeQueryArgs: ({ endpointName }) => {
 				return endpointName;
 			},
-			// transformResponse: (response: GetModerationReviewsResponse) => {
-			// 	return response.results;
-			// },
 		}),
 		getReviewsModerationById: builder.query<
 			ModerationReviews,
