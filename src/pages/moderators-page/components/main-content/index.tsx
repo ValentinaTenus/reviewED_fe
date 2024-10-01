@@ -26,6 +26,7 @@ const MainModeratorsContent: React.FC = () => {
 	const [filterByType, setFilterByType] =
 		useState<keyof typeof ButtonGroupData>("Компанії");
 	const [isOpenSerchFiltersModal, setIsOpenSerchFiltersModal] = useState(false);
+	const screenWidth = useGetScreenWidth();
 
 	const handleSetSearchTerm = (term: string) => {
 		setSearchTerm(term);
@@ -66,7 +67,6 @@ const MainModeratorsContent: React.FC = () => {
 
 	return (
 		<div className={styles["moderators_wrapper"]}>
-			{/* <<<<<<< HEAD */}
 			<header className={styles["header_wrapper"]}>
 				<h2 className={styles["title"]}>Модерація відгуків</h2>
 				<p className={styles["sub_title"]}>
@@ -82,15 +82,16 @@ const MainModeratorsContent: React.FC = () => {
 				<div className={styles["search_block"]}>
 					<p className={styles["search_title"]}>Пошук за UID</p>
 					<SearchBar
+						filterButtonText=" "
 						filtersLength={3}
-						isFilterButton={useGetScreenWidth() <= ScreenBreakpoints.TABLET}
+						isFilterButton={screenWidth <= ScreenBreakpoints.MOBILE}
 						onOpenFilter={() => setIsOpenSerchFiltersModal((prev) => !prev)}
 						onSubmit={handleSetSearchTerm}
 						placeholder="Введіть UID відгуку"
 						value={searchTerm}
 					/>
 				</div>
-				{useGetScreenWidth() > ScreenBreakpoints.TABLET && (
+				{useGetScreenWidth() > ScreenBreakpoints.MOBILE && (
 					<ModeratorsReviewFilterSection
 						filterByType={filterByType}
 						handleSetFilterByStatus={handleSetFilterByStatus}
@@ -117,7 +118,7 @@ const MainModeratorsContent: React.FC = () => {
 						<ReviewModeratorsCard key={review.id} review={review} />
 					))}
 			</main>
-			{isOpenSerchFiltersModal && (
+			{isOpenSerchFiltersModal && screenWidth <= ScreenBreakpoints.MOBILE && (
 				<Modal
 					isOpen={isOpenSerchFiltersModal}
 					onClose={() => setIsOpenSerchFiltersModal((prev) => !prev)}

@@ -20,6 +20,7 @@ import { type DropdownOption } from "~/common/types/index";
 import styles from "./styles.module.scss";
 
 type SearchBarProperties = {
+	filterButtonText?: string;
 	filtersLength?: number;
 	iconSearch?: boolean;
 	isFilterButton?: boolean;
@@ -31,6 +32,7 @@ type SearchBarProperties = {
 };
 
 const SearchBar: React.FC<SearchBarProperties> = ({
+	filterButtonText,
 	filtersLength,
 	iconSearch = false,
 	isFilterButton,
@@ -107,7 +109,7 @@ const SearchBar: React.FC<SearchBarProperties> = ({
 							onClick={onOpenFilter}
 							variant={ButtonVariant.DEFAULT}
 						>
-							Фільтр ({filtersLength})
+							{filterButtonText || `Фільтр (${filtersLength})`}
 						</Button>
 					)}
 					{useGetScreenWidth() > ScreenBreakpoints.TABLET ? (

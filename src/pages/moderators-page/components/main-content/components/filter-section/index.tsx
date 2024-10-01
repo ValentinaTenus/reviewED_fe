@@ -4,8 +4,10 @@ import { SortDropdown, ToggleGroupButtons } from "~/common/components";
 import {
 	moderationsReviewSortOptionsByPeriod,
 	moderationsReviewSortOptionsByStatus,
+	ScreenBreakpoints,
 } from "~/common/constants";
 import { ButtonGroupData } from "~/common/enums";
+import { useGetScreenWidth } from "~/common/hooks";
 import { DropdownOption } from "~/common/types";
 
 import styles from "./styles.module.scss";
@@ -43,11 +45,13 @@ const ModeratorsReviewFilterSection: React.FC<Props> = ({
 				<p className={styles["fitters_block__sort_title"]}>Сортувати за</p>
 				<SortDropdown
 					className={styles["dropdown_fullwidth"]}
+					menuStaticStyle={useGetScreenWidth() <= ScreenBreakpoints.MOBILE}
 					onChange={handleSetFilterByStatus}
 					options={moderationsReviewSortOptionsByStatus}
 				/>
 				<SortDropdown
 					className={styles["dropdown_fullwidth"]}
+					menuStaticStyle={useGetScreenWidth() <= ScreenBreakpoints.MOBILE}
 					onChange={handleSetSortByPeriod}
 					options={moderationsReviewSortOptionsByPeriod}
 				/>
