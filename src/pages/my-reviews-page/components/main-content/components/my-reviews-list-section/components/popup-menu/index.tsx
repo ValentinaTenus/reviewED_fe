@@ -1,16 +1,17 @@
-import React from "react";
 import clsx from "clsx";
-import styles from "./styles.module.scss";
+import React from "react";
 
 import { Icon } from "~/common/components";
 import { PopupMenuOption } from "~/common/types/my-reviews";
 
+import styles from "./styles.module.scss";
+
 type PopupMenuProps = {
-	options: PopupMenuOption[];
 	onSelect: (option: string) => void;
+	options: PopupMenuOption[];
 };
 
-const PopupMenu: React.FC<PopupMenuProps> = ({ options, onSelect }) => {
+const PopupMenu: React.FC<PopupMenuProps> = ({ onSelect, options }) => {
 	const handleSelect = (option: string) => {
 		onSelect(option);
 	};
@@ -20,11 +21,11 @@ const PopupMenu: React.FC<PopupMenuProps> = ({ options, onSelect }) => {
 			<div className={styles["popup-menu__options"]}>
 				{options.map((option) => (
 					<div
-						key={option.value}
 						className={clsx(
 							styles["popup-menu__option"],
 							option.value === "delete" && styles["option-delete"],
 						)}
+						key={option.value}
 						onClick={() => handleSelect(option.value)}
 					>
 						<Icon name={option.iconName} />

@@ -8,6 +8,7 @@ enum IconName {
 	AUDIENCE = "audience",
 	BANK = "bank",
 	CLOSE = "close",
+	DELETE = "delete",
 	DOLLAR_SIGN = "dollarSign",
 	EDIT = "edit",
 	EMAIL = "email",
@@ -19,6 +20,7 @@ enum IconName {
 	LINKEDIN_LOGO = "linkedinLogo",
 	LIST_VIEW = "listView",
 	LOCATION = "location",
+	MESSAGES = "messages",
 	MINUS = "minus",
 	MORE = "more",
 	PEOPLE = "people",
@@ -36,8 +38,6 @@ enum IconName {
 	WARNING = "warning",
 	XRP = "xrp",
 	YOUTUBE = "youtube",
-	DELETE = "delete",
-	MESSAGES = "messages"
 }
 
 export { IconName };

@@ -10,6 +10,7 @@ import Audience from "~/assets/images/audience.svg?react";
 import Bank from "~/assets/images/bank.svg?react";
 import Phone from "~/assets/images/call.svg?react";
 import Close from "~/assets/images/close.svg?react";
+import Delete from "~/assets/images/delete.svg?react";
 import DollarSign from "~/assets/images/dollar-circle.svg?react";
 import Edit from "~/assets/images/edit.svg?react";
 import Facebook from "~/assets/images/facebook.svg?react";
@@ -20,6 +21,7 @@ import Like from "~/assets/images/like.svg?react";
 import LinkedInLogo from "~/assets/images/linkedIn-logo.svg?react";
 import ListView from "~/assets/images/list-view.svg?react";
 import Location from "~/assets/images/location.svg?react";
+import Messages from "~/assets/images/messages.svg?react";
 import Minus from "~/assets/images/minus.svg?react";
 import More from "~/assets/images/more.svg?react";
 import People from "~/assets/images/people.svg?react";
@@ -37,8 +39,6 @@ import Teacher from "~/assets/images/teacher.svg?react";
 import Warning from "~/assets/images/warning.svg?react";
 import Xrp from "~/assets/images/xrp-(xrp).svg?react";
 import Youtube from "~/assets/images/youtube.svg?react";
-import Delete from "~/assets/images/delete.svg?react";
-import Messages from "~/assets/images/messages.svg?react";
 import { type IconName } from "~/common/enums/index";
 
 const iconNameToSvg: Record<
@@ -54,6 +54,7 @@ const iconNameToSvg: Record<
 	audience: Audience,
 	bank: Bank,
 	close: Close,
+	delete: Delete,
 	dollarSign: DollarSign,
 	edit: Edit,
 	email: Email,
@@ -65,6 +66,7 @@ const iconNameToSvg: Record<
 	linkedinLogo: LinkedInLogo,
 	listView: ListView,
 	location: Location,
+	messages: Messages,
 	minus: Minus,
 	more: More,
 	people: People,
@@ -82,8 +84,6 @@ const iconNameToSvg: Record<
 	warning: Warning,
 	xrp: Xrp,
 	youtube: Youtube,
-	delete: Delete,
-	messages: Messages,
 };
 
 export { iconNameToSvg };

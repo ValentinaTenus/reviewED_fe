@@ -8,6 +8,7 @@ import styles from "./styles.module.scss";
 
 const variants: Record<ButtonVariant, string> = {
 	default: styles.button__base,
+	delete: styles.button__delete,
 	group_buttons: styles.group__buttons,
 	login: styles.button__login,
 	outlined: styles.button__outlined,
@@ -16,6 +17,7 @@ const variants: Record<ButtonVariant, string> = {
 		styles.button__outlined_mobile,
 	),
 	primary: styles.button__primary,
+	secondary: styles.button__secondary,
 	share_facebook: styles.button__share_facebook,
 	share_linkedin: styles.button__share_linkedin,
 	share_twitter: styles.button__share_twitter,

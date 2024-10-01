@@ -10,13 +10,13 @@ import {
 	PopupMenuOption,
 } from "~/common/types/my-reviews";
 
-import styles from "./styles.module.scss";
 import { PopupMenu } from "../popup-menu";
+import styles from "./styles.module.scss";
 
 const POPUP_OPTIONS: PopupMenuOption[] = [
-	{ value: "edit", iconName: IconName.EDIT },
-	{ value: "contact moderator", iconName: IconName.MESSAGES },
-	{ value: "delete", iconName: IconName.DELETE },
+	{ iconName: IconName.EDIT, value: "edit" },
+	{ iconName: IconName.MESSAGES, value: "contact moderator" },
+	{ iconName: IconName.DELETE, value: "delete" },
 ];
 
 // Constants for breakpoints and max preview lengths
@@ -31,10 +31,8 @@ const LARGE_SCREEN_BREAKPOINT = 888;
 const ZERO_NUMBER = 0;
 
 interface Properties {
+	activePopup: null | number;
 	category: MyReviewCategory;
-	review: MyReview;
-	activePopup: number | null;
-	handleTogglePopup: (item: number | null) => void;
 	handleDeleteReview: (reviewId: number) => void;
 	handleEditReview: ({
 		reviewId,
@@ -43,15 +41,17 @@ interface Properties {
 		reviewId: number;
 		text: string;
 	}) => void;
+	handleTogglePopup: (item: null | number) => void;
+	review: MyReview;
 }
 
 const ReviewListItem: React.FC<Properties> = ({
-	category,
-	review,
-	handleEditReview,
-	handleDeleteReview,
-	handleTogglePopup,
 	activePopup,
+	category,
+	handleDeleteReview,
+	handleEditReview,
+	handleTogglePopup,
+	review,
 }) => {
 	const [showFullText, setShowFullText] = useState(false);
 	const [maxPreviewLength, setMaxPreviewLength] = useState(
@@ -115,7 +115,7 @@ const ReviewListItem: React.FC<Properties> = ({
 					className={clsx(styles["popup-menu"], styles["popup-menu-mobile"])}
 				>
 					{activePopup === review.id && (
-						<PopupMenu options={POPUP_OPTIONS} onSelect={handleSelect} />
+						<PopupMenu onSelect={handleSelect} options={POPUP_OPTIONS} />
 					)}
 				</div>
 			</div>
@@ -271,7 +271,7 @@ const ReviewListItem: React.FC<Properties> = ({
 								)}
 							>
 								{activePopup === review.id && (
-									<PopupMenu options={POPUP_OPTIONS} onSelect={handleSelect} />
+									<PopupMenu onSelect={handleSelect} options={POPUP_OPTIONS} />
 								)}
 							</div>
 						</div>
