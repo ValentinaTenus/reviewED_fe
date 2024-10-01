@@ -60,7 +60,9 @@ const FilterResultItems: React.FC<Properties> = ({
 					onClick={onClearFilters}
 					variant={ButtonVariant.DEFAULT}
 				>
-					Очистити все
+					<span className={styles["clear_filters__button_text"]}>
+						Очистити все{" "}
+					</span>
 				</Button>
 			)}
 		</div>
