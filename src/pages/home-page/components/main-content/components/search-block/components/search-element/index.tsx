@@ -213,23 +213,17 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 		({ option }: { option: DropdownOption }) => {
 			setSelectedCategory(option.value.toString());
 
-			if (option.value.toLocaleString() === categories[INDEX_COURSES].value) {
+			if (option.value.toString() === categories[INDEX_COURSES].value) {
 				void dispatch(setCompaniesFilters({ city: "", name: "" }));
 				void dispatch(
 					setCoursesFilters({
-						city: [selectedLocation],
+						category_by_id: [{ id: "", name: "Всі курси" }],
+						city: [{ id: "", name: "Всі міста" }],
+						subcategory_by_id: [],
 						title: searchTerm,
 					}),
 				);
 			} else {
-				void dispatch(
-					setCoursesFilters({
-						category_by_id: [""],
-						city: [{ id: "", name: "" }],
-						subcategory_by_id: [{ id: "", name: "" }],
-						title: "",
-					}),
-				);
 				void dispatch(
 					setCompaniesFilters({
 						city: selectedLocation.id,
@@ -275,8 +269,10 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 				setSelectedCourseCategory(option.value.toString());
 				void dispatch(
 					setCoursesFilters({
-						category_by_id: [option.value.toString()],
-						subcategory_by_id: [{ id: "", name: "" }],
+						category_by_id: [
+							{ id: option.value.toString(), name: option.label },
+						],
+						subcategory_by_id: [],
 					}),
 				);
 			} else {
@@ -284,7 +280,7 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 				setSelectedCourseSubCategory(option.value.toString());
 				void dispatch(
 					setCoursesFilters({
-						category_by_id: [""],
+						category_by_id: [],
 						subcategory_by_id: [
 							{ id: option.value.toLocaleString(), name: option.label },
 						],

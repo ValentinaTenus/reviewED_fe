@@ -1,14 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { type Course } from "~/common/types/index";
+import { type Course, FilterType } from "~/common/types/index";
 
 type CourseFilter = {
-	category_by_id?: string[];
-	city?: { id: string; name: string }[];
+	category_by_id?: FilterType[];
+	city?: FilterType[];
 	limit?: number;
 	offset?: number;
 	sort?: string;
-	subcategory_by_id?: { id: string; name: string }[];
+	subcategory_by_id?: FilterType[];
 	title?: string;
 };
 
@@ -20,8 +20,8 @@ type CoursesState = {
 const initialState: CoursesState = {
 	courses: null,
 	filters: {
-		category_by_id: [],
-		city: [],
+		category_by_id: [{ id: "", name: "Всі курси" }],
+		city: [{ id: "", name: "Всі міста" }],
 		subcategory_by_id: [],
 		title: "",
 	},

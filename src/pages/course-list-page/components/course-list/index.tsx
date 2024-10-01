@@ -32,15 +32,15 @@ const CourseContent: React.FC = () => {
 
 	const [searchTerm, setSearchTerm] = useState(filters?.title || "");
 
-	const [selectedCategoryIds, setSelectedCategoryIds] = useState<string[]>(
+	const [selectedCategories, setSelectedCategories] = useState<FilterType[]>(
 		filters?.category_by_id || [],
 	);
 	const [selectedSubCategories, setSelectedSubCategories] = useState<
-		{ id: string; name: string }[]
+		FilterType[]
 	>(filters?.subcategory_by_id || []);
-	const [selectedLocations, setSelectedLocations] = useState<
-		{ id: string; name: string }[]
-	>(filters?.city || []);
+	const [selectedLocations, setSelectedLocations] = useState<FilterType[]>(
+		filters?.city || [],
+	);
 
 	const [getCourses, { data: coursesResponse, isLoading }] =
 		useLazyGetCoursesByFilterQuery();
@@ -63,7 +63,7 @@ const CourseContent: React.FC = () => {
 	);
 
 	const handleClearFilters = useCallback(() => {
-		setSelectedCategoryIds([]);
+		setSelectedCategories([]);
 		setSelectedSubCategories([]);
 		setSelectedLocations([]);
 		dispatch(clearFilters());
@@ -72,9 +72,11 @@ const CourseContent: React.FC = () => {
 	const handleApplyFiltersAndSearch = useCallback(
 		(newSearchTerm?: string) => {
 			getCourses({
-				category_by_id: selectedCategoryIds.includes(ALL_CATEGORIES_ID)
-					? undefined
-					: selectedCategoryIds,
+				category_by_id: selectedCategories.find(
+					(sc) => sc.id === ALL_CATEGORIES_ID,
+				)
+					? [""]
+					: selectedCategories.map((c) => c.id),
 				city: selectedLocations.find((sl) => sl.id === ALL_CATEGORIES_ID)
 					? [""]
 					: selectedLocations.map((c) => c.id),
@@ -91,7 +93,7 @@ const CourseContent: React.FC = () => {
 		[
 			currentPage,
 			getCourses,
-			selectedCategoryIds,
+			selectedCategories,
 			selectedLocations,
 			selectedSubCategories,
 			searchTerm,
@@ -136,12 +138,20 @@ const CourseContent: React.FC = () => {
 				setSelectedSubCategories(filteredSubCategories);
 			}
 
+			if (filterType === CoursesFilterType.CATEGORIES) {
+				const filteredCategories = selectedCategories.filter(
+					(c) => c.id !== id,
+				);
+				setSelectedCategories(filteredCategories);
+			}
+
 			handleApplyFiltersAndSearch();
 			dispatch(clearFilters());
 		},
 		[
 			dispatch,
 			handleApplyFiltersAndSearch,
+			selectedCategories,
 			selectedLocations,
 			selectedSubCategories,
 		],
@@ -151,7 +161,6 @@ const CourseContent: React.FC = () => {
 		handleClearFilters();
 		handleApplyFiltersAndSearch();
 	}, [handleClearFilters, handleApplyFiltersAndSearch]);
-
 	return (
 		<>
 			<div className={styles["courses_list__container"]}>
@@ -174,6 +183,7 @@ const CourseContent: React.FC = () => {
 					<FilterResultItems
 						onClearFilters={handleClearAllFilters}
 						onRemoveFilter={handleRemoveFilter}
+						selectedCategories={selectedCategories}
 						selectedLocations={selectedLocations}
 						selectedSubCategories={selectedSubCategories}
 					/>
