@@ -20,7 +20,6 @@ import { type DropdownOption } from "~/common/types/index";
 import styles from "./styles.module.scss";
 
 type SearchBarProperties = {
-	filterButtonText?: string;
 	filtersLength?: number;
 	iconSearch?: boolean;
 	isFilterButton?: boolean;
@@ -32,7 +31,6 @@ type SearchBarProperties = {
 };
 
 const SearchBar: React.FC<SearchBarProperties> = ({
-	filterButtonText,
 	filtersLength,
 	iconSearch = false,
 	isFilterButton,
@@ -46,6 +44,7 @@ const SearchBar: React.FC<SearchBarProperties> = ({
 	const [filteredSuggestions, setFilteredSuggestions] = useState<
 		DropdownOption[]
 	>([]);
+	const screenWidth = useGetScreenWidth();
 
 	const { control, errors, handleSubmit } = useAppForm({
 		defaultValues: {
@@ -110,10 +109,12 @@ const SearchBar: React.FC<SearchBarProperties> = ({
 							type={ButtonType.BUTTON}
 							variant={ButtonVariant.DEFAULT}
 						>
-							{filterButtonText || `Фільтр (${filtersLength})`}
+							{screenWidth > ScreenBreakpoints.TABLET
+								? `Фільтр (${filtersLength})`
+								: ""}
 						</Button>
 					)}
-					{useGetScreenWidth() > ScreenBreakpoints.TABLET ? (
+					{screenWidth > ScreenBreakpoints.TABLET ? (
 						<div className={styles["search_button_wrapper"]}>
 							<Button
 								className={styles["search__button"]}

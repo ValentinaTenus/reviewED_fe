@@ -91,7 +91,6 @@ const MainModeratorsContent: React.FC = () => {
 				<div className={styles["search_block"]}>
 					<p className={styles["search_title"]}>Пошук за UID</p>
 					<SearchBar
-						filterButtonText=" "
 						filtersLength={3}
 						isFilterButton={screenWidth <= ScreenBreakpoints.MOBILE}
 						onOpenFilter={handleSetIsOpenSerchFiltersModal}

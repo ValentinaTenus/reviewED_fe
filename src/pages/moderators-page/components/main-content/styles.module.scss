@@ -35,12 +35,12 @@
 	.moderators_fitters_section {
 		display: flex;
 		gap: 20px;
-		@media (min-width: 480px) and (max-width: 1280px) {
+		@media (min-width: 480px) and (max-width: 1000px) {
 			flex-direction: column;
 		}
 		.search_block {
 			width: 75%;
-			@media (max-width: 1280px) {
+			@media (max-width: 1000px) {
 				width: 100%;
 			}
 			.search_title {
@@ -58,7 +58,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: 40px;
-		@media (max-width: 1280px) {
+		@media (max-width: 1000px) {
 			margin-top: 40px;
 			width: 100%;
 		}
