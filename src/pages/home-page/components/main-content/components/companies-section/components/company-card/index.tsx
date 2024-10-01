@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { StarRating } from "~/common/components/index";
+import { DefaultAvatar, StarRating } from "~/common/components/index";
+import { IMAGE_UPLOAD_URL, LOGO_NONE } from "~/common/constants/index";
 import { AppRoute, RatingSize, StarRatingVariant } from "~/common/enums/index";
 import { Company } from "~/common/types/index";
 
@@ -29,11 +30,19 @@ const CompanyCard: React.FC<CompanyCardProperties> = ({ company }) => {
 				/>
 			</div>
 			<div className={styles["item_logo_container"]}>
-				<img
-					alt={company.name}
-					className={styles["company_logo"]}
-					src={company.logo}
-				/>
+				{company.logo !== LOGO_NONE ? (
+					<img
+						alt={`${company.name} logo`}
+						className={styles["company_logo"]}
+						src={`${IMAGE_UPLOAD_URL}${company.logo}`}
+					/>
+				) : (
+					<DefaultAvatar
+						className={styles["company_logo"]}
+						name={company.name}
+					/>
+				)}
+
 				<h4 className={styles["item_name"]}>{company.name}</h4>
 			</div>
 		</Link>

@@ -1,7 +1,13 @@
 import React, { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Icon, IconButton, StarRating } from "~/common/components/index";
+import {
+	DefaultAvatar,
+	Icon,
+	IconButton,
+	StarRating,
+} from "~/common/components/index";
+import { IMAGE_UPLOAD_URL, LOGO_NONE } from "~/common/constants/index";
 import { AppRoute, IconName, RatingSize } from "~/common/enums/index";
 import { Company } from "~/common/types/index";
 
@@ -22,11 +28,18 @@ const CompanyListCard: React.FC<Properties> = ({ company }) => {
 		<div className={styles["company_list_card__container"]}>
 			<div className={styles["company_list_card__header"]}>
 				<div className={styles["company_list_card__logo_container"]}>
-					<img
-						alt={company.name}
-						className={styles["company_list_card__logo"]}
-						src={company.logo}
-					/>
+					{company.logo !== LOGO_NONE ? (
+						<img
+							alt={`${company.name} logo`}
+							className={styles["company_list_card__logo"]}
+							src={`${IMAGE_UPLOAD_URL}${company.logo}`}
+						/>
+					) : (
+						<DefaultAvatar
+							className={styles["company_list_card__logo"]}
+							name={company.name}
+						/>
+					)}
 					<span className={styles["company_list_card__name"]}>
 						{company.name}
 					</span>

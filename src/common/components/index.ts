@@ -1,6 +1,7 @@
 export { BreadCrumb } from "./breadcrumb/index";
 export { Button } from "./button/index";
 export { CheckDropdown } from "./check-dropdown/index";
+export { DefaultAvatar } from "./default-avatar/index";
 export { Dropdown } from "./dropdown/index";
 export { Footer } from "./footer/index";
 export { Header } from "./header/index";
