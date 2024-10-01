@@ -128,15 +128,6 @@ const MainModeratorsContent: React.FC = () => {
 					/>
 				</Modal>
 			)}
-			{/* =======
-			<div className={styles["title_wrapper"]}>
-				<p>Модерація відгуків</p>
-				<p>Знайдено: {moderatorsReviews?.count} відгуків</p>
-			</div>
-			<div>
-				<p>Пошук за UID</p>
-			</div>
->>>>>>> main */}
 		</div>
 	);
 };
