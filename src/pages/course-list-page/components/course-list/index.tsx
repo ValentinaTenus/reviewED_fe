@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 
 import { Pagination, Spinner } from "~/common/components/index";
 import { CoursesFilterType, SpinnerVariant } from "~/common/enums/index";
+import { useGetScreenWidth } from "~/common/hooks";
 import { FilterType } from "~/common/types";
 import { useLazyGetCoursesByFilterQuery } from "~/redux/courses/courses-api";
 import { clearFilters } from "~/redux/courses/courses-slice";
@@ -14,7 +15,6 @@ import {
 } from "./components/index";
 import styles from "./styles.module.scss";
 
-const DEFAULT_SCREEN_WIDTH = 0;
 const DEFAULT_PAGE_COUNT = 0;
 const ALL_CATEGORIES_ID = "0";
 const DEFAULT_CURRENT_PAGE = 1;
@@ -25,11 +25,11 @@ const ZERO_LENGTH = 0;
 const CourseContent: React.FC = () => {
 	const dispatch = useAppDispatch();
 	const { filters } = useAppSelector((state) => state.courses);
+	const screenWidth = useGetScreenWidth();
 
 	const [currentPage, setCurrentPage] = useState(DEFAULT_CURRENT_PAGE);
 	const [pageCount, setPageCount] = useState(DEFAULT_PAGE_COUNT);
 
-	const [screenWidth, setScreenWidth] = useState<number>(DEFAULT_SCREEN_WIDTH);
 	const [searchTerm, setSearchTerm] = useState(filters?.title || "");
 
 	const [selectedCategoryIds, setSelectedCategoryIds] = useState<string[]>(
@@ -44,7 +44,6 @@ const CourseContent: React.FC = () => {
 
 	const [getCourses, { data: coursesResponse, isLoading }] =
 		useLazyGetCoursesByFilterQuery();
-
 	const handleSelectSubCategory = useCallback(
 		(chosenSubCategories: FilterType[]) => {
 			setSelectedSubCategories([...chosenSubCategories]);
@@ -107,11 +106,6 @@ const CourseContent: React.FC = () => {
 		[handleApplyFiltersAndSearch],
 	);
 
-	const updateScreenWidth = () => {
-		const screenWidth = window.innerWidth;
-		setScreenWidth(screenWidth);
-	};
-
 	const updateCoursesPageCount = useCallback(() => {
 		if (coursesResponse?.count) {
 			setPageCount(Math.ceil(coursesResponse.count / DEFAULT_COURSES_PER_PAGE));
@@ -125,13 +119,6 @@ const CourseContent: React.FC = () => {
 	useEffect(() => {
 		handleApplyFiltersAndSearch();
 	}, [handleApplyFiltersAndSearch]);
-
-	useEffect(() => {
-		updateScreenWidth();
-		window.addEventListener("resize", updateScreenWidth);
-
-		return () => window.removeEventListener("resize", updateScreenWidth);
-	}, []);
 
 	const handleRemoveFilter = useCallback(
 		(filterType: CoursesFilterType, id: string) => {
@@ -179,7 +166,6 @@ const CourseContent: React.FC = () => {
 					onChooseLocation={handleSelectLocation}
 					onChooseSubCategory={handleSelectSubCategory}
 					onClearFilters={handleClearFilters}
-					screenWidth={screenWidth}
 					searchTerm={searchTerm}
 					selectedLocations={selectedLocations}
 					selectedSubCategories={selectedSubCategories}
@@ -195,6 +181,7 @@ const CourseContent: React.FC = () => {
 						resultCount={
 							coursesResponse?.count ? coursesResponse.count : ZERO_LENGTH
 						}
+						resultTerm={searchTerm}
 					/>
 				</div>
 			</div>
