@@ -25,8 +25,10 @@ export { type ModalHandlers, type ModalProperties } from "./modal/index";
 export {
 	type CompanyAndCourseReviewsByUserId,
 	type GetCompanyAndCourseReviewsByUserIdResponse,
-	type GetModerationReviews,
+	type GetModerationReviewsRequest,
+	type GetModerationReviewsResponse,
 	type GetReviewsResponse,
+	type ModerationReviews,
 	type RecentReview,
 	type Review,
 } from "./review/index";

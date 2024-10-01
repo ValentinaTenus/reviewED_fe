@@ -21,9 +21,9 @@ const QuestionAndAnswer = () => {
 		QuestionAndAnswerProperties[]
 	>(dropdownData[activeButtonValue]);
 
-	const handleButtonClick = (value: DropdownKey) => {
-		setQuestionsAnswers(dropdownData[value]);
-		setActiveButtonValue(value);
+	const handleButtonClick = (value: string) => {
+		setQuestionsAnswers(dropdownData[value as DropdownKey]);
+		setActiveButtonValue(value as DropdownKey);
 	};
 
 	return (

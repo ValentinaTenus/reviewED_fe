@@ -16,8 +16,9 @@ type Properties = {
 	className?: string;
 	isDisabled?: boolean;
 	isIconButton?: boolean;
-	name: string;
-	onChange: (value: number | string) => void;
+	menuStaticStyle?: boolean;
+	name?: string;
+	onChange: (value: DropdownOption["value"]) => void;
 	options: DropdownOption[];
 };
 
@@ -25,6 +26,8 @@ const SortDropdown: React.FC<Properties> = ({
 	className,
 	isDisabled,
 	isIconButton = false,
+	menuStaticStyle,
+	name,
 	onChange,
 	options,
 }) => {
@@ -63,7 +66,7 @@ const SortDropdown: React.FC<Properties> = ({
 
 	return (
 		<div className={styles["sort_container"]}>
-			<p className={styles["sort_text"]}>Сортувати за</p>
+			<p className={styles["sort_text"]}>{name}</p>
 			<div
 				className={clsx(
 					styles["dropdown_container"],
@@ -105,6 +108,7 @@ const SortDropdown: React.FC<Properties> = ({
 						className={clsx(
 							styles["dropdown_menu"],
 							isIconButton && styles["icon_button__menu"],
+							menuStaticStyle && styles["dropdown_menu-static"],
 						)}
 					>
 						{options.map((option, index) => (

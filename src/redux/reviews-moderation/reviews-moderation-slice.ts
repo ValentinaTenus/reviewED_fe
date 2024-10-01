@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { type GetModerationReviews } from "~/common/types";
+import { type GetModerationReviewsResponse } from "~/common/types";
 
 type ReviewsState = {
-	reviewsModeration: GetModerationReviews["results"] | null;
+	reviewsModeration: GetModerationReviewsResponse["results"] | null;
 };
 
 const initialState: ReviewsState = {
@@ -16,7 +16,7 @@ const reviewsModerationSlice = createSlice({
 	reducers: {
 		setRewiews: (
 			state,
-			action: PayloadAction<GetModerationReviews["results"]>,
+			action: PayloadAction<GetModerationReviewsResponse["results"]>,
 		) => {
 			state.reviewsModeration = action.payload;
 		},

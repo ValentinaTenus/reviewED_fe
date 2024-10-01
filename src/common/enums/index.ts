@@ -10,6 +10,8 @@ export { HttpStatusCode } from "./http-status-code.enum";
 export { IconName } from "./icon-name.enum";
 export { IconSize } from "./icon-size.enum";
 export { ModalVariant } from "./modal-variants.enum";
+export { ButtonGroupData } from "./moderation-review-buttons-group.enum";
+export { ModerationReviewStatus } from "./moderation-review-status";
 export { SpinnerVariant } from "./spinner-variant.enum";
 export { RatingSize } from "./star-rating-size.enum";
 export { StarRatingVariant } from "./star-rating-variants.enum";

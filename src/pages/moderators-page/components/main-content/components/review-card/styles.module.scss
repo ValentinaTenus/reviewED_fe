@@ -58,13 +58,13 @@
 			background-color: var(--color-yellow-200);
 		}
 
-		&--published {
+		&--approved {
 			border-bottom: 1px solid var(--color-grey-400);
 			border-left: 1px solid var(--color-grey-400);
 			border-right: 1px solid var(--color-grey-400);
 		}
 
-		&--removed {
+		&--rejected {
 			background-color: var(--color-grey-200);
 			text-align: center;
 		}
@@ -311,47 +311,46 @@
 }
 
 .rating_block .stars_block * {
-  width: 14px;
-  height: 14px;
+	width: 14px;
+	height: 14px;
 
-  @include desktop {
-    width: 18px;
-    height: 18px;
-  }
+	@include desktop {
+		width: 18px;
+		height: 18px;
+	}
 }
 
 .rating_block > span:last-child {
-  line-height: 140%;
+	line-height: 140%;
 }
 
 .rating_block .stars_block {
-  @include desktop {
-    gap: 4px;
-  }
+	@include desktop {
+		gap: 4px;
+	}
 }
 
 .rating_block {
-  gap: 8px;
+	gap: 8px;
 }
 
 .rating_block_big .stars_block_big {
-  @include tablet {
-    gap: 4px;
-  }
+	@include tablet {
+		gap: 4px;
+	}
 
-  @include desktop {
-    gap: 6px;
-  }
+	@include desktop {
+		gap: 6px;
+	}
 }
 
 .rating_block_big > span:last-child {
-  letter-spacing: -0.06em;
+	letter-spacing: -0.06em;
 }
 
 .rating_block_big .stars_block_big * {
-  @include desktop {
-    width: 20px;
-    height: 20px;
-  }
+	@include desktop {
+		width: 20px;
+		height: 20px;
+	}
 }
-

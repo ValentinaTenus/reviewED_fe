@@ -1,6 +1,9 @@
 import clsx from "clsx";
 import React, { type ReactNode } from "react";
 
+import { ButtonType } from "~/common/enums";
+import { ValueOf } from "~/common/types";
+
 import styles from "./styles.module.scss";
 
 type IconButtonProperties = {
@@ -8,6 +11,7 @@ type IconButtonProperties = {
 	className?: string;
 	isDisabled?: boolean;
 	onClick?: React.MouseEventHandler<HTMLButtonElement>;
+	type?: ValueOf<typeof ButtonType>;
 };
 
 const IconButton: React.FC<IconButtonProperties> = ({
@@ -15,12 +19,13 @@ const IconButton: React.FC<IconButtonProperties> = ({
 	className,
 	isDisabled,
 	onClick,
+	type,
 }) => (
 	<button
 		className={clsx(styles.icon__button, className)}
 		disabled={isDisabled}
 		onClick={onClick}
-		type="button"
+		type={type || ButtonType.BUTTON}
 	>
 		{children}
 	</button>
