@@ -28,6 +28,11 @@ const FilterResultItems: React.FC<Properties> = ({
 		selectedLocations.length +
 		selectedSubCategories.length +
 		selectedCategories.length;
+
+	if (filtersLength === ZERO_LENGTH) {
+		return null;
+	}
+
 	return (
 		<div className={styles["filter_items__container"]}>
 			{selectedLocations.map((filter, index) => (

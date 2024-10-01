@@ -32,6 +32,7 @@ const CourseContent: React.FC = () => {
 
 	const [searchTerm, setSearchTerm] = useState(filters?.title || "");
 
+	const [sortBy, setSortBy] = useState<string>("");
 	const [selectedCategories, setSelectedCategories] = useState<FilterType[]>(
 		filters?.category_by_id || [],
 	);
@@ -62,6 +63,10 @@ const CourseContent: React.FC = () => {
 		[dispatch],
 	);
 
+	const handleChangeSortBy = useCallback((newSortBy: number | string) => {
+		setSortBy(newSortBy.toString());
+	}, []);
+
 	const handleClearFilters = useCallback(() => {
 		setSelectedCategories([]);
 		setSelectedSubCategories([]);
@@ -82,6 +87,7 @@ const CourseContent: React.FC = () => {
 					: selectedLocations.map((c) => c.id),
 				limit: DEFAULT_COURSES_PER_PAGE,
 				offset: (currentPage - INDEX_ONE) * DEFAULT_COURSES_PER_PAGE,
+				sort: sortBy,
 				subcategory_by_id: selectedSubCategories.find(
 					(sb) => sb.id === ALL_CATEGORIES_ID,
 				)
@@ -97,6 +103,7 @@ const CourseContent: React.FC = () => {
 			selectedLocations,
 			selectedSubCategories,
 			searchTerm,
+			sortBy,
 		],
 	);
 
@@ -188,6 +195,7 @@ const CourseContent: React.FC = () => {
 						selectedSubCategories={selectedSubCategories}
 					/>
 					<FilterResultTitle
+						onChangeSortBy={handleChangeSortBy}
 						resultCount={
 							coursesResponse?.count ? coursesResponse.count : ZERO_LENGTH
 						}

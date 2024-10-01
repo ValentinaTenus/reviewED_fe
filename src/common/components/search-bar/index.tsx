@@ -104,7 +104,9 @@ const SearchBar: React.FC<SearchBarProperties> = ({
 							type={ButtonType.BUTTON}
 							variant={ButtonVariant.DEFAULT}
 						>
-							Фільтр ({filtersLength})
+							{screenWidth > ScreenBreakpoints.TABLET
+								? `Фільтр (${filtersLength})`
+								: ""}
 						</Button>
 					)}
 					{screenWidth > ScreenBreakpoints.TABLET ? (
