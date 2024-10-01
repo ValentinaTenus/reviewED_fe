@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import React, { useState } from "react";
 
-import { Button, StarRating } from "~/common/components";
+import { Button, Logo, StarRating } from "~/common/components";
 import {
 	ButtonSize,
 	ButtonType,
@@ -69,7 +69,11 @@ const ReviewModeratorsCard: React.FC<ReviewModeratorsCardProps> = ({
 					</div>
 				</div>
 				<div className={clsx(style["card__title"], style["title"])}>
-					<img alt="logo" className={style["title__img"]} src={review.logo} />
+					<Logo
+						className={style["title__img"]}
+						logo={review.logo}
+						name="logo"
+					/>
 					<h4 className={style["title__text"]}>{review.related_entity_name}</h4>
 					<div className={style["title__stars"]}>
 						<StarRating

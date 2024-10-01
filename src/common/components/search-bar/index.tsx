@@ -107,6 +107,7 @@ const SearchBar: React.FC<SearchBarProperties> = ({
 							}
 							className={styles["filter-button"]}
 							onClick={onOpenFilter}
+							type={ButtonType.BUTTON}
 							variant={ButtonVariant.DEFAULT}
 						>
 							{filterButtonText || `Фільтр (${filtersLength})`}

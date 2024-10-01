@@ -25,7 +25,7 @@ const IconButton: React.FC<IconButtonProperties> = ({
 		className={clsx(styles.icon__button, className)}
 		disabled={isDisabled}
 		onClick={onClick}
-		type={type || "button"}
+		type={type || ButtonType.BUTTON}
 	>
 		{children}
 	</button>

@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Icon, IconButton, StarRating } from "~/common/components/index";
+import { Icon, IconButton, Logo, StarRating } from "~/common/components/index";
 import { AppRoute, IconName, RatingSize } from "~/common/enums/index";
 import { Company } from "~/common/types/index";
 
@@ -22,10 +22,10 @@ const CompanyListCard: React.FC<Properties> = ({ company }) => {
 		<div className={styles["company_list_card__container"]}>
 			<div className={styles["company_list_card__header"]}>
 				<div className={styles["company_list_card__logo_container"]}>
-					<img
-						alt={company.name}
+					<Logo
 						className={styles["company_list_card__logo"]}
-						src={company.logo}
+						logo={company.logo}
+						name={company.name}
 					/>
 					<span className={styles["company_list_card__name"]}>
 						{company.name}
