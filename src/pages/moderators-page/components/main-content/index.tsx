@@ -107,7 +107,9 @@ const MainModeratorsContent: React.FC = () => {
 					</div>
 				)}
 
-				{fetchResult?.error && <NotFound />}
+				{(fetchResult?.error || fetchResult?.reviews?.count === INDEX_ZERO) && (
+					<NotFound />
+				)}
 
 				{!fetchResult?.isFetching &&
 					!fetchResult?.error &&
