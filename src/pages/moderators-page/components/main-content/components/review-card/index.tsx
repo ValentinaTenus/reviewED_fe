@@ -79,6 +79,8 @@ const ReviewModeratorsCard: React.FC<ReviewModeratorsCardProps> = ({
 					<div className={style["title__stars"]}>
 						<StarRating
 							averageRating={3.5}
+							className={style["rating_block"]}
+							classNameStarsBlock={style["stars_block"]}
 							variant={StarRatingVariant.SMALL_CARD}
 						/>
 					</div>
@@ -87,10 +89,12 @@ const ReviewModeratorsCard: React.FC<ReviewModeratorsCardProps> = ({
 					<div className={style["content__info"]}>
 						<div className={style["content__date"]}>
 							01/ 09/ 2024,{" "}
-							<span className={style["content__time"]}>15 : 33</span>
+							<span className={style["content__time"]}>15:33</span>
 						</div>
 						<StarRating
 							averageRating={4.5}
+							className={style["rating_block_big"]}
+							classNameStarsBlock={style["stars_block_big"]}
 							size={RatingSize.MEDIUM}
 							variant={StarRatingVariant.SMALL_CARD}
 						/>
