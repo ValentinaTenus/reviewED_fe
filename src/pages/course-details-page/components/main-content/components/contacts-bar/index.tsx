@@ -19,49 +19,36 @@ const defineLocation = (location: string): string => {
 	}
 };
 
-
 const ContactsBar = forwardRef<HTMLDivElement, ContactsBarProperties>(
-	({ course,  title}, ref) => {
+	({ course, title }, ref) => {
 		return (
-<div className={styles["contacts-bar"]} ref={ref}>
-			<div className={styles["contacts-header"]}>{title}</div>
-			<Contact
-				iconName={IconName.LOCATION}
-				title={course ? defineLocation(course.location) : ""}
-			/>
-			<Contact
-				iconName={IconName.BANK}
-				title={course ? course.company : ""}
-			/>
-			<Contact iconName={IconName.GLOBAL} title={course ? course.website : ""} />
-			<aside className={styles["contacts__button-container"]}>
-				<Button size={ButtonSize.MEDIUM} variant={ButtonVariant.PRIMARY}>Зв'язатися з компанією</Button>
-				<Button size={ButtonSize.MEDIUM} variant={ButtonVariant.OUTLINED}><p className={styles["contacts__bold-content"]}>Показати контакти</p></Button>
-			</aside>
-		</div>
+			<div className={styles["contacts-bar"]} ref={ref}>
+				<div className={styles["contacts-header"]}>{title}</div>
+				<Contact
+					iconName={IconName.LOCATION}
+					title={course ? defineLocation(course.location) : ""}
+				/>
+				<Contact
+					iconName={IconName.BANK}
+					title={course ? course.company : ""}
+				/>
+				<Contact
+					iconName={IconName.GLOBAL}
+					title={course ? course.website : ""}
+				/>
+				<aside className={styles["contacts__button-container"]}>
+					<Button size={ButtonSize.MEDIUM} variant={ButtonVariant.PRIMARY}>
+						Зв'язатися з компанією
+					</Button>
+					<Button size={ButtonSize.MEDIUM} variant={ButtonVariant.OUTLINED}>
+						<p className={styles["contacts__bold-content"]}>
+							Показати контакти
+						</p>
+					</Button>
+				</aside>
+			</div>
 		);
 	},
 );
-
-// const ContactsBar: React.FC<ContactsBarProperties> = ({ course, title }) => {
-// 	return (
-// 		<div className={styles["contacts-bar"]}>
-// 			<div className={styles["contacts-header"]}>{title}</div>
-// 			<Contact
-// 				iconName={IconName.LOCATION}
-// 				title={course ? defineLocation(course.location) : ""}
-// 			/>
-// 			<Contact
-// 				iconName={IconName.BUILDING}
-// 				title={course ? course.company : ""}
-// 			/>
-// 			<Contact iconName={IconName.GLOBE} title={course ? course.website : ""} />
-// 			<aside className={styles["contacts__button-container"]}>
-// 				<Button size={ButtonSize.MEDIUM} variant={ButtonVariant.PRIMARY}>Зв'язатися з компанією</Button>
-// 				<Button size={ButtonSize.MEDIUM} variant={ButtonVariant.OUTLINED}><p className={styles["contacts__bold-content"]}>Показати контакти</p></Button>
-// 			</aside>
-// 		</div>
-// 	);
-// };
 
 export { ContactsBar };

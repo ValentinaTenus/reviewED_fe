@@ -1,13 +1,27 @@
-.main_content {
-	font-family: var(--font-family-main);
-	font-size: var(--font-size-title-h4);
-	font-weight: var(--font-weight-semi-bold);
+.reviews-bar {
+display: grid;
+gap: 24px;
+grid-template-areas: "hdr hdr" "rvs sts" "rvs btn";
+grid-template-rows: 71px 230px 1fr;
 }
 
-.reviews-header {
+.reviews-bar__header {
 	color: var(--color-black);
 	font-family: var(--font-family-main);
 	font-weight: var(--font-weight-extra-bold);
 	font-size: var(--font-size-title);
+	grid-area: hdr;
 	line-height: 130%;
+}
+
+.reviews-bar__button {
+	grid-area: btn;
+	width: 536px;
+}
+
+
+@media (max-width: 1280px) {
+	.reviews-bar__button {
+		width: 100%;
+	}
 }

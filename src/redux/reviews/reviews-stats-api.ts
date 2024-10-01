@@ -1,7 +1,7 @@
 import { HttpMethods } from "~/common/enums/index.ts";
 import {
-	type CourseReview,
-	type GetCourseReviews,
+	type ReviewsStats,
+	type GetReviewsStats,
 } from "~/common/types/index.ts";
 
 import { api } from "../services.ts";
@@ -9,18 +9,18 @@ import { reviewsApiPath } from "./constants.ts";
 
 export const reviewsApi = api.injectEndpoints({
 	endpoints: (builder) => ({
-		getCourseReviews: builder.query<CourseReview[], number>({
+		getReviewsStats: builder.query<ReviewsStats[], number>({
 			query: (id) => {
 				return {
 					method: HttpMethods.GET,
-					url: reviewsApiPath.REVIEWS_BY_COURSE_ID + `${id}`,
+					url: reviewsApiPath.REVIEWS_STATS_BY_COURSE_ID + `${id}`,
 				};
 			},
-			transformResponse: (response: GetCourseReviews) =>
+			transformResponse: (response: GetReviewsStats) =>
 				response.results,
 		}),
 	}),
 });
 
-export const { useGetCourseReviewsQuery, useLazyGetCourseReviewsQuery } =
+export const { useGetReviewsStatsQuery, useLazyGetReviewsStatsQuery } =
 	reviewsApi;

@@ -8,7 +8,6 @@ import { CategoriesSection } from "./components/categories-list";
 import { DescriptionSection } from "./components/description-section";
 import { Header } from "./components/header";
 import { PricingBar } from "./components/pricing-bar";
-import { SkillsList } from "./components/skills-list";
 import { TargetGroupSection } from "./components/target-group-section";
 import styles from "./styles.module.scss";
 import { BreadCrumb } from "~/common/components";
@@ -44,7 +43,6 @@ console.log(mockCourse);
 				<DescriptionSection
 					description={mockCourse ? mockCourse.description : ""}
 				/>
-				<SkillsList />
 				<CategoriesSection />
 				<ContactsBar course={mockCourse} ref={aboutCompanyRef} title="Про компанію"/>
 				<ReviewsBar />

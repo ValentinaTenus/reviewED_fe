@@ -25,11 +25,13 @@ export {
 	type CompanyAndCourseReviewsByUserId,
 	type CourseReview,
 	type GetCompanyAndCourseReviewsByUserIdResponse,
-	type GetCourseReviewsResponse,
+	type GetCourseReviews,
 	type GetModerationReviews,
 	type GetReviewsResponse,
+	type GetReviewsStats,
 	type RecentReview,
 	type Review,
+	type ReviewsStats,
 } from "./review/index";
 export { type User, type UserWithStaff } from "./user/index";
 export { type ValueOf } from "./value-of/index";

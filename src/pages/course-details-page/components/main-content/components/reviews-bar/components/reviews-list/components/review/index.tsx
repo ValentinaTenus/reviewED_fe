@@ -3,7 +3,7 @@ import React from "react";
 import styles from "./styles.module.scss";
 import { ReviewHeader } from "./components/review-header";
 import { ReviewMain } from "./components/review-main";
-import { ReviewFooter } from "./components/feview-footer";
+import { ReviewFooter } from "./components/review-footer";
 
 type ReviewProperties = {};
 
