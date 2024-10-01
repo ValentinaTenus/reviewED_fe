@@ -13,7 +13,8 @@ const FilterResultTitle: React.FC<Properties> = ({
 }) => {
 	return (
 		<h2 className={styles["filter_result__title"]}>
-			Знайдено {resultCount} по вашому запиту {resultTerm}
+			Знайдено {resultCount} по вашому запиту{" "}
+			{resultTerm ? `"${resultTerm}"` : ""}
 		</h2>
 	);
 };

@@ -1,12 +1,7 @@
 import React, { useCallback, useState } from "react";
 
 import FilterIcon from "~/assets/images/filter.svg?react";
-import {
-	Button,
-	Icon,
-	IconButton,
-	SearchInput,
-} from "~/common/components/index";
+import { Button, Icon, SearchInput } from "~/common/components/index";
 import { ScreenBreakpoints } from "~/common/constants/index";
 import {
 	ButtonSize,
@@ -106,6 +101,7 @@ const SearchBar: React.FC<SearchBarProperties> = ({
 							}
 							className={styles["filter-button"]}
 							onClick={onOpenFilter}
+							type={ButtonType.BUTTON}
 							variant={ButtonVariant.DEFAULT}
 						>
 							Фільтр ({filtersLength})
@@ -123,12 +119,17 @@ const SearchBar: React.FC<SearchBarProperties> = ({
 							</Button>
 						</div>
 					) : (
-						<IconButton className={styles["search__icon_button"]}>
-							<Icon
-								className={styles["search__icon_button__icon"]}
-								name={IconName.SEARCH}
-							/>
-						</IconButton>
+						<Button
+							appendedIcon={
+								<Icon
+									className={styles["search__icon_button__icon"]}
+									name={IconName.SEARCH}
+								/>
+							}
+							className={styles["search__icon_button"]}
+							type={ButtonType.SUBMIT}
+							variant={ButtonVariant.PRIMARY}
+						/>
 					)}
 				</div>
 			</form>
