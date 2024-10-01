@@ -1,0 +1,15 @@
+.nested_option {
+	cursor: pointer;
+	font-size: var(--font-size-title-h5);
+}
+
+.checkbox__input {
+	align-self: center;
+	border-radius: 6px;
+	height: 24px;
+	width: 24px;
+}
+
+.checkbox__input:checked {
+	background-color: var(--color-blue-icons);
+}

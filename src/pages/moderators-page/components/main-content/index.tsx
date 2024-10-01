@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import { useGetReviewsModerationQuery } from "~/redux/reviews-moderation/reviews-moderation-api";
 import { setRewiews } from "~/redux/reviews-moderation/reviews-moderation-slice";
 
-import { ReviewModeratorsCard } from "./components/index";
 import styles from "./styles.module.scss";
 
 const MainModeratorsContent: React.FC = () => {
@@ -26,9 +25,6 @@ const MainModeratorsContent: React.FC = () => {
 			<div>
 				<p>Пошук за UID</p>
 			</div>
-			{moderatorsReviews?.results.map((review) => (
-				<ReviewModeratorsCard key={review.id} review={review} />
-			))}
 		</div>
 	);
 };

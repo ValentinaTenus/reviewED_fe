@@ -113,44 +113,13 @@
 	align-items: center;
 }
 
-.course_verified {
-	display: flex;
-	gap: 10px;
-	align-items: center;
-	color: var(--color-icon-green);
-}
-
 .course_audience,
 .course_price,
 .course_teacher,
-.course_shield,
 .course_location {
 	width: 24px;
 	height: 24px;
 	color: var(--color-grey-400);
-}
-
-.course_shield {
-	color: var(--color-icon-green);
-}
-
-/*-----------------------------*/
-
-.rating {
-	display: flex;
-	align-items: center;
-	gap: 5px;
-}
-
-.body-r {
-	line-height: 1.4;
-	color: var(--color-grey-400);
-}
-
-.items-center {
-	display: flex;
-	align-items: center;
-	gap: 5px;
 }
 
 /*-----------------------------*/
@@ -163,8 +132,7 @@
 		margin-bottom: 15px;
 	}
 
-	.course_categories-span,
-	.course_verified-span {
+	.course_categories-span {
 		display: none;
 	}
 

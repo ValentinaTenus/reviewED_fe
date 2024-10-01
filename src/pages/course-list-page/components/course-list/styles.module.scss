@@ -1,7 +1,7 @@
 .courses_list__container {
 	display: flex;
 	flex-direction: column;
-	gap: 40px;
+	gap: 32px;
 	width: 100%;
 }
 
@@ -24,10 +24,8 @@
 	margin: 0 auto;
 }
 
-.course-list__cards {
-	align-items: center;
+.filter_items_and_title {
 	display: flex;
 	flex-direction: column;
-	gap: 40px;
-   
+	gap: 32px;
 }

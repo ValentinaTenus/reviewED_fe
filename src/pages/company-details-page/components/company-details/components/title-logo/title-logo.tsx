@@ -2,6 +2,7 @@ import { Rating } from "@mui/material";
 import React from "react";
 
 import { Company } from "~/common/types";
+import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
 
 import styles from "./styles.module.scss";
 
@@ -28,7 +29,7 @@ const TitleLogo: React.FC<{
 					</div>
 					<div className={styles["title-rating_container"]}>
 						<p className={styles["title"]}>{company.name}</p>
-						<div className={styles["rating"]}>
+						<div className={globalStyles["rating"]}>
 							<Rating
 								name="half-rating-read"
 								precision={0.5}
