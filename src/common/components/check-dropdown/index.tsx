@@ -100,7 +100,6 @@ const CheckDropdown: React.FC<Properties> = ({
 				<div
 					className={clsx(styles["dropdown_title"], styles["dropdown_item"])}
 					key={`option-${option.value}`}
-					onClick={() => handleOptionClick(option)}
 				>
 					{option.label}
 				</div>,

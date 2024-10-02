@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 
 import { Logo, StarRating } from "~/common/components/index";
 import { AppRoute, RatingSize, StarRatingVariant } from "~/common/enums/index";
-import { Course } from "~/common/types/index";
+import { type GetCoursesResult } from "~/common/types/index";
 
 import styles from "./styles.module.scss";
 
 type CourseCardProperties = {
 	className?: string;
-	course: Course;
+	course: GetCoursesResult;
 };
 
 const CourseCard: React.FC<CourseCardProperties> = ({ className, course }) => {
