@@ -8,7 +8,7 @@ import {
 import { ScreenBreakpoints } from "~/common/constants/screen-breakpoints";
 import { IconName, RatingSize } from "~/common/enums";
 import { Course } from "~/common/types/courses/course.type";
-import { useGetRecentReviewsQuery } from "~/redux/reviews/reviews-api";
+import { useGetCourseReviewsQuery } from "~/redux/reviews/reviews-api";
 
 import { StarRating } from "../star-rating";
 import styles from "./styles.module.scss";
@@ -21,12 +21,11 @@ type CourseCardProps = {
 const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
 	const CHAR_LIMIT_MOBILE = 107;
 	const CHAR_LIMIT_DESKTOP = 303;
-	const AVATARS_COUNT = 4;
 
 	const [isOneStar, setIsOneStar] = useState(false);
 	const [maxLength, setMaxLength] = useState(CHAR_LIMIT_DESKTOP);
 
-	const { data: recentReviews } = useGetRecentReviewsQuery(AVATARS_COUNT);
+	const { data: courseReviews } = useGetCourseReviewsQuery(course.id);
 
 	useEffect(() => {
 		const handleResize = () => {
@@ -46,7 +45,9 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
 		};
 	}, []);
 
-	const avatars = recentReviews?.map((review) => review.author_avatar) || [];
+	const avatars = Array.isArray(courseReviews)
+		? courseReviews.map((review) => review.author_avatar)
+		: [];
 
 	return (
 		<div className={styles["course-card"]}>

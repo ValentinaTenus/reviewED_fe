@@ -10,6 +10,12 @@ import { reviewsApiPath } from "./constants.ts";
 
 export const reviewsApi = api.injectEndpoints({
 	endpoints: (builder) => ({
+		getCourseReviews: builder.query<RecentReview[], number>({
+			query: (courseId) => ({
+				method: HttpMethods.GET,
+				url: `/reviews/courses/list/${courseId}`,
+			}),
+		}),
 		getRecentReviews: builder.query<RecentReview[], number>({
 			query: (count) => ({
 				method: HttpMethods.GET,
@@ -32,6 +38,7 @@ export const reviewsApi = api.injectEndpoints({
 });
 
 export const {
+	useGetCourseReviewsQuery,
 	useGetRecentReviewsQuery,
 	useGetReviewsByUserIdQuery,
 	useLazyGetReviewsByUserIdQuery,
