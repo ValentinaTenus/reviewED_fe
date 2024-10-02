@@ -21,6 +21,7 @@
 	background: var(--color-white);
 
 	@include tablet {
+    min-width: 672px;
 		padding: 36px;
 		border-radius: 40px;
 	}
@@ -322,6 +323,7 @@
 
 .rating_block > span:last-child {
   line-height: 140%;
+  font-weight: var(--font-weight-bold);
 }
 
 .rating_block .stars_block {
