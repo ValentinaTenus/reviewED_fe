@@ -35,7 +35,7 @@ export const coursesApi = api.injectEndpoints({
 			},
 		}),
 		getCoursesByFilter: builder.query<
-			GetQueryResponse<GetCoursesResult[]>,
+			GetQueryResponse<GetCoursesResult>,
 			GetCoursesRequestQuery
 		>({
 			forceRefetch({ currentArg, previousArg }) {

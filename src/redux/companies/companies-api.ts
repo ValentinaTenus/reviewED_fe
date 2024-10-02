@@ -26,7 +26,7 @@ export const companiesApi = api.injectEndpoints({
 			},
 		}),
 		getCompaniesByFilter: builder.query<
-			GetQueryResponse<Company[]>,
+			GetQueryResponse<Company>,
 			GetCompaniesRequestQuery
 		>({
 			forceRefetch({ currentArg, previousArg }) {
