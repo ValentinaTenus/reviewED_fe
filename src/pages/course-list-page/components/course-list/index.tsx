@@ -171,11 +171,6 @@ const CourseContent: React.FC = () => {
 	return (
 		<>
 			<div className={styles["courses_list__container"]}>
-				{isLoading && (
-					<div className={styles["spinner"]}>
-						<Spinner variant={SpinnerVariant.MEDIUM} />
-					</div>
-				)}
 				<FilterSection
 					onApplyFiltersAndSearch={handleApplyFiltersAndSearch}
 					onChangeSearchTerm={handleChangeSearchTerm}
@@ -202,6 +197,11 @@ const CourseContent: React.FC = () => {
 						resultTerm={searchTerm}
 					/>
 				</div>
+				{isLoading && (
+					<div className={styles["spinner"]}>
+						<Spinner variant={SpinnerVariant.MEDIUM} />
+					</div>
+				)}
 			</div>
 			{coursesResponse && coursesResponse.results.length > ZERO_LENGTH && (
 				<Pagination
