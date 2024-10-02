@@ -1,0 +1,26 @@
+.avatar-group {
+  display: flex;
+  align-items: center;
+
+  &__images {
+    display: flex;
+    position: relative;
+  }
+
+  &__image {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid var(--color-white);
+    position: relative;
+
+    &:not(:first-child) {
+      margin-left: -8px;
+    }
+
+    &__fallback {
+      background-color: var(--color-grey-400);
+      text-align: center;
+    }
+  }
+}  

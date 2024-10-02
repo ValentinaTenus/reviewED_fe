@@ -1,3 +1,4 @@
+export { AvatarGroup } from "./avatar-group/index";
 export { BreadCrumb } from "./breadcrumb/index";
 export { Button } from "./button/index";
 export { CheckDropdown } from "./check-dropdown/index";

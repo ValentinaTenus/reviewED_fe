@@ -55,7 +55,10 @@ const AvatarGroup: React.FC<AvatarGroupProps> = ({ avatars, className }) => {
 								styles["avatar-group__fallback"],
 							)}
 							key={index}
-						/>
+						>
+							{" "}
+							D
+						</div>
 					),
 				)}
 			</div>
