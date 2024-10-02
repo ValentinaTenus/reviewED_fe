@@ -40,6 +40,7 @@ const TopCoursesSection: React.FC<TopCoursesSectionProperties> = ({
 						className={styles["item_card"]}
 						course={course}
 						key={course.id}
+						type="top-course"
 					/>
 				))}
 			</ItemsContentWrapperSection>

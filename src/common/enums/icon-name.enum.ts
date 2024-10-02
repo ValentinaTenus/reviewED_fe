@@ -31,9 +31,9 @@ enum IconName {
 	STAR = "star",
 	TABLE_VIEW = "tableView",
 	TEACHER = "teacher",
+	USERS = "users",
 	XRP = "xrp",
 	YOUTUBE = "youtube",
-	USERS = "users",
 }
 
 export { IconName };
