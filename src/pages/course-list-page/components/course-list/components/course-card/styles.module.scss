@@ -218,12 +218,6 @@
 			gap: 12px;
 		}
 
-		&__categories {
-			font-size: var(--font-size-main-text);
-			flex-wrap: wrap;
-			gap: 8px;
-		}
-
 		&__description {
       gap: 16px;
 			padding: 8px 4px;
@@ -231,6 +225,13 @@
 			&-text {
 				font-size: var(--font-size-main-text);
 			}
+
+      &-categories {
+        flex-direction: row;
+        font-size: var(--font-size-main-text);
+        flex-wrap: wrap;
+        gap: 8px;
+      }
 		}
 
 		&__reviews {
