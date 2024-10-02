@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 
-import { Pagination, Spinner } from "~/common/components/index";
+import { CourseCard, Pagination, Spinner } from "~/common/components/index";
 import { CoursesFilterType, SpinnerVariant } from "~/common/enums/index";
 import { useGetScreenWidth } from "~/common/hooks";
 import { FilterType } from "~/common/types";
@@ -169,6 +169,7 @@ const CourseContent: React.FC = () => {
 		handleClearFilters();
 		handleApplyFiltersAndSearch();
 	}, [handleClearFilters, handleApplyFiltersAndSearch]);
+
 	return (
 		<>
 			<div className={styles["courses_list__container"]}>
@@ -202,6 +203,15 @@ const CourseContent: React.FC = () => {
 					<div className={styles["spinner"]}>
 						<Spinner variant={SpinnerVariant.MEDIUM} />
 					</div>
+				)}
+			</div>
+			<div className={styles["courses_list"]}>
+				{coursesResponse && coursesResponse.results.length > ZERO_LENGTH ? (
+					coursesResponse.results.map((course) => (
+						<CourseCard course={course} key={course.id} />
+					))
+				) : (
+					<p>No courses available</p>
 				)}
 			</div>
 			{coursesResponse && coursesResponse.results.length > ZERO_LENGTH && (

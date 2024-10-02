@@ -1,7 +1,10 @@
+export { AvatarGroup } from "./avatar-group/index";
 export { BreadCrumb } from "./breadcrumb/index";
 export { Button } from "./button/index";
 export { CheckDropdown } from "./check-dropdown/index";
+export { CourseCard } from "./course-card/index";
 export { Dropdown } from "./dropdown/index";
+export { ExpandableDescription } from "./expandable-description/index";
 export { Footer } from "./footer/index";
 export { Header } from "./header/index";
 export { Icon } from "./icon/index";
