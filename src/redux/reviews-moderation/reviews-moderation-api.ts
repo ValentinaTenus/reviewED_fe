@@ -46,9 +46,6 @@ export const reviewsModerationApi = api.injectEndpoints({
 					url: reviewsApiPath.ROOT,
 				};
 			},
-			serializeQueryArgs: ({ endpointName }) => {
-				return endpointName;
-			},
 		}),
 		getReviewsModerationById: builder.query<
 			ModerationReviews,
@@ -89,8 +86,8 @@ export const reviewsModerationApi = api.injectEndpoints({
 });
 
 export const {
-	useGetReviewsModerationByFilterQuery,
-	useGetReviewsModerationByIdQuery,
 	useGetReviewsModerationQuery,
+	useLazyGetReviewsModerationByFilterQuery,
+	useLazyGetReviewsModerationByIdQuery,
 	useLazySetReviewsModerationStatusQuery,
 } = reviewsModerationApi;

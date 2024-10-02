@@ -20,12 +20,14 @@ import { useLazySetReviewsModerationStatusQuery } from "~/redux/reviews-moderati
 import style from "./styles.module.scss";
 
 type ReviewModeratorsCardProps = {
+	onUpdateModeratorsReviews: () => Promise<void>;
 	review: ModerationReviews;
 };
 
 const INDEX_ZERO = 0;
 
 const ReviewModeratorsCard: React.FC<ReviewModeratorsCardProps> = ({
+	onUpdateModeratorsReviews,
 	review,
 }) => {
 	const [isTruncated, setIsTruncated] = useState(true);
@@ -35,21 +37,33 @@ const ReviewModeratorsCard: React.FC<ReviewModeratorsCardProps> = ({
 
 	const transformedReviewType = review.type.split("_")[INDEX_ZERO];
 
-	const handleSetApproveReviewStatus = useCallback(() => {
-		setReviewStatus({
+	const handleSetApproveReviewStatus = useCallback(async () => {
+		const result = await setReviewStatus({
 			id: review.id.toString(),
 			status: "approved",
 			type: transformedReviewType as SetModerationReviewsStatusRequest["type"],
 		});
-	}, [review.id, transformedReviewType, setReviewStatus]);
+		if (result.data) onUpdateModeratorsReviews();
+	}, [
+		review.id,
+		transformedReviewType,
+		setReviewStatus,
+		onUpdateModeratorsReviews,
+	]);
 
-	const handleSetRejectReviewStatus = useCallback(() => {
-		setReviewStatus({
+	const handleSetRejectReviewStatus = useCallback(async () => {
+		const result = await setReviewStatus({
 			id: review.id.toString(),
 			status: "rejected",
 			type: transformedReviewType as SetModerationReviewsStatusRequest["type"],
 		});
-	}, [review.id, transformedReviewType, setReviewStatus]);
+		if (result.data) onUpdateModeratorsReviews();
+	}, [
+		review.id,
+		transformedReviewType,
+		setReviewStatus,
+		onUpdateModeratorsReviews,
+	]);
 
 	const handleTruncatedText = () => setIsTruncated(!isTruncated);
 
