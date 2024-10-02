@@ -9,6 +9,7 @@ import {
 	SpinnerVariant,
 	ViewStyle,
 } from "~/common/enums/index";
+import { useGetScreenWidth } from "~/common/hooks";
 import { Category } from "~/common/types/index";
 import { NotFound } from "~/pages/home-page/components/main-content/components/search-block/components";
 import { useGetCategoriesQuery } from "~/redux/categories/categories-api";
@@ -23,7 +24,6 @@ import {
 } from "./components/index";
 import styles from "./styles.module.scss";
 
-const DEFAULT_SCREEN_WIDTH = 0;
 const ALL_CATEGORIES_ID = 0;
 const DEFAULT_PAGE_COUNT = 0;
 const DEFAULT_COMPANIES_PER_PAGE = 12;
@@ -43,13 +43,14 @@ const CompaniesContent: React.FC = () => {
 		ALL_CATEGORIES_ID,
 	]);
 
-	const [screenWidth, setScreenWidth] = useState<number>(DEFAULT_SCREEN_WIDTH);
 	const [currentPage, setCurrentPage] = useState(DEFAULT_CURRENT_PAGE);
 	const [companiesPerPage, setCompaniesPerPage] = useState(
 		DEFAULT_COMPANIES_PER_PAGE,
 	);
 	const [viewStyle, setViewStyle] = useState(ViewStyle.TABLE);
 	const [serverError, setServerError] = useState("");
+
+	const screenWidth = useGetScreenWidth();
 
 	const { data: categories } = useGetCategoriesQuery(undefined);
 	const {
@@ -117,17 +118,24 @@ const CompaniesContent: React.FC = () => {
 
 	const handleChooseCategory = useCallback(
 		(chosenCategoryId: number) => {
-			setSelectedCategoryIds([...selectedCategoryIds, chosenCategoryId]);
+			if (chosenCategoryId === ALL_CATEGORIES_ID) {
+				setSelectedCategoryIds([ALL_CATEGORIES_ID]);
+			} else if (selectedCategoryIds.includes(ALL_CATEGORIES_ID)) {
+				setSelectedCategoryIds([chosenCategoryId]);
+			} else if (selectedCategoryIds.includes(chosenCategoryId)) {
+				const newCategories = selectedCategoryIds.filter(
+					(id) => id !== chosenCategoryId,
+				);
+				setSelectedCategoryIds(newCategories);
+			} else {
+				setSelectedCategoryIds([...selectedCategoryIds, chosenCategoryId]);
+			}
+
 			void dispatch(setFilters({ city: "" }));
 			setCurrentPage(DEFAULT_CURRENT_PAGE);
 		},
 		[dispatch, selectedCategoryIds],
 	);
-
-	const updateScreenWidth = () => {
-		const screenWidth = window.innerWidth;
-		setScreenWidth(screenWidth);
-	};
 
 	useEffect(() => {
 		updateCompaniesPerPageAndPageCount();
@@ -144,13 +152,6 @@ const CompaniesContent: React.FC = () => {
 			: { message: "Невідома помилка" };
 		setServerError(loadError.message);
 	}, [error]);
-
-	useEffect(() => {
-		updateScreenWidth();
-		window.addEventListener("resize", updateScreenWidth);
-
-		return () => window.removeEventListener("resize", updateScreenWidth);
-	}, []);
 
 	const allCategories: Category[] = categories
 		? [{ id: 0, name: "All", subcategories: [] }, ...categories]

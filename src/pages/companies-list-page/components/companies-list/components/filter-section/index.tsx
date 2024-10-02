@@ -50,7 +50,11 @@ const FilterSection: React.FC<FilterSectionProperties> = ({
 					<div className={styles["companies_filter__search_bar"]}>
 						<SearchBar
 							onSubmit={onChangeSearchTerm}
-							placeholder="Знайди свою ідеальну компанію"
+							placeholder={
+								screenWidth > ScreenBreakpoints.MOBILE
+									? "Знайди свою ідеальну компанію"
+									: "Пошук"
+							}
 							value={searchTerm}
 						/>
 						{screenWidth > ScreenBreakpoints.TABLET && (
