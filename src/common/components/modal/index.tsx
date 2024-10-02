@@ -38,7 +38,7 @@ const Modal: React.FC<ModalProperties> = ({
 				tabIndex={-1}
 			>
 				<div className={styles["modal__header"]}>
-					{title && <h2 className={styles["modal__title"]}>{title}</h2>}
+					<h2 className={styles["modal__title"]}>{title}</h2>
 					<IconButton
 						className={styles["modal__close_button"]}
 						onClick={onClose}

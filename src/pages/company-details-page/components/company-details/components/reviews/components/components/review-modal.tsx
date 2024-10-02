@@ -28,6 +28,7 @@ const ReviewModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
 	};
 
 	const handleSubmit = async () => {
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		const response = await sendReview({
 			companyId: 1,
 			rating: rating,

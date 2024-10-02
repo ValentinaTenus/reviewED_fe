@@ -2,7 +2,7 @@ import clsx from "clsx";
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { StarRating } from "~/common/components/index";
+import { Logo, StarRating } from "~/common/components/index";
 import { AppRoute, RatingSize, StarRatingVariant } from "~/common/enums/index";
 import { Course } from "~/common/types/index";
 
@@ -21,10 +21,10 @@ const CourseCard: React.FC<CourseCardProperties> = ({ className, course }) => {
 			to={`${AppRoute.COURSE_DETAILS}${course.id}`}
 		>
 			<div className={styles["item_loco_container"]}>
-				<img
-					alt={course.title}
+				<Logo
 					className={styles["course_image"]}
-					src={course.company_logo}
+					logo={course.company_logo}
+					name={course.company}
 				/>
 				<div className={styles["item_rating_container"]}>
 					<StarRating

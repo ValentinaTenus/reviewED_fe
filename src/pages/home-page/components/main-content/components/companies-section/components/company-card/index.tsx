@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { StarRating } from "~/common/components/index";
+import { Logo, StarRating } from "~/common/components/index";
 import { AppRoute, RatingSize, StarRatingVariant } from "~/common/enums/index";
 import { Company } from "~/common/types/index";
 
@@ -29,10 +29,10 @@ const CompanyCard: React.FC<CompanyCardProperties> = ({ company }) => {
 				/>
 			</div>
 			<div className={styles["item_logo_container"]}>
-				<img
-					alt={company.name}
+				<Logo
 					className={styles["company_logo"]}
-					src={company.logo}
+					logo={company.logo}
+					name={company.name}
 				/>
 				<h4 className={styles["item_name"]}>{company.name}</h4>
 			</div>
