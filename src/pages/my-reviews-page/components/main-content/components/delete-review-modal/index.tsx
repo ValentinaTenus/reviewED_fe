@@ -28,8 +28,13 @@ const DeleteReviewModal: React.FC<Properties> = ({
 	};
 
 	return (
-		<DialogModal isOpen={isOpen} onClose={handleClose} withIconClose>
-			<div className={styles["delete-modal__wrapper"]}>
+		<DialogModal
+			classNames="delete-modal"
+			isOpen={isOpen}
+			onClose={handleClose}
+			withIconClose
+		>
+			<div className={styles["delete-modal"]}>
 				<div className={styles["delete-modal__top"]}>
 					<div className={styles["delete-modal__icon"]}>
 						<div className={styles["icon__inner"]}>

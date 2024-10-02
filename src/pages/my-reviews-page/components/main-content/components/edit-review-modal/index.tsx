@@ -77,7 +77,7 @@ const EditReviewModal: React.FC<Properties> = ({
 							<Input
 								control={control}
 								errors={errors}
-								maxWords={200}
+								maxWords={2000}
 								name="text"
 								placeholder="Review text"
 								rows={1}

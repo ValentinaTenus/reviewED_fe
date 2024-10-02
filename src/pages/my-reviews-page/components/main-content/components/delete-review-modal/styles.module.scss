@@ -1,18 +1,18 @@
-.delete-modal__wrapper {
+.delete-modal {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	padding: 20px;
-}
 
-.delete-modal__top {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	padding-bottom: 29px;
-	font-family: var(--font-family-main);
+	&__top {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding-bottom: 29px;
+		font-family: var(--font-family-main);
+	}
 
-	.delete-modal__icon {
+	&__icon {
 		border-radius: 100px;
 		padding: 8px;
 		margin-bottom: 40px;
@@ -37,7 +37,7 @@
 		}
 	}
 
-	.delete-modal__title {
+	&__title {
 		font-weight: var(--font-weight-extra-bold);
 		font-size: var(--font-size-title);
 		color: var(--color-grey-900);
@@ -45,7 +45,7 @@
 		margin-bottom: 24px;
 	}
 
-	.delete-modal__text {
+	&__text {
 		text-align: center;
 
 		p {
@@ -54,30 +54,62 @@
 			line-height: 140%;
 		}
 	}
-}
 
-hr {
-	display: block;
-	height: 2px;
-	border: 0;
-	border-top: 2px solid var(--color-grey-300);
-	margin: 0;
-	padding: 0;
-	width: calc(100% + 80px);
-}
+	&__bottom {
+		display: flex;
+		justify-content: center;
+		width: 100%;
+		margin-top: 40px;
+	}
 
-.delete-modal__bottom {
-	display: flex;
-	justify-content: center;
-	width: 100%;
-	margin-top: 40px;
-
-	.delete-modal__buttons {
+	&__buttons {
 		display: flex;
 		gap: 24px;
 
 		button {
 			width: 143px;
+		}
+	}
+
+	hr {
+		display: block;
+		height: 2px;
+		border: 0;
+		border-top: 2px solid var(--color-grey-300);
+		margin: 0;
+		padding: 0;
+		width: calc(100% + 80px);
+	}
+}
+
+@media (max-width: 576px) {
+	.delete-modal {
+		padding: 0;
+
+		&__top {
+			padding-bottom: 10px;
+		}
+
+		&__icon {
+			margin-bottom: 29px;
+		}
+
+		&__title {
+			margin-bottom: 16px;
+		}
+
+		&__bottom {
+			margin-top: 14px;
+		}
+
+		&__buttons {
+			button {
+				width: 132px;
+			}
+		}
+
+		hr {
+			width: calc(100% + 40px);
 		}
 	}
 }

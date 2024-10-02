@@ -9,6 +9,7 @@ type Properties = {
 	isOpen: boolean;
 	onClose: () => void;
 	withIconClose?: boolean;
+	classNames?: keyof typeof styles;
 };
 
 const DialogModal: React.FC<Properties> = ({
@@ -16,6 +17,7 @@ const DialogModal: React.FC<Properties> = ({
 	isOpen,
 	onClose,
 	withIconClose = false,
+	classNames,
 }) => {
 	// Prevent background scrolling when the modal is open
 	useEffect(() => {
@@ -34,7 +36,10 @@ const DialogModal: React.FC<Properties> = ({
 	if (!isOpen) return null;
 
 	return (
-		<div className={styles["modal"]} onClick={onClose}>
+		<div
+			className={clsx(styles["modal"], classNames && styles[classNames])}
+			onClick={onClose}
+		>
 			<div
 				className={styles["modal-content"]}
 				onClick={(e) => e.stopPropagation()}
@@ -42,7 +47,7 @@ const DialogModal: React.FC<Properties> = ({
 				<button
 					className={clsx(
 						styles["modal-content__icon-close"],
-						withIconClose && styles["with-icon-close"],
+						withIconClose && styles["modal-content__icon-close--visible"],
 					)}
 					onClick={onClose}
 				>
