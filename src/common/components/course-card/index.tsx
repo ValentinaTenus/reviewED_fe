@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 
-import { Icon } from "~/common/components/index";
+import {
+	AvatarGroup,
+	ExpandableDescription,
+	Icon,
+} from "~/common/components/index";
 import { ScreenBreakpoints } from "~/common/constants/screen-breakpoints";
 import { IconName, RatingSize } from "~/common/enums";
 import { Course } from "~/common/types/courses/course.type";
 import { useGetRecentReviewsQuery } from "~/redux/reviews/reviews-api";
 
-import AvatarGroup from "../avatar-group";
-import ExpandableButton from "../expandable-button";
 import { StarRating } from "../star-rating";
 import styles from "./styles.module.scss";
 
@@ -19,7 +21,6 @@ type CourseCardProps = {
 const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
 	const CHAR_LIMIT_MOBILE = 107;
 	const CHAR_LIMIT_DESKTOP = 303;
-	const LAST_INDEX_OFFSET = 1;
 	const AVATARS_COUNT = 4;
 
 	const [isOneStar, setIsOneStar] = useState(false);
@@ -94,29 +95,51 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
 				</div>
 			</div>
 
-			<div className={styles["course-card__categories"]}>
+			<div className={styles["course-card__age"]}>
 				<Icon
-					className={styles["course-card__categories-icon"]}
+					className={styles["course-card__age-icon"]}
 					name={IconName.PEOPLE}
 				/>
+				<div className={styles["course-card__age-list"]}>
+					{course.age && (
+						<span className={styles["course-card__age-item"]}>
+							{course.age}
+						</span>
+					)}
+				</div>
+			</div>
+			<div className={styles["course-card__categories"]}>
 				<div className={styles["course-card__categories-list"]}>
-					{course.categories.map((category, index) => (
-						<span
+					<Icon
+						className={styles["course-card__categories-icon"]}
+						name={IconName.TEACHER}
+					/>
+					{course.categories.map((category) => (
+						<div
 							className={styles["course-card__categories-item"]}
 							key={category.id}
 						>
-							{category.name}
-							{index < course.categories.length - LAST_INDEX_OFFSET ? ", " : ""}
-						</span>
+							<span className={styles["course-card__categories-name"]}>
+								{category.name}:
+							</span>
+							{category.subcategories.map((subcategory) => (
+								<span
+									className={styles["course-card__categories-subcategory"]}
+									key={subcategory.id}
+								>
+									{subcategory.name}
+								</span>
+							))}
+						</div>
 					))}
 				</div>
+				{course.description.trim() !== "" && (
+					<ExpandableDescription
+						description={course.description}
+						maxLength={maxLength}
+					/>
+				)}
 			</div>
-			{course.description.trim() !== "" && (
-				<ExpandableButton
-					description={course.description}
-					maxLength={maxLength}
-				/>
-			)}
 
 			<div className={styles["course-card__reviews"]}>
 				<div className={styles["course-card__reviews-info"]}>
@@ -145,4 +168,4 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
 	);
 };
 
-export default CourseCard;
+export { CourseCard };

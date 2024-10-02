@@ -10,7 +10,7 @@ const CourseList: React.FC = () => {
 		<div className={styles["course-list_page"]}>
 			<Header />
 			<div className={styles["course-list__content"]}>
-				<CourseContent CoursesCurrentPage={currentPage} />
+				<CourseContent />
 			</div>
 			<Footer />
 		</div>

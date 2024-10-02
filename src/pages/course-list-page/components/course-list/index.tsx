@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 
-import { Pagination, Spinner } from "~/common/components/index";
+import { CourseCard, Pagination, Spinner } from "~/common/components/index";
 import { CoursesFilterType, SpinnerVariant } from "~/common/enums/index";
 import { useGetScreenWidth } from "~/common/hooks";
 import { FilterType } from "~/common/types";
@@ -22,9 +22,7 @@ const DEFAULT_COURSES_PER_PAGE = 6;
 const INDEX_ONE = 1;
 const ZERO_LENGTH = 0;
 
-const CourseContent: React.FC<{ CoursesCurrentPage: number }> = ({
-	CoursesCurrentPage,
-}) => {
+const CourseContent: React.FC = () => {
 	const dispatch = useAppDispatch();
 	const { filters } = useAppSelector((state) => state.courses);
 	const screenWidth = useGetScreenWidth();
@@ -170,6 +168,7 @@ const CourseContent: React.FC<{ CoursesCurrentPage: number }> = ({
 		handleClearFilters();
 		handleApplyFiltersAndSearch();
 	}, [handleClearFilters, handleApplyFiltersAndSearch]);
+
 	return (
 		<>
 			<div className={styles["courses_list__container"]}>
@@ -204,6 +203,15 @@ const CourseContent: React.FC<{ CoursesCurrentPage: number }> = ({
 						resultTerm={searchTerm}
 					/>
 				</div>
+			</div>
+			<div className={styles["courses_list"]}>
+				{coursesResponse && coursesResponse.results.length > ZERO_LENGTH ? (
+					coursesResponse.results.map((course) => (
+						<CourseCard course={course} key={course.id} />
+					))
+				) : (
+					<p>No courses available</p>
+				)}
 			</div>
 			{coursesResponse && coursesResponse.results.length > ZERO_LENGTH && (
 				<Pagination

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import styles from "./styles.module.scss";
 
-interface ExpandableButtonProps {
+interface ExpandableDescriptionProps {
 	description: string;
 	maxLength: number;
 	startIndex?: number;
@@ -10,7 +10,7 @@ interface ExpandableButtonProps {
 
 const INDEX_ZERO = 0;
 
-const ExpandableButton: React.FC<ExpandableButtonProps> = ({
+const ExpandableDescription: React.FC<ExpandableDescriptionProps> = ({
 	description,
 	maxLength,
 	startIndex = INDEX_ZERO,
@@ -38,4 +38,4 @@ const ExpandableButton: React.FC<ExpandableButtonProps> = ({
 	);
 };
 
-export default ExpandableButton;
+export { ExpandableDescription };
