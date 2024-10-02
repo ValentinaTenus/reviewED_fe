@@ -4,15 +4,14 @@ import { Link } from "react-router-dom";
 
 import { Button, Icon } from "~/common/components";
 import { AppRoute, ButtonVariant, IconName } from "~/common/enums";
-import { Company, Course } from "~/common/types";
+import { GetCoursesResult } from "~/common/types";
 import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
 
 import styles from "./styles.module.scss";
 
 const CourseCard: React.FC<{
-	company: Company;
-	course: Course;
-}> = ({ company, course }) => {
+	course: GetCoursesResult;
+}> = ({ course }) => {
 	const RATING_SCALE = 1.0;
 
 	return (

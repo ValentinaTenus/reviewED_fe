@@ -1,7 +1,7 @@
 import { HttpMethods } from "~/common/enums/index.ts";
 import {
 	type CompanyAndCourseReviewsByUserId,
-	type GetCompanyAndCourseReviewsByUserIdResponse,
+	type GetQueryResponse,
 } from "~/common/types/index.ts";
 
 import { api } from "../services.ts";
@@ -20,7 +20,7 @@ export const reviewsApi = api.injectEndpoints({
 				};
 			},
 			transformResponse: (
-				response: GetCompanyAndCourseReviewsByUserIdResponse,
+				response: GetQueryResponse<CompanyAndCourseReviewsByUserId>,
 			) => response.results,
 		}),
 	}),

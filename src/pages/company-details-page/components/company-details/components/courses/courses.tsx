@@ -2,14 +2,14 @@ import React, { useState } from "react";
 
 import { Button, Icon } from "~/common/components";
 import { ButtonVariant, IconName } from "~/common/enums";
-import { Company, Course } from "~/common/types";
+import { Company, GetCoursesResult } from "~/common/types";
 
 import { CourseCard } from "./components/course-card/course-card";
 import styles from "./styles.module.scss";
 
 const Courses = React.forwardRef<
 	HTMLDivElement,
-	{ company: Company; courses: Course[] }
+	{ company: Company; courses: GetCoursesResult[] }
 >(({ company, courses }, ref) => {
 	const [showAll, setShowAll] = useState(false);
 

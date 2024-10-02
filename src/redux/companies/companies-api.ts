@@ -2,7 +2,7 @@ import { HttpMethods } from "~/common/enums/index.ts";
 import {
 	type Company,
 	type GetCompaniesRequestQuery,
-	type GetCompaniesResponse,
+	type GetQueryResponse,
 } from "~/common/types/index.ts";
 
 import { api } from "../services.ts";
@@ -21,12 +21,12 @@ export const companiesApi = api.injectEndpoints({
 			serializeQueryArgs: ({ endpointName }) => {
 				return endpointName;
 			},
-			transformResponse: (response: GetCompaniesResponse) => {
+			transformResponse: (response: GetQueryResponse<Company>) => {
 				return response.results;
 			},
 		}),
 		getCompaniesByFilter: builder.query<
-			GetCompaniesResponse,
+			GetQueryResponse<Company>,
 			GetCompaniesRequestQuery
 		>({
 			forceRefetch({ currentArg, previousArg }) {
@@ -42,8 +42,8 @@ export const companiesApi = api.injectEndpoints({
 			query: (filters: GetCompaniesRequestQuery = {}) => {
 				return {
 					method: HttpMethods.GET,
-					params: filters,
-					url: companiesApiPath.ROOT,
+					params: { ...filters },
+					url: `${companiesApiPath.ROOT}`,
 				};
 			},
 			serializeQueryArgs: ({ endpointName }) => {
