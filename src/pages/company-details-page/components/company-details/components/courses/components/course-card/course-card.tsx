@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import { Button, Icon } from "~/common/components";
-import { ButtonVariant, IconName } from "~/common/enums";
+import { AppRoute, ButtonVariant, IconName } from "~/common/enums";
 import { Company, Course } from "~/common/types";
 import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
 
@@ -97,7 +97,9 @@ const CourseCard: React.FC<{
 						</span>
 					</div>
 				</div>
-				<Button variant={ButtonVariant.PRIMARY}>Read reviews</Button>
+				<Link to={`${AppRoute.COURSE_DETAILS}${course.id}`}>
+					<Button variant={ButtonVariant.PRIMARY}>Read reviews</Button>
+				</Link>
 			</div>
 		</>
 	);

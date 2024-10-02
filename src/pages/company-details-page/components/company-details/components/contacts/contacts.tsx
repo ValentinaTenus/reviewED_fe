@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Button, Icon } from "~/common/components";
 import { ButtonVariant, IconName } from "~/common/enums";
@@ -9,6 +9,12 @@ import styles from "./styles.module.scss";
 
 const Contacts = React.forwardRef<HTMLDivElement, { company: Company }>(
 	({ company }, ref) => {
+		const [isContactsShow, setIsContactsShow] = useState(false);
+
+		const handleClick = () => {
+			setIsContactsShow(!isContactsShow);
+		};
+
 		return (
 			<>
 				<div className={styles["contacts"]} ref={ref}>
@@ -32,12 +38,37 @@ const Contacts = React.forwardRef<HTMLDivElement, { company: Company }>(
 							/>
 							<span className={globalStyles["p-sb"]}>{company.website}</span>
 						</li>
+						<li
+							className={`${styles["contacts_item"]} ${!isContactsShow && styles["hidden"]}`}
+						>
+							<span className={globalStyles["p-sb"]}>
+								{company.contact_person}
+							</span>
+						</li>
+						<li
+							className={`${styles["contacts_item"]} ${!isContactsShow && styles["hidden"]}`}
+						>
+							{company.phone_numbers.map((phone_number, index) => (
+								<span
+									className={`${globalStyles["p-sb"]} ${styles["contacts_phone-number"]}`}
+									key={index}
+								>
+									{phone_number}
+								</span>
+							))}
+						</li>
 					</ul>
 					<div className={styles["contacts_buttons"]}>
-						<Button variant={ButtonVariant.PRIMARY}>
+						<Button
+							onClick={() => (window.location.href = `mailto:${company.email}`)}
+							variant={ButtonVariant.PRIMARY}
+						>
 							Зв&#39;язатися з компанією
 						</Button>
-						<Button variant={ButtonVariant.OUTLINED}>Показати контакти</Button>
+						<Button onClick={handleClick} variant={ButtonVariant.OUTLINED}>
+							{!isContactsShow && "Показати контакти"}
+							{isContactsShow && "Сховати контакти"}
+						</Button>
 					</div>
 				</div>
 			</>

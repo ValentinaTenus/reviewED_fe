@@ -17,7 +17,30 @@ export const reviewsApi = api.injectEndpoints({
 				return response.results;
 			},
 		}),
+		sendReview: builder.mutation<ReviewResponse, SendReviewRequest>({
+			query: (reviewData) => ({
+				body: {
+					rating: reviewData.rating,
+					text: reviewData.text,
+				},
+				method: HttpMethods.POST,
+				url: `${reviewsApiPath.ROOT}/companies/${reviewData.companyId}`,
+			}),
+		}),
 	}),
 });
 
-export const { useGetReviewsByCompanyIdQuery } = reviewsApi;
+export type SendReviewRequest = {
+	companyId: number;
+	rating: null | number;
+	text: string;
+};
+
+export type ReviewResponse = {
+	companyId: number;
+	rating: number;
+	text: string;
+};
+
+export const { useGetReviewsByCompanyIdQuery, useSendReviewMutation } =
+	reviewsApi;

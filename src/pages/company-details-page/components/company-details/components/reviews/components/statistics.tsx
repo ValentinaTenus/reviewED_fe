@@ -6,6 +6,7 @@ import { ButtonVariant, IconName } from "~/common/enums";
 import { Company } from "~/common/types";
 import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
 
+import { ReviewModal } from "./components/review-modal";
 import styles from "./styles.module.scss";
 
 const Statistics: React.FC<{
@@ -23,6 +24,16 @@ const Statistics: React.FC<{
 
 	const handleToggleVisibility = () => {
 		setIsVisible(!isVisible);
+	};
+
+	const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+
+	const handleOpenReviewModal = () => {
+		setIsReviewModalOpen(true);
+	};
+
+	const handleCloseReviewModal = () => {
+		setIsReviewModalOpen(false);
 	};
 
 	return (
@@ -123,7 +134,13 @@ const Statistics: React.FC<{
 					</div>
 				</div>
 			</div>
-			<Button variant={ButtonVariant.PRIMARY}>Написати відгук</Button>
+			<Button onClick={handleOpenReviewModal} variant={ButtonVariant.PRIMARY}>
+				Написати відгук
+			</Button>
+			<ReviewModal
+				isOpen={isReviewModalOpen}
+				onClose={handleCloseReviewModal}
+			/>
 		</div>
 	);
 };

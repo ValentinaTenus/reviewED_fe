@@ -9,11 +9,15 @@ import styles from "./styles.module.scss";
 const CompanyDetailsPage: React.FC = () => {
 	const { companyId } = useParams();
 
+	const ONE = 1;
+
 	if (companyId) {
+		const ID = companyId.slice(-ONE);
+
 		return (
 			<div className={styles["company-details_page"]}>
 				<Header />
-				<CompanyDetails companyId={companyId} />
+				<CompanyDetails companyId={ID} />
 				<Footer />
 			</div>
 		);
