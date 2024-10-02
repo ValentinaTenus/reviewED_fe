@@ -2,7 +2,7 @@ import { HttpMethods } from "~/common/enums/index.ts";
 import {
 	type Course,
 	type GetCoursesRequestQuery,
-	type GetCoursesResponse,
+	type GetQueryResponse,
 } from "~/common/types/index.ts";
 
 import { api } from "../services.ts";
@@ -31,12 +31,12 @@ export const coursesApi = api.injectEndpoints({
 			serializeQueryArgs: ({ endpointName }) => {
 				return endpointName;
 			},
-			transformResponse: (response: GetCoursesResponse) => {
+			transformResponse: (response: GetQueryResponse<Course>) => {
 				return response.results;
 			},
 		}),
 		getCoursesByFilter: builder.query<
-			GetCoursesResponse,
+			GetQueryResponse<Course[]>,
 			GetCoursesRequestQuery
 		>({
 			forceRefetch({ currentArg, previousArg }) {

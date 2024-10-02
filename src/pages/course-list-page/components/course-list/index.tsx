@@ -45,6 +45,7 @@ const CourseContent: React.FC = () => {
 
 	const [getCourses, { data: coursesResponse, isLoading }] =
 		useLazyGetCoursesByFilterQuery();
+
 	const handleSelectSubCategory = useCallback(
 		(chosenSubCategories: FilterType[]) => {
 			setSelectedSubCategories([...chosenSubCategories]);
