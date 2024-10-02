@@ -1,0 +1,8 @@
+VITE_APP_DEVELOPMENT_PORT=3001
+VITE_BASE_URL=https://reviewed-api.azurewebsites.net/api/v1
+VITE_AUTH_REDIRECT_URL=http://localhost:5173/auth/success
+VITE_IMAGE_UPLOAD_URL=https://reviewed-api.azurewebsites.net/api/v1/companies/upload/
+
+# PROD
+
+VITE_APP_DOMAIN_URL=https://review-ed.onrender.com/
