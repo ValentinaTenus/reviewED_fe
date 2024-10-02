@@ -25,7 +25,6 @@ export {
 	type GetModerationReviewsRequest,
 	type GetModerationReviewsResponse,
 	type GetReviewsByCompanyIdResponseDto,
-	type GetReviewsByCourseIdResponseDto,
 	type ModerationReviews,
 	type RecentReview,
 	type Review,

@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 
 import { ScreenBreakpoints } from "~/common/constants/index";
 import { AppRoute } from "~/common/enums/index";
-import { Course } from "~/common/types/index";
+import { type GetCoursesResult } from "~/common/types/index";
 
 import { CourseCard, ItemsContentWrapperSection, ItemsHeader } from "../index";
 import styles from "./styles.module.scss";
 
 type NewCoursesSectionProperties = {
-	courses: Course[];
+	courses: GetCoursesResult[];
 	screenWidth: number;
 };
 
