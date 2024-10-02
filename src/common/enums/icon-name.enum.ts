@@ -33,6 +33,7 @@ enum IconName {
 	TEACHER = "teacher",
 	XRP = "xrp",
 	YOUTUBE = "youtube",
+	USERS = "users",
 }
 
 export { IconName };

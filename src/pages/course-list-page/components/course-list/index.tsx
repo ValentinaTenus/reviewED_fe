@@ -16,6 +16,7 @@ import {
 import styles from "./styles.module.scss";
 
 const DEFAULT_PAGE_COUNT = 0;
+const DEFAULT_REVIEWS_COUNT = 0;
 const ALL_CATEGORIES_ID = "0";
 const DEFAULT_CURRENT_PAGE = 1;
 const DEFAULT_COURSES_PER_PAGE = 6;
@@ -31,6 +32,7 @@ const CourseContent: React.FC = () => {
 	const [pageCount, setPageCount] = useState(DEFAULT_PAGE_COUNT);
 
 	const [searchTerm, setSearchTerm] = useState(filters?.title || "");
+	const [reviewsCount, setReviewsCount] = useState(DEFAULT_REVIEWS_COUNT);
 
 	const [sortBy, setSortBy] = useState<string>("");
 	const [selectedCategories, setSelectedCategories] = useState<FilterType[]>(
@@ -119,6 +121,7 @@ const CourseContent: React.FC = () => {
 	const updateCoursesPageCount = useCallback(() => {
 		if (coursesResponse?.count) {
 			setPageCount(Math.ceil(coursesResponse.count / DEFAULT_COURSES_PER_PAGE));
+			setReviewsCount(coursesResponse.reviews_count);
 		}
 	}, [coursesResponse?.count]);
 
@@ -197,6 +200,7 @@ const CourseContent: React.FC = () => {
 							coursesResponse?.count ? coursesResponse.count : ZERO_LENGTH
 						}
 						resultTerm={searchTerm}
+						resultReviewsCount={reviewsCount}
 					/>
 				</div>
 				{isLoading && (
