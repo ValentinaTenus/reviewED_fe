@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 
 import { Button, Logo, StarRating } from "~/common/components";
 import {
@@ -11,7 +11,11 @@ import {
 	StarRatingVariant,
 } from "~/common/enums";
 import { useTransformDate } from "~/common/hooks";
-import { ModerationReviews } from "~/common/types/review/index";
+import {
+	ModerationReviews,
+	SetModerationReviewsStatusRequest,
+} from "~/common/types/review/index";
+import { useLazySetReviewsModerationStatusQuery } from "~/redux/reviews-moderation/reviews-moderation-api";
 
 import style from "./styles.module.scss";
 
@@ -19,11 +23,33 @@ type ReviewModeratorsCardProps = {
 	review: ModerationReviews;
 };
 
+const INDEX_ZERO = 0;
+
 const ReviewModeratorsCard: React.FC<ReviewModeratorsCardProps> = ({
 	review,
 }) => {
 	const [isTruncated, setIsTruncated] = useState(true);
 	const { formattedDate, formattedTime } = useTransformDate(review.time_added);
+
+	const [setReviewStatus] = useLazySetReviewsModerationStatusQuery();
+
+	const transformedReviewType = review.type.split("_")[INDEX_ZERO];
+
+	const handleSetApproveReviewStatus = useCallback(() => {
+		setReviewStatus({
+			id: review.id.toString(),
+			status: "approved",
+			type: transformedReviewType as SetModerationReviewsStatusRequest["type"],
+		});
+	}, [review.id, transformedReviewType, setReviewStatus]);
+
+	const handleSetRejectReviewStatus = useCallback(() => {
+		setReviewStatus({
+			id: review.id.toString(),
+			status: "rejected",
+			type: transformedReviewType as SetModerationReviewsStatusRequest["type"],
+		});
+	}, [review.id, transformedReviewType, setReviewStatus]);
 
 	const handleTruncatedText = () => setIsTruncated(!isTruncated);
 
@@ -117,6 +143,7 @@ const ReviewModeratorsCard: React.FC<ReviewModeratorsCardProps> = ({
 						<Button
 							className={style["button_fixed"]}
 							isFullWidth
+							onClick={handleSetApproveReviewStatus}
 							size={ButtonSize.SMALL}
 							type={ButtonType.BUTTON}
 							variant={ButtonVariant.PRIMARY}
@@ -128,6 +155,7 @@ const ReviewModeratorsCard: React.FC<ReviewModeratorsCardProps> = ({
 						<Button
 							className={style["button_fixed"]}
 							isFullWidth
+							onClick={handleSetRejectReviewStatus}
 							size={ButtonSize.SMALL}
 							type={ButtonType.BUTTON}
 							variant={ButtonVariant.OUTLINED}
