@@ -9,6 +9,7 @@ import { clearFilters } from "~/redux/courses/courses-slice";
 import { useAppDispatch, useAppSelector } from "~/redux/hooks.type";
 
 import {
+	CourseCardsList,
 	FilterResultItems,
 	FilterResultTitle,
 	FilterSection,
@@ -205,11 +206,14 @@ const CourseContent: React.FC = () => {
 				)}
 			</div>
 			{coursesResponse && coursesResponse.results.length > ZERO_LENGTH && (
-				<Pagination
-					defaultCurrentPage={currentPage}
-					pages={pageCount}
-					setCurrentPage={setCurrentPage}
-				/>
+				<div className={styles["courses_list__search_results"]}>
+					<CourseCardsList courses={coursesResponse.results} />
+					<Pagination
+						defaultCurrentPage={currentPage}
+						pages={pageCount}
+						setCurrentPage={setCurrentPage}
+					/>
+				</div>
 			)}
 		</>
 	);

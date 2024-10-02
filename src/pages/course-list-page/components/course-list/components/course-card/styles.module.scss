@@ -1,0 +1,262 @@
+.course-card {
+	padding: 24px;
+	max-width: 1040px;
+	width: 100%;
+	border: 2px solid var(--color-grey-350);
+	border-radius: 16px;
+
+	&__head {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		border-bottom: 1px solid var(--color-grey-350);
+		padding-bottom: 24px;
+	}
+
+	&__logo {
+		font-family: var(--font-family-main);
+		gap: 8px;
+		display: flex;
+		flex-direction: column;
+		align-items: start;
+
+		&-image {
+			height: 60px;
+			width: 120px;
+		}
+	}
+
+	&__title {
+		font-family: var(--font-family-roboto);
+		font-size: var(--font-size-title-h2);
+		font-weight: var(--font-weight-bold);
+		color: var(--color-grey-950);
+	}
+
+	&__data {
+		color: var(--color-grey-400);
+		font-family: var(--font-family-main);
+		font-size: var(--font-size-title-h5);
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		padding-top: 24px;
+		gap: 40px;
+		margin-bottom: 9px;
+	}
+
+	&__company {
+		display: flex;
+    align-items: center;
+		gap: 8px;
+
+		&-name {
+			color: var(--color-grey-800);
+			text-decoration: underline;
+			text-decoration-color: var(--color-grey-400);
+		}
+	}
+
+	&__status {
+		gap: 8px;
+		display: flex;
+		align-items: center;
+
+		&-text {
+			color: var(--color-icon-green);
+		}
+
+		&-icon {
+			width: 24px;
+			height: 24px;
+			color: var(--color-grey-500);
+		}
+	}
+
+	&__location {
+		gap: 8px;
+		display: flex;
+		align-items: center;
+		color: var(--color-icon-green);
+
+		&-icon {
+			width: 24px;
+			height: 24px;
+      color: var(--color-grey-500);
+		}
+  }
+
+	&__price {
+		gap: 8px;
+		display: flex;
+		align-items: center;
+
+		&-icon {
+			width: 24px;
+			height: 24px;
+			color: var(--color-grey-500);
+		}
+	}
+  
+	&__ages {
+		display: flex;
+		flex-direction: row;
+		margin-bottom: 16px;
+		align-items: center;
+    font-family: var(--font-family-main);
+		color: var(--color-grey-400);
+
+		&-icon {
+			margin-right: 4px;
+			width: 24px;
+			height: 24px;
+			color: var(--color-grey-500);
+		}
+	}
+
+	&__description {
+		border: 1px solid var(--color-grey-350);
+		border-radius: 4px;
+		padding: 8px 16px;
+		font-family: var(--font-family-main);
+		color: var(--color-grey-500);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+		&-categories {
+			display: flex;
+			gap: 8px;
+			align-items: center;
+			margin-bottom: 25px;
+		}
+
+		&-text {
+			font-family: var(--font-family-main);
+			font-size: var(--font-size-title-h5);
+			font-weight: var(--font-weight-regular);
+			line-height: 140%;
+			color: var(--color-grey-490);
+      text-align: justify;
+		}
+
+		&-toggle {
+			color: var(--color-grey-800);
+			white-space: nowrap;
+			display: inline;
+			cursor: pointer;
+		}
+	}
+
+	&__reviews {
+		margin-top: 24px;
+		display: flex;
+		justify-content: space-between;
+		font-family: var(--font-family-main);
+		font-size: var(--font-size-main-text);
+
+		&-info {
+			display: flex;
+			gap: 16px;
+			align-items: center;
+			font-family: var(--font-family-main);
+			color: var(--color-grey-400);
+
+			&-verified {
+				border-right: 1px solid var(--color-grey-350);
+				padding-right: 16px;
+				height: 48px;
+				color: var(--color-icon-green);
+				display: flex;
+				align-items: center;
+				gap: 8px;
+
+				&-icon {
+					vertical-align: middle;
+					width: 24px;
+					height: 24px;
+					color: var(--color-icon-green);
+				}
+			}
+		}
+	}
+}
+
+@media (min-width: 300px) and (max-width: 768px) {
+	.course-card {
+		padding: 16px;
+		
+
+		&__title {
+			font-size: var(--font-size-title-large);
+		}
+
+		&__logo {
+			&-image {
+				width: 60px;
+				height: 30px;
+			}
+		}
+
+		&__data {
+			font-size: var(--font-size-main-text);
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 12px;
+		}
+
+		&__categories {
+			font-size: var(--font-size-main-text);
+			flex-wrap: wrap;
+			gap: 8px;
+
+			&-list {
+				width: 88%;
+				word-break: break-all;
+			}
+
+			&-item {
+				display: inline-block;
+			}
+		}
+
+		&__description {
+			
+			padding: 8px 4px;
+			
+			&-text {
+				font-size: var(--font-size-main-text);
+			}
+
+			&-categories {
+				margin-bottom: 16px;
+				&-icon {
+					display: none;
+				}
+
+				&-specialization {
+					display: none;
+				}
+			}
+		}
+
+		&__reviews {
+			flex-direction: column;
+			gap: 16px;
+
+			&-info {
+				border-bottom: 1px solid var(--color-grey-350);
+				
+
+				&-verified {
+					border-right: none;
+					padding-right: 0;
+
+					&-text {
+						display: none;
+					}
+				}
+			}
+		}
+	}
+}
