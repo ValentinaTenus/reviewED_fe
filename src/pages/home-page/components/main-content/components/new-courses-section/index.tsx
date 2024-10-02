@@ -20,7 +20,7 @@ const NewCoursesSection: React.FC<NewCoursesSectionProperties> = ({
 	const navigate = useNavigate();
 
 	const handleSeeAllClick = useCallback(() => {
-		navigate(AppRoute.NEW_COURSES);
+		navigate(AppRoute.ALL_COURSES);
 	}, [navigate]);
 
 	return (
