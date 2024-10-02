@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 import {
 	AvatarGroup,
+	Button,
 	ExpandableDescription,
 	Icon,
 } from "~/common/components/index";
 import { ScreenBreakpoints } from "~/common/constants/screen-breakpoints";
-import { IconName, RatingSize } from "~/common/enums";
+import { ButtonVariant, IconName, RatingSize } from "~/common/enums";
 import { Course } from "~/common/types/courses/course.type";
 import { useGetCourseReviewsQuery } from "~/redux/reviews/reviews-api";
 
@@ -92,7 +94,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
 						className={styles["course-card__price-icon"]}
 						name={IconName.DOLLAR_SIGN}
 					/>
-					UAH {course.price} per course
+					UAH {course.price}
 				</div>
 			</div>
 
@@ -161,9 +163,14 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
 						</span>
 					</span>
 				</div>
-				<button className={styles["course-card__reviews-button"]}>
-					Read Reviews
-				</button>
+				<Link to={`/course-details/${course.id}`}>
+					<Button
+						className={styles["course-card__reviews-button"]}
+						variant={ButtonVariant.PRIMARY}
+					>
+						Read reviews
+					</Button>
+				</Link>
 			</div>
 		</div>
 	);
