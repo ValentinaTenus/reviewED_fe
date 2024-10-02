@@ -22,3 +22,9 @@
 .contacts__bold-content {
 	font-weight: var(--font-weight-bold);
 }
+
+@media (max-width: 768px) {
+	.contacts__button-container {
+		flex-direction: column;
+	}
+}

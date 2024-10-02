@@ -15,38 +15,48 @@ import { PageTitle } from "./components/page-title";
 import { NavBar } from "./components/navigation-bar";
 import { ReviewsBar } from "./components/reviews-bar";
 
-
-
-const breadcrumbs = [{label: "Головна сторінка", path: "#"}, {label: "Пошук", path: "#"}, {label: "Наша сторінка", path: "#"},];
-
 const MainContent: React.FC = () => {
 	const { data: courses } = useGetCoursesQuery(undefined);
 	const mockCourse = courses?.[0];
 
-
 	// const exampleCourseIndex = "2";
 	// const { data: mockCourse } = useGetCourseByIdQuery(exampleCourseIndex);
+	console.log(mockCourse);
+
+	const courseName: string = mockCourse?.title || "";
+
+	const breadcrumbs = [
+		{ label: "Головна сторінка", path: `${import.meta.env.VITE_BASE_URL}`},
+		{ label: "Пошук", path: "#" },
+		{ label: courseName, path: "#" },
+	];
 
 	const aboutCourseRef = useRef(null);
 	const aboutCompanyRef = useRef(null);
 
-console.log(mockCourse);
+	console.log(mockCourse);
 	return (
 		<div className={styles["main_content_wrapper"]}>
-			{mockCourse && <div className={styles["main_content"]}>
-				<BreadCrumb items={breadcrumbs}/>
-				<PageTitle course={mockCourse}/>
-				<NavBar aboutCourse={aboutCourseRef} aboutCompany={aboutCompanyRef}/>
-				<Header ref={aboutCourseRef} title="Про курс"/>
-				<PricingBar price={mockCourse ? mockCourse.price : ""} />
-				<TargetGroupSection targetGroup={mockCourse ? mockCourse.age : ""} />
-				<DescriptionSection
-					description={mockCourse ? mockCourse.description : ""}
-				/>
-				<CategoriesSection />
-				<ContactsBar course={mockCourse} ref={aboutCompanyRef} title="Про компанію"/>
-				<ReviewsBar />
-			</div>}
+			{mockCourse && (
+				<div className={styles["main_content"]}>
+					<BreadCrumb items={breadcrumbs} />
+					<PageTitle course={mockCourse} />
+					<NavBar aboutCourse={aboutCourseRef} aboutCompany={aboutCompanyRef} />
+					<Header ref={aboutCourseRef} title="Про курс" />
+					<PricingBar price={mockCourse ? mockCourse.price : ""} />
+					<TargetGroupSection targetGroup={mockCourse ? mockCourse.age : ""} />
+					<DescriptionSection
+						description={mockCourse ? mockCourse.description : ""}
+					/>
+					<CategoriesSection />
+					<ContactsBar
+						course={mockCourse}
+						ref={aboutCompanyRef}
+						title="Про компанію"
+					/>
+					<ReviewsBar />
+				</div>
+			)}
 		</div>
 	);
 };

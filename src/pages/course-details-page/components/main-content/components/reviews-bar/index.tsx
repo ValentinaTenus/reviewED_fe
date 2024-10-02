@@ -21,9 +21,13 @@ const ReviewsBar: React.FC<ReviewsBarProperties> = ({}) => {
 			<h3 className={styles["reviews-bar__header"]}>Відгуки</h3>
 			<ReviewsList />
 			<ReviewsStats stats={mockStats} />
-			<Button className={styles["reviews-bar__button"]} size={ButtonSize.MEDIUM} variant={ButtonVariant.PRIMARY}>
-						Написати відгук
-					</Button>
+			<Button
+				className={styles["reviews-bar__button"]}
+				size={ButtonSize.MEDIUM}
+				variant={ButtonVariant.PRIMARY}
+			>
+				Написати відгук
+			</Button>
 		</div>
 	);
 };

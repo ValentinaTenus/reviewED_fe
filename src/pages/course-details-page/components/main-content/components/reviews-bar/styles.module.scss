@@ -1,8 +1,8 @@
 .reviews-bar {
-display: grid;
-gap: 24px;
-grid-template-areas: "hdr hdr" "rvs sts" "rvs btn";
-grid-template-rows: 71px 230px 1fr;
+	display: grid;
+	gap: 24px;
+	grid-template-areas: "hdr hdr" "rvs sts" "rvs btn";
+	grid-template-rows: 71px 230px 1fr;
 }
 
 .reviews-bar__header {
@@ -19,9 +19,15 @@ grid-template-rows: 71px 230px 1fr;
 	width: 536px;
 }
 
-
-@media (max-width: 1280px) {
+@media (max-width: 768px) {
 	.reviews-bar__button {
 		width: 100%;
+	}
+
+	.reviews-bar {
+		display: grid;
+		gap: 16px;
+		grid-template-areas: "hdr" "sts" "btn" "rvs";
+		grid-template-rows: 71px 230px 1fr auto;
 	}
 }
