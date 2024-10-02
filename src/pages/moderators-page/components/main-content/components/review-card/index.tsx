@@ -1,15 +1,16 @@
 import clsx from "clsx";
 import React, { useState } from "react";
 
-import DefaultCompanyImage from "~/assets/images/default-company-image.png";
-import { Button, StarRating } from "~/common/components";
+import { Button, Logo, StarRating } from "~/common/components";
 import {
 	ButtonSize,
 	ButtonType,
 	ButtonVariant,
+	ModerationReviewStatus,
 	RatingSize,
 	StarRatingVariant,
 } from "~/common/enums";
+import { useTransformDate } from "~/common/hooks";
 import { ModerationReviews } from "~/common/types/review/index";
 
 import style from "./styles.module.scss";
@@ -22,63 +23,61 @@ const ReviewModeratorsCard: React.FC<ReviewModeratorsCardProps> = ({
 	review,
 }) => {
 	const [isTruncated, setIsTruncated] = useState(true);
-	const status = {
-		pending: true,
-		published: false,
-		removed: false,
-	};
+	const { formattedDate, formattedTime } = useTransformDate(review.time_added);
 
 	const handleTruncatedText = () => setIsTruncated(!isTruncated);
 
 	return (
 		<div>
-			{review.email}
 			<div className={style.card}>
 				<div
-					className={clsx(style["card__state"], {
-						[style["card__state--pending"]]: status.pending,
-						[style["card__state--published"]]: status.published,
-						[style["card__state--removed"]]: status.removed,
-					})}
+					className={clsx(style["card__state"], [
+						style[`card__state--${review.status}`],
+					])}
 				>
-					{status.pending && "В очікуванні"}
-					{status.published && "Опубліковано"}
-					{status.removed && "Вилучено з публікації"}
+					{
+						ModerationReviewStatus[
+							review.status as keyof typeof ModerationReviewStatus
+						]
+					}
 				</div>
 				<div className={style.info}>
 					<p className={style["info__UID-text"]}>
 						UID відгуку:{" "}
-						<span className={style["info__UID-number"]}>{381264}</span>
+						<span className={style["info__UID-number"]}>{review.id}</span>
 					</p>
 					<div className={style["info__links"]}>
 						<p className={style["info__link-text"]}>
 							Профіль Linkedin:
-							<a className={style["info__link"]} href="#">
+							<a
+								className={style["info__link"]}
+								href={review.author_profile_link}
+								rel="noreferrer"
+								target="_blank"
+							>
 								{" "}
-								www.linkedin.com/in/example-example-24a713279
+								{review.author_profile_link}
 							</a>
 						</p>
 						<p className={style["info__link-text"]}>
 							email:
 							<a className={style["info__link"]} href="#">
 								{" "}
-								example_example@gmail.com
+								{review.author_email}
 							</a>
 						</p>
 					</div>
 				</div>
 				<div className={clsx(style["card__title"], style["title"])}>
-					<img
-						alt="logo"
+					<Logo
 						className={style["title__img"]}
-						src={DefaultCompanyImage}
+						logo={review.logo}
+						name={review.related_entity_name}
 					/>
-					<h4 className={style["title__text"]}>
-						QA тестування. Тестувальник ПЗ
-					</h4>
+					<h4 className={style["title__text"]}>{review.related_entity_name}</h4>
 					<div className={style["title__stars"]}>
 						<StarRating
-							averageRating={3.5}
+							averageRating={review.avg_rating}
 							className={style["rating_block"]}
 							classNameStarsBlock={style["stars_block"]}
 							variant={StarRatingVariant.SMALL_CARD}
@@ -88,11 +87,11 @@ const ReviewModeratorsCard: React.FC<ReviewModeratorsCardProps> = ({
 				<div className={clsx(style["content"], style["card__content"])}>
 					<div className={style["content__info"]}>
 						<div className={style["content__date"]}>
-							01/ 09/ 2024,{" "}
-							<span className={style["content__time"]}>15:33</span>
+							{formattedDate},{" "}
+							<span className={style["content__time"]}>{formattedTime}</span>
 						</div>
 						<StarRating
-							averageRating={4.5}
+							averageRating={review.rating}
 							className={style["rating_block_big"]}
 							classNameStarsBlock={style["stars_block_big"]}
 							size={RatingSize.MEDIUM}
@@ -104,30 +103,7 @@ const ReviewModeratorsCard: React.FC<ReviewModeratorsCardProps> = ({
 							[style["content__text--truncated"]]: isTruncated,
 						})}
 					>
-						Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fugiat,
-						nihil. Nobis, distinctio. Vero autem itaque voluptate aliquam optio
-						iure excepturi esse vitae at repellendus aut atque, eveniet sit.
-						Nulla temporibus sit maxime dignissimos, aliquam accusamus iste ab
-						dolores quae nemo consequuntur alias tempora possimus omnis maiores
-						inventore quo asperiores soluta adipisci ea debitis illo! Incidunt
-						reiciendis, pariatur quas, voluptate reprehenderit asperiores
-						corporis consequuntur ab magni repudiandae fugit. Pariatur facere
-						explicabo praesentium sunt omnis est deserunt beatae? Unde
-						blanditiis, corrupti omnis pariatur laborum praesentium numquam
-						molestiae sed accusamus, saepe aut. Veritatis doloremque commodi ut
-						adipisci velit consequuntur aliquid vero earum aperiam?Lorem ipsum
-						dolor sit, amet consectetur adipisicing elit. Itaque, quasi
-						accusantium? Odit consequatur a itaque consequuntur ex facere
-						distinctio velit ratione tenetur architecto expedita doloremque
-						delectus aperiam aliquam iusto quod sit repellendus, adipisci quo.
-						Expedita corporis at amet nulla provident, dolorum voluptatum iure
-						quo quae itaque maxime sapiente maiores eius, pariatur fuga ipsum
-						repellat beatae est delectus autem! Fugit vero accusamus quasi sed
-						dignissimos nostrum! Libero, sit. A quas alias, voluptatibus eaque
-						molestiae minima, facilis culpa cumque maiores, quibusdam animi
-						exercitationem odit? Commodi asperiores consequuntur aliquam. Vel in
-						possimus, quibusdam optio adipisci autem assumenda corrupti aliquam
-						rerum delectus necessitatibus eum.
+						{review.text}
 					</p>
 					<button
 						className={style["content__text_button"]}
@@ -137,7 +113,7 @@ const ReviewModeratorsCard: React.FC<ReviewModeratorsCardProps> = ({
 					</button>
 				</div>
 				<div className={style["card__buttons"]}>
-					{(status.pending || status.removed) && (
+					{(review.status === "pending" || review.status === "rejected") && (
 						<Button
 							className={style["button_fixed"]}
 							isFullWidth
@@ -148,7 +124,7 @@ const ReviewModeratorsCard: React.FC<ReviewModeratorsCardProps> = ({
 							Опубліковати
 						</Button>
 					)}
-					{(status.published || status.pending) && (
+					{(review.status === "approved" || review.status === "pending") && (
 						<Button
 							className={style["button_fixed"]}
 							isFullWidth
