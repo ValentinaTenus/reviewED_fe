@@ -12,6 +12,7 @@ const ZERO_LENGTH = 0;
 type Properties = {
 	onClearFilters: () => void;
 	onRemoveFilter: (filterType: CoursesFilterType, id: string) => void;
+	selectedCategories: FilterType[];
 	selectedLocations: FilterType[];
 	selectedSubCategories: FilterType[];
 };
@@ -19,10 +20,18 @@ type Properties = {
 const FilterResultItems: React.FC<Properties> = ({
 	onClearFilters,
 	onRemoveFilter,
+	selectedCategories,
 	selectedLocations,
 	selectedSubCategories,
 }) => {
-	const filtersLength = selectedLocations.length + selectedSubCategories.length;
+	const filtersLength =
+		selectedLocations.length +
+		selectedSubCategories.length +
+		selectedCategories.length;
+
+	if (filtersLength === ZERO_LENGTH) {
+		return null;
+	}
 
 	return (
 		<div className={styles["filter_items__container"]}>
@@ -30,6 +39,14 @@ const FilterResultItems: React.FC<Properties> = ({
 				<FilterResultItem
 					filter={filter}
 					filterType={CoursesFilterType.LOCATIONS}
+					key={index}
+					onRemoveFilter={onRemoveFilter}
+				/>
+			))}
+			{selectedCategories.map((filter, index) => (
+				<FilterResultItem
+					filter={filter}
+					filterType={CoursesFilterType.CATEGORIES}
 					key={index}
 					onRemoveFilter={onRemoveFilter}
 				/>
@@ -48,7 +65,9 @@ const FilterResultItems: React.FC<Properties> = ({
 					onClick={onClearFilters}
 					variant={ButtonVariant.DEFAULT}
 				>
-					Очистити все
+					<span className={styles["clear_filters__button_text"]}>
+						Очистити все{" "}
+					</span>
 				</Button>
 			)}
 		</div>

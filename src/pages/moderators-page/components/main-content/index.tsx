@@ -1,37 +1,144 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { useGetReviewsModerationQuery } from "~/redux/reviews-moderation/reviews-moderation-api";
+import { Modal, SearchBar, Spinner } from "~/common/components";
+import { ScreenBreakpoints } from "~/common/constants";
+import { ButtonGroupData, SpinnerVariant } from "~/common/enums";
+import { useGetScreenWidth } from "~/common/hooks";
+import { DropdownOption, GetModerationReviewsRequest } from "~/common/types";
+import { NotFound } from "~/pages/home-page/components/main-content/components/search-block/components";
 import { setRewiews } from "~/redux/reviews-moderation/reviews-moderation-slice";
+import useReviewModerationApi from "~/redux/reviews-moderation/use-review-moderation-api.hook";
 
-import { ReviewModeratorsCard } from "./components/index";
+import {
+	ModeratorsReviewFilterSection,
+	ReviewModeratorsCard,
+} from "./components/index";
 import styles from "./styles.module.scss";
 
+const INDEX_ZERO = 0;
+
 const MainModeratorsContent: React.FC = () => {
-	const { data: moderatorsReviews } = useGetReviewsModerationQuery();
+	const [searchTerm, setSearchTerm] = useState<string>("");
+	const [filterByStatus, setFilterByStatus] =
+		useState<DropdownOption["value"]>();
+	const [sortByPeriod, setSortByPeriod] = useState<DropdownOption["value"]>();
+	const [filterByType, setFilterByType] =
+		useState<keyof typeof ButtonGroupData>("Компанії");
+	const [isOpenSerchFiltersModal, setIsOpenSerchFiltersModal] = useState(false);
+	const screenWidth = useGetScreenWidth();
+
+	const handleSetSearchTerm = useCallback(
+		(term: string) => {
+			setSearchTerm(term);
+		},
+		[setSearchTerm],
+	);
+
+	const handleSetFilterByStatus = useCallback(
+		(sortOption: DropdownOption["value"]) => {
+			if (sortOption) setFilterByStatus(sortOption);
+			if (!sortOption) setFilterByStatus(undefined);
+		},
+		[setFilterByStatus],
+	);
+	const handleSetSortByPeriod = useCallback(
+		(sortOption: DropdownOption["value"]) => {
+			if (sortOption) setSortByPeriod(sortOption);
+			if (!sortOption) setSortByPeriod(undefined);
+		},
+		[setSortByPeriod],
+	);
+	const handleSetIsOpenSerchFiltersModal = useCallback(
+		() => setIsOpenSerchFiltersModal((prev) => !prev),
+		[setIsOpenSerchFiltersModal],
+	);
+
+	const fetchResult = useReviewModerationApi({
+		id: searchTerm,
+		ordering: sortByPeriod as GetModerationReviewsRequest["ordering"],
+		status: filterByStatus as GetModerationReviewsRequest["status"],
+		type: ButtonGroupData[filterByType],
+	});
+	// const err = (fetchResult?.error as FetchBaseQueryError)?.status;
+	// const loadError = (error as FetchBaseQueryError)?.data
+	// 	? ((error as FetchBaseQueryError).data as Error)
+	// 	: { message: "Невідома помилка" };
+	// setServerError(loadError.message);
+
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		if (moderatorsReviews) {
-			dispatch(setRewiews(moderatorsReviews.results));
+		if (fetchResult?.reviews) {
+			dispatch(setRewiews(fetchResult?.reviews.results));
 		}
-	}, [moderatorsReviews, dispatch]);
+	}, [fetchResult?.reviews, dispatch]);
 
 	return (
 		<div className={styles["moderators_wrapper"]}>
-			<div className={styles["title_wrapper"]}>
-				<p>Модерація відгуків</p>
-				<p>Знайдено: {moderatorsReviews?.count} відгуків</p>
-			</div>
-			<div>
-				<p>Пошук за UID</p>
-			</div>
-			{[{ id: 1 }].map((review) => (
-				<ReviewModeratorsCard key={review.id} review={review} />
-			))}
-			{/* {moderatorsReviews?.results.map((review) => (
-				<ReviewModeratorsCard key={review.id} review={review} />
-			))} */}
+			<header className={styles["header_wrapper"]}>
+				<h2 className={styles["title"]}>Модерація відгуків</h2>
+				<p className={styles["sub_title"]}>
+					Знайдено:{" "}
+					<span>
+						{fetchResult?.error ? INDEX_ZERO : fetchResult?.reviews?.count}
+					</span>{" "}
+					відгуків
+				</p>
+			</header>
+
+			<section className={styles["moderators_fitters_section"]}>
+				<div className={styles["search_block"]}>
+					<p className={styles["search_title"]}>Пошук за UID</p>
+					<SearchBar
+						filtersLength={3}
+						isFilterButton={screenWidth <= ScreenBreakpoints.MOBILE}
+						onOpenFilter={handleSetIsOpenSerchFiltersModal}
+						onSubmit={handleSetSearchTerm}
+						placeholder="Введіть UID відгуку"
+						value={searchTerm}
+					/>
+				</div>
+				{useGetScreenWidth() > ScreenBreakpoints.MOBILE && (
+					<ModeratorsReviewFilterSection
+						filterByType={filterByType}
+						handleSetFilterByStatus={handleSetFilterByStatus}
+						handleSetSortByPeriod={handleSetSortByPeriod}
+						setFilterByType={setFilterByType}
+					/>
+				)}
+			</section>
+
+			<main className={styles["main_section"]}>
+				{fetchResult?.isFetching && (
+					<div className={styles["spinner"]}>
+						<Spinner variant={SpinnerVariant.MEDIUM} />
+					</div>
+				)}
+
+				{(fetchResult?.error || fetchResult?.reviews?.count === INDEX_ZERO) && (
+					<NotFound />
+				)}
+
+				{!fetchResult?.isFetching &&
+					!fetchResult?.error &&
+					fetchResult?.reviews?.results.map((review) => (
+						<ReviewModeratorsCard key={review.id} review={review} />
+					))}
+			</main>
+			{isOpenSerchFiltersModal && screenWidth <= ScreenBreakpoints.MOBILE && (
+				<Modal
+					isOpen={isOpenSerchFiltersModal}
+					onClose={handleSetIsOpenSerchFiltersModal}
+				>
+					<ModeratorsReviewFilterSection
+						filterByType={filterByType}
+						handleSetFilterByStatus={handleSetFilterByStatus}
+						handleSetSortByPeriod={handleSetSortByPeriod}
+						setFilterByType={setFilterByType}
+					/>
+				</Modal>
+			)}
 		</div>
 	);
 };
