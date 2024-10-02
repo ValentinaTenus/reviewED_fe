@@ -1,8 +1,8 @@
 import React from "react";
 import { useRef } from "react";
 import { ContactsBar } from "./components/contacts-bar";
-// import { useGetCourseByIdQuery } from "~/redux/courses/courses-api";
-import { useGetCoursesQuery } from "~/redux/courses/courses-api";
+import { useGetCourseByIdQuery } from "~/redux/courses/courses-api";
+
 
 import { CategoriesSection } from "./components/categories-list";
 import { DescriptionSection } from "./components/description-section";
@@ -16,17 +16,16 @@ import { NavBar } from "./components/navigation-bar";
 import { ReviewsBar } from "./components/reviews-bar";
 
 const MainContent: React.FC = () => {
-	const { data: courses } = useGetCoursesQuery(undefined);
-	const mockCourse = courses?.[0];
 
-	// const exampleCourseIndex = "2";
-	// const { data: mockCourse } = useGetCourseByIdQuery(exampleCourseIndex);
-	console.log(mockCourse);
+
+	const exampleCourseIndex = "1";
+	const { data: mockCourse } = useGetCourseByIdQuery(exampleCourseIndex);
+
 
 	const courseName: string = mockCourse?.title || "";
 
 	const breadcrumbs = [
-		{ label: "Головна сторінка", path: `${import.meta.env.VITE_BASE_URL}`},
+		{ label: "Головна сторінка", path: `../`},
 		{ label: "Пошук", path: "#" },
 		{ label: courseName, path: "#" },
 	];
@@ -34,7 +33,7 @@ const MainContent: React.FC = () => {
 	const aboutCourseRef = useRef(null);
 	const aboutCompanyRef = useRef(null);
 
-	console.log(mockCourse);
+
 	return (
 		<div className={styles["main_content_wrapper"]}>
 			{mockCourse && (

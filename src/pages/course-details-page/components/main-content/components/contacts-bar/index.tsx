@@ -1,13 +1,13 @@
 import { forwardRef } from "react";
 import { ButtonVariant, ButtonSize, IconName } from "~/common/enums/index";
-import { type Course } from "~/common/types";
+import { type GetCourseByIdResponseDto } from "~/common/types";
 
 import { Button } from "~/common/components";
 import { Contact } from "./components/contact";
 import styles from "./styles.module.scss";
 
 type ContactsBarProperties = {
-	course: Course | undefined;
+	course: GetCourseByIdResponseDto | undefined;
 	title: string;
 };
 
@@ -30,7 +30,7 @@ const ContactsBar = forwardRef<HTMLDivElement, ContactsBarProperties>(
 				/>
 				<Contact
 					iconName={IconName.BANK}
-					title={course ? course.company : ""}
+					title={course ? course.company.name : ""}
 				/>
 				<Contact
 					iconName={IconName.GLOBAL}
