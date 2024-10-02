@@ -35,3 +35,9 @@
 	flex-direction: column;
 	gap: 24px;
 }
+
+@media (max-width: 1280px) {
+	.courses_list__search_results {
+		padding-top: 40px;
+	}
+}

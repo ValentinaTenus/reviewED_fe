@@ -20,11 +20,16 @@ const CourseCategory: React.FC<Properties> = ({ category }) => {
 			<span className={styles["course_category__specialization"]}>
 				{category.name}:
 			</span>
-			{category.subcategories.map((subcategory) => (
-				<div className={styles["course_category__tag"]} key={subcategory.id}>
-					{subcategory.name}
-				</div>
-			))}
+			<div className={styles["course_category__subcategories"]}>
+				{category.subcategories.map((subcategory) => (
+					<div
+						className={styles["course_category__subcategories-tag"]}
+						key={subcategory.id}
+					>
+						{subcategory.name}
+					</div>
+				))}
+			</div>
 		</div>
 	);
 };

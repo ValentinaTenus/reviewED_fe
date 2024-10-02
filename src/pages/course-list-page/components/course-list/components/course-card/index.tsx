@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-import { Button, Icon, Logo, StarRating } from "~/common/components/index";
+import { Icon, Logo, StarRating } from "~/common/components/index";
 import { ScreenBreakpoints } from "~/common/constants/screen-breakpoints";
-import { AppRoute, ButtonVariant, IconName, RatingSize } from "~/common/enums";
+import { AppRoute, IconName, RatingSize } from "~/common/enums";
 import { useGetScreenWidth } from "~/common/hooks";
 import { GetCoursesResult } from "~/common/types/courses/course.type";
 
@@ -13,6 +13,7 @@ import styles from "./styles.module.scss";
 const CHAR_LIMIT_MOBILE = 107;
 const CHAR_LIMIT_DESKTOP = 303;
 const START_INDEX = 0;
+const ZERO_LENGTH = 0;
 
 type CourseCardProps = {
 	className?: string;
@@ -24,7 +25,6 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
 	const [maxLength, setMaxLength] = useState(CHAR_LIMIT_DESKTOP);
 
 	const screenWidth = useGetScreenWidth();
-	const navigate = useNavigate();
 
 	const toggleDescription = () => {
 		setIsExpanded(!isExpanded);
@@ -37,10 +37,6 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
 			setMaxLength(CHAR_LIMIT_DESKTOP);
 		}
 	}, [screenWidth]);
-
-	const handleRedirect = useCallback(() => {
-		navigate(`${AppRoute.COURSE_DETAILS}${course.id}`);
-	}, [course.id, navigate]);
 
 	useEffect(() => {
 		handleChangeMaxLength();
@@ -96,22 +92,24 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
 			</div>
 
 			<div className={styles["course-card__description"]}>
-				<div className={styles["course-card__categories"]}>
+				<div className={styles["course-card__description-categories"]}>
 					{course.categories.map((category) => (
 						<CourseCategory category={category} key={category.id} />
 					))}
 				</div>
-				<p className={styles["course-card__description-text"]}>
-					{isExpanded
-						? course.description
-						: `${course.description.substring(START_INDEX, maxLength)}...`}
-					<span
-						className={styles["course-card__description-toggle"]}
-						onClick={toggleDescription}
-					>
-						{isExpanded ? " Сховати" : " Показати більше"}
-					</span>
-				</p>
+				{course.description.length > ZERO_LENGTH && (
+					<p className={styles["course-card__description-text"]}>
+						{isExpanded
+							? course.description
+							: `${course.description.substring(START_INDEX, maxLength)}...`}
+						<span
+							className={styles["course-card__description-toggle"]}
+							onClick={toggleDescription}
+						>
+							{isExpanded ? " Сховати" : " Показати більше"}
+						</span>
+					</p>
+				)}
 			</div>
 			<div className={styles["course-card__reviews"]}>
 				<div className={styles["course-card__reviews-info"]}>
@@ -132,9 +130,12 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
 						</span>
 					</span>
 				</div>
-				<Button onClick={handleRedirect} variant={ButtonVariant.PRIMARY}>
+				<Link
+					className={styles["course-card__link"]}
+					to={`${AppRoute.COURSE_DETAILS}${course.id}`}
+				>
 					Читати відгуки
-				</Button>
+				</Link>
 			</div>
 		</div>
 	);

@@ -2,29 +2,49 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  
+
   &__icon {
     width: 24px;
     height: 24px;
     color: var(--color-grey-500);
   }
+
   &__specialization {
+    display: inline-block;
     color: var(--color-grey-400);
   }
 
-  &__tag {
-    padding: 5px 8px 3px 5px;
-    border-radius: 40px;
-    background-color: var(--color-yellow-100);
-    color: var(--color-yellow-600);
-    display: inline-flex;
-    text-align: center;
-    font-size: var(--font-size-main-text);
+  &__subcategories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
 
-    &::before {
-      vertical-align: middle;
-      content: "•";
-      margin: 0 5px;
+    &-tag {
+      padding: 5px 8px 3px 5px;
+      border-radius: 40px;
+      background-color: var(--color-yellow-100);
+      color: var(--color-yellow-600);
+      display: inline-flex;
+      text-align: center;
+      font-size: var(--font-size-main-text);
+  
+      &::before {
+        vertical-align: middle;
+        content: "•";
+        margin: 0 5px;
+      }
+    }
+  }
+}
+
+@media (min-width: 300px) and (max-width: 768px) {
+  .course_category {
+    &__icon {
+      display: none;
+    }
+
+    &__specialization {
+      display: none;
     }
   }
 }
