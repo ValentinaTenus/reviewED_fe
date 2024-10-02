@@ -42,8 +42,8 @@ export const companiesApi = api.injectEndpoints({
 			query: (filters: GetCompaniesRequestQuery = {}) => {
 				return {
 					method: HttpMethods.GET,
-					params: filters,
-					url: companiesApiPath.ROOT,
+					params: { ...filters },
+					url: `${companiesApiPath.ROOT}`,
 				};
 			},
 			serializeQueryArgs: ({ endpointName }) => {
