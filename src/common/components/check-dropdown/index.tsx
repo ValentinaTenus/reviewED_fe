@@ -1,7 +1,9 @@
 import clsx from "clsx";
 import React, { useMemo, useState } from "react";
 
-import { DropdownOption } from "~/common/types/index";
+import { ScreenBreakpoints } from "~/common/constants";
+import { useGetScreenWidth } from "~/common/hooks";
+import { type DropdownOption, type FilterType } from "~/common/types/index";
 
 import { SubcategoryItem } from "./components/index";
 import styles from "./styles.module.scss";
@@ -15,10 +17,10 @@ type Properties = {
 	isDisabled?: boolean;
 	label?: string;
 	name: string;
-	onChange: (value: { isTitle: boolean; values: string[] }) => void;
+	onChange: (value: { isTitle: boolean; values: FilterType[] }) => void;
 	options: DropdownOption[];
 	placeholder?: string;
-	selectedItems: string[];
+	selectedItems: FilterType[];
 };
 
 const CheckDropdown: React.FC<Properties> = ({
@@ -33,13 +35,11 @@ const CheckDropdown: React.FC<Properties> = ({
 		const selectedOptions: DropdownOption[] = [];
 
 		options.forEach((option) => {
-			if (selectedItems.includes(option.value.toString())) {
-				selectedOptions.push(option);
-			}
-
 			if (option.options) {
 				option.options.forEach((subOption) => {
-					if (selectedItems.includes(subOption.value.toString())) {
+					if (
+						selectedItems.find((so) => so.id === subOption.value.toString())
+					) {
 						selectedOptions.push(subOption);
 					}
 				});
@@ -48,18 +48,18 @@ const CheckDropdown: React.FC<Properties> = ({
 
 		return selectedOptions;
 	}, [options, selectedItems]);
-
 	const [isOpen, setIsOpen] = useState(false);
+	const screenWidth = useGetScreenWidth();
 	const [visibleItemsCount, setVisibleItemsCount] = useState(
 		INITIAL_VISIBLE_COUNT,
 	);
 
 	const handleOptionClick = (option: DropdownOption) => {
-		const isSelected = selectedOptions?.some((o) => o.value === option.value);
+		const isSelected = selectedOptions.some((o) => o.value === option.value);
 
 		let updatedSelectedOptions;
 		if (isSelected) {
-			updatedSelectedOptions = selectedOptions?.filter(
+			updatedSelectedOptions = selectedOptions.filter(
 				(o) => o.value !== option.value,
 			);
 		} else {
@@ -68,7 +68,10 @@ const CheckDropdown: React.FC<Properties> = ({
 
 		onChange({
 			isTitle: false,
-			values: updatedSelectedOptions.map((o) => o.value.toString()),
+			values: updatedSelectedOptions.map((o) => ({
+				id: o.value.toString(),
+				name: o.label,
+			})),
 		});
 	};
 
@@ -87,7 +90,11 @@ const CheckDropdown: React.FC<Properties> = ({
 		let itemsCount = DEFAULT_OPTIONS_LENGTH;
 
 		for (const option of options) {
-			if (itemsCount >= visibleItemsCount) break;
+			if (
+				screenWidth > ScreenBreakpoints.MOBILE &&
+				itemsCount >= visibleItemsCount
+			)
+				break;
 
 			renderedItems.push(
 				<div
@@ -101,7 +108,12 @@ const CheckDropdown: React.FC<Properties> = ({
 
 			if (option.options && option.options.length > DEFAULT_OPTIONS_LENGTH) {
 				for (const subOption of option.options) {
-					if (itemsCount >= visibleItemsCount) break;
+					if (
+						screenWidth > ScreenBreakpoints.MOBILE &&
+						itemsCount >= visibleItemsCount
+					)
+						break;
+
 					const isSelected = selectedOptions.some(
 						(o) => o.value === subOption.value,
 					);
@@ -110,7 +122,8 @@ const CheckDropdown: React.FC<Properties> = ({
 						<SubcategoryItem
 							className={styles["dropdown_item"]}
 							isSelected={isSelected}
-							onClick={handleOptionClick}
+							key={`suboption-${subOption.value}`}
+							onClick={() => handleOptionClick(subOption)}
 							subOption={subOption}
 						/>,
 					);
@@ -151,11 +164,12 @@ const CheckDropdown: React.FC<Properties> = ({
 				<div className={styles["dropdown_menu"]}>
 					{renderVisibleItems()}
 
-					{visibleItemsCount < totalItemsCount && (
-						<div className={styles["see_more"]} onClick={handleShowMore}>
-							Дивитись більше
-						</div>
-					)}
+					{screenWidth > ScreenBreakpoints.MOBILE &&
+						visibleItemsCount < totalItemsCount && (
+							<div className={styles["see_more"]} onClick={handleShowMore}>
+								Дивитись більше
+							</div>
+						)}
 				</div>
 			)}
 		</div>

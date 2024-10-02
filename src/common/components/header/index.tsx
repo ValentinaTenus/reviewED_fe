@@ -18,7 +18,6 @@ import styles from "./styles.module.scss";
 const Header: React.FC = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const [serverError, setServerError] = useState("");
-
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const { refresh, user } = useAppSelector((state) => state.auth);
@@ -96,13 +95,22 @@ const Header: React.FC = () => {
 							{isMenuOpen && (
 								<div className={styles["user_menu"]}>
 									<ul className={styles["user_menu_list"]}>
-										<li className={styles["user_menu_list_item"]}>
-											{user.is_staff ? (
-												<a href="#">Модерація відгуків</a>
-											) : (
-												<a href="#">Ваші відгуки</a>
-											)}
-										</li>
+										{user.is_staff ? (
+											<>
+												<li className={styles["user_menu_list_item"]}>
+													<Link to={AppRoute.MODERATORS_PAGE}>
+														Модерація відгуків
+													</Link>
+												</li>
+												<li className={styles["user_menu_list_item"]}>
+													<Link to="#">Звернення користувачів</Link>
+												</li>
+											</>
+										) : (
+											<li className={styles["user_menu_list_item"]}>
+												<Link to="#">Ваші відгуки</Link>
+											</li>
+										)}
 										<li className={styles["user_menu_list_item"]}>
 											<Button
 												className={styles["logout__button"]}

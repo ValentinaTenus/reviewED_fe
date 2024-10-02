@@ -5,30 +5,27 @@ export {
 	type LogOutRequestDto,
 } from "./auth/index";
 export { type Category } from "./category/index";
-export {
-	type Company,
-	type GetCompaniesRequestQuery,
-	type GetCompaniesResponse,
-} from "./company/index";
+export { type Company, type GetCompaniesRequestQuery } from "./company/index";
 export {
 	type Course,
+	type FilterType,
+	type GetCourseByIdResponseDto,
 	type GetCoursesRequestQuery,
-	type GetCoursesResponse,
+	type GetCoursesResult,
 } from "./courses/index";
 export { type DropdownOption } from "./dropdown-option";
 export {
 	type FooterNavigationIconLink,
 	type FooterNavigationLink,
 } from "./footer-navigation-links/index";
+export { type GetQueryResponse } from "./get-query-response.type";
 export { type ModalHandlers, type ModalProperties } from "./modal/index";
 export {
 	type CompanyAndCourseReviewsByUserId,
-	type CourseReview,
-	type GetCompanyAndCourseReviewsByUserIdResponse,
-	type GetCourseReviews,
-	type GetModerationReviews,
-	type GetReviewsResponse,
-	type GetReviewsStats,
+	type GetModerationReviewsRequest,
+	type GetModerationReviewsResponse,
+	type GetReviewsByCompanyIdResponseDto,
+	type ModerationReviews,
 	type RecentReview,
 	type Review,
 	type ReviewsStats,

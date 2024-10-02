@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { ScreenBreakpoints } from "~/common/constants/index";
-import { type Course } from "~/common/types/index";
+import { type GetCoursesResult } from "~/common/types/index";
 import { useGetCompaniesQuery } from "~/redux/companies/companies-api";
 import { useGetCoursesQuery } from "~/redux/courses/courses-api";
 
@@ -27,7 +27,7 @@ const DEFAULT_SCREEN_WIDTH = 0;
 const INDEX_ZERO = 0;
 
 const MainContent: React.FC = () => {
-	const [topCourses, setTopCourses] = useState<Course[]>([]);
+	const [topCourses, setTopCourses] = useState<GetCoursesResult[]>([]);
 	const { data: companies } = useGetCompaniesQuery({});
 	const { data: courses } = useGetCoursesQuery(undefined);
 
@@ -37,7 +37,6 @@ const MainContent: React.FC = () => {
 	const updateVisibleItems = () => {
 		const screenWidth = window.innerWidth;
 		setScreenWidth(screenWidth);
-
 		if (screenWidth <= ScreenBreakpoints.MOBILE) {
 			setVisibleItems(VisibleCards.MOBILE);
 		} else if (screenWidth <= ScreenBreakpoints.TABLET) {

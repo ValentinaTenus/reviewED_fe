@@ -28,7 +28,7 @@ type FilterSectionProperties = {
 	onChooseCategory: (categoryId: number) => void;
 	screenWidth: number;
 	searchTerm: string;
-	selectedCategoryId: number;
+	selectedCategoryIds: number[];
 };
 
 const FilterSection: React.FC<FilterSectionProperties> = ({
@@ -38,7 +38,7 @@ const FilterSection: React.FC<FilterSectionProperties> = ({
 	onChooseCategory,
 	screenWidth,
 	searchTerm,
-	selectedCategoryId,
+	selectedCategoryIds,
 }) => {
 	return (
 		<div className={styles["companies_filter__container"]}>
@@ -50,12 +50,16 @@ const FilterSection: React.FC<FilterSectionProperties> = ({
 					<div className={styles["companies_filter__search_bar"]}>
 						<SearchBar
 							onSubmit={onChangeSearchTerm}
-							placeholder="Знайди свою ідеальну компанію"
+							placeholder={
+								screenWidth > ScreenBreakpoints.MOBILE
+									? "Знайди свою ідеальну компанію"
+									: "Пошук"
+							}
 							value={searchTerm}
 						/>
 						{screenWidth > ScreenBreakpoints.TABLET && (
 							<SortDropdown
-								name="sort"
+								name="Сортувати за"
 								onChange={onChangeSortBy}
 								options={CompaniesSortOptions}
 							/>
@@ -64,7 +68,7 @@ const FilterSection: React.FC<FilterSectionProperties> = ({
 					<CompaniesCategories
 						categories={categories}
 						onSelectCategory={onChooseCategory}
-						selectedCategoryId={selectedCategoryId}
+						selectedCategoryIds={selectedCategoryIds}
 					/>
 				</div>
 			</div>

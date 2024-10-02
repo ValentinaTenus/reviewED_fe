@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import ShieldTick from "~/assets/images/shield-tick.svg?react";
-import { StarRating } from "~/common/components/index";
+import { Logo, StarRating } from "~/common/components/index";
 import { AppRoute, RatingSize } from "~/common/enums/index";
 import { Company } from "~/common/types/index";
 
@@ -19,10 +19,10 @@ const CompanyListCardDesktop: React.FC<Properties> = ({ company }) => {
 			to={`${AppRoute.COMPANY_DETAILS}${company.id}`}
 		>
 			<div className={styles["company_list_card__title"]}>
-				<img
-					alt={company.name}
+				<Logo
 					className={styles["company_list_card__logo"]}
-					src={company.logo}
+					logo={company.logo}
+					name={company.name}
 				/>
 				<span className={styles["company_list_card__name"]}>
 					{company.name}
