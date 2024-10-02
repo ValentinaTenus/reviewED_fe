@@ -1,7 +1,8 @@
 import { HttpMethods } from "~/common/enums/index.ts";
 import {
-	type Course,
+	type GetCourseByIdResponseDto,
 	type GetCoursesRequestQuery,
+	type GetCoursesResult,
 	type GetQueryResponse,
 } from "~/common/types/index.ts";
 
@@ -12,31 +13,29 @@ const ZERO_LENGTH = 0;
 
 export const coursesApi = api.injectEndpoints({
 	endpoints: (builder) => ({
-		getCourseById: builder.query<Course, string | undefined>({
+		getCourseById: builder.query<GetCourseByIdResponseDto, string | undefined>({
 			query: (id) => ({
 				method: HttpMethods.GET,
 				url: `${coursesApiPath.ROOT}/${id}`,
 			}),
 		}),
-		getCourses: builder.query<Course[], undefined>({
+		getCourses: builder.query<GetCoursesResult[], undefined>({
 			query: (filters: GetCoursesRequestQuery = {}) => {
 				return {
 					method: HttpMethods.GET,
 					params: filters,
-					url:
-						`https://reviewed-api.azurewebsites.net/api/v1/` +
-						coursesApiPath.ROOT,
+					url: coursesApiPath.ROOT,
 				};
 			},
 			serializeQueryArgs: ({ endpointName }) => {
 				return endpointName;
 			},
-			transformResponse: (response: GetQueryResponse<Course>) => {
+			transformResponse: (response: GetQueryResponse<GetCoursesResult>) => {
 				return response.results;
 			},
 		}),
 		getCoursesByFilter: builder.query<
-			GetQueryResponse<Course[]>,
+			GetQueryResponse<GetCoursesResult[]>,
 			GetCoursesRequestQuery
 		>({
 			forceRefetch({ currentArg, previousArg }) {

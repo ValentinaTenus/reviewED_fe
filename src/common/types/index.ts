@@ -9,7 +9,9 @@ export { type Company, type GetCompaniesRequestQuery } from "./company/index";
 export {
 	type Course,
 	type FilterType,
+	type GetCourseByIdResponseDto,
 	type GetCoursesRequestQuery,
+	type GetCoursesResult,
 } from "./courses/index";
 export { type DropdownOption } from "./dropdown-option";
 export {
