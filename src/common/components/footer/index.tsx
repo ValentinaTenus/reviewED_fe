@@ -24,9 +24,10 @@ import styles from "./styles.module.scss";
 
 const Footer: React.FC = () => {
 	const [companiesLinks, setCompaniesLinks] = useState<FooterNavigationLink[]>(
-		[],
+		CompaniesLinksDesktop,
 	);
-	const [coursesLinks, setCoursesLinks] = useState<FooterNavigationLink[]>([]);
+	const [coursesLinks, setCoursesLinks] =
+		useState<FooterNavigationLink[]>(CoursesLinksDesktop);
 	const [othersLinks, setOthersLinks] =
 		useState<FooterNavigationLink[]>(OthersFooterLinks);
 
