@@ -1,6 +1,9 @@
 import { HttpMethods } from "~/common/enums/index.ts";
 import { type GetModerationReviewsResponse } from "~/common/types/index.ts";
-import { ModerationReviews } from "~/common/types/review/get-moderation-reviews.ts";
+import {
+	ModerationReviews,
+	SetModerationReviewsStatusRequest,
+} from "~/common/types/review/get-moderation-reviews.ts";
 
 import { api } from "../services.ts";
 import { reviewsApiPath } from "./constans.ts";
@@ -43,9 +46,6 @@ export const reviewsModerationApi = api.injectEndpoints({
 					url: reviewsApiPath.ROOT,
 				};
 			},
-			serializeQueryArgs: ({ endpointName }) => {
-				return endpointName;
-			},
 		}),
 		getReviewsModerationById: builder.query<
 			ModerationReviews,
@@ -68,11 +68,26 @@ export const reviewsModerationApi = api.injectEndpoints({
 				};
 			},
 		}),
+		setReviewsModerationStatus: builder.query<
+			undefined,
+			SetModerationReviewsStatusRequest
+		>({
+			query: (paramss) => {
+				return {
+					body: {
+						status: paramss.status,
+					},
+					method: HttpMethods.PATCH,
+					url: `${reviewsApiPath.ROOT}/${paramss.type}/${paramss.id}/`,
+				};
+			},
+		}),
 	}),
 });
 
 export const {
-	useGetReviewsModerationByFilterQuery,
-	useGetReviewsModerationByIdQuery,
 	useGetReviewsModerationQuery,
+	useLazyGetReviewsModerationByFilterQuery,
+	useLazyGetReviewsModerationByIdQuery,
+	useLazySetReviewsModerationStatusQuery,
 } = reviewsModerationApi;
