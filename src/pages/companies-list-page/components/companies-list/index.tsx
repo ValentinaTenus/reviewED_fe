@@ -104,14 +104,6 @@ const CompaniesContent: React.FC = () => {
 		[updateCompaniesPerPageAndPageCount],
 	);
 
-	const handleChangeSearchTerm = useCallback(
-		(newSearchTerm: string) => {
-			setSearchTerm(newSearchTerm);
-			void dispatch(setFilters({ city: "" }));
-		},
-		[dispatch],
-	);
-
 	const handleChangeSortBy = useCallback((newSortBy: number | string) => {
 		setSortBy(newSortBy.toString());
 	}, []);
@@ -135,6 +127,24 @@ const CompaniesContent: React.FC = () => {
 			setCurrentPage(DEFAULT_CURRENT_PAGE);
 		},
 		[dispatch, selectedCategoryIds],
+	);
+
+	const handleSubmitSearchTerm = useCallback(
+		(newSearchTerm: string) => {
+			setSearchTerm(newSearchTerm);
+			void dispatch(setFilters({ city: "" }));
+		},
+		[dispatch],
+	);
+
+	const handleChangeSearchTerm = useCallback(
+		(newSearchTerm: string) => {
+			if (newSearchTerm.trim() === "") {
+				setSearchTerm(newSearchTerm);
+				void dispatch(setFilters({ city: "" }));
+			}
+		},
+		[dispatch],
 	);
 
 	useEffect(() => {
@@ -165,6 +175,7 @@ const CompaniesContent: React.FC = () => {
 					onChangeSearchTerm={handleChangeSearchTerm}
 					onChangeSortBy={handleChangeSortBy}
 					onChooseCategory={handleChooseCategory}
+					onSubmitSearchTerm={handleSubmitSearchTerm}
 					screenWidth={screenWidth}
 					searchTerm={searchTerm}
 					selectedCategoryIds={selectedCategoryIds}

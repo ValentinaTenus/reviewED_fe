@@ -26,6 +26,7 @@ type FilterSectionProperties = {
 	onChangeSearchTerm: (searchTerm: string) => void;
 	onChangeSortBy: (sortBy: number | string) => void;
 	onChooseCategory: (categoryId: number) => void;
+	onSubmitSearchTerm: (searchTerm: string) => void;
 	screenWidth: number;
 	searchTerm: string;
 	selectedCategoryIds: number[];
@@ -36,6 +37,7 @@ const FilterSection: React.FC<FilterSectionProperties> = ({
 	onChangeSearchTerm,
 	onChangeSortBy,
 	onChooseCategory,
+	onSubmitSearchTerm,
 	screenWidth,
 	searchTerm,
 	selectedCategoryIds,
@@ -49,7 +51,8 @@ const FilterSection: React.FC<FilterSectionProperties> = ({
 				<div className={styles["companies_filter__search_and_categories"]}>
 					<div className={styles["companies_filter__search_bar"]}>
 						<SearchBar
-							onSubmit={onChangeSearchTerm}
+							onChangeSearchTerm={onChangeSearchTerm}
+							onSubmit={onSubmitSearchTerm}
 							placeholder={
 								screenWidth > ScreenBreakpoints.MOBILE
 									? "Знайди свою ідеальну компанію"
