@@ -201,11 +201,15 @@
 		@include tablet {
 			font-weight: var(--font-weight-extra-bold);
 			font-size: var(--font-size-title-mobile-h2);
+
+      white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
 	}
 
 	&__stars {
-		position: absolute;
+		position: absolute; 
 		bottom: 0;
 		left: 0;
 
