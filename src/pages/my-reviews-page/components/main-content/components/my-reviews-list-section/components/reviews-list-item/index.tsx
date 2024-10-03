@@ -33,14 +33,8 @@ const ZERO_NUMBER = 0;
 interface Properties {
 	activePopup: null | number;
 	category: MyReviewCategory;
-	handleDeleteReview: (reviewId: number) => void;
-	handleEditReview: ({
-		reviewId,
-		text,
-	}: {
-		reviewId: number;
-		text: string;
-	}) => void;
+	handleClickDeleteReview: (entityId: number | null) => void;
+	handleClickEditReview: (entityId: number | null) => void;
 	handleTogglePopup: (item: null | number) => void;
 	review: MyReview;
 }
@@ -48,8 +42,8 @@ interface Properties {
 const ReviewListItem: React.FC<Properties> = ({
 	activePopup,
 	category,
-	handleDeleteReview,
-	handleEditReview,
+	handleClickDeleteReview,
+	handleClickEditReview,
 	handleTogglePopup,
 	review,
 }) => {
@@ -59,28 +53,28 @@ const ReviewListItem: React.FC<Properties> = ({
 		MAX_PREVIEW_LENGTH_DESKTOP,
 	);
 
-	const togglePopup = () => {
-		// If the popup is already active for this review, close it
+	const togglePopup = useCallback(() => {
+		// If the popup is already active for this review - close it
 		if (activePopup === review.id) {
 			handleTogglePopup(null);
 		} else {
 			handleTogglePopup(review.id);
 		}
-	};
+	}, [activePopup, review.id]);
 
-	const handleSelect = (option: string) => {
+	const handleSelect = useCallback((option: string) => {
 		if (option === "edit") {
-			handleEditReview({ reviewId: review.id, text: review.text });
+			handleClickEditReview(review.id);
 		}
 
 		if (option === "delete") {
-			handleDeleteReview(review.id);
+			handleClickDeleteReview(review.id);
 		}
 
 		handleTogglePopup(null);
-	};
+	}, []);
 
-	const handleClickMoreOptions = () => {
+	const handleClickMoreOptions = useCallback(() => {
 		const width = window.innerWidth;
 
 		// for mobile open ActionsModal, for table open PopupMenu
@@ -92,9 +86,12 @@ const ReviewListItem: React.FC<Properties> = ({
 
 		handleTogglePopup(null);
 		setIsOpenActionsModal(true);
-	};
+	}, [review.id]);
 
-	const toggleText = () => setShowFullText(!showFullText);
+	const toggleText = useCallback(
+		() => setShowFullText(!showFullText),
+		[showFullText],
+	);
 
 	const handleResize = useCallback(() => {
 		const width = window.innerWidth;
@@ -235,7 +232,10 @@ const ReviewListItem: React.FC<Properties> = ({
 										styles["review__body-icons"],
 									)}
 								>
-									<div className={styles["icons-left"]}>
+									<div
+										className={styles["icons-left"]}
+										onClick={() => handleClickEditReview(review.id)}
+									>
 										<Icon name={IconName.EDIT} /> <span>Edit</span>
 									</div>
 									<div className={styles["icons-right"]}>
@@ -297,7 +297,10 @@ const ReviewListItem: React.FC<Properties> = ({
 				</div>
 
 				<div className={clsx(styles["icons"], styles["icons-bottom"])}>
-					<div className={styles["icons-left"]}>
+					<div
+						className={styles["icons-left"]}
+						onClick={() => handleClickEditReview(review.id)}
+					>
 						<Icon name={IconName.EDIT} /> <span>Edit</span>
 					</div>
 					<div className={styles["icons-right"]}>

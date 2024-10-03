@@ -1,84 +1,19 @@
+import React, { useCallback, useEffect, useState } from "react";
+import styles from "./styles.module.scss";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import React, { useEffect, useState } from "react";
 
 import { Pagination, Spinner } from "~/common/components";
 import { SpinnerVariant } from "~/common/enums";
+import { MyReview, MyReviewCategory } from "~/common/types/my-reviews";
 import {
-	DeleteReviewModalData,
-	EditReviewModalData,
-	MyReview,
-	MyReviewCategory,
-} from "~/common/types/my-reviews";
-import { useGetMyReviewsQuery } from "~/redux/my-reviews/my-reviews-api";
-import { useGetUserQuery } from "~/redux/user/user-api";
-
+	useDeleteMyReviewMutation,
+	useEditMyReviewMutation,
+	useGetMyReviewsQuery,
+} from "~/redux/my-reviews/my-reviews-api";
 import { DeleteReviewModal } from "../delete-review-modal";
 import { EditReviewModal } from "../edit-review-modal";
 import { HeaderList, MyReviewsList, NotFound } from "./components/index";
-import styles from "./styles.module.scss";
-
-const myReviewsListData: MyReview[] = [
-	{
-		author_full_name: "Lemon academy",
-		company_reviews_count: 123,
-		id: 1,
-		logo: "https://placehold.co/150x150/png",
-		rating: 5,
-		related_entity_name: "QA Testing, Become a Tester",
-		status: "pending",
-		text: "I recently completed a test automation course using Selenium, and I want to share my experience. The course turned out to be extremely useful and effective in deepening my knowledge in the field test automation. The Selenium classes were especially valuable because they allowed me to learn a tool for automating the testing of web applications. I learned how to create and execute automated test cases, set up a test environment, and integrate Selenium with other tools such as JIRA. I recently completed a test automation course using Selenium",
-		time_added: "00/00/2024",
-		total_courses_count: 102,
-	},
-	{
-		author_full_name: "Lemon academy",
-		company_reviews_count: 123,
-		id: 2,
-		logo: "https://placehold.co/150x150/png",
-		rating: 5,
-		related_entity_name: "QA Testing, Become a Tester",
-		status: "pending",
-		text: "I recently completed a test automation course using Selenium, and I want to share my experience. The course turned out to be extremely useful and effective in deepening my knowledge in the field test automation. The Selenium classes were especially valuable because they allowed me to learn a tool for automating the testing of web applications. I learned how to create and execute automated test cases, set up a test environment, and integrate Selenium with other tools such as JIRA. I recently completed a test automation course using Selenium",
-		time_added: "01/01/2024",
-		total_courses_count: 102,
-	},
-	{
-		author_full_name: "Lemon academy",
-		company_reviews_count: 123,
-		id: 3,
-		logo: "https://placehold.co/150x150/png",
-		rating: 5,
-		related_entity_name: "QA Testing, Become a Tester",
-		status: "removed",
-		text: "I recently completed a test automation course using Selenium, and I want to share my experience. The course turned out to be extremely useful and effective in deepening my knowledge in the field test automation. The Selenium classes were especially valuable because they allowed me to learn a tool for automating the testing of web applications. I learned how to create and execute automated test cases, set up a test environment, and integrate Selenium with other tools such as JIRA. I recently completed a test automation course using Selenium",
-		time_added: "02/02/2024",
-		total_courses_count: 102,
-	},
-	{
-		author_full_name: "Lemon academy",
-		company_reviews_count: 123,
-		id: 4,
-		logo: "https://placehold.co/150x150/png",
-		rating: 5,
-		related_entity_name: "QA Testing, Become a Tester",
-		status: "published",
-		text: "I recently completed a test automation course using Selenium, and I want to share my experience. The course turned out to be extremely useful and effective in deepening my knowledge in the field test automation. The Selenium classes were especially valuable because they allowed me to learn a tool for automating the testing of web applications. I learned how to create and execute automated test cases, set up a test environment, and integrate Selenium with other tools such as JIRA. I recently completed a test automation course using Selenium",
-		time_added: "03/03/2024",
-		total_courses_count: 102,
-	},
-	{
-		author_full_name: "Lemon academy",
-		company_reviews_count: 123,
-		id: 5,
-		logo: "https://placehold.co/150x150/png",
-		rating: 5,
-		related_entity_name: "QA Testing, Become a Tester",
-		status: "pending",
-		text: "I recently completed a test automation course using Selenium, and I want to share my experience. The course turned out to be extremely useful and effective in deepening my knowledge in the field test automation. The Selenium classes were especially valuable because they allowed me to learn a tool for automating the testing of web applications. I learned how to create and execute automated test cases, set up a test environment, and integrate Selenium with other tools such as JIRA. I recently completed a test automation course using Selenium",
-		time_added: "04/04/2024",
-		total_courses_count: 102,
-	},
-];
+import { useAppSelector } from "~/redux/hooks.type";
 
 const DEFAULT_PAGE_COUNT = 0;
 const DEFAULT_CURRENT_PAGE = 1;
@@ -94,48 +29,102 @@ const MyReviewsListSection: React.FC<Properties> = ({ category }) => {
 	const [currentPage, setCurrentPage] = useState(DEFAULT_CURRENT_PAGE);
 	const [pageCount, setPageCount] = useState(DEFAULT_PAGE_COUNT);
 	const [serverError, setServerError] = useState("");
+	const [entityId, setEntityId] = useState<number | null>(null);
+	const [isOpenEditReviewModal, setIsOpenEditReviewModal] =
+		useState<boolean>(false);
+	const [isOpenDeleteReviewModal, setIsOpenDeleteReviewModal] =
+		useState<boolean>(false);
 
-	const [editReviewModalData, setEditReviewModalData] =
-		useState<EditReviewModalData>({ isOpen: false, reviewId: null, text: "" });
-	const [deleteReviewModalData, setDeleteReviewModalData] =
-		useState<DeleteReviewModalData>({ isOpen: false, reviewId: null });
+	const { user } = useAppSelector((state) => state.auth);
 
-	const { data: user, error: fetchUserError } = useGetUserQuery(undefined);
+	const [deleteMyReview, { isLoading: isDeleting }] =
+		useDeleteMyReviewMutation();
+	const [editMyReview, { isLoading: isEditing }] = useEditMyReviewMutation();
+
+	const userId = user?.id as number;
+	const reviewsQueryParams = {
+		limit: DEFAULT_REVIEWS_PER_PAGE,
+		offset: (currentPage - INDEX_ONE) * DEFAULT_REVIEWS_PER_PAGE,
+		type: category,
+	};
+
 	const {
-		data: reviews,
-		error: fetchReviewsError,
-		// isLoading,
+		data: reviewsData,
+		error,
+		isLoading,
 	} = useGetMyReviewsQuery(
 		{
-			params: {
-				limit: DEFAULT_REVIEWS_PER_PAGE,
-				offset: (currentPage - INDEX_ONE) * DEFAULT_REVIEWS_PER_PAGE,
-				type: category,
-			},
-			userId: user?.id as number,
+			params: reviewsQueryParams,
+			userId,
 		},
 		{
+			skip: userId === undefined,
 			refetchOnMountOrArgChange: true,
 		},
 	);
 
 	useEffect(() => {
-		if (reviews) {
-			setPageCount(Math.ceil(reviews.count / DEFAULT_REVIEWS_PER_PAGE));
-		}
-	}, [reviews]);
-
-	useEffect(() => {
-		if (fetchReviewsError || fetchUserError) {
-			const error = fetchReviewsError || fetchUserError;
-
+		if (error) {
 			const loadError = (error as FetchBaseQueryError)?.data
 				? ((error as FetchBaseQueryError).data as Error)
 				: { message: "An error occurred during the retrieval of my reviews." };
 
 			setServerError(loadError.message);
+		} else {
+			setServerError("");
 		}
-	}, [fetchReviewsError, fetchUserError]);
+	}, [error]);
+
+	useEffect(() => {
+		if (reviewsData) {
+			setPageCount(Math.ceil(reviewsData.count / DEFAULT_REVIEWS_PER_PAGE));
+		}
+	}, [reviewsData]);
+
+	useEffect(() => {
+		setCurrentPage(DEFAULT_CURRENT_PAGE);
+	}, [category]);
+
+	const handleClickDeleteReview = useCallback((entityId: number | null) => {
+		setIsOpenDeleteReviewModal(true);
+		setEntityId(entityId);
+	}, []);
+
+	const handleClickEditReview = useCallback((entityId: number | null) => {
+		setIsOpenEditReviewModal(true);
+		setEntityId(entityId);
+	}, []);
+
+	const handleCloseDeleteReview = useCallback(() => {
+		setIsOpenDeleteReviewModal(false);
+		setEntityId(null);
+	}, []);
+
+	const handleCloseEditReview = () => {
+		setIsOpenEditReviewModal(false);
+		setEntityId(null);
+	};
+
+	const handleDeleteReview = useCallback(async () => {
+		if (entityId) {
+			await deleteMyReview({ entityId, category }).unwrap();
+			handleCloseDeleteReview();
+		}
+	}, [entityId, category, deleteMyReview]);
+
+	const handleEditReview = useCallback(
+		async (data: { text: string; rating: number }) => {
+			if (entityId) {
+				await editMyReview({ body: data, category, entityId }).unwrap();
+				handleCloseEditReview();
+			}
+		},
+		[entityId, category, editMyReview],
+	);
+
+	const reviews = reviewsData?.results;
+	const isAvailableMyReviews = reviews && reviews.length > ZERO_LENGTH;
+	const isMyReviewListEmpty = reviews && reviews.length === ZERO_LENGTH;
 
 	return (
 		<div className={styles["my-reviews-list"]}>
@@ -144,31 +133,23 @@ const MyReviewsListSection: React.FC<Properties> = ({ category }) => {
 			</div>
 
 			<div className={styles["my-reviews-list__content"]}>
-				{/* {reviews?.results && reviews.results.length > ZERO_LENGTH && (
+				{isAvailableMyReviews && (
 					<MyReviewsList
 						category={category}
-						reviews={reviews.results}
-						setEditReviewModalData={setEditReviewModalData}
-						setDeleteReviewModalData={setDeleteReviewModalData}
+						reviews={reviewsData.results}
+						handleClickEditReview={handleClickEditReview}
+						handleClickDeleteReview={handleClickDeleteReview}
 					/>
 				)}
 
-				{reviews?.results && reviews.results.length === ZERO_LENGTH && (
-					<NotFound />
-				)}
+				{isMyReviewListEmpty && <NotFound />}
 
 				{isLoading && <Spinner variant={SpinnerVariant.SMALL} />}
-				{serverError && <div className={styles["error"]}>{serverError}</div>} */}
 
-				<MyReviewsList
-					category={category}
-					reviews={myReviewsListData}
-					setDeleteReviewModalData={setDeleteReviewModalData}
-					setEditReviewModalData={setEditReviewModalData}
-				/>
+				{serverError && <div className={styles["error"]}>{serverError}</div>}
 			</div>
 
-			{reviews?.results && reviews.results.length > ZERO_LENGTH && (
+			{isAvailableMyReviews && (
 				<Pagination
 					defaultCurrentPage={currentPage}
 					pages={pageCount}
@@ -176,27 +157,22 @@ const MyReviewsListSection: React.FC<Properties> = ({ category }) => {
 				/>
 			)}
 
-			{editReviewModalData.isOpen && (
+			{isOpenEditReviewModal && entityId && (
 				<EditReviewModal
-					isOpen={editReviewModalData.isOpen}
-					// review={
-					// 	reviews?.results.find(
-					// 		(review) => review.id === editReviewModalData.reviewId,
-					// 	) as MyReview
-					// }
-					review={
-						myReviewsListData.find(
-							(review) => review.id === editReviewModalData.reviewId,
-						) as MyReview
-					}
-					setEditReviewModalData={setEditReviewModalData}
+					isOpen={isOpenEditReviewModal}
+					isEditing={isEditing}
+					review={reviews?.find((review) => review.id === entityId) as MyReview}
+					handleEditReview={handleEditReview}
+					handleCloseEditReview={handleCloseEditReview}
 				/>
 			)}
 
-			{deleteReviewModalData.isOpen && (
+			{isOpenDeleteReviewModal && (
 				<DeleteReviewModal
-					{...deleteReviewModalData}
-					setDeleteReviewModalData={setDeleteReviewModalData}
+					isOpen={isOpenDeleteReviewModal}
+					isDeleting={isDeleting}
+					handleDeleteReview={handleDeleteReview}
+					handleCloseDeleteReview={handleCloseDeleteReview}
 				/>
 			)}
 		</div>

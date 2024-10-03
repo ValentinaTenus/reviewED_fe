@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 
 import { Button, Icon, Input, StarRating } from "~/common/components";
 import {
@@ -8,38 +8,43 @@ import {
 	IconName,
 } from "~/common/enums";
 import { useAppForm } from "~/common/hooks";
-import { EditReviewModalData, MyReview } from "~/common/types/my-reviews";
+import { MyReview } from "~/common/types/my-reviews";
 
 import { DialogModal } from "../dialog-modal";
 import styles from "./styles.module.scss";
 
 interface Properties {
 	isOpen: boolean;
+	isEditing: boolean;
 	review: MyReview;
-	setEditReviewModalData: (data: EditReviewModalData) => void;
+	handleEditReview: (data: { text: string; rating: number }) => void;
+	handleCloseEditReview: () => void;
 }
 
 const EditReviewModal: React.FC<Properties> = ({
 	isOpen,
+	isEditing,
 	review,
-	setEditReviewModalData,
+	handleEditReview,
+	handleCloseEditReview,
 }) => {
 	const { control, errors, handleSubmit } = useAppForm({
 		defaultValues: {
-			text: review.text,
+			text: review?.text || "",
 		},
 	});
 
-	const handleClose = () => {
-		setEditReviewModalData({ isOpen: false, reviewId: null, text: "" });
-	};
+	const handleClose = useCallback(() => {
+		handleCloseEditReview();
+	}, []);
 
-	const handleEdit = (data: { text: string }) => {
-		// Add redux logic
-	};
+	const onEditReview = useCallback(({ text }: { text: string }) => {
+		if (!text) return;
+		handleEditReview({ text, rating: review.rating });
+	}, []);
 
 	return (
-		<DialogModal isOpen={isOpen} onClose={handleClose} classNames='edit-modal'>
+		<DialogModal isOpen={isOpen} onClose={handleClose} classNames="edit-modal">
 			<div className={styles["review-content"]}>
 				<div className={styles["review-content__info"]}>
 					<div className={styles["info__left"]}>
@@ -71,7 +76,7 @@ const EditReviewModal: React.FC<Properties> = ({
 				</div>
 
 				<div className={styles["review-content__edit"]}>
-					<form onSubmit={handleSubmit(handleEdit)}>
+					<form onSubmit={handleSubmit(onEditReview)}>
 						<div className={styles["edit__title"]}>Editing review</div>
 						<div className={styles["edit__textarea"]}>
 							<Input
@@ -99,6 +104,7 @@ const EditReviewModal: React.FC<Properties> = ({
 										Cancel
 									</Button>
 									<Button
+										disabled={isEditing}
 										size={ButtonSize.MEDIUM}
 										type={ButtonType.SUBMIT}
 										variant={ButtonVariant.PRIMARY}

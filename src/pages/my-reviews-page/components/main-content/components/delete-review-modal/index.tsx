@@ -1,31 +1,32 @@
-import React from "react";
+import React, { useCallback } from "react";
+import styles from "./styles.module.scss";
 
 import { Button, Icon } from "~/common/components";
 import { ButtonSize, ButtonVariant, IconName } from "~/common/enums";
-import { DeleteReviewModalData } from "~/common/types/my-reviews";
-
 import { DialogModal } from "../dialog-modal";
-import styles from "./styles.module.scss";
 
 interface Properties {
 	isOpen: boolean;
-	reviewId: null | number;
-	setDeleteReviewModalData: (data: DeleteReviewModalData) => void;
+	isDeleting: boolean;
+	handleDeleteReview: () => void;
+	handleCloseDeleteReview: () => void;
 }
 
 const DeleteReviewModal: React.FC<Properties> = ({
 	isOpen,
-	reviewId,
-	setDeleteReviewModalData,
+	isDeleting,
+	handleDeleteReview,
+	handleCloseDeleteReview,
 }) => {
 	if (!isOpen) return null;
 
-	const handleClose = () => {
-		setDeleteReviewModalData({ isOpen: false, reviewId: null });
-	};
-	const handleDelete = () => {
-		//Add redux logic
-	};
+	const handleClose = useCallback(() => {
+		handleCloseDeleteReview();
+	}, []);
+
+	const handleClickDelete = useCallback(() => {
+		handleDeleteReview();
+	}, []);
 
 	return (
 		<DialogModal
@@ -60,7 +61,8 @@ const DeleteReviewModal: React.FC<Properties> = ({
 							Cancel
 						</Button>
 						<Button
-							onClick={handleDelete}
+							disabled={isDeleting}
+							onClick={handleClickDelete}
 							size={ButtonSize.MEDIUM}
 							variant={ButtonVariant.DELETE}
 						>

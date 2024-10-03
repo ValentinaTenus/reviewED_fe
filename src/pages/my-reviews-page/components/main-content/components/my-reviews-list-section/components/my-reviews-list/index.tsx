@@ -1,46 +1,26 @@
 import React, { useState } from "react";
-
-import {
-	DeleteReviewModalData,
-	EditReviewModalData,
-	MyReview,
-	MyReviewCategory,
-} from "~/common/types/my-reviews";
-
-import { ReviewListItem } from "../reviews-list-item";
 import styles from "./styles.module.scss";
+
+import { MyReview, MyReviewCategory } from "~/common/types/my-reviews";
+import { ReviewListItem } from "../reviews-list-item";
 
 interface Properties {
 	category: MyReviewCategory;
 	reviews: MyReview[];
-	setDeleteReviewModalData: (data: DeleteReviewModalData) => void;
-	setEditReviewModalData: (data: EditReviewModalData) => void;
+	handleClickDeleteReview: (entityId: number | null) => void;
+	handleClickEditReview: (entityId: number | null) => void;
 }
 
 const MyReviewsList: React.FC<Properties> = ({
 	category,
 	reviews,
-	setDeleteReviewModalData,
-	setEditReviewModalData,
+	handleClickDeleteReview,
+	handleClickEditReview,
 }) => {
 	const [activePopup, setActivePopup] = useState<null | number>(null);
 
 	const handleTogglePopup = (item: null | number) => {
 		setActivePopup((prev) => (prev === item ? null : item));
-	};
-
-	const handleEditReview = ({
-		reviewId,
-		text,
-	}: {
-		reviewId: number;
-		text: string;
-	}) => {
-		setEditReviewModalData({ isOpen: true, reviewId, text });
-	};
-
-	const handleDeleteReview = (reviewId: number) => {
-		setDeleteReviewModalData({ isOpen: true, reviewId });
 	};
 
 	return (
@@ -49,8 +29,8 @@ const MyReviewsList: React.FC<Properties> = ({
 				<ReviewListItem
 					activePopup={activePopup}
 					category={category}
-					handleDeleteReview={handleDeleteReview}
-					handleEditReview={handleEditReview}
+					handleClickDeleteReview={handleClickDeleteReview}
+					handleClickEditReview={handleClickEditReview}
 					handleTogglePopup={handleTogglePopup}
 					key={review.id}
 					review={review}

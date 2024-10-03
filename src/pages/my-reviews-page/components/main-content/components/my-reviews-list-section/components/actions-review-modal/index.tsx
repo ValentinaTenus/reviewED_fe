@@ -19,7 +19,7 @@ const ActionsReviewModal: React.FC<Properties> = ({
 	onSelect,
 	setIsOpenActionsModal,
 }) => {
-	const handleClose = () => {
+	const handleClose = () => {	
 		setIsOpenActionsModal(false);
 	};
 
@@ -36,7 +36,7 @@ const ActionsReviewModal: React.FC<Properties> = ({
 		>
 			<div className={styles["actions-modal"]}>
 				<div className={styles["actions-modal__title"]}>Actions</div>
-				
+
 				<hr />
 
 				<div className={styles["actions-modal__options"]}>
