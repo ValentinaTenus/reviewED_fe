@@ -1,97 +1,80 @@
-import { Rating } from "@mui/material";
 import React, { useCallback, useState } from "react";
 
 import { Button } from "~/common/components/index";
 import { Modal } from "~/common/components/modal";
 import { ButtonSize, ButtonVariant } from "~/common/enums/index";
 import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
-import { useSendReviewMutation } from "~/redux/reviews/reviews-companies-api";
+// import { useSendReviewMutation } from "~/redux/reviews/reviews-companies-api";
 
 import styles from "./styles.module.scss";
 
-const ReviewModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
+const ReportModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
 	isOpen,
 	onClose,
 }) => {
-	const ZERO = 0;
 	const MIN_TEXT = 200;
 
-	const [rating, setRating] = useState<null | number>(ZERO);
-	const [reviewText, setReviewText] = useState("");
+	const [reportText, setReportText] = useState("");
 
-	const [sendReview] = useSendReviewMutation();
-
+	// const [sendReview] = useSendReviewMutation();
 	const handleReviewChange = useCallback(
 		(event: React.ChangeEvent<HTMLTextAreaElement>) => {
-			setReviewText(event.target.value);
+			setReportText(event.target.value);
 		},
-		[setReviewText],
+		[setReportText],
 	);
 
 	const handleSubmit = useCallback(async () => {
-		const response = await sendReview({
-			companyId: 1,
-			rating: rating,
-			text: reviewText,
-		});
-		// eslint-disable-next-line no-console
-		console.log(response);
-		onClose();
-	}, [rating, reviewText, sendReview, onClose]);
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		// const response = await sendReview({
+		// 	companyId: 1,
+		// 	text: setReportText,
+		// });
+		// onClose();
+		// }, [reportText, sendReview, onClose]);
+	}, []);
 
 	const handleCloseReviewModal = useCallback(() => {
 		onClose();
-		setRating(ZERO);
-		setReviewText("");
-	}, [onClose, setRating, setReviewText]);
+		setReportText("");
+	}, [onClose, setReportText]);
 
 	return (
 		<Modal
 			isOpen={isOpen}
 			onClose={handleCloseReviewModal}
-			title="Залиш свій відгук"
+			title="Поскаржитися"
 		>
 			<div className={styles["modal_content"]}>
-				<div className={styles["modal_rating-block"]}>
-					<h4 className={styles["modal_label"]}>Ваша оцінка</h4>
-					<Rating
-						name="simple-controlled"
-						onChange={(event, newValue) => {
-							setRating(newValue);
-						}}
-						precision={0.5}
-						value={rating}
-					/>
-				</div>
 				<div className={styles["modal_review-block"]}>
-					<h4 className={styles["modal_label"]}>Ваш відгук</h4>
+					<h4 className={styles["modal_label"]}>Ваш коментар</h4>
 					<textarea
 						className={`${styles["modal_review-textarea"]} ${globalStyles["body-r"]}`}
 						id="review"
 						maxLength={2000}
 						onChange={handleReviewChange}
 						placeholder="Текст відгуку"
-						value={reviewText}
+						value={reportText}
 					/>
 					<div
 						className={`${styles["modal_char-counter"]} ${globalStyles["small_r"]}`}
 					>
 						<span>Мінімальна к-ть символів - 200</span>
-						<span>{reviewText.length}/2000</span>
+						<span>{reportText.length}/2000</span>
 					</div>
 				</div>
 				<Button
 					className={styles["modal_submit-button"]}
-					disabled={reviewText.length < MIN_TEXT}
+					disabled={reportText.length < MIN_TEXT}
 					onClick={handleSubmit}
 					size={ButtonSize.LARGE}
 					variant={ButtonVariant.PRIMARY}
 				>
-					Написати відгук
+					Залишити скаргу
 				</Button>
 			</div>
 		</Modal>
 	);
 };
 
-export { ReviewModal };
+export { ReportModal };

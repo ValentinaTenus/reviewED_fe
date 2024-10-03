@@ -15,6 +15,10 @@ const Contacts = React.forwardRef<HTMLDivElement, { company: Company }>(
 			setIsContactsShow(!isContactsShow);
 		};
 
+		const handleContact = () => {
+			window.location.href = `mailto:${company.email}`;
+		};
+
 		return (
 			<>
 				<div className={styles["contacts"]} ref={ref}>
@@ -59,10 +63,7 @@ const Contacts = React.forwardRef<HTMLDivElement, { company: Company }>(
 						</li>
 					</ul>
 					<div className={styles["contacts_buttons"]}>
-						<Button
-							onClick={() => (window.location.href = `mailto:${company.email}`)}
-							variant={ButtonVariant.PRIMARY}
-						>
+						<Button onClick={handleContact} variant={ButtonVariant.PRIMARY}>
 							Зв&#39;язатися з компанією
 						</Button>
 						<Button onClick={handleClick} variant={ButtonVariant.OUTLINED}>

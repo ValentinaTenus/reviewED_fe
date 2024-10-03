@@ -32,7 +32,7 @@ export const reviewsApi = api.injectEndpoints({
 					text: reviewData.text,
 				},
 				method: HttpMethods.POST,
-				url: `${reviewsApiPath.ROOT}/companies/${reviewData.companyId}`,
+				url: `${reviewsApiPath.POST_COMPANIES_REVIEWS}${reviewData.companyId}`,
 			}),
 		}),
 	}),

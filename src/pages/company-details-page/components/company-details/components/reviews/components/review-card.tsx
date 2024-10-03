@@ -1,5 +1,5 @@
 import { Rating } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { Icon } from "~/common/components";
@@ -7,12 +7,23 @@ import { IconName } from "~/common/enums";
 import { Review } from "~/common/types";
 import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
 
+import { ReportModal } from "./components/report-modal";
 import styles from "./styles.module.scss";
 
 const ReviewCard: React.FC<{
 	review: Review;
 }> = ({ review }) => {
 	const RATING_SCALE = 1.0;
+
+	const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+
+	const handleOpenReviewModal = () => {
+		setIsReviewModalOpen(true);
+	};
+
+	const handleCloseReviewModal = () => {
+		setIsReviewModalOpen(false);
+	};
 
 	return (
 		<>
@@ -76,7 +87,11 @@ const ReviewCard: React.FC<{
 				{review.text}
 			</p>
 			<div className={styles["review_bottom"]}>
-				<Link className={styles["review_icon-text"]} to="#">
+				<Link
+					className={styles["review_icon-text"]}
+					onClick={handleOpenReviewModal}
+					to="#"
+				>
 					<Icon className={styles["review_flag"]} name={IconName.FLAG} />
 					<span className={globalStyles["small_r"]}>Report</span>
 				</Link>
@@ -93,6 +108,10 @@ const ReviewCard: React.FC<{
 					</Link>
 				</div>
 			</div>
+			<ReportModal
+				isOpen={isReviewModalOpen}
+				onClose={handleCloseReviewModal}
+			/>
 		</>
 	);
 };
