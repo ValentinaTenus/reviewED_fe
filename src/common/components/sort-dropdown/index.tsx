@@ -71,7 +71,7 @@ const SortDropdown: React.FC<Properties> = ({
 				aiEnd ? styles["ai-end"] : styles["ai-start"]
 			}`}
 		>
-			<p className={styles["sort_text"]}>Сортувати за</p>
+			<p className={styles["sort_text"]}>{name}</p>
 			<div
 				className={clsx(
 					styles["dropdown_container"],

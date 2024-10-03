@@ -1,7 +1,6 @@
-import { forwardRef, useCallback, useState } from "react";
+import { forwardRef, useState } from "react";
 
-import { Pagination, SortDropdown } from "~/common/components";
-import { ReviewsSortOptions } from "~/common/constants";
+import { Pagination } from "~/common/components";
 import { Company, Review } from "~/common/types";
 import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
 
@@ -9,7 +8,6 @@ import { ReviewCard } from "./components/review-card";
 import { Statistics } from "./components/statistics";
 import styles from "./styles.module.scss";
 
-// eslint-disable-next-line react/display-name
 const Reviews = forwardRef<
 	HTMLDivElement,
 	{ company: Company; reviews: Review[] | undefined }
@@ -17,12 +15,6 @@ const Reviews = forwardRef<
 	const MIN_REVIEWS = 0;
 	const ZERO = 0;
 	const ONE = 1;
-
-	const [, setSortBy] = useState<string>("");
-
-	const handleChangeSortBy = useCallback((newSortBy: number | string) => {
-		setSortBy(newSortBy.toString());
-	}, []);
 
 	const DEFAULT_REVIEWS_PER_PAGE = 4;
 	const DEFAULT_CURRENT_PAGE = 1;
@@ -52,13 +44,6 @@ const Reviews = forwardRef<
 			<div className={styles["reviews_section"]}>
 				<div className={styles["reviews_container"]} ref={ref}>
 					<h2 className={styles["reviews_heading"]}>Відгуки</h2>
-					<SortDropdown
-						aiEnd={false}
-						className={styles["sort-dropdown"]}
-						name="sort"
-						onChange={handleChangeSortBy}
-						options={ReviewsSortOptions}
-					/>
 					{reviews?.map((review, index) => (
 						<div className={styles["review"]} key={index}>
 							<ReviewCard review={review} />
@@ -99,5 +84,7 @@ const Reviews = forwardRef<
 		);
 	}
 });
+
+Reviews.displayName = "Reviews";
 
 export { Reviews };

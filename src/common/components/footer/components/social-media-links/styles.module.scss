@@ -28,3 +28,24 @@
 .footer_content__contact_icon:hover {
   color: var(--color-yellow-500);
 }
+
+@media (max-width: 768px) {
+  .footer_content__contacts_data {
+    gap: 8px;
+  }
+  
+}
+
+@media (max-width: 365px) {
+  .footer_content__contact_icon {
+    height: 24px;
+    width: 24px;
+  }
+}
+
+@media (max-width: 300px) {
+  .footer_content__contact_icon {
+    height: 18px;
+    width: 18px;
+  }
+}

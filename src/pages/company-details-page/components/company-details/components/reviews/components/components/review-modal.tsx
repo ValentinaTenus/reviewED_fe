@@ -31,6 +31,13 @@ const ReviewModal: React.FC<{
 		[setReviewText],
 	);
 
+	const handleRatingChange = useCallback(
+		(_: React.SyntheticEvent, newValue: null | number) => {
+			setRating(newValue);
+		},
+		[],
+	);
+
 	const handleCloseReviewModal = useCallback(() => {
 		onClose();
 		setRating(ZERO);
@@ -64,9 +71,7 @@ const ReviewModal: React.FC<{
 					<h4 className={styles["modal_label"]}>Ваша оцінка</h4>
 					<Rating
 						name="simple-controlled"
-						onChange={(_event, newValue) => {
-							setRating(newValue);
-						}}
+						onChange={handleRatingChange}
 						precision={0.5}
 						value={rating}
 					/>
