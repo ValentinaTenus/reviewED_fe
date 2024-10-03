@@ -5,10 +5,17 @@ import { Modal, SearchBar, Spinner } from "~/common/components";
 import { ScreenBreakpoints } from "~/common/constants";
 import { ButtonGroupData, SpinnerVariant } from "~/common/enums";
 import { useGetScreenWidth } from "~/common/hooks";
-import { DropdownOption, GetModerationReviewsRequest } from "~/common/types";
+import {
+	DropdownOption,
+	GetModerationReviewsRequest,
+	GetModerationReviewsResponse,
+} from "~/common/types";
 import { NotFound } from "~/pages/home-page/components/main-content/components/search-block/components";
+import {
+	useLazyGetReviewsModerationByFilterQuery,
+	useLazyGetReviewsModerationByIdQuery,
+} from "~/redux/reviews-moderation/reviews-moderation-api";
 import { setRewiews } from "~/redux/reviews-moderation/reviews-moderation-slice";
-import useReviewModerationApi from "~/redux/reviews-moderation/use-review-moderation-api.hook";
 
 import {
 	ModeratorsReviewFilterSection,
@@ -17,22 +24,26 @@ import {
 import styles from "./styles.module.scss";
 
 const INDEX_ZERO = 0;
+const INDEX_ONE = 1;
 
 const MainModeratorsContent: React.FC = () => {
-	const [searchTerm, setSearchTerm] = useState<string>("");
+	const [searchedID, setSearchedID] = useState<string>("");
 	const [filterByStatus, setFilterByStatus] =
 		useState<DropdownOption["value"]>();
 	const [sortByPeriod, setSortByPeriod] = useState<DropdownOption["value"]>();
 	const [filterByType, setFilterByType] =
 		useState<keyof typeof ButtonGroupData>("Компанії");
 	const [isOpenSerchFiltersModal, setIsOpenSerchFiltersModal] = useState(false);
+	const [fetchResult, setFetchResult] = useState<
+		GetModerationReviewsResponse | undefined
+	>();
 	const screenWidth = useGetScreenWidth();
 
 	const handleSetSearchTerm = useCallback(
 		(term: string) => {
-			setSearchTerm(term);
+			setSearchedID(term);
 		},
-		[setSearchTerm],
+		[setSearchedID],
 	);
 
 	const handleSetFilterByStatus = useCallback(
@@ -54,36 +65,66 @@ const MainModeratorsContent: React.FC = () => {
 		[setIsOpenSerchFiltersModal],
 	);
 
-	const fetchResult = useReviewModerationApi({
-		id: searchTerm,
-		ordering: sortByPeriod as GetModerationReviewsRequest["ordering"],
-		status: filterByStatus as GetModerationReviewsRequest["status"],
-		type: ButtonGroupData[filterByType],
-	});
-	// const err = (fetchResult?.error as FetchBaseQueryError)?.status;
-	// const loadError = (error as FetchBaseQueryError)?.data
-	// 	? ((error as FetchBaseQueryError).data as Error)
-	// 	: { message: "Невідома помилка" };
-	// setServerError(loadError.message);
+	const [getModeratorsReviewByID, { isFetching: isFetchingByID }] =
+		useLazyGetReviewsModerationByIdQuery();
+
+	const [getModeratorsReviewsByFilters, { isFetching: isFetchingByFilters }] =
+		useLazyGetReviewsModerationByFilterQuery();
+
+	const handleUpdateModeratorsReviews = useCallback(async () => {
+		if (searchedID) {
+			const res = await getModeratorsReviewByID({
+				id: searchedID,
+				type: ButtonGroupData[filterByType],
+			});
+			setFetchResult({
+				count: res.data ? INDEX_ONE : INDEX_ZERO,
+				next: null,
+				previous: null,
+				results: res.data ? [res.data] : [],
+			});
+		} else {
+			const res = await getModeratorsReviewsByFilters({
+				id: searchedID,
+				ordering: sortByPeriod as GetModerationReviewsRequest["ordering"],
+				status: filterByStatus as GetModerationReviewsRequest["status"],
+				type: ButtonGroupData[filterByType],
+			});
+			setFetchResult(res.data);
+		}
+	}, [
+		filterByStatus,
+		filterByType,
+		getModeratorsReviewByID,
+		getModeratorsReviewsByFilters,
+		searchedID,
+		sortByPeriod,
+	]);
+
+	useEffect(() => {
+		handleUpdateModeratorsReviews();
+	}, [
+		searchedID,
+		filterByType,
+		sortByPeriod,
+		filterByStatus,
+		handleUpdateModeratorsReviews,
+	]);
 
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		if (fetchResult?.reviews) {
-			dispatch(setRewiews(fetchResult?.reviews.results));
+		if (fetchResult?.results) {
+			dispatch(setRewiews(fetchResult?.results));
 		}
-	}, [fetchResult?.reviews, dispatch]);
+	}, [fetchResult, dispatch]);
 
 	return (
 		<div className={styles["moderators_wrapper"]}>
 			<header className={styles["header_wrapper"]}>
 				<h2 className={styles["title"]}>Модерація відгуків</h2>
 				<p className={styles["sub_title"]}>
-					Знайдено:{" "}
-					<span>
-						{fetchResult?.error ? INDEX_ZERO : fetchResult?.reviews?.count}
-					</span>{" "}
-					відгуків
+					Знайдено: <span>{fetchResult?.count || INDEX_ZERO}</span> відгуків
 				</p>
 			</header>
 
@@ -96,7 +137,7 @@ const MainModeratorsContent: React.FC = () => {
 						onOpenFilter={handleSetIsOpenSerchFiltersModal}
 						onSubmit={handleSetSearchTerm}
 						placeholder="Введіть UID відгуку"
-						value={searchTerm}
+						value={searchedID}
 					/>
 				</div>
 				{useGetScreenWidth() > ScreenBreakpoints.MOBILE && (
@@ -110,22 +151,25 @@ const MainModeratorsContent: React.FC = () => {
 			</section>
 
 			<main className={styles["main_section"]}>
-				{fetchResult?.isFetching && (
+				{(isFetchingByID || isFetchingByFilters) && (
 					<div className={styles["spinner"]}>
 						<Spinner variant={SpinnerVariant.MEDIUM} />
 					</div>
 				)}
 
-				{(fetchResult?.error || fetchResult?.reviews?.count === INDEX_ZERO) && (
-					<NotFound />
-				)}
+				{fetchResult?.count === INDEX_ZERO && <NotFound />}
 
-				{!fetchResult?.isFetching &&
-					!fetchResult?.error &&
-					fetchResult?.reviews?.results.map((review) => (
-						<ReviewModeratorsCard key={review.id} review={review} />
+				{!isFetchingByID &&
+					!isFetchingByFilters &&
+					fetchResult?.results.map((review) => (
+						<ReviewModeratorsCard
+							key={review.id}
+							onUpdateModeratorsReviews={handleUpdateModeratorsReviews}
+							review={review}
+						/>
 					))}
 			</main>
+
 			{isOpenSerchFiltersModal && screenWidth <= ScreenBreakpoints.MOBILE && (
 				<Modal
 					isOpen={isOpenSerchFiltersModal}
