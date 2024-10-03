@@ -15,14 +15,18 @@ import { PageTitle } from "./components/page-title";
 import { NavBar } from "./components/navigation-bar";
 import { ReviewsBar } from "./components/reviews-bar";
 
-const MainContent: React.FC = () => {
+type MainContentProperties = {
+	courseId: string;
+};
+
+const MainContent: React.FC<MainContentProperties> = ({courseId}) => {
 
 
-	const exampleCourseIndex = "1";
-	const { data: mockCourse } = useGetCourseByIdQuery(exampleCourseIndex);
 
+	const { data: course } = useGetCourseByIdQuery(courseId);
+console.log(course)
 
-	const courseName: string = mockCourse?.title || "";
+	const courseName: string = course?.title || "";
 
 	const breadcrumbs = [
 		{ label: "Головна сторінка", path: `../`},
@@ -36,20 +40,20 @@ const MainContent: React.FC = () => {
 
 	return (
 		<div className={styles["main_content_wrapper"]}>
-			{mockCourse && (
+			{course && (
 				<div className={styles["main_content"]}>
 					<BreadCrumb items={breadcrumbs} />
-					<PageTitle course={mockCourse} />
+					<PageTitle course={course} />
 					<NavBar aboutCourse={aboutCourseRef} aboutCompany={aboutCompanyRef} />
 					<Header ref={aboutCourseRef} title="Про курс" />
-					<PricingBar price={mockCourse ? mockCourse.price : ""} />
-					<TargetGroupSection targetGroup={mockCourse ? mockCourse.age : ""} />
+					<PricingBar price={course ? course.price : ""} />
+					<TargetGroupSection targetGroup={course ? course.age : ""} />
 					<DescriptionSection
-						description={mockCourse ? mockCourse.description : ""}
+						description={course ? course.description : ""}
 					/>
-					<CategoriesSection />
+					<CategoriesSection course={course} />
 					<ContactsBar
-						course={mockCourse}
+						course={course}
 						ref={aboutCompanyRef}
 						title="Про компанію"
 					/>
