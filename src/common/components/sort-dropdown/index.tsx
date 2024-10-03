@@ -29,7 +29,6 @@ const SortDropdown: React.FC<Properties> = ({
 	isDisabled,
 	isIconButton = false,
 	menuStaticStyle,
-	name,
 	onChange,
 	options,
 }) => {

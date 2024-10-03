@@ -1,11 +1,15 @@
 import { Rating } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { Icon } from "~/common/components";
 import { IconName } from "~/common/enums";
 import { Review } from "~/common/types";
 import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
+import {
+	useLikeReviewMutation,
+	useUnlikeReviewMutation,
+} from "~/redux/reviews/reviews-companies-api";
 
 import { ReportModal } from "./components/report-modal";
 import { ShareModal } from "./components/share-modal";
@@ -15,6 +19,7 @@ const ReviewCard: React.FC<{
 	review: Review;
 }> = ({ review }) => {
 	const RATING_SCALE = 1.0;
+	const ONE = 1;
 
 	const [isReportModalOpen, setIsReportModalOpen] = useState(false);
 
@@ -34,6 +39,45 @@ const ReviewCard: React.FC<{
 
 	const handleCloseShareModal = () => {
 		setIsShareModalOpen(false);
+	};
+
+	const [likesCount, setLikesCount] = useState(review.count_likes);
+	const [isLiked, setIsLiked] = useState(false);
+
+	const [likeReview] = useLikeReviewMutation();
+	const [unlikeReview] = useUnlikeReviewMutation();
+
+	useEffect(() => {
+		const likedReviews = JSON.parse(
+			localStorage.getItem("likedReviews") || "[]",
+		);
+		setIsLiked(likedReviews.includes(review.id));
+	}, [review.id]);
+
+	const handleLike = async () => {
+		try {
+			await likeReview({ reviewId: review.id }).unwrap();
+			setLikesCount((prevCount) => prevCount + ONE);
+			setIsLiked(true);
+			const likedReviews = JSON.parse(
+				localStorage.getItem("likedReviews") || "[]",
+			);
+			localStorage.setItem(
+				"likedReviews",
+				JSON.stringify([...likedReviews, review.id]),
+			);
+		} catch {
+			await unlikeReview({ reviewId: review.id }).unwrap();
+			setLikesCount((prevCount) => prevCount - ONE);
+			setIsLiked(false);
+			const likedReviews = JSON.parse(
+				localStorage.getItem("likedReviews") || "[]",
+			);
+			localStorage.setItem(
+				"likedReviews",
+				JSON.stringify(likedReviews.filter((id: number) => id !== review.id)),
+			);
+		}
 	};
 
 	return (
@@ -115,11 +159,16 @@ const ReviewCard: React.FC<{
 						<Icon className={styles["review_share"]} name={IconName.SHARE} />
 						<span className={globalStyles["small_r"]}>Share</span>
 					</Link>
-					<Link className={styles["review_icon-text"]} to="#">
-						<Icon className={styles["review_like"]} name={IconName.LIKE} />
-						<span className={globalStyles["small_r"]}>
-							{review.count_likes}
-						</span>
+					<Link
+						className={styles["review_icon-text"]}
+						onClick={handleLike}
+						to="#"
+					>
+						<Icon
+							className={`${styles["review_like"]} ${isLiked ? styles["liked"] : ""}`}
+							name={IconName.LIKE}
+						/>
+						<span className={globalStyles["small_r"]}>{likesCount}</span>
 					</Link>
 				</div>
 			</div>

@@ -18,8 +18,7 @@ const Reviews = forwardRef<
 	const ZERO = 0;
 	const ONE = 1;
 
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const [sortBy, setSortBy] = useState<string>("");
+	const [, setSortBy] = useState<string>("");
 
 	const handleChangeSortBy = useCallback((newSortBy: number | string) => {
 		setSortBy(newSortBy.toString());

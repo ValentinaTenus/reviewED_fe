@@ -17,6 +17,7 @@ const ReviewModal: React.FC<{
 }> = ({ company, isOpen, onClose }) => {
 	const ZERO = 0;
 	const MIN_TEXT = 200;
+	const FORBIDDEN = 403;
 
 	const [rating, setRating] = useState<null | number>(ZERO);
 	const [reviewText, setReviewText] = useState("");
@@ -37,11 +38,18 @@ const ReviewModal: React.FC<{
 	}, [onClose, setRating, setReviewText]);
 
 	const handleSubmit = useCallback(async () => {
-		await sendReview({
+		const response = await sendReview({
 			companyId: company.id,
 			rating: rating,
 			text: reviewText,
 		});
+		if (response.error) {
+			if ("status" in response.error && response.error.status !== FORBIDDEN) {
+				window.location.href = "/privacy-policy";
+			} else {
+				alert("You have already left a review for this company");
+			}
+		}
 		handleCloseReviewModal();
 	}, [company.id, rating, reviewText, sendReview, handleCloseReviewModal]);
 
@@ -56,7 +64,7 @@ const ReviewModal: React.FC<{
 					<h4 className={styles["modal_label"]}>Ваша оцінка</h4>
 					<Rating
 						name="simple-controlled"
-						onChange={(event, newValue) => {
+						onChange={(_event, newValue) => {
 							setRating(newValue);
 						}}
 						precision={0.5}
