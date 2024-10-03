@@ -18,10 +18,14 @@
 }
 
 .companies_filter__search_bar {
-  align-items: flex-end;
+  align-items: flex-start;
   display: flex;
   justify-content: space-between;
   gap: 124px;
+}
+
+.companies_filter__sort {
+  width: 230px;
 }
 
 @media (max-width: 1280px) {

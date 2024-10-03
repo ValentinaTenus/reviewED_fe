@@ -35,12 +35,13 @@
 .search_button_wrapper {
 	height: 100%;
 	padding: 4px;
-	width: 196px;
 }
 
 .search__button {
+	font-size: var(--font-size-title-h5);
 	height: 100%;
-	width: 100%;
+	padding: 12px 32px;
+	width: 196px;
 }
 
 .search__icon_button {
@@ -77,6 +78,12 @@
 
 .filter-button__icon {
 	height: 22px;
+}
+
+@media (max-width: 1280px) {
+	.search__button {
+		width: 112px;
+	}
 }
 
 @media (max-width: 768px) {

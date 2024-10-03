@@ -10,7 +10,7 @@ import styles from "./styles.module.scss";
 const Courses = React.forwardRef<
 	HTMLDivElement,
 	{ company: Company; courses: GetCoursesResult[] }
->(({ company, courses }, ref) => {
+>(({ courses }, ref) => {
 	const [showAll, setShowAll] = useState(false);
 
 	const toggleShowAll = () => {
