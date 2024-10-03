@@ -14,9 +14,10 @@ const TechContactsBlock: React.FC = () => {
 			<div className={styles["footer_content__contacts_data"]}>
 				<div className={styles["footer_content__contacts"]}>
 					<div className={styles["footer_content__contact"]}>
-						<Icon 
+						<Icon
 							className={styles["footer_content__contact-icon"]}
-							name={IconName.PHONE} />
+							name={IconName.PHONE}
+						/>
 						<a
 							className={styles["footer_content__contact-link"]}
 							href="tel:+380674646575"
@@ -25,9 +26,9 @@ const TechContactsBlock: React.FC = () => {
 						</a>
 					</div>
 					<div className={styles["footer_content__contact"]}>
-						<Icon 
+						<Icon
 							className={styles["footer_content__contact-icon"]}
-							name={IconName.EMAIL} 
+							name={IconName.EMAIL}
 						/>
 						<a
 							className={styles["footer_content__contact-link"]}
