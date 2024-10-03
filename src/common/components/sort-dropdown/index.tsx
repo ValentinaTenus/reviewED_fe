@@ -13,6 +13,7 @@ import styles from "./styles.module.scss";
 const FIRST_OPTION = 0;
 
 type Properties = {
+	aiEnd?: boolean;
 	className?: string;
 	isDisabled?: boolean;
 	isIconButton?: boolean;
@@ -23,6 +24,7 @@ type Properties = {
 };
 
 const SortDropdown: React.FC<Properties> = ({
+	aiEnd = true,
 	className,
 	isDisabled,
 	isIconButton = false,
@@ -65,8 +67,12 @@ const SortDropdown: React.FC<Properties> = ({
 	}, []);
 
 	return (
-		<div className={styles["sort_container"]}>
-			<p className={styles["sort_text"]}>{name}</p>
+		<div
+			className={`${styles["sort_container"]} ${
+				aiEnd ? styles["ai-end"] : styles["ai-start"]
+			}`}
+		>
+			<p className={styles["sort_text"]}>Сортувати за</p>
 			<div
 				className={clsx(
 					styles["dropdown_container"],

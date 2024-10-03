@@ -1,30 +1,85 @@
-import { forwardRef } from "react";
+import { forwardRef, useCallback, useState } from "react";
 
-import { Review } from "~/common/types";
+import { Pagination, SortDropdown } from "~/common/components";
+import { ReviewsSortOptions } from "~/common/constants";
+import { Company, Review } from "~/common/types";
 import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
 
 import { ReviewCard } from "./components/review-card";
+import { Statistics } from "./components/statistics";
 import styles from "./styles.module.scss";
 
 // eslint-disable-next-line react/display-name
-const Reviews = forwardRef<HTMLDivElement, { reviews: Review[] | undefined }>(
-	({ reviews }, ref) => {
-		const MIN_REVIEWS = 0;
+const Reviews = forwardRef<
+	HTMLDivElement,
+	{ company: Company; reviews: Review[] | undefined }
+>(({ company, reviews }, ref) => {
+	const MIN_REVIEWS = 0;
+	const ZERO = 0;
+	const ONE = 1;
 
-		if (reviews?.length != MIN_REVIEWS) {
-			return (
-				<div className={styles["reviews"]} ref={ref}>
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const [sortBy, setSortBy] = useState<string>("");
+
+	const handleChangeSortBy = useCallback((newSortBy: number | string) => {
+		setSortBy(newSortBy.toString());
+	}, []);
+
+	const DEFAULT_REVIEWS_PER_PAGE = 4;
+	const DEFAULT_CURRENT_PAGE = 1;
+
+	const [currentPage, setCurrentPage] = useState(DEFAULT_CURRENT_PAGE);
+	const [reviewsPerPage] = useState(DEFAULT_REVIEWS_PER_PAGE);
+
+	let pages = 0;
+
+	if (reviews) {
+		pages = Math.ceil(reviews.length / reviewsPerPage);
+	}
+
+	const [pageCount] = useState(pages);
+
+	const reviewsCount =
+		reviews?.reduce(
+			(acc, review) => {
+				acc[review.rating] = (acc[review.rating] || ZERO) + ONE;
+				return acc;
+			},
+			{} as Record<number, number>,
+		) || {};
+
+	if (reviews?.length != MIN_REVIEWS) {
+		return (
+			<div className={styles["reviews_section"]}>
+				<div className={styles["reviews_container"]} ref={ref}>
 					<h2 className={styles["reviews_heading"]}>Відгуки</h2>
+					<SortDropdown
+						aiEnd={false}
+						className={styles["sort-dropdown"]}
+						name="sort"
+						onChange={handleChangeSortBy}
+						options={ReviewsSortOptions}
+					/>
 					{reviews?.map((review, index) => (
 						<div className={styles["review"]} key={index}>
 							<ReviewCard review={review} />
 						</div>
 					))}
+					{pageCount > DEFAULT_CURRENT_PAGE && (
+						<Pagination
+							defaultCurrentPage={currentPage}
+							pages={pageCount}
+							setCurrentPage={setCurrentPage}
+						/>
+					)}
 				</div>
-			);
-		} else {
-			return (
-				<div className={styles["no-reviews_container"]}>
+				<Statistics company={company} reviewsCount={reviewsCount} />
+			</div>
+		);
+	} else {
+		return (
+			<div className={styles["reviews_section"]}>
+				<div className={styles["no-reviews_container"]} ref={ref}>
 					<h2 className={styles["reviews_heading"]}>Відгуки</h2>
 					<div className={styles["no-reviews"]}>
 						<img
@@ -40,9 +95,10 @@ const Reviews = forwardRef<HTMLDivElement, { reviews: Review[] | undefined }>(
 						</p>
 					</div>
 				</div>
-			);
-		}
-	},
-);
+				<Statistics company={company} reviewsCount={reviewsCount} />
+			</div>
+		);
+	}
+});
 
 export { Reviews };

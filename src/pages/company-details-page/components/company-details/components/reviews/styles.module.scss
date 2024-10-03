@@ -1,5 +1,13 @@
-.reviews {
+.reviews_section {
+	display: flex;
+	justify-content: space-between;
+	gap: 20px;
 	padding-bottom: 40px;
+}
+
+.reviews_container,
+.no-reviews_container {
+	flex: 0 1 60%;
 }
 
 .reviews_heading {
@@ -20,10 +28,6 @@
 	bottom: -30px;
 }
 
-.no-reviews_container {
-	padding-bottom: 40px;
-}
-
 .no-reviews {
 	display: flex;
 	flex-direction: column;
@@ -41,3 +45,15 @@
 }
 
 /*-----------------------------*/
+
+.sort-dropdown {
+	margin-bottom: 30px;
+}
+
+/*-----------------------------*/
+
+@media (max-width: 992px) {
+	.reviews_section {
+		flex-direction: column-reverse;
+	}
+}

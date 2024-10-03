@@ -1,7 +1,9 @@
 import { HttpMethods } from "~/common/enums/index.ts";
 import {
+	type CompanyReview,
 	type GetQueryResponse,
 	type GetReviewsByCompanyIdResponseDto,
+	type ReviewReport,
 } from "~/common/types/index.ts";
 
 import { api } from "../services.ts";
@@ -25,7 +27,42 @@ export const reviewsApi = api.injectEndpoints({
 				return response.results;
 			},
 		}),
+		sendReport: builder.mutation<ReviewReport, SendReportRequest>({
+			query: (reviewData) => ({
+				body: {
+					reason: reviewData.reason,
+				},
+				method: HttpMethods.POST,
+				url: `${reviewsApiPath.POST_REPORTS}${reviewData.reviewType}/${reviewData.reviewId}`,
+			}),
+		}),
+		sendReview: builder.mutation<CompanyReview, SendReviewRequest>({
+			query: (reviewData) => ({
+				body: {
+					rating: reviewData.rating,
+					text: reviewData.text,
+				},
+				method: HttpMethods.POST,
+				url: `${reviewsApiPath.POST_COMPANIES_REVIEWS}${reviewData.companyId}/`,
+			}),
+		}),
 	}),
 });
 
-export const { useGetReviewsByCompanyIdQuery } = reviewsApi;
+export type SendReviewRequest = {
+	companyId: number;
+	rating: null | number;
+	text: string;
+};
+
+export type SendReportRequest = {
+	reason: string;
+	reviewId: number;
+	reviewType: string;
+};
+
+export const {
+	useGetReviewsByCompanyIdQuery,
+	useSendReportMutation,
+	useSendReviewMutation,
+} = reviewsApi;

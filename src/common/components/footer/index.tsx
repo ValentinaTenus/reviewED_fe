@@ -27,7 +27,8 @@ const Footer: React.FC = () => {
 		[],
 	);
 	const [coursesLinks, setCoursesLinks] = useState<FooterNavigationLink[]>([]);
-	const [othersLinks, setOthersLinks] = useState<FooterNavigationLink[]>([]);
+	const [othersLinks, setOthersLinks] =
+		useState<FooterNavigationLink[]>(OthersFooterLinks);
 
 	const updateVisibleItems = () => {
 		const screenWidth = window.innerWidth;
