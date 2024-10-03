@@ -9,7 +9,7 @@ const CourseDetailsPage: React.FC = () => {
 	return (
 		<div className={styles["course_details_page"]}>
 			<Header />
-			<MainContent courseId="125" />
+			<MainContent courseId="128" />
 			<Footer />
 		</div>
 	);
