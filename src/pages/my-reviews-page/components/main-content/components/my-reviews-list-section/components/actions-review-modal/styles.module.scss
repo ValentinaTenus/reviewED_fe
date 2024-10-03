@@ -1,0 +1,44 @@
+.actions-modal {
+	font-family: var(--font-family-main);
+	display: flex;
+	flex-direction: column;
+
+	&__title {
+		font-weight: var(--font-weight-bold);
+		font-size: var(--font-size-title-large);
+		line-height: 140%;
+		letter-spacing: -0.06em;
+		color: var(--color-grey-900);
+		padding-bottom: 20px;
+	}
+
+	hr {
+		align-self: center;
+		width: calc(100% + 40px);
+		border: 0;
+		border-top: 2px solid var(--color-grey-300);
+		margin: 0;
+		padding: 0;
+		margin-bottom: 29px;
+	}
+
+	&__options {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+	}
+
+	&__option {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		text-transform: capitalize;
+
+		&.option-delete {
+			color: var(--color-red-500);
+		}
+	}
+}
+
+@media (max-width: 576px) {
+}

@@ -1,8 +1,8 @@
 import { IconName } from "~/common/enums";
 
-type PopupMenuOption = {
+type MyReviewOptions = {
 	iconName: IconName;
 	value: string;
 };
 
-export { type PopupMenuOption };
+export { type MyReviewOptions };
