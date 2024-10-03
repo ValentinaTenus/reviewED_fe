@@ -4,15 +4,17 @@ import React, { useCallback, useState } from "react";
 import { Button } from "~/common/components/index";
 import { Modal } from "~/common/components/modal";
 import { ButtonSize, ButtonVariant } from "~/common/enums/index";
+import { Company } from "~/common/types";
 import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
 import { useSendReviewMutation } from "~/redux/reviews/reviews-companies-api";
 
 import styles from "./styles.module.scss";
 
-const ReviewModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
-	isOpen,
-	onClose,
-}) => {
+const ReviewModal: React.FC<{
+	company: Company;
+	isOpen: boolean;
+	onClose: () => void;
+}> = ({ company, isOpen, onClose }) => {
 	const ZERO = 0;
 	const MIN_TEXT = 200;
 
@@ -30,14 +32,14 @@ const ReviewModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
 
 	const handleSubmit = useCallback(async () => {
 		const response = await sendReview({
-			companyId: 1,
+			companyId: company.id,
 			rating: rating,
 			text: reviewText,
 		});
 		// eslint-disable-next-line no-console
 		console.log(response);
 		onClose();
-	}, [rating, reviewText, sendReview, onClose]);
+	}, [company.id, rating, reviewText, sendReview, onClose]);
 
 	const handleCloseReviewModal = useCallback(() => {
 		onClose();

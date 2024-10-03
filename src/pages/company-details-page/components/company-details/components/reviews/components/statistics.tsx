@@ -138,6 +138,7 @@ const Statistics: React.FC<{
 				Написати відгук
 			</Button>
 			<ReviewModal
+				company={company}
 				isOpen={isReviewModalOpen}
 				onClose={handleCloseReviewModal}
 			/>

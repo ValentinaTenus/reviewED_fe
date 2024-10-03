@@ -22,6 +22,7 @@ export { type GetQueryResponse } from "./get-query-response.type";
 export { type ModalHandlers, type ModalProperties } from "./modal/index";
 export {
 	type CompanyAndCourseReviewsByUserId,
+	type CompanyReview,
 	type GetModerationReviewsRequest,
 	type GetModerationReviewsResponse,
 	type GetReviewsByCompanyIdResponseDto,

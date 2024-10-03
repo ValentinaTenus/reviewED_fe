@@ -1,5 +1,6 @@
 import { HttpMethods } from "~/common/enums/index.ts";
 import {
+	type CompanyReview,
 	type GetQueryResponse,
 	type GetReviewsByCompanyIdResponseDto,
 } from "~/common/types/index.ts";
@@ -25,7 +26,7 @@ export const reviewsApi = api.injectEndpoints({
 				return response.results;
 			},
 		}),
-		sendReview: builder.mutation<ReviewResponse, SendReviewRequest>({
+		sendReview: builder.mutation<CompanyReview, SendReviewRequest>({
 			query: (reviewData) => ({
 				body: {
 					rating: reviewData.rating,
@@ -41,12 +42,6 @@ export const reviewsApi = api.injectEndpoints({
 export type SendReviewRequest = {
 	companyId: number;
 	rating: null | number;
-	text: string;
-};
-
-export type ReviewResponse = {
-	companyId: number;
-	rating: number;
 	text: string;
 };
 

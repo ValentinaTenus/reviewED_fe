@@ -1,4 +1,5 @@
 export { type CompanyAndCourseReviewsByUserId } from "./company-and-courses-review-by-user-id.type";
+export { type CompanyReview } from "./company-review";
 export {
 	type GetModerationReviewsRequest,
 	type GetModerationReviewsResponse,
