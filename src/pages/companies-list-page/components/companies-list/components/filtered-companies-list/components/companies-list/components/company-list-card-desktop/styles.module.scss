@@ -37,6 +37,7 @@
 .company_list_card__reviews_container {
   align-items: center;
   display: flex;
+  justify-content: space-between;
   gap: 16px;
 }
 
@@ -46,10 +47,13 @@
 }
 
 .company_list_card__reviewer_avatars {
-
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .company_list_card__review_amount {
+  align-self: center;
   color: var(--color-grey-400);
   font-size: var(--font-size-main-text);
 }

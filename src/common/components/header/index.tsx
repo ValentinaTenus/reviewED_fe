@@ -12,7 +12,7 @@ import { useLazyLogOutQuery } from "~/redux/auth/auth-api";
 import { logout } from "~/redux/auth/auth-slice";
 import { useAppDispatch, useAppSelector } from "~/redux/hooks.type";
 
-import { BurgerMenu, Search } from "./components/index";
+import { BurgerMenu } from "./components/index";
 import styles from "./styles.module.scss";
 
 const Header: React.FC = () => {
@@ -64,9 +64,6 @@ const Header: React.FC = () => {
 					<Link className={styles["header_logo"]} to={AppRoute.ROOT}>
 						<Logo />
 					</Link>
-					<div className={styles["header_search"]}>
-						<Search />
-					</div>
 				</div>
 				<div className={styles["header__button_container"]}>
 					{!user && (
@@ -103,12 +100,14 @@ const Header: React.FC = () => {
 													</Link>
 												</li>
 												<li className={styles["user_menu_list_item"]}>
-													<Link to="#">Звернення користувачів</Link>
+													<Link to={AppRoute.USER_REQUESTS}>
+														Звернення користувачів
+													</Link>
 												</li>
 											</>
 										) : (
 											<li className={styles["user_menu_list_item"]}>
-												<Link to="#">Ваші відгуки</Link>
+												<Link to={AppRoute.USER_REVIEWS}>Ваші відгуки</Link>
 											</li>
 										)}
 										<li className={styles["user_menu_list_item"]}>

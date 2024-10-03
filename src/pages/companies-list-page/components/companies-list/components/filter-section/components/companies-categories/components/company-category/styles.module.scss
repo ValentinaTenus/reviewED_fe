@@ -12,7 +12,8 @@
 }
 
 .companies_categories__item_selected {
-  border: 1px solid var( --color-light-blue-selected-items);
+  border: 2px solid var(--color-blue-icons);
+  color: var(--color-blue-icons);
 }
 
 .companies_categories__item:not(.companies_categories__item_selected):hover {
