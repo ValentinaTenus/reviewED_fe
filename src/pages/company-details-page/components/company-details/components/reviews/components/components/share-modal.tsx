@@ -15,6 +15,10 @@ const ShareModal: React.FC<{
 	onClose: () => void;
 	review: Review;
 }> = ({ isOpen, onClose, review }) => {
+	const FACEBOOK_SHARE_URL = import.meta.env.VITE_FACEBOOK_SHARE_URL;
+	const LINKEDIN_SHARE_URL = import.meta.env.VITE_LINKEDIN_SHARE_URL;
+	const X_SHARE_URL = import.meta.env.VITE_X_SHARE_URL;
+
 	const handleCloseReviewModal = useCallback(() => {
 		onClose();
 	}, [onClose]);
@@ -39,11 +43,11 @@ const ShareModal: React.FC<{
 			const encodedLink = encodeURIComponent(shareableLink);
 			switch (platform) {
 				case "facebook":
-					return `https://www.facebook.com/sharer/sharer.php?u=${encodedLink}`;
+					return `${FACEBOOK_SHARE_URL}${encodedLink}`;
 				case "linkedin":
-					return `https://www.linkedin.com/sharing/share-offsite/?url=${encodedLink}`;
+					return `${LINKEDIN_SHARE_URL}${encodedLink}`;
 				case "x":
-					return `https://twitter.com/intent/tweet?url=${encodedLink}`;
+					return `${X_SHARE_URL}${encodedLink}`;
 				default:
 					return "";
 			}

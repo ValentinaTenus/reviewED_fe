@@ -37,13 +37,11 @@ const ReviewModal: React.FC<{
 	}, [onClose, setRating, setReviewText]);
 
 	const handleSubmit = useCallback(async () => {
-		const response = await sendReview({
+		await sendReview({
 			companyId: company.id,
 			rating: rating,
 			text: reviewText,
 		});
-		// eslint-disable-next-line no-console
-		console.log(response);
 		handleCloseReviewModal();
 	}, [company.id, rating, reviewText, sendReview, handleCloseReviewModal]);
 

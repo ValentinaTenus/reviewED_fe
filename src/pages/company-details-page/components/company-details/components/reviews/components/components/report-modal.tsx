@@ -36,7 +36,6 @@ const ReportModal: React.FC<{
 	}, [onClose, setReportText]);
 
 	const handleSubmit = useCallback(async () => {
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		const response = await sendReport({
 			reason: reportText,
 			reviewId: review.id,
