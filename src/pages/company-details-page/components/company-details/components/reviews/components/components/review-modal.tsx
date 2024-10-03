@@ -30,6 +30,12 @@ const ReviewModal: React.FC<{
 		[setReviewText],
 	);
 
+	const handleCloseReviewModal = useCallback(() => {
+		onClose();
+		setRating(ZERO);
+		setReviewText("");
+	}, [onClose, setRating, setReviewText]);
+
 	const handleSubmit = useCallback(async () => {
 		const response = await sendReview({
 			companyId: company.id,
@@ -38,14 +44,8 @@ const ReviewModal: React.FC<{
 		});
 		// eslint-disable-next-line no-console
 		console.log(response);
-		onClose();
-	}, [company.id, rating, reviewText, sendReview, onClose]);
-
-	const handleCloseReviewModal = useCallback(() => {
-		onClose();
-		setRating(ZERO);
-		setReviewText("");
-	}, [onClose, setRating, setReviewText]);
+		handleCloseReviewModal();
+	}, [company.id, rating, reviewText, sendReview, handleCloseReviewModal]);
 
 	return (
 		<Modal
