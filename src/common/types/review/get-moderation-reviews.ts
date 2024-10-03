@@ -1,3 +1,9 @@
+type SetModerationReviewsStatusRequest = {
+	id: string;
+	status: "approved" | "rejected";
+	type: "company" | "course";
+};
+
 type GetModerationReviewsResponse = {
 	count: number;
 	next: null | string;
@@ -31,4 +37,5 @@ export type {
 	GetModerationReviewsRequest,
 	GetModerationReviewsResponse,
 	ModerationReviews,
+	SetModerationReviewsStatusRequest,
 };

@@ -1,0 +1,21 @@
+.avatar-group {
+    display: flex;
+    align-items: center;
+  
+    &__images {
+      display: flex;
+      position: relative;
+    }
+  
+    &__image {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid white;
+      position: relative;
+  
+      &:not(:first-child) {
+        margin-left: -8px;
+      }
+    }
+}  

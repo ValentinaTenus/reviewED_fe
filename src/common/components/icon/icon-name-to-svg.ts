@@ -32,6 +32,7 @@ import SortIcon from "~/assets/images/sort.svg?react";
 import Star from "~/assets/images/star.svg?react";
 import TableView from "~/assets/images/table-view.svg?react";
 import Teacher from "~/assets/images/teacher.svg?react";
+import Users from "~/assets/images/users.svg?react";
 import Xrp from "~/assets/images/xrp-(xrp).svg?react";
 import Youtube from "~/assets/images/youtube.svg?react";
 import { type IconName } from "~/common/enums/index";
@@ -72,6 +73,7 @@ const iconNameToSvg: Record<
 	star: Star,
 	tableView: TableView,
 	teacher: Teacher,
+	users: Users,
 	xrp: Xrp,
 	youtube: Youtube,
 };

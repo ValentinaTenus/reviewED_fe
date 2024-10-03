@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 
-import { Pagination, Spinner } from "~/common/components/index";
+import { CourseCard, Pagination, Spinner } from "~/common/components/index";
 import { CoursesFilterType, SpinnerVariant } from "~/common/enums/index";
 import { useGetScreenWidth } from "~/common/hooks";
 import { FilterType } from "~/common/types";
@@ -16,6 +16,7 @@ import {
 import styles from "./styles.module.scss";
 
 const DEFAULT_PAGE_COUNT = 0;
+const DEFAULT_REVIEWS_COUNT = 0;
 const ALL_CATEGORIES_ID = "0";
 const DEFAULT_CURRENT_PAGE = 1;
 const DEFAULT_COURSES_PER_PAGE = 6;
@@ -31,6 +32,7 @@ const CourseContent: React.FC = () => {
 	const [pageCount, setPageCount] = useState(DEFAULT_PAGE_COUNT);
 
 	const [searchTerm, setSearchTerm] = useState(filters?.title || "");
+	const [reviewsCount, setReviewsCount] = useState(DEFAULT_REVIEWS_COUNT);
 
 	const [sortBy, setSortBy] = useState<string>("");
 	const [selectedCategories, setSelectedCategories] = useState<FilterType[]>(
@@ -120,7 +122,11 @@ const CourseContent: React.FC = () => {
 		if (coursesResponse?.count) {
 			setPageCount(Math.ceil(coursesResponse.count / DEFAULT_COURSES_PER_PAGE));
 		}
-	}, [coursesResponse?.count]);
+
+		if (coursesResponse?.reviews_count) {
+			setReviewsCount(coursesResponse.reviews_count);
+		}
+	}, [coursesResponse?.count, coursesResponse?.reviews_count]);
 
 	useEffect(() => {
 		updateCoursesPageCount();
@@ -169,6 +175,7 @@ const CourseContent: React.FC = () => {
 		handleClearFilters();
 		handleApplyFiltersAndSearch();
 	}, [handleClearFilters, handleApplyFiltersAndSearch]);
+
 	return (
 		<>
 			<div className={styles["courses_list__container"]}>
@@ -195,6 +202,7 @@ const CourseContent: React.FC = () => {
 						resultCount={
 							coursesResponse?.count ? coursesResponse.count : ZERO_LENGTH
 						}
+						resultReviewsCount={reviewsCount}
 						resultTerm={searchTerm}
 					/>
 				</div>
@@ -202,6 +210,15 @@ const CourseContent: React.FC = () => {
 					<div className={styles["spinner"]}>
 						<Spinner variant={SpinnerVariant.MEDIUM} />
 					</div>
+				)}
+			</div>
+			<div className={styles["courses_list"]}>
+				{coursesResponse && coursesResponse.results.length > ZERO_LENGTH ? (
+					coursesResponse.results.map((course) => (
+						<CourseCard course={course} key={course.id} />
+					))
+				) : (
+					<p>No courses available</p>
 				)}
 			</div>
 			{coursesResponse && coursesResponse.results.length > ZERO_LENGTH && (

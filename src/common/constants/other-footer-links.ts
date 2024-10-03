@@ -5,4 +5,9 @@ const OthersFooterLinks = [
 	{ href: AppRoute.PRIVACY_POLICY, label: "Політика конфіденційності" },
 ];
 
-export { OthersFooterLinks };
+const OthersFooterLinksMobile = [
+	{ href: AppRoute.FAQ_PAGE, label: "FAQ" },
+	{ href: AppRoute.PRIVACY_POLICY, label: "Пол. Кон." },
+];
+
+export { OthersFooterLinks, OthersFooterLinksMobile };
