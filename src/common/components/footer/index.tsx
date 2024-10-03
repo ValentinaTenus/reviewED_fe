@@ -33,7 +33,7 @@ const Footer: React.FC = () => {
 	const updateVisibleItems = () => {
 		const screenWidth = window.innerWidth;
 
-		if (screenWidth <= ScreenBreakpoints.MOBILE) {
+		if (screenWidth <= ScreenBreakpoints.SMALL_MOBILE) {
 			setOthersLinks(OthersFooterLinksMobile);
 		} else if (screenWidth <= ScreenBreakpoints.TABLET) {
 			setCompaniesLinks(CompaniesLinksSmartphones);
