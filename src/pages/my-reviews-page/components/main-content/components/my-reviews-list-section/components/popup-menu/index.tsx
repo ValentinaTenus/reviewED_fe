@@ -2,13 +2,13 @@ import clsx from "clsx";
 import React from "react";
 
 import { Icon } from "~/common/components";
-import { PopupMenuOption } from "~/common/types/my-reviews";
+import { MyReviewOptions } from "~/common/types/my-reviews";
 
 import styles from "./styles.module.scss";
 
 type PopupMenuProps = {
 	onSelect: (option: string) => void;
-	options: PopupMenuOption[];
+	options: MyReviewOptions[];
 };
 
 const PopupMenu: React.FC<PopupMenuProps> = ({ onSelect, options }) => {

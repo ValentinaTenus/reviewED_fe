@@ -1,5 +1,6 @@
-import clsx from "clsx";
 import React, { useCallback, useEffect, useState } from "react";
+import clsx from "clsx";
+import styles from "./styles.module.scss";
 
 import { Icon } from "~/common/components/index";
 import { StarRating } from "~/common/components/star-rating";
@@ -7,13 +8,12 @@ import { IconName } from "~/common/enums/index";
 import {
 	MyReview,
 	MyReviewCategory,
-	PopupMenuOption,
+	MyReviewOptions,
 } from "~/common/types/my-reviews";
-
 import { PopupMenu } from "../popup-menu";
-import styles from "./styles.module.scss";
+import { ActionsReviewModal } from "../actions-review-modal";
 
-const POPUP_OPTIONS: PopupMenuOption[] = [
+const MY_REVIEW_OPTIONS: MyReviewOptions[] = [
 	{ iconName: IconName.EDIT, value: "edit" },
 	{ iconName: IconName.MESSAGES, value: "contact moderator" },
 	{ iconName: IconName.DELETE, value: "delete" },
@@ -25,7 +25,7 @@ const MAX_PREVIEW_LENGTH_MOBILE = 150;
 const MAX_PREVIEW_LENGTH_TABLET = 230;
 const MAX_PREVIEW_LENGTH_LARGE_SCREEN = 350;
 const MAX_PREVIEW_LENGTH_EXTRA_LARGE = 190;
-const MOBILE_BREAKPOINT = 450;
+const MOBILE_BREAKPOINT = 576;
 const TABLET_BREAKPOINT = 630;
 const LARGE_SCREEN_BREAKPOINT = 888;
 const ZERO_NUMBER = 0;
@@ -53,6 +53,7 @@ const ReviewListItem: React.FC<Properties> = ({
 	handleTogglePopup,
 	review,
 }) => {
+	const [isOpenActionsModal, setIsOpenActionsModal] = useState<boolean>(false);
 	const [showFullText, setShowFullText] = useState(false);
 	const [maxPreviewLength, setMaxPreviewLength] = useState(
 		MAX_PREVIEW_LENGTH_DESKTOP,
@@ -77,6 +78,20 @@ const ReviewListItem: React.FC<Properties> = ({
 		}
 
 		handleTogglePopup(null);
+	};
+
+	const handleClickMoreOptions = () => {
+		const width = window.innerWidth;
+
+		// for mobile open ActionsModal, for table open PopupMenu
+		if (width > MOBILE_BREAKPOINT) {
+			handleTogglePopup(review.id);
+			setIsOpenActionsModal(false);
+			return;
+		}
+
+		handleTogglePopup(null);
+		setIsOpenActionsModal(true);
 	};
 
 	const toggleText = () => setShowFullText(!showFullText);
@@ -108,14 +123,14 @@ const ReviewListItem: React.FC<Properties> = ({
 	return (
 		<li className={styles["list__item"]}>
 			<div className={clsx(styles["item__elem"], styles["more-options"])}>
-				<span className={styles["icon-more"]} onClick={togglePopup}>
+				<span className={styles["icon-more"]} onClick={handleClickMoreOptions}>
 					<Icon name={IconName.MORE} />
 				</span>
 				<div
 					className={clsx(styles["popup-menu"], styles["popup-menu-mobile"])}
 				>
 					{activePopup === review.id && (
-						<PopupMenu onSelect={handleSelect} options={POPUP_OPTIONS} />
+						<PopupMenu onSelect={handleSelect} options={MY_REVIEW_OPTIONS} />
 					)}
 				</div>
 			</div>
@@ -271,7 +286,10 @@ const ReviewListItem: React.FC<Properties> = ({
 								)}
 							>
 								{activePopup === review.id && (
-									<PopupMenu onSelect={handleSelect} options={POPUP_OPTIONS} />
+									<PopupMenu
+										onSelect={handleSelect}
+										options={MY_REVIEW_OPTIONS}
+									/>
 								)}
 							</div>
 						</div>
@@ -288,6 +306,15 @@ const ReviewListItem: React.FC<Properties> = ({
 					</div>
 				</div>
 			</div>
+
+			{isOpenActionsModal && (
+				<ActionsReviewModal
+					options={MY_REVIEW_OPTIONS}
+					onSelect={handleSelect}
+					isOpen={isOpenActionsModal}
+					setIsOpenActionsModal={setIsOpenActionsModal}
+				/>
+			)}
 		</li>
 	);
 };

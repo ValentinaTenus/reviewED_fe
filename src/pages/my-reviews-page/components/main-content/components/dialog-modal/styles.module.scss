@@ -21,18 +21,27 @@
 		&__icon-close {
 			display: none;
 			position: absolute;
-			top: 16px;
-			right: 26px;
+			top: 7px;
+			right: 20px;
 			background: none;
 			border: none;
 			color: var(--color-grey-900);
 			font-size: 35px;
 			cursor: pointer;
 
+			svg {
+				width: 15px;
+				height: 15px;
+			}
+
 			&--visible {
 				display: block;
 			}
 		}
+	}
+
+	&.edit-modal {
+		align-items: flex-start;
 	}
 }
 
@@ -51,13 +60,12 @@
 		&-content {
 			margin: 0px;
 			border-radius: unset;
+		}
+	}
 
-			&__icon-close {
-				display: block;
-				position: absolute;
-				top: 10px;
-				right: 26px;
-			}
+	.modal-content {
+		&__icon-close {
+			display: block;
 		}
 	}
 
@@ -65,16 +73,6 @@
 		&.modal {
 			align-items: center;
 			background-color: rgba(0, 0, 0, 0.5);
-
-			.modal-content {
-				margin: 20px;
-				border-radius: 20px;
-				overflow-x: hidden;
-
-				&__icon-close {
-					display: none;
-				}
-			}
 		}
 
 		.modal-content {
@@ -83,10 +81,22 @@
 			overflow-x: hidden;
 
 			&__icon-close {
-				display: block;
-				position: absolute;
-				top: 10px;
-				right: 16px;
+				display: none;
+			}
+		}
+	}
+
+	.actions-modal {
+		&.modal {
+			align-items: flex-end;
+
+			background-color: rgba(0, 0, 0, 0.5);
+
+			.modal-content {
+				margin: 0px;
+				border-top-left-radius: 20px;
+				border-top-right-radius: 20px;
+				height: 50vh;
 			}
 		}
 	}

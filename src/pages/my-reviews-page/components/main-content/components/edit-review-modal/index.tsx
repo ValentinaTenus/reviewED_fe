@@ -39,7 +39,7 @@ const EditReviewModal: React.FC<Properties> = ({
 	};
 
 	return (
-		<DialogModal isOpen={isOpen} onClose={handleClose}>
+		<DialogModal isOpen={isOpen} onClose={handleClose} classNames='edit-modal'>
 			<div className={styles["review-content"]}>
 				<div className={styles["review-content__info"]}>
 					<div className={styles["info__left"]}>
@@ -77,7 +77,7 @@ const EditReviewModal: React.FC<Properties> = ({
 							<Input
 								control={control}
 								errors={errors}
-								maxWords={2000}
+								maxWords={1000}
 								name="text"
 								placeholder="Review text"
 								rows={1}

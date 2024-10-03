@@ -3,6 +3,8 @@ import type React from "react";
 import { useEffect } from "react";
 
 import styles from "./styles.module.scss";
+import { Icon } from "~/common/components";
+import { IconName } from "~/common/enums";
 
 type Properties = {
 	children?: React.ReactNode;
@@ -44,16 +46,15 @@ const DialogModal: React.FC<Properties> = ({
 				className={styles["modal-content"]}
 				onClick={(e) => e.stopPropagation()}
 			>
-				<button
+				<div
 					className={clsx(
 						styles["modal-content__icon-close"],
 						withIconClose && styles["modal-content__icon-close--visible"],
 					)}
 					onClick={onClose}
 				>
-					&times;
-				</button>
-
+					<Icon name={IconName.CLOSE} />
+				</div>
 				{children}
 			</div>
 		</div>
