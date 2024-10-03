@@ -1,6 +1,5 @@
 .review__header {
 	align-items: center;
-	background-color: forestgreen;
 	display: grid;
 	gap: 8px;
 	grid-template-areas: "user verif rating";
@@ -16,7 +15,6 @@
 }
 
 .review__rating-block {
-	background-color: hotpink;
 	display: grid;
 	grid-area: rating;
 	justify-items: end;
@@ -25,7 +23,6 @@
 }
 
 .review__user-block {
-	background-color: firebrick;
 	align-items: center;
 	display: flex;
 	gap: 5px 12px;
@@ -39,7 +36,6 @@
 }
 
 .review__user-name {
-	background-color: red;
 	display: flex;
 	font-family: var(--font-family-main);
 	font-size: var(--font-size-title-large);
@@ -49,7 +45,6 @@
 }
 
 .review__user-role {
-	background-color: greenyellow;
 	color: var(--color-grey-400);
 	display: flex;
 	font-family: var(--font-family-main);

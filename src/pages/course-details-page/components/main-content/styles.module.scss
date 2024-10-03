@@ -1,33 +1,33 @@
-.main_content_wrapper {
-    padding: 8px 86px;
+.main-content__wrapper {
+    padding: 40px 80px;
   }
   
-  .main_content {
+  .main-content {
     align-items: flex-start;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
-    gap: 80px;
-    margin: 0 auto;
+    gap: 32px;
+    margin: 40px auto 0;
     padding: 0;
   }
   
   @media (max-width: 768px)  {
-    .main_content_wrapper {
-      padding: 0px 48px;
+    .main-content__wrapper {
+      padding: 24px 48px;
     }
   
-    .main_content {
-      gap: 64px;
+    .main-content {
+      gap: 24px;
     }
   }
   
   @media (max-width: 480px)  {
-    .main_content_wrapper {
-      padding: 0px 20px;  
+    .main-content__wrapper {
+      padding: 24px 20px;  
     }
   
-    .main_content {
+    .main-content {
       gap: 48px;
     }
   }

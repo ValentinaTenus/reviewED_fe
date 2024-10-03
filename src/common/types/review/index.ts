@@ -6,7 +6,6 @@ export {
 	type GetModerationReviewsResponse,
 	type ModerationReviews,
 } from "./get-moderation-reviews";
-export { type GetReviewsStats } from "./get-reviews-stats-dto.type";
 export { type GetReviewsByCompanyIdResponseDto } from "./get-reviews-by-company-id-response-dto.type";
 export { type RecentReview } from "./recent-review";
 export { type Review } from "./review.type";

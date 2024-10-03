@@ -8,6 +8,7 @@ import { StatsBar } from "./components/stats-bar";
 import { Button, StarRating } from "~/common/components";
 import { RatingBar } from "./components/rating-bar";
 import { RatingSize, ButtonSize, ButtonVariant } from "~/common/enums";
+import { useGetCourseByIdQuery } from "~/redux/courses/courses-api";
 
 type ReviewsStatsProperties = {
 	stats: ReviewsStats;
@@ -15,6 +16,8 @@ type ReviewsStatsProperties = {
 
 const ReviewsStats: React.FC<ReviewsStatsProperties> = ({ stats }) => {
 	const [isRatingBarShown, setIsRatingBarShown] = useState<boolean>(false);
+
+	const { data: course } = useGetCourseByIdQuery("1");
 
 	const updateRatingDisplay = () => {
 		const screenWidth = window.innerWidth;
@@ -35,20 +38,25 @@ const ReviewsStats: React.FC<ReviewsStatsProperties> = ({ stats }) => {
 
 	return (
 		<div className={styles["reviews-stats"]}>
-			<div className={styles["stats-container"]}>
-				<StatsBar result="100500" title="Загальна кількість" />
-				<StatsBar
-					result="3.0"
-					title="Середній рейтинг"
-					visualization={
-						<StarRating
-							averageRating={4.6}
-							isNumberShown={false}
-							size={RatingSize.MEDIUM}
-						/>
-					}
-				/>
-			</div>
+			{course && (
+				<div className={styles["stats-container"]}>
+					<StatsBar
+						result={`${course.reviews_count}`}
+						title="Загальна кількість"
+					/>
+					<StatsBar
+						result={`${course.avg_rating}`}
+						title="Середній рейтинг"
+						visualization={
+							<StarRating
+								averageRating={course.avg_rating}
+								isNumberShown={false}
+								size={RatingSize.MEDIUM}
+							/>
+						}
+					/>
+				</div>
+			)}
 
 			{isRatingBarShown && <RatingBar stats={stats} />}
 			{!isRatingBarShown && (

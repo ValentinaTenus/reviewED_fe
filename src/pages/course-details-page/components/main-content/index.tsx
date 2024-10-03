@@ -24,7 +24,7 @@ const MainContent: React.FC<MainContentProperties> = ({courseId}) => {
 
 
 	const { data: course } = useGetCourseByIdQuery(courseId);
-console.log(course)
+
 
 	const courseName: string = course?.title || "";
 
@@ -39,10 +39,12 @@ console.log(course)
 
 
 	return (
-		<div className={styles["main_content_wrapper"]}>
+		<div className={styles["main-content__wrapper"]}>
+			<BreadCrumb items={breadcrumbs} />
 			{course && (
-				<div className={styles["main_content"]}>
-					<BreadCrumb items={breadcrumbs} />
+				
+				<div className={styles["main-content"]}>
+					
 					<PageTitle course={course} />
 					<NavBar aboutCourse={aboutCourseRef} aboutCompany={aboutCompanyRef} />
 					<Header ref={aboutCourseRef} title="Про курс" />
