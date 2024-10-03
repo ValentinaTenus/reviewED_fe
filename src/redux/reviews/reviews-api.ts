@@ -34,6 +34,15 @@ export const reviewsApi = api.injectEndpoints({
 				response: GetQueryResponse<CompanyAndCourseReviewsByUserId>,
 			) => response.results,
 		}),
+		getShareableLink: builder.query<
+			{ shareable_link: string },
+			{ id: number; review_type: string }
+		>({
+			query: ({ id, review_type }) => ({
+				method: HttpMethods.GET,
+				url: reviewsApiPath.SHAREABLE_LINK + `${review_type}/${id}`,
+			}),
+		}),
 	}),
 });
 
@@ -41,5 +50,6 @@ export const {
 	useGetCourseReviewsQuery,
 	useGetRecentReviewsQuery,
 	useGetReviewsByUserIdQuery,
+	useGetShareableLinkQuery,
 	useLazyGetReviewsByUserIdQuery,
 } = reviewsApi;

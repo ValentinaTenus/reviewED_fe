@@ -3,20 +3,22 @@ import React, { useCallback, useState } from "react";
 import { Button } from "~/common/components/index";
 import { Modal } from "~/common/components/modal";
 import { ButtonSize, ButtonVariant } from "~/common/enums/index";
+import { Review } from "~/common/types";
 import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
-// import { useSendReviewMutation } from "~/redux/reviews/reviews-companies-api";
+import { useSendReportMutation } from "~/redux/reviews/reviews-companies-api";
 
 import styles from "./styles.module.scss";
 
-const ReportModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
-	isOpen,
-	onClose,
-}) => {
+const ReportModal: React.FC<{
+	isOpen: boolean;
+	onClose: () => void;
+	review: Review;
+}> = ({ isOpen, onClose, review }) => {
 	const MIN_TEXT = 200;
 
 	const [reportText, setReportText] = useState("");
 
-	// const [sendReview] = useSendReviewMutation();
+	const [sendReport] = useSendReportMutation();
 	const handleReviewChange = useCallback(
 		(event: React.ChangeEvent<HTMLTextAreaElement>) => {
 			setReportText(event.target.value);
@@ -26,13 +28,15 @@ const ReportModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
 
 	const handleSubmit = useCallback(async () => {
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		// const response = await sendReview({
-		// 	companyId: 1,
-		// 	text: setReportText,
-		// });
-		// onClose();
-		// }, [reportText, sendReview, onClose]);
-	}, []);
+		const response = await sendReport({
+			reason: reportText,
+			reviewId: review.id,
+			reviewType: "company",
+		});
+		// eslint-disable-next-line no-console
+		console.log(response);
+		onClose();
+	}, [reportText, review.id, sendReport, onClose]);
 
 	const handleCloseReviewModal = useCallback(() => {
 		onClose();
