@@ -24,16 +24,17 @@ import styles from "./styles.module.scss";
 
 const Footer: React.FC = () => {
 	const [companiesLinks, setCompaniesLinks] = useState<FooterNavigationLink[]>(
-		[],
+		CompaniesLinksDesktop,
 	);
-	const [coursesLinks, setCoursesLinks] = useState<FooterNavigationLink[]>([]);
+	const [coursesLinks, setCoursesLinks] =
+		useState<FooterNavigationLink[]>(CoursesLinksDesktop);
 	const [othersLinks, setOthersLinks] =
 		useState<FooterNavigationLink[]>(OthersFooterLinks);
 
 	const updateVisibleItems = () => {
 		const screenWidth = window.innerWidth;
 
-		if (screenWidth <= ScreenBreakpoints.MOBILE) {
+		if (screenWidth <= ScreenBreakpoints.SMALL_MOBILE) {
 			setOthersLinks(OthersFooterLinksMobile);
 		} else if (screenWidth <= ScreenBreakpoints.TABLET) {
 			setCompaniesLinks(CompaniesLinksSmartphones);

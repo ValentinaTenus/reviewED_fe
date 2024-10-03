@@ -140,3 +140,14 @@
   }
 }
 
+@media (max-width: 360px) {
+  .footer_content__small_link {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 320px) {
+  .footer_content__small_link {
+    font-size: 8px;
+  }
+}

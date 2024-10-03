@@ -13,6 +13,10 @@
   padding: 24px;
 }
 
+.company_card__container:hover {
+  border: 1px solid var(--color-grey-950);
+}
+
 .company_card__logo_container {
   display: flex;
   justify-content: space-between;
