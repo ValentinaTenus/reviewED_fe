@@ -22,12 +22,14 @@ export { type GetQueryResponse } from "./get-query-response.type";
 export { type ModalHandlers, type ModalProperties } from "./modal/index";
 export {
 	type CompanyAndCourseReviewsByUserId,
+	type CompanyReview,
 	type GetModerationReviewsRequest,
 	type GetModerationReviewsResponse,
 	type GetReviewsByCompanyIdResponseDto,
 	type ModerationReviews,
 	type RecentReview,
 	type Review,
+	type ReviewReport,
 } from "./review/index";
 export {
 	type AgreePolicyRequest,

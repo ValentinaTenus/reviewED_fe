@@ -1,5 +1,5 @@
 import { Rating } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { Icon } from "~/common/components";
@@ -7,12 +7,34 @@ import { IconName } from "~/common/enums";
 import { Review } from "~/common/types";
 import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
 
+import { ReportModal } from "./components/report-modal";
+import { ShareModal } from "./components/share-modal";
 import styles from "./styles.module.scss";
 
 const ReviewCard: React.FC<{
 	review: Review;
 }> = ({ review }) => {
 	const RATING_SCALE = 1.0;
+
+	const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+
+	const handleOpenReportModal = () => {
+		setIsReportModalOpen(true);
+	};
+
+	const handleCloseReportModal = () => {
+		setIsReportModalOpen(false);
+	};
+
+	const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+
+	const handleOpenShareModal = () => {
+		setIsShareModalOpen(true);
+	};
+
+	const handleCloseShareModal = () => {
+		setIsShareModalOpen(false);
+	};
 
 	return (
 		<>
@@ -76,12 +98,20 @@ const ReviewCard: React.FC<{
 				{review.text}
 			</p>
 			<div className={styles["review_bottom"]}>
-				<Link className={styles["review_icon-text"]} to="#">
+				<Link
+					className={styles["review_icon-text"]}
+					onClick={handleOpenReportModal}
+					to="#"
+				>
 					<Icon className={styles["review_flag"]} name={IconName.FLAG} />
 					<span className={globalStyles["small_r"]}>Report</span>
 				</Link>
 				<div className={styles["review_share-like"]}>
-					<Link className={styles["review_icon-text"]} to="#">
+					<Link
+						className={styles["review_icon-text"]}
+						onClick={handleOpenShareModal}
+						to="#"
+					>
 						<Icon className={styles["review_share"]} name={IconName.SHARE} />
 						<span className={globalStyles["small_r"]}>Share</span>
 					</Link>
@@ -93,6 +123,16 @@ const ReviewCard: React.FC<{
 					</Link>
 				</div>
 			</div>
+			<ReportModal
+				isOpen={isReportModalOpen}
+				onClose={handleCloseReportModal}
+				review={review}
+			/>
+			<ShareModal
+				isOpen={isShareModalOpen}
+				onClose={handleCloseShareModal}
+				review={review}
+			/>
 		</>
 	);
 };

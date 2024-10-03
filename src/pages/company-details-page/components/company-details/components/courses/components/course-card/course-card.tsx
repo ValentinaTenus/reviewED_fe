@@ -3,16 +3,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import { Button, Icon } from "~/common/components";
-import { ButtonVariant, IconName } from "~/common/enums";
-import { Company, GetCoursesResult } from "~/common/types";
+import { AppRoute, ButtonVariant, IconName } from "~/common/enums";
+import { GetCoursesResult } from "~/common/types";
 import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
 
 import styles from "./styles.module.scss";
 
 const CourseCard: React.FC<{
-	company: Company;
 	course: GetCoursesResult;
-}> = ({ company, course }) => {
+}> = ({ course }) => {
 	const RATING_SCALE = 1.0;
 
 	return (
@@ -25,7 +24,7 @@ const CourseCard: React.FC<{
 							name="half-rating-read"
 							precision={0.5}
 							readOnly
-							value={company?.avg_overall_rating}
+							value={course?.avg_rating}
 						/>
 					</div>
 					<Icon className={styles["course_star"]} name={IconName.STAR} />
@@ -84,7 +83,7 @@ const CourseCard: React.FC<{
 							<img alt="" src="/src/assets/images/profile_pics.png" />
 						</div>
 						<span className={globalStyles["body-r"]}>
-							{company.total_reviews_count} Reviews
+							{course.reviews_count} Reviews
 						</span>
 					</div>
 					<div className={globalStyles["_verified"]}>
@@ -97,7 +96,9 @@ const CourseCard: React.FC<{
 						</span>
 					</div>
 				</div>
-				<Button variant={ButtonVariant.PRIMARY}>Read reviews</Button>
+				<Link to={`${AppRoute.COURSE_DETAILS}${course.id}`}>
+					<Button variant={ButtonVariant.PRIMARY}>Read reviews</Button>
+				</Link>
 			</div>
 		</>
 	);

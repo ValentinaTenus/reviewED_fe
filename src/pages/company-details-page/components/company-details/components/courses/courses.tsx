@@ -10,7 +10,7 @@ import styles from "./styles.module.scss";
 const Courses = React.forwardRef<
 	HTMLDivElement,
 	{ company: Company; courses: GetCoursesResult[] }
->(({ company, courses }, ref) => {
+>(({ courses }, ref) => {
 	const [showAll, setShowAll] = useState(false);
 
 	const toggleShowAll = () => {
@@ -30,7 +30,7 @@ const Courses = React.forwardRef<
 			<div className={styles["courses_cards"]}>
 				{displayedCourses.map((course, index) => (
 					<div className={styles["course_card"]} key={index}>
-						<CourseCard company={company} course={course} />
+						<CourseCard course={course} />
 					</div>
 				))}
 			</div>
