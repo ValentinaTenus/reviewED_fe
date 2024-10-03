@@ -15,6 +15,9 @@ export { IMAGE_UPLOAD_URL } from "./image-upload-url";
 export { LOGO_NONE } from "./logo-none";
 export { moderationsReviewSortOptionsByPeriod } from "./moderations-review-period-sort-options";
 export { moderationsReviewSortOptionsByStatus } from "./moderations-review-status-sort-options";
-export { OthersFooterLinks } from "./other-footer-links";
+export {
+	OthersFooterLinks,
+	OthersFooterLinksMobile,
+} from "./other-footer-links";
 export { ScreenBreakpoints } from "./screen-breakpoints";
 export { SocialLinks } from "./social-media-links";

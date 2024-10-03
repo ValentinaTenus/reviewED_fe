@@ -6,10 +6,11 @@ import {
 	Button,
 	ExpandableDescription,
 	Icon,
+	Logo,
 } from "~/common/components/index";
 import { ScreenBreakpoints } from "~/common/constants/screen-breakpoints";
 import { ButtonVariant, IconName, RatingSize } from "~/common/enums";
-import { Course } from "~/common/types/courses/course.type";
+import { GetCoursesResult } from "~/common/types/courses/course.type";
 import { useGetCourseReviewsQuery } from "~/redux/reviews/reviews-api";
 
 import { StarRating } from "../star-rating";
@@ -17,7 +18,7 @@ import styles from "./styles.module.scss";
 
 type CourseCardProps = {
 	className?: string;
-	course: Course;
+	course: GetCoursesResult;
 };
 
 const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
@@ -56,15 +57,11 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
 			<div className={styles["course-card__head"]}>
 				<h2 className={styles["course-card__title"]}>{course.title}</h2>
 				<div className={styles["course-card__logo"]}>
-					{course.company_logo ? (
-						<img
-							alt="Company logo"
-							className={styles["course-card__logo-image"]}
-							src={course.company_logo}
-						/>
-					) : (
-						<div className={styles["course-card__logo-placeholder"]} />
-					)}
+					<Logo
+						className={styles["course-card__logo-image"]}
+						logo={course.company_logo}
+						name={course.company}
+					/>
 					<StarRating
 						averageRating={course.avg_rating}
 						isOneStar={isOneStar}

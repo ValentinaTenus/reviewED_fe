@@ -1,28 +1,27 @@
 import React from "react";
 
-import { SortDropdown } from "~/common/components/index";
+import { Icon, SortDropdown } from "~/common/components/index";
 import {
 	CoursesSortOptions,
 	ScreenBreakpoints,
 } from "~/common/constants/index";
-import { useGetScreenWidth } from "~/common/hooks/index";
 import { IconName } from "~/common/enums/index";
-import { Icon } from "~/common/components/index";
+import { useGetScreenWidth } from "~/common/hooks/index";
 
 import styles from "./styles.module.scss";
 
 type Properties = {
 	onChangeSortBy: (newSortBy: number | string) => void;
 	resultCount: number;
-	resultTerm: string;
 	resultReviewsCount: number;
+	resultTerm: string;
 };
 
 const FilterResultTitle: React.FC<Properties> = ({
 	onChangeSortBy,
 	resultCount,
-	resultTerm,
 	resultReviewsCount,
+	resultTerm,
 }) => {
 	const screenWidth = useGetScreenWidth();
 

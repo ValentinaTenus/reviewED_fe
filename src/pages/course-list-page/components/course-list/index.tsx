@@ -121,9 +121,12 @@ const CourseContent: React.FC = () => {
 	const updateCoursesPageCount = useCallback(() => {
 		if (coursesResponse?.count) {
 			setPageCount(Math.ceil(coursesResponse.count / DEFAULT_COURSES_PER_PAGE));
+		}
+
+		if (coursesResponse?.reviews_count) {
 			setReviewsCount(coursesResponse.reviews_count);
 		}
-	}, [coursesResponse?.count]);
+	}, [coursesResponse?.count, coursesResponse?.reviews_count]);
 
 	useEffect(() => {
 		updateCoursesPageCount();
@@ -199,8 +202,8 @@ const CourseContent: React.FC = () => {
 						resultCount={
 							coursesResponse?.count ? coursesResponse.count : ZERO_LENGTH
 						}
-						resultTerm={searchTerm}
 						resultReviewsCount={reviewsCount}
+						resultTerm={searchTerm}
 					/>
 				</div>
 				{isLoading && (
