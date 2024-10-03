@@ -1,6 +1,7 @@
 import { Rating } from "@mui/material";
 import React from "react";
 
+import { Logo } from "~/common/components";
 import { Company } from "~/common/types";
 import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
 
@@ -12,7 +13,6 @@ const TitleLogo: React.FC<{
 	if (company) {
 		const RATING_SCALE = 1.0;
 
-		const companyImage = `https://reviewed-api.azurewebsites.net/api/v1/companies/upload/${company.logo}`;
 		const formattedRating = (company.avg_overall_rating / RATING_SCALE).toFixed(
 			RATING_SCALE,
 		);
@@ -21,10 +21,10 @@ const TitleLogo: React.FC<{
 			<>
 				<div className={styles["title-logo_container"]}>
 					<div className={styles["logo_container"]}>
-						<img
-							alt={companyImage}
+						<Logo
 							className={styles["logo_image"]}
-							src={companyImage}
+							logo={company.logo}
+							name={company.name}
 						/>
 					</div>
 					<div className={styles["title-rating_container"]}>
@@ -34,7 +34,7 @@ const TitleLogo: React.FC<{
 								name="half-rating-read"
 								precision={0.5}
 								readOnly
-								value={company?.avg_overall_rating}
+								value={company?.avg_rating}
 							/>
 							<span>({formattedRating})</span>
 						</div>

@@ -10,6 +10,7 @@ import Audience from "~/assets/images/audience.svg?react";
 import Bank from "~/assets/images/bank.svg?react";
 import Phone from "~/assets/images/call.svg?react";
 import Close from "~/assets/images/close.svg?react";
+import Copy from "~/assets/images/copy.svg?react";
 import DollarSign from "~/assets/images/dollar-circle.svg?react";
 import Facebook from "~/assets/images/facebook.svg?react";
 import Filter from "~/assets/images/filter.svg?react";
@@ -32,6 +33,7 @@ import SortIcon from "~/assets/images/sort.svg?react";
 import Star from "~/assets/images/star.svg?react";
 import TableView from "~/assets/images/table-view.svg?react";
 import Teacher from "~/assets/images/teacher.svg?react";
+import Users from "~/assets/images/users.svg?react";
 import Xrp from "~/assets/images/xrp-(xrp).svg?react";
 import Youtube from "~/assets/images/youtube.svg?react";
 import { type IconName } from "~/common/enums/index";
@@ -49,6 +51,7 @@ const iconNameToSvg: Record<
 	audience: Audience,
 	bank: Bank,
 	close: Close,
+	copy: Copy,
 	dollarSign: DollarSign,
 	email: Email,
 	facebook: Facebook,
@@ -72,6 +75,7 @@ const iconNameToSvg: Record<
 	star: Star,
 	tableView: TableView,
 	teacher: Teacher,
+	users: Users,
 	xrp: Xrp,
 	youtube: Youtube,
 };

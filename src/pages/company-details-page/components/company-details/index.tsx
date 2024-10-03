@@ -18,7 +18,10 @@ const CompanyDetails: React.FC<{ companyId: string }> = ({ companyId }) => {
 	const filters = {
 		category_by_id: [""],
 		city: [""],
-		company_id: "1",
+		company_id: companyId,
+		limit: 0,
+		offset: 0,
+		sort: "",
 		subcategory_by_id: [""],
 		title: "",
 	};
@@ -49,7 +52,7 @@ const CompanyDetails: React.FC<{ companyId: string }> = ({ companyId }) => {
 					courses={coursesResponse.results}
 					ref={coursesRef}
 				/>
-				<Reviews ref={reviewsRef} reviews={reviews} />
+				<Reviews company={company} ref={reviewsRef} reviews={reviews} />
 			</div>
 		);
 	}

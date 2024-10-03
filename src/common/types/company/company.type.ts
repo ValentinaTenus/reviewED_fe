@@ -2,6 +2,7 @@ import { Category } from "../category";
 
 type Company = {
 	avg_overall_rating: number;
+	avg_rating: number;
 	categories: Category[];
 	city: string;
 	contact_person: string;
@@ -12,6 +13,7 @@ type Company = {
 	logo: string;
 	name: string;
 	phone_numbers: string[];
+	review_count: number;
 	total_courses: number;
 	total_reviews_count: number;
 	website: string;

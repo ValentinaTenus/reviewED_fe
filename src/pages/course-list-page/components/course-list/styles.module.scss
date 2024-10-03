@@ -29,3 +29,17 @@
 	flex-direction: column;
 	gap: 32px;
 }
+
+.courses_list {
+	display: flex;
+	flex-direction: column;
+	padding-left: 86px;
+	gap: 24px;
+}
+
+@media (max-width: 1280px) {
+	.courses_list {
+		padding-left: 0;
+		justify-content: center;
+	}
+}

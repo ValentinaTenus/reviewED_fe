@@ -22,6 +22,7 @@ export { type GetQueryResponse } from "./get-query-response.type";
 export { type ModalHandlers, type ModalProperties } from "./modal/index";
 export {
 	type CompanyAndCourseReviewsByUserId,
+	type CompanyReview,
 	type CourseReview,
 	type GetCourseReviews,
 	type GetModerationReviewsRequest,
@@ -30,7 +31,12 @@ export {
 	type ModerationReviews,
 	type RecentReview,
 	type Review,
+	type ReviewReport,
 	type ReviewsStats,
 } from "./review/index";
-export { type User, type UserWithStaff } from "./user/index";
+export {
+	type AgreePolicyRequest,
+	type User,
+	type UserWithStaff,
+} from "./user/index";
 export { type ValueOf } from "./value-of/index";

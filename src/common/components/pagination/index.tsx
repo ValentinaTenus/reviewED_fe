@@ -13,9 +13,9 @@ type PaginationProps = {
 };
 
 const DOTS = "...";
-const VISIBLE_PAGES = 5;
-const INITIAL_THRESHOLD = 3;
-const END_THRESHOLD = 3;
+const VISIBLE_PAGES = 3;
+const INITIAL_THRESHOLD = 2;
+const END_THRESHOLD = 2;
 const DEFAULT_PAGE_NUMBER = 10;
 const FIRST_PAGE = 1;
 

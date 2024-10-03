@@ -11,9 +11,14 @@ import styles from "./styles.module.scss";
 type CourseCardProperties = {
 	className?: string;
 	course: GetCoursesResult;
+	type?: "new-course" | "top-course";
 };
 
-const CourseCard: React.FC<CourseCardProperties> = ({ className, course }) => {
+const CourseCard: React.FC<CourseCardProperties> = ({
+	className,
+	course,
+	type = "new-course",
+}) => {
 	return (
 		<Link
 			className={clsx(styles["item_card"], className)}
@@ -22,7 +27,10 @@ const CourseCard: React.FC<CourseCardProperties> = ({ className, course }) => {
 		>
 			<div className={styles["item_loco_container"]}>
 				<Logo
-					className={styles["course_image"]}
+					className={clsx(
+						styles["course_image"],
+						type === "top-course" && styles["course_image__top_course"],
+					)}
 					logo={course.company_logo}
 					name={course.company}
 				/>

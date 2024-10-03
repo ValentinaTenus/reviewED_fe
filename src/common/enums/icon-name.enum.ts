@@ -8,6 +8,7 @@ enum IconName {
 	AUDIENCE = "audience",
 	BANK = "bank",
 	CLOSE = "close",
+	COPY = "copy",
 	DOLLAR_SIGN = "dollarSign",
 	EMAIL = "email",
 	FACEBOOK = "facebook",
@@ -31,6 +32,7 @@ enum IconName {
 	STAR = "star",
 	TABLE_VIEW = "tableView",
 	TEACHER = "teacher",
+	USERS = "users",
 	XRP = "xrp",
 	YOUTUBE = "youtube",
 }

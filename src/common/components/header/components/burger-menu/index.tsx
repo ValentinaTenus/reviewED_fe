@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { Button } from "~/common/components/index";
 import { AppRoute, ButtonVariant } from "~/common/enums/index";
 
-import { Search } from "../index";
 import styles from "./styles.module.scss";
 
 type BurgerMenuProperties = {
@@ -15,7 +14,6 @@ const BurgerMenu: React.FC<BurgerMenuProperties> = ({ onLogin }) => {
 	return (
 		<div className={styles["user_menu_wrapper"]}>
 			<div className={styles["user_menu"]}>
-				<Search />
 				<ul className={styles["user_menu__list"]}>
 					<Link
 						className={styles["user_menu__list_item"]}
