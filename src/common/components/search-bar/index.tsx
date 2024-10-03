@@ -23,6 +23,7 @@ type SearchBarProperties = {
 	filtersLength?: number;
 	iconSearch?: boolean;
 	isFilterButton?: boolean;
+	onChangeSearchTerm?: (searchTerm: string) => void;
 	onInputChange?: (value: string) => [];
 	onOpenFilter?: () => void;
 	onSubmit: (searchTerm: string) => void;
@@ -34,6 +35,7 @@ const SearchBar: React.FC<SearchBarProperties> = ({
 	filtersLength,
 	iconSearch = false,
 	isFilterButton,
+	onChangeSearchTerm,
 	onInputChange,
 	onOpenFilter,
 	onSubmit,
@@ -64,8 +66,12 @@ const SearchBar: React.FC<SearchBarProperties> = ({
 					setFilteredSuggestions(suggestions);
 				}
 			}
+
+			if (onChangeSearchTerm) {
+				onChangeSearchTerm(value);
+			}
 		},
-		[onInputChange],
+		[onInputChange, onChangeSearchTerm],
 	);
 
 	const handleFormSubmit = useCallback(
