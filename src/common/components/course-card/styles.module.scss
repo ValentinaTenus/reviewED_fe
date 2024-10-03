@@ -213,7 +213,7 @@
 			gap: 12px;
 		}
 
-		&__categories {
+		&__age {
 			font-size: var(--font-size-main-text);
 			flex-wrap: wrap;
 			gap: 8px;
@@ -234,22 +234,24 @@
 			&-text {
 				font-size: var(--font-size-main-text);
 			}
-
-			&-categories {
-				margin-bottom: 16px;
-				&-icon {
-					display: none;
-				}
-
-				&-specialization {
-					display: none;
-				}
-			}
 		}
 
+		&__categories {
+			&-icon {
+				display: none;
+			}
+
+			&-name {
+				display:none;
+			}
+		}
 		&__reviews {
 			flex-direction: column;
 			gap: 16px;
+
+			&-button {
+				width: 100%;
+			}
 
 			&-info {
 				border-bottom: 1px solid var(--color-grey-350);
