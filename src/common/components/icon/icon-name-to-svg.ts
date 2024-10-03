@@ -1,4 +1,3 @@
-
 import React from "react";
 
 import ArrowLeftLong from "~/assets/images/arrow_left_long_light.svg?react";

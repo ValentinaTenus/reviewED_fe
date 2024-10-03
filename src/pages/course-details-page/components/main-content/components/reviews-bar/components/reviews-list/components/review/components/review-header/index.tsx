@@ -1,10 +1,11 @@
 import React from "react";
 
-import styles from "./styles.module.scss";
-import { StarRating } from "~/common/components";
 import Image from "~/assets/images/review_profile_pic.png";
-import { Icon } from "~/common/components";
+import { Icon, StarRating } from "~/common/components";
 import { IconName } from "~/common/enums";
+
+import styles from "./styles.module.scss";
+
 type ReviewHeaderProperties = {
 	date: string;
 	name: string;
@@ -21,7 +22,7 @@ const ReviewHeader: React.FC<ReviewHeaderProperties> = ({
 	return (
 		<div className={styles["review__header"]}>
 			<aside className={styles["review__user-block"]}>
-				<img src={Image} alt="" className={styles["review__user-picture"]} />
+				<img alt="" className={styles["review__user-picture"]} src={Image} />
 				<div className={styles["review__name-block"]}>
 					<p className={styles["review__user-name"]}>{name}</p>
 					<p className={styles["review__user-role"]}>{role}</p>

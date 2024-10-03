@@ -1,4 +1,5 @@
 import { type CourseReview } from "./course-reviews.type";
+
 type GetCourseReviews = {
 	count: number;
 	next: null | number;

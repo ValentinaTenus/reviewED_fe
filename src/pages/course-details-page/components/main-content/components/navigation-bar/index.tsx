@@ -1,11 +1,10 @@
-import { useState } from "react";
-import React from "react";
+import React, { useState } from "react";
 
 import styles from "./styles.module.scss";
 
 type NavBarProperties = {
-	aboutCourse: React.RefObject<HTMLDivElement>;
 	aboutCompany: React.RefObject<HTMLDivElement>;
+	aboutCourse: React.RefObject<HTMLDivElement>;
 };
 
 const scrollToSection = (sectionRef: React.RefObject<HTMLDivElement>) => {
@@ -14,7 +13,7 @@ const scrollToSection = (sectionRef: React.RefObject<HTMLDivElement>) => {
 	}
 };
 
-const NavBar: React.FC<NavBarProperties> = ({ aboutCourse, aboutCompany }) => {
+const NavBar: React.FC<NavBarProperties> = ({ aboutCompany, aboutCourse }) => {
 	const [active, setActive] = useState("Про курс");
 
 	return (

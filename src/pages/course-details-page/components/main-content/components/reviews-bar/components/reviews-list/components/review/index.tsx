@@ -1,13 +1,11 @@
 import React from "react";
 
-import styles from "./styles.module.scss";
+import { ReviewFooter } from "./components/review-footer";
 import { ReviewHeader } from "./components/review-header";
 import { ReviewMain } from "./components/review-main";
-import { ReviewFooter } from "./components/review-footer";
+import styles from "./styles.module.scss";
 
-type ReviewProperties = {};
-
-const Review: React.FC<ReviewProperties> = ({}) => {
+const Review: React.FC = () => {
 	return (
 		<div className={styles["review"]}>
 			<ReviewHeader

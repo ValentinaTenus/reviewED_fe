@@ -1,9 +1,9 @@
 import React from "react";
 
-import styles from "./styles.module.scss";
+import { Logo, StarRating } from "~/common/components";
 import { type GetCourseByIdResponseDto } from "~/common/types";
-import { StarRating } from "~/common/components";
-import { Logo } from "~/common/components";
+
+import styles from "./styles.module.scss";
 
 type PageTitleProperties = {
 	course: GetCourseByIdResponseDto;

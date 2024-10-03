@@ -1,8 +1,9 @@
 import { forwardRef } from "react";
-import { ButtonVariant, ButtonSize, IconName } from "~/common/enums/index";
-import { type GetCourseByIdResponseDto } from "~/common/types";
 
 import { Button } from "~/common/components";
+import { ButtonSize, ButtonVariant, IconName } from "~/common/enums/index";
+import { type GetCourseByIdResponseDto } from "~/common/types";
+
 import { Contact } from "./components/contact";
 import styles from "./styles.module.scss";
 
@@ -38,17 +39,20 @@ const ContactsBar = forwardRef<HTMLDivElement, ContactsBarProperties>(
 				/>
 				<aside className={styles["contacts__button-container"]}>
 					<Button size={ButtonSize.MEDIUM} variant={ButtonVariant.PRIMARY}>
-						Зв'язатися з компанією
+						Зв&apos;язатися з компанією
 					</Button>
 					<Button size={ButtonSize.MEDIUM} variant={ButtonVariant.OUTLINED}>
 						<p className={styles["contacts__bold-content"]}>
 							Показати контакти
 						</p>
+						npm
 					</Button>
 				</aside>
 			</div>
 		);
 	},
 );
+
+ContactsBar.displayName = "ContactsBar";
 
 export { ContactsBar };

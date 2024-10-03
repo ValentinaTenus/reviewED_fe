@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
 
-import styles from "./styles.module.scss";
-
-import { ScreenBreakpoints } from "~/common/constants/index";
-import { type ReviewsStats } from "~/common/types";
-import { StatsBar } from "./components/stats-bar";
 import { Button, StarRating } from "~/common/components";
-import { RatingBar } from "./components/rating-bar";
-import { RatingSize, ButtonSize, ButtonVariant } from "~/common/enums";
+import { ScreenBreakpoints } from "~/common/constants/index";
+import { ButtonSize, ButtonVariant, RatingSize } from "~/common/enums";
+import { type ReviewsStats } from "~/common/types";
 import { useGetCourseByIdQuery } from "~/redux/courses/courses-api";
+
+import { RatingBar } from "./components/rating-bar";
+import { StatsBar } from "./components/stats-bar";
+import styles from "./styles.module.scss";
 
 type ReviewsStatsProperties = {
 	stats: ReviewsStats;
 };
 
-const ReviewsStats: React.FC<ReviewsStatsProperties> = ({ stats }) => {
+const ReviewsStatsBar: React.FC<ReviewsStatsProperties> = ({ stats }) => {
 	const [isRatingBarShown, setIsRatingBarShown] = useState<boolean>(false);
 
 	const { data: course } = useGetCourseByIdQuery("1");
@@ -68,4 +68,4 @@ const ReviewsStats: React.FC<ReviewsStatsProperties> = ({ stats }) => {
 	);
 };
 
-export { ReviewsStats };
+export { ReviewsStatsBar };

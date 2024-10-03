@@ -1,8 +1,9 @@
 import React from "react";
 
-import styles from "./styles.module.scss";
 import { type ReviewsStats } from "~/common/types";
+
 import { RatingLine } from "./components/rating-line";
+import styles from "./styles.module.scss";
 
 type RatingBarProperties = {
 	stats: ReviewsStats;
@@ -10,21 +11,22 @@ type RatingBarProperties = {
 
 const MIN_LINE_WIDTH = 4;
 const MAX_LINE_WIDTH = 188;
+const PERCENT_NUMBER = 100;
 
 const RatingBar: React.FC<RatingBarProperties> = ({ stats }) => {
 	const calculatePixelsUnit = (): number => {
 		const ratingsArray: number[] = Object.values(stats);
-		if (ratingsArray.every((item) => item <= 100))
-			return (MAX_LINE_WIDTH - MIN_LINE_WIDTH) / 100;
+		if (ratingsArray.every((item) => item <= PERCENT_NUMBER))
+			return (MAX_LINE_WIDTH - MIN_LINE_WIDTH) / PERCENT_NUMBER;
 
 		const maxRatings = Math.max(...ratingsArray);
-		return (maxRatings - MIN_LINE_WIDTH) / 100;
+		return (maxRatings - MIN_LINE_WIDTH) / PERCENT_NUMBER;
 	};
 
 	const pixelsUnit = calculatePixelsUnit();
 
 	const defineWidth = (ratingValue: number): number => {
-		if (ratingValue <= 0) return MIN_LINE_WIDTH;
+		if (ratingValue) return MIN_LINE_WIDTH;
 		return pixelsUnit * ratingValue + MIN_LINE_WIDTH;
 	};
 

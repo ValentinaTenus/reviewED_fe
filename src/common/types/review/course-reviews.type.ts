@@ -1,12 +1,12 @@
 type CourseReview = {
-	id: number;
-	text: string;
-	rating: number;
 	author_name: string;
-	status: string;
+	company_name: string;
 	count_likes: number;
 	course_title: string;
-	company_name: string;
+	id: number;
+	rating: number;
+	status: string;
+	text: string;
 };
 
-export  { type CourseReview };
+export { type CourseReview };

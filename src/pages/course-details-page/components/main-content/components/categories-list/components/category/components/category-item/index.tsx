@@ -1,6 +1,7 @@
 import React from "react";
 
 import styles from "./styles.module.scss";
+
 type CategoryItemProperties = {
 	title: string;
 };

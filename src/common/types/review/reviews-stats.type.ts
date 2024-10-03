@@ -1,9 +1,9 @@
 type ReviewsStats = {
-	one: number;
-	two: number;
-	three: number;
-	four: number;
 	five: number;
+	four: number;
+	one: number;
+	three: number;
+	two: number;
 };
 
 export { type ReviewsStats };

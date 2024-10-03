@@ -16,8 +16,7 @@ export const reviewsApi = api.injectEndpoints({
 					url: reviewsApiPath.REVIEWS_BY_COURSE_ID + `${id}`,
 				};
 			},
-			transformResponse: (response: GetCourseReviews) =>
-				response.results,
+			transformResponse: (response: GetCourseReviews) => response.results,
 		}),
 	}),
 });
