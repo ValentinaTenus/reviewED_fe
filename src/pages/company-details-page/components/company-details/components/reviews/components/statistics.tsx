@@ -21,6 +21,11 @@ const Statistics: React.FC<{
 	const HUNDRED = 100;
 	const THREE_SECONDS = 3000;
 
+	const formattedRating = (company.avg_rating / ONE).toFixed(ONE);
+	const formattedRatingOverall = (company.avg_overall_rating / ONE).toFixed(
+		ONE,
+	);
+
 	const [isVisible, setIsVisible] = useState(false);
 
 	const handleToggleVisibility = () => {
@@ -77,7 +82,7 @@ const Statistics: React.FC<{
 						<span
 							className={`${globalStyles["stats_span"]} ${styles["span_before-rating"]}`}
 						>
-							{company.avg_rating}
+							{formattedRating}
 						</span>
 						<Rating
 							name="half-rating-read"
@@ -149,7 +154,7 @@ const Statistics: React.FC<{
 						<span
 							className={`${globalStyles["stats_span"]} ${styles["span_before-rating"]}`}
 						>
-							{company.avg_overall_rating}
+							{formattedRatingOverall}
 						</span>
 						<Rating
 							name="half-rating-read"
