@@ -19,7 +19,7 @@ const AddCompanySection: React.FC = () => {
 			<div className={styles["add_company_text_section"]}>
 				<p className={styles["text_section_title"]}>
 					Не знайшли{" "}
-					<span className={styles["title_yellow"]}>свою компанію</span>
+					<span className={styles["title_yellow"]}>свою компанію?</span>
 				</p>
 				<p className={styles["text_section_text"]}>
 					Зв&apos;яжіться з нами, щоб додати вашу компанію і отримати чесні

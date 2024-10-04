@@ -15,6 +15,7 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  width: 45%;
 }
 
 .text_section_title {
@@ -72,6 +73,10 @@
   height: 40px;
 }
 
+@media (max-width: 1280px) and (min-width: 768px) {
+  
+}
+
 @media (max-width: 1280px) {
   .add_company_container {
     flex-direction: column;
@@ -86,6 +91,8 @@
   .add_company_text_section {
     justify-content: center;
     padding: 0 10px;
+    text-align: center;
+    width: 100%;
   }
 
   .add_company_form_section {
@@ -99,6 +106,7 @@
 
   .text_section_title {
     align-self: center;
+    text-align: center;
   }
 
   .form_inputs {
