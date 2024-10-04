@@ -11,7 +11,7 @@ type PricingBarProperties = {
 
 const PricingBar: React.FC<PricingBarProperties> = ({ price }) => {
 	return (
-		<div className={styles["main_content"]}>
+		<div className={styles["pricing-bar"]}>
 			<SectionTitle iconName={IconName.DOLLAR_SIGN} title="Ціна за навчання:" />
 			{price}
 		</div>

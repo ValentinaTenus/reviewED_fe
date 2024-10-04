@@ -1,0 +1,35 @@
+.navbar__wrapper {
+	padding-bottom: 50px;
+	overflow-x: auto;
+	white-space: nowrap;
+}
+
+.navbar {
+	display: flex;
+	gap: 40px;
+}
+
+.navbar__item {
+	color: var(--color-grey-500);
+	cursor: pointer;
+	display: block;
+	font-size: var(--font-size-title-large);
+	font-weight: var(--font-weight-semi-bold);
+	line-height: 1.4;
+	padding: 0 15px;
+}
+
+.item_active {
+	color: var(--color-black);
+	position: relative;
+}
+
+.item_active::after {
+	content: "";
+	background-color: var(--color-black);
+	bottom: -20px;
+	height: 3px;
+	left: 0;
+	position: absolute;
+	width: 100%;
+}

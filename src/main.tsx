@@ -56,7 +56,7 @@ const routes = createBrowserRouter([
 			},
 			{
 				element: <CourseDetailsPage />,
-				path: AppRoute.COURSE_DETAILS_TEST,
+				path: AppRoute.COURSE_DETAILS,
 			},
 			{
 				element: <CourseList />,

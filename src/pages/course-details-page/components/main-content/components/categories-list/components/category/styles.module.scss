@@ -1,12 +1,17 @@
-.categories_header {
+
+
+.category__header {
 	font-family: var(--font-family-roboto);
 	font-size: var(--font-size-main-text);
 	font-weight: var(--font-weight-semi-bold);
 	margin-bottom: 12px;
 }
 
-.categories_list {
+.subcategories__list {
+	display: flex;
+	flex-direction: column;
 	font-size: var(--font-size-title-h5);
 	font-weight: var(--font-weight-semi-bold);
+	gap: 10px;
 	width: 100%;
 }
