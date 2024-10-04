@@ -10,6 +10,7 @@ import {
 	Header,
 } from "~/common/components/index";
 import { AppRoute, ButtonVariant } from "~/common/enums/index";
+import { useAppSelector } from "~/redux/hooks.type";
 import { useAgreePolicyMutation } from "~/redux/user/user-api";
 
 import styles from "./styles.module.scss";
@@ -28,6 +29,8 @@ const PrivacyPolicyPage: React.FC = () => {
 	const [isPolicyAgreed, setIsPolicyAgreed] = useState(false);
 	const [serverError, setServerError] = useState("");
 	const [agreePolicy, { error, isSuccess }] = useAgreePolicyMutation();
+
+	const { user } = useAppSelector((state) => state.auth);
 
 	const handleCheckBoxChange = useCallback(
 		(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -123,40 +126,44 @@ const PrivacyPolicyPage: React.FC = () => {
 								</li>
 							</ol>
 						</div>
-						<div className={styles["privacy_policy__content-form"]}>
-							<Checkbox
-								label="З політикою конфіденційності Сайту ознайомлений(а)"
-								name="privacy-policy"
-								onChange={handleCheckBoxChange}
-							/>
-						</div>
+						{user && (
+							<div className={styles["privacy_policy__content-form"]}>
+								<Checkbox
+									label="З політикою конфіденційності Сайту ознайомлений(а)"
+									name="privacy-policy"
+									onChange={handleCheckBoxChange}
+								/>
+							</div>
+						)}
 					</div>
 					{serverError && (
 						<p className={styles["privacy_policy__content-error"]}>
 							{serverError}
 						</p>
 					)}
-					<div className={styles["privacy_policy__content-buttons"]}>
-						<Button
-							className={clsx(
-								styles["privacy_policy__content-buttons-button"],
-								styles["privacy_policy__content-buttons-button-reject"],
-							)}
-							disabled={isSuccess}
-							onClick={handleRejectPrivacyPolicy}
-							variant={ButtonVariant.PRIMARY}
-						>
-							Відхилити
-						</Button>
-						<Button
-							className={styles["privacy_policy__content-buttons-button"]}
-							disabled={!isPolicyAgreed}
-							onClick={handleAgreePrivacyPolicy}
-							variant={ButtonVariant.PRIMARY}
-						>
-							Прийняти
-						</Button>
-					</div>
+					{user && (
+						<div className={styles["privacy_policy__content-buttons"]}>
+							<Button
+								className={clsx(
+									styles["privacy_policy__content-buttons-button"],
+									styles["privacy_policy__content-buttons-button-reject"],
+								)}
+								disabled={isSuccess}
+								onClick={handleRejectPrivacyPolicy}
+								variant={ButtonVariant.PRIMARY}
+							>
+								Відхилити
+							</Button>
+							<Button
+								className={styles["privacy_policy__content-buttons-button"]}
+								disabled={!isPolicyAgreed}
+								onClick={handleAgreePrivacyPolicy}
+								variant={ButtonVariant.PRIMARY}
+							>
+								Прийняти
+							</Button>
+						</div>
+					)}
 				</div>
 			</div>
 			<Footer />
