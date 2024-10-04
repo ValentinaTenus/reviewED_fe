@@ -21,7 +21,6 @@ const ReviewsStatsBar: React.FC<ReviewsStatsProperties> = ({ stats }) => {
 	const { data: course } = useGetCourseByIdQuery("1");
 
 	const scrWidth = useGetScreenWidth();
-	console.log(scrWidth);
 
 	useEffect(() => {
 		if (scrWidth <= ScreenBreakpoints.MOBILE) {
