@@ -9,6 +9,7 @@ import { useGetCourseByIdQuery } from "~/redux/courses/courses-api";
 import { RatingBar } from "./components/rating-bar";
 import { StatsBar } from "./components/stats-bar";
 import styles from "./styles.module.scss";
+import { useGetScreenWidth } from "~/common/hooks";
 
 type ReviewsStatsProperties = {
 	stats: ReviewsStats;
@@ -19,22 +20,16 @@ const ReviewsStatsBar: React.FC<ReviewsStatsProperties> = ({ stats }) => {
 
 	const { data: course } = useGetCourseByIdQuery("1");
 
-	const updateRatingDisplay = () => {
-		const screenWidth = window.innerWidth;
+	const scrWidth = useGetScreenWidth();
+	console.log(scrWidth);
 
-		if (screenWidth <= ScreenBreakpoints.MOBILE) {
+	useEffect(() => {
+		if (scrWidth <= ScreenBreakpoints.MOBILE) {
 			setIsRatingBarShown(false);
 		} else {
 			setIsRatingBarShown(true);
 		}
-	};
-
-	useEffect(() => {
-		updateRatingDisplay();
-		window.addEventListener("resize", updateRatingDisplay);
-
-		return () => window.removeEventListener("resize", updateRatingDisplay);
-	}, []);
+	}, [scrWidth]);
 
 	return (
 		<div className={styles["reviews-stats"]}>
