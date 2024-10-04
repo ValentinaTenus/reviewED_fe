@@ -33,7 +33,7 @@ const authSlice = createSlice({
 			state.access = action.payload.access;
 			state.refresh = action.payload.refresh;
 		},
-		setUser: (state, action: PayloadAction<UserWithStaff>) => {
+		setUser: (state, action: PayloadAction<null | UserWithStaff>) => {
 			state.user = action.payload;
 		},
 	},
