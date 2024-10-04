@@ -15,9 +15,9 @@ const CategoriesSection: React.FC<CategorySectionProperties> = ({ course }) => {
 			<h3 className={styles["categories__header"]}>Категорії курса</h3>
 			<article className={styles["categories__list"]}>
 				{course &&
-					course.categories.map((category, index) => {
-						return <CategoryBlock category={category} key={index} />;
-					})}
+					course.categories.map((category, index) => (
+						<CategoryBlock category={category} key={index} />
+					))}
 			</article>
 		</div>
 	);

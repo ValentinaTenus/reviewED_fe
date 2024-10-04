@@ -16,14 +16,21 @@ const scrollToSection = (sectionRef: React.RefObject<HTMLDivElement>) => {
 const NavBar: React.FC<NavBarProperties> = ({ aboutCompany, aboutCourse }) => {
 	const [active, setActive] = useState("Про курс");
 
+	const handleNavigationClick = (
+		activeStateValue: string,
+		ref: React.RefObject<HTMLDivElement>,
+	) => {
+		setActive(activeStateValue);
+		scrollToSection(ref);
+	};
+
 	return (
 		<nav className={styles["navbar__wrapper"]}>
 			<ul className={styles["navbar"]}>
 				<li
 					className={`${styles["navbar__item"]} ${active === "Про курс" ? styles["item_active"] : ""}`}
 					onClick={() => {
-						setActive("Про курс");
-						scrollToSection(aboutCourse);
+						handleNavigationClick("Про курс", aboutCourse);
 					}}
 				>
 					Про курс
@@ -31,8 +38,7 @@ const NavBar: React.FC<NavBarProperties> = ({ aboutCompany, aboutCourse }) => {
 				<li
 					className={`${styles["navbar__item"]} ${active === "Про компанію" ? styles["item_active"] : ""}`}
 					onClick={() => {
-						setActive("Про компанію");
-						scrollToSection(aboutCompany);
+						handleNavigationClick("Про компанію", aboutCompany);
 					}}
 				>
 					Про компанію
