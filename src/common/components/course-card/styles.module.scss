@@ -127,6 +127,7 @@
 
 		&-item {
 			display: flex;
+			flex-wrap: wrap;
 			gap: 8px;
 		}
 
@@ -139,6 +140,9 @@
 			display: inline-flex;
 			text-align: center;
 			font-size: var(--font-size-main-text);
+			overflow: hidden;
+				
+				
 
 			&::before {
 				vertical-align: middle;
@@ -216,12 +220,11 @@
 
 		&__age {
 			font-size: var(--font-size-main-text);
-			flex-wrap: wrap;
+			
 			gap: 8px;
 
 			&-list {
-				width: 88%;
-				word-break: break-all;
+				width: 100%;
 			}
 
 			&-item {
