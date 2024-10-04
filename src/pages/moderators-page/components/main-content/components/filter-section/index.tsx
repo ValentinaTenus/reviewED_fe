@@ -45,16 +45,21 @@ const ModeratorsReviewFilterSection: React.FC<Props> = ({
 				<p className={styles["fitters_block__sort_title"]}>Сортувати за</p>
 				<SortDropdown
 					className={styles["dropdown_fullwidth"]}
+					isWithCleaner
 					menuStaticStyle={useGetScreenWidth() <= ScreenBreakpoints.MOBILE}
 					onChange={handleSetFilterByStatus}
 					options={moderationsReviewSortOptionsByStatus}
+					title="Стан перевірки"
 				/>
 				<SortDropdown
 					className={styles["dropdown_fullwidth"]}
+					isWithCleaner
 					menuStaticStyle={useGetScreenWidth() <= ScreenBreakpoints.MOBILE}
 					onChange={handleSetSortByPeriod}
 					options={moderationsReviewSortOptionsByPeriod}
+					title="Період"
 				/>
+				{/* <SortGroupCleaner cleanFn={[handleSetFilterByStatus, handleSetSortByPeriod]}/> */}
 			</div>
 		</div>
 	);

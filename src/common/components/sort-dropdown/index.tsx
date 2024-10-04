@@ -17,10 +17,12 @@ type Properties = {
 	className?: string;
 	isDisabled?: boolean;
 	isIconButton?: boolean;
+	isWithCleaner?: boolean;
 	menuStaticStyle?: boolean;
 	name?: string;
 	onChange: (value: DropdownOption["value"]) => void;
 	options: DropdownOption[];
+	title?: string;
 };
 
 const SortDropdown: React.FC<Properties> = ({
@@ -28,16 +30,24 @@ const SortDropdown: React.FC<Properties> = ({
 	className,
 	isDisabled,
 	isIconButton = false,
+	isWithCleaner,
 	menuStaticStyle,
 	name,
 	onChange,
 	options,
+	title,
 }) => {
 	const [selectedOption, setSelectedOption] = useState<
 		DropdownOption | undefined
 	>(undefined);
 	const [isOpen, setIsOpen] = useState(false);
 	const dropdownRef = useRef<HTMLDivElement>(null);
+
+	const definedTitle = selectedOption
+		? selectedOption.label
+		: title
+			? title
+			: options[FIRST_OPTION].label;
 
 	const handleOptionClick = (option: DropdownOption) => {
 		const { label, value } = option;
@@ -51,6 +61,11 @@ const SortDropdown: React.FC<Properties> = ({
 			setIsOpen(!isOpen);
 		}
 	}, [isDisabled, isOpen]);
+
+	const handleCleanOption = useCallback(() => {
+		setSelectedOption(undefined);
+		onChange("");
+	}, [setSelectedOption, onChange]);
 
 	useEffect(() => {
 		const handleClickOutside = (e: MouseEvent) => {
@@ -93,21 +108,34 @@ const SortDropdown: React.FC<Properties> = ({
 					</IconButton>
 				)}
 				{!isIconButton && (
-					<div
-						className={clsx(styles["dropdown_trigger"], {
-							[styles["open"]]: isOpen,
-						})}
-						onClick={handleToggleDropdown}
-					>
-						{selectedOption
-							? selectedOption.label
-							: options[FIRST_OPTION].label}
-						{isOpen ? (
-							<ArrowUp className={styles["dropdown_icon"]} />
-						) : (
-							<ArrowDown className={styles["dropdown_icon"]} />
+					<>
+						<div
+							className={clsx(styles["dropdown_trigger"], {
+								[styles["open"]]: isOpen,
+								[styles["selected"]]: !isOpen && selectedOption && title,
+							})}
+							onClick={handleToggleDropdown}
+						>
+							{definedTitle}
+
+							{isOpen ? (
+								<ArrowUp className={styles["dropdown_icon"]} />
+							) : (
+								<ArrowDown className={styles["dropdown_icon"]} />
+							)}
+						</div>
+						{isWithCleaner && (
+							<IconButton
+								className={clsx(
+									styles["dropdown_cleaner-icon"],
+									!selectedOption && styles["dropdown_cleaner-icon_disabled"],
+								)}
+								onClick={handleCleanOption}
+							>
+								<Icon name={IconName.CLOSE_CIRCLE} />
+							</IconButton>
 						)}
-					</div>
+					</>
 				)}
 				{isOpen && !isDisabled && (
 					<div
@@ -115,20 +143,24 @@ const SortDropdown: React.FC<Properties> = ({
 							styles["dropdown_menu"],
 							isIconButton && styles["icon_button__menu"],
 							menuStaticStyle && styles["dropdown_menu-static"],
+							isWithCleaner && styles["dropdown_menu_with-cleaner"],
 						)}
 					>
-						{options.map((option, index) => (
-							<div
-								className={clsx(
-									styles["dropdown_item"],
-									isIconButton && styles["icon_button__menu_item"],
-								)}
-								key={index}
-								onClick={() => handleOptionClick(option)}
-							>
-								{option.label}
-							</div>
-						))}
+						{options.map(
+							(option, index) =>
+								option.label !== definedTitle && (
+									<div
+										className={clsx(
+											styles["dropdown_item"],
+											isIconButton && styles["icon_button__menu_item"],
+										)}
+										key={index}
+										onClick={() => handleOptionClick(option)}
+									>
+										{option.label}
+									</div>
+								),
+						)}
 					</div>
 				)}
 			</div>
