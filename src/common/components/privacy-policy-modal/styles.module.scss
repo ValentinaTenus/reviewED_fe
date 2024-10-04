@@ -64,18 +64,29 @@
       }
     }
 
+    &-form {
+      padding: 0 24px;
+    }
+
+    &-error {
+      align-self: self-start;
+      color: var(--color-error-red);
+      padding-left: 24px;
+    }
+
     &-buttons {
       border-top: 1px solid var(--color-grey-200);
       display: flex;
       gap: 32px;
       justify-content: space-between;
       padding: 32px 0 56px 0;
+      width: 100%;
 
       &-button {
         padding: 12px 64px;
         height: 48px;
         font-size: var(--font-size-title-h5);
-        width: 318px;
+        width: 100%;
 
         &-reject {
           background-color: var(--color-grey-200);
@@ -88,6 +99,36 @@
             background-color: var(--color-grey-100);
           }
         }
+      }
+    }
+  }
+}
+
+@media (max-width: 1280px) {
+  .privacy_policy {
+    &__content {
+      gap: 32px;
+      width: 678px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .privacy_policy {
+    &__content {
+      border-radius: 0;
+      gap: 32px;
+      height: calc(100% - 76.8px);
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+
+      &-info {
+        height: 100%;
+      }
+
+      &-buttons {
+        flex-direction: column;
       }
     }
   }

@@ -1,11 +1,12 @@
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import clsx from "clsx";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
-import { ButtonVariant } from "~/common/enums";
-import { useModal } from "~/common/hooks";
+import { ButtonVariant } from "~/common/enums/index";
+import { useModal } from "~/common/hooks/index";
 import { useAgreePolicyMutation } from "~/redux/user/user-api";
 
-import { Button } from "../button";
+import { Button, Checkbox } from "../index";
 import styles from "./styles.module.scss";
 
 type ModalProperties = {
@@ -19,24 +20,35 @@ const PrivacyPolicyModal: React.FC<ModalProperties> = ({ isOpen, onClose }) => {
 		onClose,
 	});
 
-	// const [isPolicyAgreed, setIsPolicyAgreed] = useState(false);
-	const [agreePolicy, { isSuccess }] = useAgreePolicyMutation();
+	const [isPolicyAgreed, setIsPolicyAgreed] = useState(false);
+	const [serverError, setServerError] = useState("");
+	const [agreePolicy, { error, isSuccess }] = useAgreePolicyMutation();
 
-	// const handleCheckBoxChange = useCallback(
-	// 	(e: React.ChangeEvent<HTMLInputElement>) => {
-	// 		setIsPolicyAgreed(e.target.checked);
-	// 		if (e.target.checked) {
-	// 			agreePolicy({ consent: true });
-	// 		}
-	// 	},
-	// 	[agreePolicy],
-	// );
+	const handleCheckBoxChange = useCallback(
+		(e: React.ChangeEvent<HTMLInputElement>) => {
+			setIsPolicyAgreed(e.target.checked);
+		},
+		[],
+	);
 
-	const handleAgreePrivacyPolicy = useCallback(() => {
-		agreePolicy({ consent: true });
+	const handleAgreePrivacyPolicy = useCallback(async () => {
+		setServerError("");
+		await agreePolicy({ consent: true });
 	}, [agreePolicy]);
 
+	useEffect(() => {
+		if (error) {
+			const loadError = ((error as FetchBaseQueryError).data as {
+				detail: string;
+			})
+				? ((error as FetchBaseQueryError).data as { detail: string })
+				: { detail: "Виникла невідома помилка" };
+			setServerError(loadError.detail);
+		}
+	}, [error]);
+
 	const handleRejectPrivacyPolicy = useCallback(() => {
+		setIsPolicyAgreed(false);
 		onClose();
 	}, [onClose]);
 
@@ -85,18 +97,18 @@ const PrivacyPolicyModal: React.FC<ModalProperties> = ({ isOpen, onClose }) => {
 								особам, які викоростувають Сайт.
 							</li>
 							<li>
-								Згода Користувача на обробку його персональних даних не потребує
+								{`Згода Користувача на обробку його персональних даних не потребує
 								від Компанії додаткових сповіщень з приводу передачі його
 								персональних даних третім особам відповідно до норм ст.21 Закону
-								України &quotПро захист персональних даних&quot.
+								України "Про захист персональних даних".`}
 							</li>
 							<li>
-								Погоджуючись з даною Угодою, Користувач затверджує, що йому
-								зрозумілі його права, визначені Законом України &quotПро захист
-								персональних даних&quot, а також з якою метою відбувається збір,
+								{`Погоджуючись з даною Угодою, Користувач затверджує, що йому
+								зрозумілі його права, визначені Законом України "Про захист
+								персональних даних", а також з якою метою відбувається збір,
 								зберігання та обробка його персональних даних. Користувач також
 								надає згоду на те, що період обробки його персональних даних
-								безстроковий.
+								безстроковий.`}
 							</li>
 							<li>
 								Збір, зберігання та обробка персональних даних відбувається з
@@ -109,8 +121,19 @@ const PrivacyPolicyModal: React.FC<ModalProperties> = ({ isOpen, onClose }) => {
 							</li>
 						</ol>
 					</div>
+					<div className={styles["privacy_policy__content-form"]}>
+						<Checkbox
+							label="З політикою конфіденційності Сайту ознайомлений(а)"
+							name="privacy-policy"
+							onChange={handleCheckBoxChange}
+						/>
+					</div>
 				</div>
-
+				{serverError && (
+					<p className={styles["privacy_policy__content-error"]}>
+						{serverError}
+					</p>
+				)}
 				<div className={styles["privacy_policy__content-buttons"]}>
 					<Button
 						className={clsx(
@@ -125,6 +148,7 @@ const PrivacyPolicyModal: React.FC<ModalProperties> = ({ isOpen, onClose }) => {
 					</Button>
 					<Button
 						className={styles["privacy_policy__content-buttons-button"]}
+						disabled={!isPolicyAgreed}
 						onClick={handleAgreePrivacyPolicy}
 						variant={ButtonVariant.PRIMARY}
 					>
