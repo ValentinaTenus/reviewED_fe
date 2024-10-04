@@ -16,7 +16,7 @@ const ReviewMain: React.FC<ReviewMainProperties> = ({ text }) => {
 
 	const currentRef = textRef.current;
 
-	const isTextOverFlown =
+	const isTextOverflowed =
 		currentRef &&
 		(currentRef as HTMLElement).scrollHeight >
 			(currentRef as HTMLElement).clientHeight;
@@ -31,18 +31,22 @@ const ReviewMain: React.FC<ReviewMainProperties> = ({ text }) => {
 		}
 	};
 
+	const handleTextResize = () => {
+		setIsFullTextShown(!isFullTextShown);
+		defineTextHeight();
+	};
+
+	defineTextHeight();
+	
 	return (
 		<div className={styles["review__main"]}>
 			<section className={styles["review__text"]} ref={textRef}>
 				{text}
 			</section>
-			{(isTextOverFlown || isFullTextShown) && (
+			{(isTextOverflowed || isFullTextShown) && (
 				<Button
 					className={styles["review__button"]}
-					onClick={() => {
-						setIsFullTextShown(!isFullTextShown);
-						defineTextHeight();
-					}}
+					onClick={() => handleTextResize()}
 					size={ButtonSize.SMALL}
 					variant={ButtonVariant.DEFAULT}
 				>
