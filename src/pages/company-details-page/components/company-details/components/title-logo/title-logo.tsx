@@ -2,13 +2,13 @@ import { Rating } from "@mui/material";
 import React from "react";
 
 import { Logo } from "~/common/components";
-import { Company } from "~/common/types";
+import { GetCompanyByIdResponse } from "~/common/types/company";
 import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
 
 import styles from "./styles.module.scss";
 
 const TitleLogo: React.FC<{
-	company: Company;
+	company: GetCompanyByIdResponse;
 }> = ({ company }) => {
 	if (company) {
 		const RATING_SCALE = 1.0;

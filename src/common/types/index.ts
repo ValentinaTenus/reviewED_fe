@@ -5,7 +5,11 @@ export {
 	type LogOutRequestDto,
 } from "./auth/index";
 export { type Category } from "./category/index";
-export { type Company, type GetCompaniesRequestQuery } from "./company/index";
+export {
+	type Company,
+	type GetCompaniesRequestQuery,
+	type GetCompanyByIdResponse,
+} from "./company/index";
 export {
 	type Course,
 	type FilterType,

@@ -4,14 +4,14 @@ import React, { useCallback, useState } from "react";
 import { Button } from "~/common/components/index";
 import { Modal } from "~/common/components/modal";
 import { ButtonSize, ButtonVariant } from "~/common/enums/index";
-import { Company } from "~/common/types";
+import { type GetCompanyByIdResponse } from "~/common/types";
 import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
 import { useSendReviewMutation } from "~/redux/reviews/reviews-companies-api";
 
 import styles from "./styles.module.scss";
 
 const ReviewModal: React.FC<{
-	company: Company;
+	company: GetCompanyByIdResponse;
 	isOpen: boolean;
 	onClose: () => void;
 }> = ({ company, isOpen, onClose }) => {

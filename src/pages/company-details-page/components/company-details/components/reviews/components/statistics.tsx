@@ -3,14 +3,14 @@ import React, { useState } from "react";
 
 import { Button, Icon } from "~/common/components";
 import { ButtonVariant, IconName } from "~/common/enums";
-import { Company } from "~/common/types";
+import { type GetCompanyByIdResponse } from "~/common/types";
 import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
 
 import { ReviewModal } from "./components/review-modal";
 import styles from "./styles.module.scss";
 
 const Statistics: React.FC<{
-	company: Company;
+	company: GetCompanyByIdResponse;
 	reviewsCount: {
 		[key: number]: number;
 	};

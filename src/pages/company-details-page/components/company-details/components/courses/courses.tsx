@@ -2,14 +2,14 @@ import React, { useState } from "react";
 
 import { Button, Icon } from "~/common/components";
 import { ButtonVariant, IconName } from "~/common/enums";
-import { Company, GetCoursesResult } from "~/common/types";
+import { type GetCompanyByIdResponse, GetCoursesResult } from "~/common/types";
 
 import { CourseCard } from "./components/course-card/course-card";
 import styles from "./styles.module.scss";
 
 const Courses = React.forwardRef<
 	HTMLDivElement,
-	{ company: Company; courses: GetCoursesResult[] }
+	{ company: GetCompanyByIdResponse; courses: GetCoursesResult[] }
 >(({ courses }, ref) => {
 	const [showAll, setShowAll] = useState(false);
 
@@ -26,7 +26,12 @@ const Courses = React.forwardRef<
 
 	return (
 		<div className={styles["courses"]} ref={ref}>
-			<h2 className={styles["courses_heading"]}>Курси</h2>
+			<h2 className={styles["courses_heading"]}>
+				<span>Курси</span>
+				<span className={styles["courses_heading__number"]}>
+					({courses.length})
+				</span>
+			</h2>
 			<div className={styles["courses_cards"]}>
 				{displayedCourses.map((course, index) => (
 					<div className={styles["course_card"]} key={index}>

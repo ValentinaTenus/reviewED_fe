@@ -1,15 +1,15 @@
 .title-logo_container {
 	display: flex;
-	gap: 10px;
-	padding-bottom: 40px;
+	gap: 20px;
 }
 
 .logo_container {
 	display: flex;
 
 	.logo_image {
+		height: 68px;
+		width: 138px;
 		max-width: 100%;
-		height: auto;
 		object-fit: contain;
 	}
 }
@@ -17,8 +17,7 @@
 .title-rating_container {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	gap: 30px;
+	justify-content: space-between;
 }
 
 .title {
@@ -29,13 +28,8 @@
 
 /*-----------------------------*/
 
-@media (max-width: 900px) {
+@media (max-width: 1280px) {
 	.title-logo_container {
-		flex-direction: column;
-		gap: 20px;
-	}
-
-	.title-rating_container {
-		gap: 15px;
+		gap: 16px;
 	}
 }

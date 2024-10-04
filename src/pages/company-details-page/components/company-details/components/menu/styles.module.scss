@@ -1,7 +1,9 @@
 .menu {
-	padding-bottom: 50px;
-	overflow-x: auto;
 	white-space: nowrap;
+	padding: 24px;
+	overflow: auto;          
+  scrollbar-width: none;  
+  -ms-overflow-style: none; 
 }
 
 .menu_list {

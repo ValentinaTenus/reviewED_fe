@@ -1,6 +1,12 @@
-.details_page {
+.company-details_page {
 	display: flex;
 	flex-direction: column;
 	gap: 40px;
 	min-height: 100vh;
+}
+
+@media (max-width: 1280px) {
+	.company-details_page {
+		gap: 24px;
+	}
 }

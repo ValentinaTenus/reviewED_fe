@@ -1,19 +1,29 @@
 .about {
-	padding-bottom: 35px;
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
 }
 
 .about_heading {
-	margin-bottom: 25px;
+	font-size:  var(--font-size-title);
+}
+
+.about_text {
+	max-width: 907px;
+	font-weight: var(--font-weight-semi-bold);
 }
 
 /*-----------------------------*/
 
 .categories {
-	padding-bottom: 40px;
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
 }
 
 .categories_heading {
-	margin-bottom: 20px;
+	font-size: var(--font-size-title-mobile-h2);
+	font-weight: var(--font-weight-semi-bold);
 }
 
 .categories-list {
@@ -26,11 +36,11 @@
 .category_name {
 	font-size: var(--font-size-main-text);
 	font-family: var(--font-family-roboto);
-	font-weight: var(--font-weight-semi-bold);
+	font-weight: var(--font-weight-bold);
 }
 
 .subcategories_list {
-	margin-top: 15px;
+	margin-top: 12px;
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
@@ -52,4 +62,22 @@
 	border-radius: 50%;
 	left: 10px;
 	top: 30%;
+}
+
+@media (max-width: 1280px) {
+	.about {
+		gap: 20px;
+	}
+
+	.about_heading, .categories_heading  {
+		font-size: var(--font-size-title-mobile-h2);
+	}
+
+	.categories {
+		gap: 16px;
+	}
+
+	.subcategories_list {
+		gap: 8px;
+	}
 }

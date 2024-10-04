@@ -2,8 +2,8 @@ import { Rating } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { Button, Icon } from "~/common/components";
-import { AppRoute, ButtonVariant, IconName } from "~/common/enums";
+import { Icon } from "~/common/components";
+import { AppRoute, IconName } from "~/common/enums";
 import { GetCoursesResult } from "~/common/types";
 import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
 
@@ -35,7 +35,7 @@ const CourseCard: React.FC<{
 			</div>
 			<div className={styles["course_info-top"]}>
 				<div className={globalStyles["items-center"]}>
-					<span className={globalStyles["body-r"]}>By:</span>
+					<span className={globalStyles["body-r"]}>Компанія:</span>
 					<Link
 						className={`${styles["course_company"]} ${globalStyles["body-r"]}`}
 						to="#"
@@ -51,7 +51,7 @@ const CourseCard: React.FC<{
 					<span
 						className={`${styles["course_type"]} ${globalStyles["body-r"]}`}
 					>
-						Online
+						{course.location === "None" ? "Online" : course.location}
 					</span>
 				</div>
 				<div className={globalStyles["items-center"]}>
@@ -92,12 +92,15 @@ const CourseCard: React.FC<{
 							name={IconName.SHIELD_TICK}
 						/>
 						<span className={globalStyles["_verified-span"]}>
-							Verified Via LinkedIn
+							Верифіковано через LinkedIn
 						</span>
 					</div>
 				</div>
-				<Link to={`${AppRoute.COURSE_DETAILS}${course.id}`}>
-					<Button variant={ButtonVariant.PRIMARY}>Read reviews</Button>
+				<Link
+					className={styles["read_reviews__link"]}
+					to={`${AppRoute.COURSE_DETAILS}${course.id}`}
+				>
+					Читати відгуки
 				</Link>
 			</div>
 		</>

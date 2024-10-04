@@ -1,18 +1,43 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
+import { BreadCrumb } from "~/common/components";
+import { AppRoute } from "~/common/enums/index";
 import { useGetCompanyByIdQuery } from "~/redux/companies/companies-api";
 import { useGetCoursesByFilterQuery } from "~/redux/courses/courses-api";
 import { useGetReviewsByCompanyIdQuery } from "~/redux/reviews/reviews-companies-api";
 
-import { About } from "./components/about/about";
-import { Contacts } from "./components/contacts/contacts";
-import { Courses } from "./components/courses/courses";
-import { Menu } from "./components/menu/menu";
-import { Reviews } from "./components/reviews/reviews";
-import { TitleLogo } from "./components/title-logo/title-logo";
+import {
+	About,
+	Contacts,
+	Courses,
+	Menu,
+	Reviews,
+	TitleLogo,
+} from "./components/index";
 import styles from "./styles.module.scss";
 
-const CompanyDetails: React.FC<{ companyId: string }> = ({ companyId }) => {
+type BreadCrumbType = {
+	label: string;
+	path: string;
+};
+
+const BreadCrumbPaths = [
+	{
+		label: "Головна сторінка",
+		path: AppRoute.ROOT,
+	},
+	{
+		label: "Компанії",
+		path: AppRoute.ALL_COMPANIES,
+	},
+];
+
+type Properties = {
+	companyId: string;
+};
+
+const CompanyDetails: React.FC<Properties> = ({ companyId }) => {
+	const [breadcrumbs, setBreadcrumbs] = useState<BreadCrumbType[]>([]);
 	const { data: company } = useGetCompanyByIdQuery(companyId);
 
 	const filters = {
@@ -28,6 +53,14 @@ const CompanyDetails: React.FC<{ companyId: string }> = ({ companyId }) => {
 
 	const { data: coursesResponse } = useGetCoursesByFilterQuery(filters);
 
+	useEffect(() => {
+		const companyNameBreadcrumb = {
+			label: company?.name ?? "",
+			path: `${AppRoute.COMPANY_DETAILS}${companyId}`,
+		};
+		setBreadcrumbs([...BreadCrumbPaths, companyNameBreadcrumb]);
+	}, [companyId, company]);
+
 	const contactsRef = useRef(null);
 	const aboutRef = useRef(null);
 	const coursesRef = useRef(null);
@@ -38,21 +71,26 @@ const CompanyDetails: React.FC<{ companyId: string }> = ({ companyId }) => {
 	if (company && coursesResponse?.results) {
 		return (
 			<div className={styles["company-details_container"]}>
-				<TitleLogo company={company} />
-				<Menu
-					aboutRef={aboutRef}
-					contactsRef={contactsRef}
-					coursesRef={coursesRef}
-					reviewsRef={reviewsRef}
-				/>
-				<Contacts company={company} ref={contactsRef} />
-				<About company={company} ref={aboutRef} />
-				<Courses
-					company={company}
-					courses={coursesResponse.results}
-					ref={coursesRef}
-				/>
-				<Reviews company={company} ref={reviewsRef} reviews={reviews} />
+				<BreadCrumb items={breadcrumbs} />
+				<div className={styles["company-details"]}>
+					<div className={styles["company-details_title"]}>
+						<TitleLogo company={company} />
+						<Menu
+							aboutRef={aboutRef}
+							contactsRef={contactsRef}
+							coursesRef={coursesRef}
+							reviewsRef={reviewsRef}
+						/>
+					</div>
+					<Contacts company={company} ref={contactsRef} />
+					<About company={company} ref={aboutRef} />
+					<Courses
+						company={company}
+						courses={coursesResponse.results}
+						ref={coursesRef}
+					/>
+					<Reviews company={company} ref={reviewsRef} reviews={reviews} />
+				</div>
 			</div>
 		);
 	}

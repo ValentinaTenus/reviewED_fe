@@ -1,7 +1,7 @@
 import { forwardRef, useState } from "react";
 
 import { Pagination } from "~/common/components";
-import { Company, Review } from "~/common/types";
+import { type GetCompanyByIdResponse, Review } from "~/common/types";
 import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
 
 import { ReviewCard } from "./components/review-card";
@@ -10,7 +10,7 @@ import styles from "./styles.module.scss";
 
 const Reviews = forwardRef<
 	HTMLDivElement,
-	{ company: Company; reviews: Review[] | undefined }
+	{ company: GetCompanyByIdResponse; reviews: Review[] | undefined }
 >(({ company, reviews }, ref) => {
 	const MIN_REVIEWS = 0;
 	const ZERO = 0;
