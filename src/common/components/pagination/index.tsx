@@ -31,7 +31,6 @@ const Pagination: React.FC<PaginationProps> = ({
 	const [currentButton, setCurrentButton] = useState<number | string>(
 		defaultCurrentPage,
 	);
-
 	const numberOfPages = Array.from({ length: pages }, (_, i) => i + FIRST_PAGE);
 
 	const getDisplayedPages = (
