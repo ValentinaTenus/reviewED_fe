@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 
 import { Button, Icon, Input, StarRating } from "~/common/components";
 import {
@@ -28,6 +28,7 @@ const EditReviewModal: React.FC<Properties> = ({
 	handleEditReview,
 	handleCloseEditReview,
 }) => {
+	const [rating, setRating] = useState<number | null>(null);
 	const { control, errors, handleSubmit } = useAppForm({
 		defaultValues: {
 			text: review?.text || "",
@@ -38,9 +39,16 @@ const EditReviewModal: React.FC<Properties> = ({
 		handleCloseEditReview();
 	}, []);
 
-	const onEditReview = useCallback(({ text }: { text: string }) => {
-		if (!text) return;
-		handleEditReview({ text, rating: review.rating });
+	const onEditReview = useCallback(
+		({ text }: { text: string }) => {
+			if (!text) return;
+			handleEditReview({ text, rating: rating || review.rating });
+		},
+		[rating],
+	);
+
+	const handleStarClick = useCallback((rating: number) => {
+		setRating(rating);
 	}, []);
 
 	return (
@@ -57,7 +65,13 @@ const EditReviewModal: React.FC<Properties> = ({
 					</div>
 					<div className={styles["info__right"]}>
 						<div className={styles["date"]}>{review.time_added}</div>
-						<StarRating averageRating={review.rating} isNumberShown={false} />
+						<StarRating
+							averageRating={rating || review.rating}
+							isNumberShown={false}
+							isEditRating
+							classNameStarsBlock={styles["rating_stars--edit"]}
+							handleClick={handleStarClick}
+						/>
 					</div>
 				</div>
 
@@ -70,7 +84,7 @@ const EditReviewModal: React.FC<Properties> = ({
 						</div>
 						<div className={styles["icon-like"]}>
 							<Icon name={IconName.LIKE} />
-							<span>21 likes</span>
+							<span>{review.count_likes} likes</span>
 						</div>
 					</div>
 				</div>
@@ -82,7 +96,7 @@ const EditReviewModal: React.FC<Properties> = ({
 							<Input
 								control={control}
 								errors={errors}
-								maxWords={1000}
+								maxWords={2000}
 								name="text"
 								placeholder="Review text"
 								rows={1}

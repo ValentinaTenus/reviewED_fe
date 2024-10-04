@@ -8,6 +8,7 @@ type MyReview = {
 	status: "pending" | "published" | "removed";
 	text: string;
 	time_added: string;
+	count_likes: number
 	total_courses_count: number;
 };
 

@@ -6,6 +6,12 @@
 .rating_stars {
   align-items: center;
   display: flex;
+
+  &--edit {
+    span {
+      cursor: pointer;
+    }
+  }
 }
 
 .rating__base {

@@ -30,6 +30,8 @@ type RatingProperties = {
 	isOneStar?: boolean;
 	size?: RatingSize;
 	variant?: StarRatingVariant;
+	isEditRating?: boolean
+	handleClick?: (rating: number) => void
 };
 
 const StarRating: React.FC<RatingProperties> = ({
@@ -40,6 +42,8 @@ const StarRating: React.FC<RatingProperties> = ({
 	isOneStar,
 	size = RatingSize.SMALL,
 	variant = StarRatingVariant.DEFAULT,
+	isEditRating,
+	handleClick
 }) => {
 	const totalStars = TOTAL_STARTS;
 
@@ -57,13 +61,13 @@ const StarRating: React.FC<RatingProperties> = ({
 					<StarIcon />
 				</span>
 			)}
-			<div className={clsx(styles["rating_stars"], classNameStarsBlock)}>
+			<div className={clsx(styles["rating_stars"], isEditRating && styles['rating_stars--edit'], classNameStarsBlock,)}>
 				{!isOneStar &&
 					[...Array(totalStars)].map((_, index) => {
 						const ratingValue = index + INCREMENT_RATING_NUMBER;
 
 						return (
-							<span key={index}>
+							<span key={index} onClick={handleClick ? () => handleClick(ratingValue) : undefined}>
 								{averageRating >= ratingValue ? (
 									<StarIcon className={styles["star"]} key={index} />
 								) : averageRating >= ratingValue - DECREMENT_RATING_NUMBER ? (
