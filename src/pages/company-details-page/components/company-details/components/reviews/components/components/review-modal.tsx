@@ -53,57 +53,65 @@ const ReviewModal: React.FC<{
 		if (response.error) {
 			if ("status" in response.error && response.error.status !== FORBIDDEN) {
 				window.location.href = "/privacy-policy";
-			} else {
-				alert("You have already left a review for this company");
 			}
+		} else {
+			const userCompanyReviews = JSON.parse(
+				localStorage.getItem("userCompanyReviews") || "[]",
+			);
+			localStorage.setItem(
+				"userCompanyReviews",
+				JSON.stringify([...userCompanyReviews, company.id]),
+			);
 		}
 		handleCloseReviewModal();
 	}, [company.id, rating, reviewText, sendReview, handleCloseReviewModal]);
 
 	return (
-		<Modal
-			isOpen={isOpen}
-			onClose={handleCloseReviewModal}
-			title="Залиш свій відгук"
-		>
-			<div className={styles["modal_content"]}>
-				<div className={styles["modal_rating-block"]}>
-					<h4 className={styles["modal_label"]}>Ваша оцінка</h4>
-					<Rating
-						name="simple-controlled"
-						onChange={handleRatingChange}
-						precision={0.5}
-						value={rating}
-					/>
-				</div>
-				<div className={styles["modal_review-block"]}>
-					<h4 className={styles["modal_label"]}>Ваш відгук</h4>
-					<textarea
-						className={`${styles["modal_review-textarea"]} ${globalStyles["body-r"]}`}
-						id="review"
-						maxLength={2000}
-						onChange={handleReviewChange}
-						placeholder="Текст відгуку"
-						value={reviewText}
-					/>
-					<div
-						className={`${styles["modal_char-counter"]} ${globalStyles["small_r"]}`}
-					>
-						<span>Мінімальна к-ть символів - 200</span>
-						<span>{reviewText.length}/2000</span>
+		<>
+			<Modal
+				isOpen={isOpen}
+				onClose={handleCloseReviewModal}
+				title="Залиш свій відгук"
+			>
+				<div className={styles["modal_content"]}>
+					<div className={styles["modal_rating-block"]}>
+						<h4 className={styles["modal_label"]}>Ваша оцінка</h4>
+						<Rating
+							name="simple-controlled"
+							onChange={handleRatingChange}
+							precision={0.5}
+							value={rating}
+						/>
 					</div>
+					<div className={styles["modal_review-block"]}>
+						<h4 className={styles["modal_label"]}>Ваш відгук</h4>
+						<textarea
+							className={`${styles["modal_review-textarea"]} ${globalStyles["body-r"]}`}
+							id="review"
+							maxLength={2000}
+							onChange={handleReviewChange}
+							placeholder="Текст відгуку"
+							value={reviewText}
+						/>
+						<div
+							className={`${styles["modal_char-counter"]} ${globalStyles["small_r"]}`}
+						>
+							<span>Мінімальна к-ть символів - 200</span>
+							<span>{reviewText.length}/2000</span>
+						</div>
+					</div>
+					<Button
+						className={styles["modal_submit-button"]}
+						disabled={reviewText.length < MIN_TEXT}
+						onClick={handleSubmit}
+						size={ButtonSize.LARGE}
+						variant={ButtonVariant.PRIMARY}
+					>
+						Написати відгук
+					</Button>
 				</div>
-				<Button
-					className={styles["modal_submit-button"]}
-					disabled={reviewText.length < MIN_TEXT}
-					onClick={handleSubmit}
-					size={ButtonSize.LARGE}
-					variant={ButtonVariant.PRIMARY}
-				>
-					Написати відгук
-				</Button>
-			</div>
-		</Modal>
+			</Modal>
+		</>
 	);
 };
 

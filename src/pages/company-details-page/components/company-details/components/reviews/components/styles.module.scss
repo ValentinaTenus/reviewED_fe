@@ -7,19 +7,13 @@
 
 .review_profile {
 	display: flex;
-	position: relative;
-	padding-left: 70px;
 	height: 60px;
 }
 
-.review_profile::before {
-	position: absolute;
-	content: "";
+.review_avatar {
 	width: 60px;
 	height: 60px;
-	border-radius: 50%;
-	background-color: var(--color-grey-480);
-	left: 0;
+	margin-right: 10px;
 }
 
 .review_profile-name-verified {
@@ -120,6 +114,12 @@
 
 .liked {
 	color: var(--color-blue-icons);
+}
+
+.alert {
+	position: fixed;
+	left: 40%;
+	top: 5%;
 }
 
 /*-----------------------------*/

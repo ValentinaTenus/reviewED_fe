@@ -1,4 +1,5 @@
 type Review = {
+	author_avatar: string;
 	author_name: string;
 	company_name: string;
 	count_likes: number;

@@ -2,7 +2,7 @@ import { Rating } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import { Icon } from "~/common/components";
+import { AuthorAvatar, Icon } from "~/common/components";
 import { IconName } from "~/common/enums";
 import { Review } from "~/common/types";
 import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
@@ -84,6 +84,11 @@ const ReviewCard: React.FC<{
 		<>
 			<div className={styles["review_top"]}>
 				<div className={styles["review_profile"]}>
+					<AuthorAvatar
+						className={styles["review_avatar"]}
+						name={review.author_name}
+						src={review.author_avatar}
+					/>
 					<div className={styles["review_profile-info"]}>
 						<div className={styles["review_profile-name-verified"]}>
 							<span className={globalStyles["large_sb"]}>

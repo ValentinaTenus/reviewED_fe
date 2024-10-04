@@ -1,5 +1,5 @@
-import { Rating } from "@mui/material";
-import React, { useState } from "react";
+import { Alert, Rating } from "@mui/material";
+import React, { useEffect, useState } from "react";
 
 import { Button, Icon } from "~/common/components";
 import { ButtonVariant, IconName } from "~/common/enums";
@@ -19,6 +19,7 @@ const Statistics: React.FC<{
 	const ONE = 1;
 	const ZERO = 0;
 	const HUNDRED = 100;
+	const THREE_SECONDS = 3000;
 
 	const [isVisible, setIsVisible] = useState(false);
 
@@ -29,12 +30,37 @@ const Statistics: React.FC<{
 	const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
 	const handleOpenReviewModal = () => {
-		setIsReviewModalOpen(true);
+		if (!isButtonInactive) setIsReviewModalOpen(true);
+		else setIsReviewed(true);
 	};
 
 	const handleCloseReviewModal = () => {
 		setIsReviewModalOpen(false);
 	};
+
+	const [isButtonInactive, setIsButtonInactive] = useState(false);
+
+	const userCompanyReviews = JSON.parse(
+		localStorage.getItem("userCompanyReviews") || "[]",
+	);
+
+	useEffect(() => {
+		if (userCompanyReviews.includes(company.id)) {
+			setIsButtonInactive(true);
+		}
+	}, [userCompanyReviews, company.id]);
+
+	const [isReviewed, setIsReviewed] = useState(false);
+
+	useEffect(() => {
+		if (isReviewed) {
+			const timer = setTimeout(() => {
+				setIsReviewed(false);
+			}, THREE_SECONDS);
+
+			return () => clearTimeout(timer);
+		}
+	}, [isReviewed]);
 
 	return (
 		<div className={styles["reviews_stats-container"]}>
@@ -142,6 +168,11 @@ const Statistics: React.FC<{
 				isOpen={isReviewModalOpen}
 				onClose={handleCloseReviewModal}
 			/>
+			{isReviewed && (
+				<Alert className={styles["alert"]} severity="info" variant="filled">
+					You have already left a review for this company
+				</Alert>
+			)}
 		</div>
 	);
 };
