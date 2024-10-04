@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React from "react";
 
 import { Icon, IconButton } from "~/common/components/index";
@@ -8,6 +9,7 @@ import styles from "./styles.module.scss";
 
 type ModalProperties = {
 	children: React.ReactNode;
+	className?: string;
 	footer?: React.ReactNode;
 	isOpen: boolean;
 	onClose: () => void;
@@ -16,6 +18,7 @@ type ModalProperties = {
 
 const Modal: React.FC<ModalProperties> = ({
 	children,
+	className,
 	footer,
 	isOpen,
 	onClose,
@@ -31,7 +34,10 @@ const Modal: React.FC<ModalProperties> = ({
 	}
 
 	return (
-		<div className={styles["modal"]} onClick={handleOutsideClick}>
+		<div
+			className={clsx(styles["modal"], className)}
+			onClick={handleOutsideClick}
+		>
 			<div
 				className={styles["modal__container"]}
 				onClick={preventModalCloseOnClick}

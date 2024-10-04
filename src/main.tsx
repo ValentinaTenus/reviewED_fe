@@ -17,7 +17,7 @@ import {
 	CourseDetailsPage,
 	HomePage,
 	ModeratorsPage,
-	PrivacyPolicy,
+	PrivacyPolicyPage,
 	UserRequests,
 	UserReviews,
 } from "./pages/index.ts";
@@ -71,7 +71,7 @@ const routes = createBrowserRouter([
 				path: AppRoute.USER_REQUESTS,
 			},
 			{
-				element: <PrivacyPolicy />,
+				element: <PrivacyPolicyPage />,
 				path: AppRoute.PRIVACY_POLICY,
 			},
 		],
