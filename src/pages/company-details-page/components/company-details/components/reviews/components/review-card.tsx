@@ -3,13 +3,18 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { AuthorAvatar, Icon } from "~/common/components";
-import { IconName } from "~/common/enums";
+import { AppRoute, IconName } from "~/common/enums";
 import { Review } from "~/common/types";
 import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
+import { useAppDispatch, useAppSelector } from "~/redux/hooks.type";
 import {
 	useLikeReviewMutation,
 	useUnlikeReviewMutation,
 } from "~/redux/reviews/reviews-companies-api";
+import {
+	likeCompanyReview,
+	unlikeCompanyReview,
+} from "~/redux/reviews/reviews-slice";
 
 import { ReportModal } from "./components/report-modal";
 import { ShareModal } from "./components/share-modal";
@@ -18,13 +23,19 @@ import styles from "./styles.module.scss";
 const ReviewCard: React.FC<{
 	review: Review;
 }> = ({ review }) => {
+	const dispatch = useAppDispatch();
+
 	const RATING_SCALE = 1.0;
 	const ONE = 1;
 
 	const [isReportModalOpen, setIsReportModalOpen] = useState(false);
 
+	const isUserInAccount = useAppSelector((state) => state.auth.user);
+
 	const handleOpenReportModal = () => {
-		setIsReportModalOpen(true);
+		if (isUserInAccount === null)
+			window.location.href = AppRoute.PRIVACY_POLICY;
+		else setIsReportModalOpen(true);
 	};
 
 	const handleCloseReportModal = () => {
@@ -47,36 +58,31 @@ const ReviewCard: React.FC<{
 	const [likeReview] = useLikeReviewMutation();
 	const [unlikeReview] = useUnlikeReviewMutation();
 
+	const userLikedCompanyReviews = useAppSelector(
+		(state) => state.reviews.userLikedCompanyReviews,
+	);
+
 	useEffect(() => {
-		const likedReviews = JSON.parse(
-			localStorage.getItem("likedReviews") || "[]",
-		);
-		setIsLiked(likedReviews.includes(review.id));
-	}, [review.id]);
+		if (userLikedCompanyReviews) {
+			setIsLiked(userLikedCompanyReviews.includes(review.id));
+		}
+	}, [userLikedCompanyReviews, review.id]);
 
 	const handleLike = async () => {
-		try {
-			await likeReview({ reviewId: review.id }).unwrap();
-			setLikesCount((prevCount) => prevCount + ONE);
-			setIsLiked(true);
-			const likedReviews = JSON.parse(
-				localStorage.getItem("likedReviews") || "[]",
-			);
-			localStorage.setItem(
-				"likedReviews",
-				JSON.stringify([...likedReviews, review.id]),
-			);
-		} catch {
-			await unlikeReview({ reviewId: review.id }).unwrap();
-			setLikesCount((prevCount) => prevCount - ONE);
-			setIsLiked(false);
-			const likedReviews = JSON.parse(
-				localStorage.getItem("likedReviews") || "[]",
-			);
-			localStorage.setItem(
-				"likedReviews",
-				JSON.stringify(likedReviews.filter((id: number) => id !== review.id)),
-			);
+		if (isUserInAccount === null)
+			window.location.href = AppRoute.PRIVACY_POLICY;
+		else {
+			try {
+				await likeReview({ reviewId: review.id }).unwrap();
+				setLikesCount((prevCount) => prevCount + ONE);
+				setIsLiked(true);
+				dispatch(likeCompanyReview(review.id));
+			} catch {
+				await unlikeReview({ reviewId: review.id }).unwrap();
+				setLikesCount((prevCount) => prevCount - ONE);
+				setIsLiked(false);
+				dispatch(unlikeCompanyReview(review.id));
+			}
 		}
 	};
 

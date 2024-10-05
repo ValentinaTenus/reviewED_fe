@@ -2,9 +2,10 @@ import { Alert, Rating } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
 import { Button, Icon } from "~/common/components";
-import { ButtonVariant, IconName } from "~/common/enums";
+import { AppRoute, ButtonVariant, IconName } from "~/common/enums";
 import { Company } from "~/common/types";
 import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
+import { useAppSelector } from "~/redux/hooks.type";
 
 import { ReviewModal } from "./components/review-modal";
 import styles from "./styles.module.scss";
@@ -36,7 +37,8 @@ const Statistics: React.FC<{
 
 	const handleOpenReviewModal = () => {
 		if (!isButtonInactive) setIsReviewModalOpen(true);
-		else setIsReviewed(true);
+		else if (isUserInAccount !== null) setIsReviewed(true);
+		else window.location.href = AppRoute.AUTH;
 	};
 
 	const handleCloseReviewModal = () => {
@@ -45,15 +47,19 @@ const Statistics: React.FC<{
 
 	const [isButtonInactive, setIsButtonInactive] = useState(false);
 
-	const userCompanyReviews = JSON.parse(
-		localStorage.getItem("userCompanyReviews") || "[]",
+	const userCompanyReviews = useAppSelector(
+		(state) => state.reviews.userCompanyReviews,
 	);
 
+	const isUserInAccount = useAppSelector((state) => state.auth.user);
+
 	useEffect(() => {
-		if (userCompanyReviews.includes(company.id)) {
+		if (userCompanyReviews.includes(company.id) || isUserInAccount === null) {
 			setIsButtonInactive(true);
+		} else {
+			setIsButtonInactive(false);
 		}
-	}, [userCompanyReviews, company.id]);
+	}, [userCompanyReviews, isUserInAccount, company.id]);
 
 	const [isReviewed, setIsReviewed] = useState(false);
 

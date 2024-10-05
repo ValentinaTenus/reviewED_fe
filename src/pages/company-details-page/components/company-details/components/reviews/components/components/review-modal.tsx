@@ -3,10 +3,17 @@ import React, { useCallback, useState } from "react";
 
 import { Button } from "~/common/components/index";
 import { Modal } from "~/common/components/modal";
-import { ButtonSize, ButtonVariant } from "~/common/enums/index";
+import {
+	AppRoute,
+	ButtonSize,
+	ButtonVariant,
+	HttpStatusCode,
+} from "~/common/enums/index";
 import { Company } from "~/common/types";
 import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
+import { useAppDispatch } from "~/redux/hooks.type";
 import { useSendReviewMutation } from "~/redux/reviews/reviews-companies-api";
+import { addCompanyReview } from "~/redux/reviews/reviews-slice";
 
 import styles from "./styles.module.scss";
 
@@ -15,9 +22,10 @@ const ReviewModal: React.FC<{
 	isOpen: boolean;
 	onClose: () => void;
 }> = ({ company, isOpen, onClose }) => {
+	const dispatch = useAppDispatch();
+
 	const ZERO = 0;
 	const MIN_TEXT = 200;
-	const FORBIDDEN = 403;
 
 	const [rating, setRating] = useState<null | number>(ZERO);
 	const [reviewText, setReviewText] = useState("");
@@ -51,20 +59,24 @@ const ReviewModal: React.FC<{
 			text: reviewText,
 		});
 		if (response.error) {
-			if ("status" in response.error && response.error.status !== FORBIDDEN) {
-				window.location.href = "/privacy-policy";
+			if (
+				"status" in response.error &&
+				response.error.status !== HttpStatusCode.FORBIDDEN
+			) {
+				window.location.href = AppRoute.PRIVACY_POLICY;
 			}
 		} else {
-			const userCompanyReviews = JSON.parse(
-				localStorage.getItem("userCompanyReviews") || "[]",
-			);
-			localStorage.setItem(
-				"userCompanyReviews",
-				JSON.stringify([...userCompanyReviews, company.id]),
-			);
+			dispatch(addCompanyReview(company.id));
 		}
 		handleCloseReviewModal();
-	}, [company.id, rating, reviewText, sendReview, handleCloseReviewModal]);
+	}, [
+		company.id,
+		dispatch,
+		rating,
+		reviewText,
+		sendReview,
+		handleCloseReviewModal,
+	]);
 
 	return (
 		<>
