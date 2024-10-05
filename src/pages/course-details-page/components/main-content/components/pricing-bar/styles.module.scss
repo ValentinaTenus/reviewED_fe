@@ -1,5 +1,9 @@
-.main_content {
+.pricing-bar {
+	border-bottom: 1px solid var(--color-grey-border);
+	border-top: 1px solid var(--color-grey-border);
 	font-family: var(--font-family-main);
 	font-size: var(--font-size-title-h4);
 	font-weight: var(--font-weight-semi-bold);
+	padding: 24px 0;
+	width: 100%;
 }

@@ -151,6 +151,12 @@
 	border-radius: 24px 24px 0 0;
 }
 
+@media (max-width: 768px) {
+	.sort_container {
+		position: static;
+	}
+}
+
 @media (max-width: 480px) {
 	.dropdown_container {
 		position: static;

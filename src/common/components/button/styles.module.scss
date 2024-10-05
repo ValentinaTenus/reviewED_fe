@@ -77,6 +77,10 @@
 	background-color: var(--color-yellow-600);
 }
 
+.button__primary:disabled {
+  background-color: var(--color-yellow-200);
+}
+
 .button__share_linkedin {
 	color: var(--color-grey-50);
 	background-color: var(--color-button-blue);
