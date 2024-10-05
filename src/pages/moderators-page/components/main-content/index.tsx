@@ -147,6 +147,9 @@ const MainModeratorsContent: React.FC = () => {
 						filterByType={filterByType}
 						handleSetFilterByStatus={handleSetFilterByStatus}
 						handleSetSortByPeriod={handleSetSortByPeriod}
+						isActiveGroupCleaner={
+							Boolean(sortByPeriod) || Boolean(filterByStatus)
+						}
 						setFilterByType={setFilterByType}
 					/>
 				)}

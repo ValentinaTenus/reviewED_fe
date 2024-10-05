@@ -15,12 +15,14 @@ const FIRST_OPTION = 0;
 type Properties = {
 	aiEnd?: boolean;
 	className?: string;
+	isClean?: boolean;
 	isDisabled?: boolean;
 	isIconButton?: boolean;
 	isWithCleaner?: boolean;
 	menuStaticStyle?: boolean;
 	name?: string;
 	onChange: (value: DropdownOption["value"]) => void;
+	onSetIsClean?: (state: boolean) => void;
 	options: DropdownOption[];
 	title?: string;
 };
@@ -28,12 +30,14 @@ type Properties = {
 const SortDropdown: React.FC<Properties> = ({
 	aiEnd = true,
 	className,
+	isClean,
 	isDisabled,
 	isIconButton = false,
 	isWithCleaner,
 	menuStaticStyle,
 	name,
 	onChange,
+	onSetIsClean,
 	options,
 	title,
 }) => {
@@ -80,6 +84,13 @@ const SortDropdown: React.FC<Properties> = ({
 		document.addEventListener("mousedown", handleClickOutside);
 		return () => document.removeEventListener("mousedown", handleClickOutside);
 	}, []);
+
+	useEffect(() => {
+		if (isClean && onSetIsClean) {
+			setSelectedOption(undefined);
+			onSetIsClean(false);
+		}
+	}, [isClean, onSetIsClean, setSelectedOption]);
 
 	return (
 		<div
