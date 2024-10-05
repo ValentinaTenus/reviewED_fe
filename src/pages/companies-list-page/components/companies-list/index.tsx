@@ -1,5 +1,5 @@
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import { Pagination, Spinner } from "~/common/components/index";
 import { ScreenBreakpoints } from "~/common/constants/index";
@@ -50,6 +50,8 @@ const CompaniesContent: React.FC = () => {
 	const [viewStyle, setViewStyle] = useState(ViewStyle.TABLE);
 	const [serverError, setServerError] = useState("");
 
+	const listRef = useRef<HTMLDivElement>(null);
+
 	const screenWidth = useGetScreenWidth();
 
 	const { data: categories } = useGetCategoriesQuery(undefined);
@@ -92,6 +94,13 @@ const CompaniesContent: React.FC = () => {
 
 		if (companiesFromApi?.count) {
 			setPageCount(Math.ceil(companiesFromApi.count / companiesPerPage));
+		}
+
+		if (listRef.current) {
+			window.scrollTo({
+				behavior: "smooth",
+				top: listRef.current.offsetTop,
+			});
 		}
 	}, [viewStyle, screenWidth, companiesFromApi?.count]);
 
@@ -191,12 +200,14 @@ const CompaniesContent: React.FC = () => {
 				companiesFromApi &&
 				companiesFromApi?.results.length > ZERO_LENGTH && (
 					<>
-						<FilteredCompaniesList
-							companies={companiesFromApi?.results}
-							onChangeSortBy={handleChangeSortBy}
-							onChangeViewStyle={handleViewChange}
-							viewStyle={viewStyle}
-						/>
+						<div ref={listRef}>
+							<FilteredCompaniesList
+								companies={companiesFromApi?.results}
+								onChangeSortBy={handleChangeSortBy}
+								onChangeViewStyle={handleViewChange}
+								viewStyle={viewStyle}
+							/>
+						</div>
 						<Pagination
 							defaultCurrentPage={currentPage}
 							pages={pageCount}

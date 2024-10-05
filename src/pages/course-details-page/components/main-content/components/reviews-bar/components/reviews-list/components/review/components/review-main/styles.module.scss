@@ -1,0 +1,22 @@
+.review__main {
+	color: var(--color-grey-950);
+	font-family: var(--font-family-main);
+	font-size: var(--font-size-title-h5);
+	font-weight: var(--font-weight-text);
+	line-height: 140%;
+}
+
+.review__text {
+	overflow: hidden;
+}
+
+.review__button {
+	color: var(--color-blue-icons);
+	line-height: 140%;
+	padding: 4px 0;
+	text-decoration: underline;
+}
+
+.review__button:hover {
+	color: var(--color-light-blue-selected-items);
+}

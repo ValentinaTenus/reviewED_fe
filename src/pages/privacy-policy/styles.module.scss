@@ -1,0 +1,133 @@
+.privacy_policy_page {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    min-height: 100vh;
+}
+
+.privacy_policy {
+	font-family: var(--font-family-main);
+	display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 40px;
+  padding: 0 94px;
+
+  &__content {
+    display: flex;
+    gap: 40px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 106px;
+
+    &-info {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+
+      &-title{
+        text-align: center;
+        font-family: var(--font-family-main);
+        font-size: var(--font-size-title);
+        font-weight: var(--font-weight-bold);
+      }
+  
+      &-text {
+        font-family: var(--font-family-main);
+        font-size: var(--font-size-title-h5);
+        line-height: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+  
+        &-paragraph {
+          text-align: justify;
+        }
+  
+        &-list {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          list-style: decimal;
+          padding-left: 24px;
+          text-align: justify;
+        }
+      }
+    }
+
+    &-form {
+      padding: 0 24px;
+    }
+
+    &-error {
+      align-self: self-start;
+      color: var(--color-error-red);
+      padding-left: 24px;
+    }
+
+    &-buttons {
+      border-top: 1px solid var(--color-grey-200);
+      display: flex;
+      gap: 32px;
+      justify-content: space-between;
+      padding-top: 32px;
+      width: 100%;
+
+      &-button {
+        padding: 12px 64px;
+        height: 48px;
+        font-size: var(--font-size-title-h5);
+        width: 100%;
+
+        &-reject {
+          background-color: var(--color-grey-200);
+
+          &:hover {
+            background-color: var(--color-grey-500);
+          }
+
+          &:disabled {
+            background-color: var(--color-grey-100);
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1280px) {
+  .privacy_policy {
+    padding: 0 48px;
+    gap: 32px;
+
+    &__content {
+      gap: 40px;
+      padding: 40px 40px;
+
+      &-info {
+        gap: 32px;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .privacy_policy_page {
+    gap: 32px;
+  }
+
+  .privacy_policy {
+    gap: 24px;
+    padding: 0 20px;
+
+    &__content {
+      gap: 24px;
+      padding: 32px 0;
+
+      &-buttons {
+        flex-direction: column;
+      }
+    }
+  }
+}
