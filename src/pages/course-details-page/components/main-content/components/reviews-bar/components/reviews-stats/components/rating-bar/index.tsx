@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 
 import { type ReviewsStats } from "~/common/types";
 
@@ -10,28 +10,38 @@ type RatingBarProperties = {
 };
 
 const MIN_LINE_WIDTH = 4;
-const MAX_LINE_WIDTH = 188;
 const PERCENT_NUMBER = 100;
+const RATIO_MAX_LINE_WIDTH_TO_BAR_WIDTH = 0.6164;
 
 const RatingBar: React.FC<RatingBarProperties> = ({ stats }) => {
-	const calculatePixelsUnit = (): number => {
-		const ratingsArray: number[] = Object.values(stats);
-		if (ratingsArray.every((item) => item <= PERCENT_NUMBER))
-			return (MAX_LINE_WIDTH - MIN_LINE_WIDTH) / PERCENT_NUMBER;
-
-		const maxRatings = Math.max(...ratingsArray);
-		return (maxRatings - MIN_LINE_WIDTH) / PERCENT_NUMBER;
-	};
-
-	const pixelsUnit = calculatePixelsUnit();
+	let ratingBarRef = useRef<HTMLDivElement>(null);
+	const currentRef = ratingBarRef.current;
 
 	const defineWidth = (ratingValue: number): number => {
-		if (ratingValue) return MIN_LINE_WIDTH;
-		return pixelsUnit * ratingValue + MIN_LINE_WIDTH;
+		if (currentRef !== null) {
+			let pixelsUnit: number;
+
+			const ratingsArray: number[] = Object.values(stats);
+			const currentBarWidth = (currentRef as HTMLElement).offsetWidth;
+			const maxLineWidth = currentBarWidth * RATIO_MAX_LINE_WIDTH_TO_BAR_WIDTH;
+
+			if (ratingsArray.every((item) => item <= PERCENT_NUMBER)) {
+				pixelsUnit = (maxLineWidth - MIN_LINE_WIDTH) / PERCENT_NUMBER;
+			} else {
+				const maxRating = Math.max(...ratingsArray);
+				pixelsUnit = (maxLineWidth - MIN_LINE_WIDTH) / maxRating;
+			}
+
+			if (!ratingValue) return MIN_LINE_WIDTH;
+
+			return pixelsUnit * ratingValue + MIN_LINE_WIDTH;
+		} else {
+			return MIN_LINE_WIDTH;
+		}
 	};
 
 	return (
-		<div className={styles["rating-bar"]}>
+		<div className={styles["rating-bar"]} ref={ratingBarRef}>
 			<RatingLine
 				lineWidth={defineWidth(stats.five)}
 				rate="5"

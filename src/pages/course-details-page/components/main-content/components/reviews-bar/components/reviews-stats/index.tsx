@@ -51,11 +51,16 @@ const ReviewsStatsBar: React.FC<ReviewsStatsProperties> = ({ stats }) => {
 					/>
 				</div>
 			)}
-
 			{isRatingBarShown && <RatingBar stats={stats} />}
+
 			{!isRatingBarShown && (
-				<Button size={ButtonSize.MEDIUM} variant={ButtonVariant.OUTLINED}>
-					Hello
+				<Button
+					className={styles["stats-container__button"]}
+					onClick={() => setIsRatingBarShown(!isRatingBarShown)}
+					size={ButtonSize.MEDIUM}
+					variant={ButtonVariant.OUTLINED}
+				>
+					Подивитись детальніше
 				</Button>
 			)}
 		</div>
