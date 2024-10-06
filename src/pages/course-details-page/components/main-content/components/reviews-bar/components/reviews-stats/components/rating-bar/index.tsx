@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 
 import { type ReviewsStats } from "~/common/types";
 
@@ -11,59 +11,46 @@ type RatingBarProperties = {
 
 const MIN_LINE_WIDTH = 4;
 const PERCENT_NUMBER = 100;
-const RATIO_MAX_LINE_WIDTH_TO_BAR_WIDTH = 0.6164;
+const WIDTH_RATIO_MAX_LINE_TO_CONTAINER = 0.6943;
 
 const RatingBar: React.FC<RatingBarProperties> = ({ stats }) => {
-	let ratingBarRef = useRef<HTMLDivElement>(null);
-	const currentRef = ratingBarRef.current;
+	const calculateWidthPercent = (rating: number): string => {
+		if (!rating) return `${MIN_LINE_WIDTH}px`;
 
-	const defineWidth = (ratingValue: number): number => {
-		if (currentRef !== null) {
-			let pixelsUnit: number;
+		const ratingsArray: number[] = Object.values(stats);
 
-			const ratingsArray: number[] = Object.values(stats);
-			const currentBarWidth = (currentRef as HTMLElement).offsetWidth;
-			const maxLineWidth = currentBarWidth * RATIO_MAX_LINE_WIDTH_TO_BAR_WIDTH;
-
-			if (ratingsArray.every((item) => item <= PERCENT_NUMBER)) {
-				pixelsUnit = (maxLineWidth - MIN_LINE_WIDTH) / PERCENT_NUMBER;
-			} else {
-				const maxRating = Math.max(...ratingsArray);
-				pixelsUnit = (maxLineWidth - MIN_LINE_WIDTH) / maxRating;
-			}
-
-			if (!ratingValue) return MIN_LINE_WIDTH;
-
-			return pixelsUnit * ratingValue + MIN_LINE_WIDTH;
+		if (ratingsArray.every((item) => item <= PERCENT_NUMBER)) {
+			return `calc(${rating * WIDTH_RATIO_MAX_LINE_TO_CONTAINER}% + ${MIN_LINE_WIDTH}px)`;
 		} else {
-			return MIN_LINE_WIDTH;
+			const maxRating = Math.max(...ratingsArray);
+			return `calc(${(rating / maxRating) * PERCENT_NUMBER * WIDTH_RATIO_MAX_LINE_TO_CONTAINER}% + ${MIN_LINE_WIDTH}px)`;
 		}
 	};
 
 	return (
-		<div className={styles["rating-bar"]} ref={ratingBarRef}>
+		<div className={styles["rating-bar"]}>
 			<RatingLine
-				lineWidth={defineWidth(stats.five)}
+				lineWidth={calculateWidthPercent(stats.five)}
 				rate="5"
 				ratingNumber={stats.five}
 			/>
 			<RatingLine
-				lineWidth={defineWidth(stats.four)}
+				lineWidth={calculateWidthPercent(stats.four)}
 				rate="4"
 				ratingNumber={stats.four}
 			/>
 			<RatingLine
-				lineWidth={defineWidth(stats.three)}
+				lineWidth={calculateWidthPercent(stats.three)}
 				rate="3"
 				ratingNumber={stats.three}
 			/>
 			<RatingLine
-				lineWidth={defineWidth(stats.two)}
+				lineWidth={calculateWidthPercent(stats.two)}
 				rate="2"
 				ratingNumber={stats.two}
 			/>
 			<RatingLine
-				lineWidth={defineWidth(stats.one)}
+				lineWidth={calculateWidthPercent(stats.one)}
 				rate="1"
 				ratingNumber={stats.one}
 			/>

@@ -1,8 +1,7 @@
 import React from "react";
 
-import styles from "./styles.module.scss";
-
 import { Review } from "./components/review";
+import styles from "./styles.module.scss";
 
 const ReviewsList: React.FC = () => {
 	return (

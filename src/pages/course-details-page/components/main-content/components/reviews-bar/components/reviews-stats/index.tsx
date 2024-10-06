@@ -3,13 +3,13 @@ import React, { useEffect, useState } from "react";
 import { Button, StarRating } from "~/common/components";
 import { ScreenBreakpoints } from "~/common/constants/index";
 import { ButtonSize, ButtonVariant, RatingSize } from "~/common/enums";
+import { useGetScreenWidth } from "~/common/hooks";
 import { type ReviewsStats } from "~/common/types";
 import { useGetCourseByIdQuery } from "~/redux/courses/courses-api";
 
 import { RatingBar } from "./components/rating-bar";
 import { StatsBar } from "./components/stats-bar";
 import styles from "./styles.module.scss";
-import { useGetScreenWidth } from "~/common/hooks";
 
 type ReviewsStatsProperties = {
 	stats: ReviewsStats;

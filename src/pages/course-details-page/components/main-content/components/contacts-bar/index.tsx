@@ -45,7 +45,7 @@ const ContactsBar = forwardRef<HTMLDivElement, ContactsBarProperties>(
 						<p className={styles["contacts__bold-content"]}>
 							Показати контакти
 						</p>
-									</Button>
+					</Button>
 				</aside>
 			</div>
 		);

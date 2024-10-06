@@ -6,7 +6,7 @@ import { IconName } from "~/common/enums";
 import styles from "./styles.module.scss";
 
 type RatingLineProperties = {
-	lineWidth: number;
+	lineWidth: string;
 	rate: string;
 	ratingNumber: number;
 };
@@ -22,7 +22,7 @@ const RatingLine: React.FC<RatingLineProperties> = ({
 			<p>{rate}</p>
 			<div
 				className={styles["rating-line__view"]}
-				style={{ width: `${lineWidth}px` }}
+				style={{ width: lineWidth }}
 			/>
 			<p>{ratingNumber}</p>
 		</div>

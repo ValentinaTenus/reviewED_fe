@@ -10,12 +10,12 @@ import styles from "./styles.module.scss";
 
 const MOCK_COURSE_ID = 1;
 const mockStats = {
+	"five": 0,
+	"four": 1,
 	"one": 110,
+	"three": 2,
 	"two": 100,
-	"three": 40,
-	"four": 6,
-	"five": 14
-}
+};
 const ReviewsBar: React.FC = () => {
 	const { data: stats } = useGetReviewsStatsQuery(MOCK_COURSE_ID);
 
