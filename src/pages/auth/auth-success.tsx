@@ -21,36 +21,38 @@ const AuthSuccess: React.FC = () => {
 
 	const [serverError, setServerError] = useState("");
 
-	const [login, { data, isLoading }] = useLazyLoginQuery();
+	const [login, { data, error, isLoading }] = useLazyLoginQuery();
 
 	const sendCode = useCallback(
 		async (code: string, state: string) => {
 			if (code && state) {
-				try {
-					const { data } = await login({ code, state });
+				const { data } = await login({ code, state });
 
-					if (data) {
-						void dispatch(setUser(data?.user_info));
-						void dispatch(
-							setTokens({
-								access: data?.access,
-								refresh: data?.refresh,
-							}),
-						);
-						navigate(AppRoute.ROOT);
-					}
-				} catch (error: unknown) {
-					const loadError = ((error as FetchBaseQueryError).data as {
-						detail: string;
-					})
-						? ((error as FetchBaseQueryError).data as { detail: string })
-						: { detail: "Виникла невідома помилка" };
-					setServerError(loadError?.detail);
+				if (data) {
+					void dispatch(setUser(data?.user_info));
+					void dispatch(
+						setTokens({
+							access: data?.access,
+							refresh: data?.refresh,
+						}),
+					);
+					navigate(AppRoute.ROOT);
 				}
 			}
 		},
 		[dispatch, login, navigate],
 	);
+
+	useEffect(() => {
+		if (error) {
+			const loadError = ((error as FetchBaseQueryError).data as {
+				error: string;
+			})
+				? ((error as FetchBaseQueryError).data as { error: string })
+				: { error: "Виникла невідома помилка" };
+			setServerError(loadError.error);
+		}
+	}, [error]);
 
 	useEffect(() => {
 		if (code && state) {

@@ -67,6 +67,7 @@ const Input = <T extends FieldValues>({
 		hasError && styles["input__error"],
 		hasIcon && styles["input-with-icon"],
 		disabled && styles["input__disabled"],
+		field.value && styles["input__filled"],
 		isTextArea && styles["textarea"],
 	);
 
