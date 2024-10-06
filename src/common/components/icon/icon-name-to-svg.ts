@@ -10,6 +10,7 @@ import Audience from "~/assets/images/audience.svg?react";
 import Bank from "~/assets/images/bank.svg?react";
 import Phone from "~/assets/images/call.svg?react";
 import Close from "~/assets/images/close.svg?react";
+import CloseCircle from "~/assets/images/close-circle.svg?react";
 import Copy from "~/assets/images/copy.svg?react";
 import DollarSign from "~/assets/images/dollar-circle.svg?react";
 import Facebook from "~/assets/images/facebook.svg?react";
@@ -51,6 +52,7 @@ const iconNameToSvg: Record<
 	audience: Audience,
 	bank: Bank,
 	close: Close,
+	close_circle: CloseCircle,
 	copy: Copy,
 	dollarSign: DollarSign,
 	email: Email,

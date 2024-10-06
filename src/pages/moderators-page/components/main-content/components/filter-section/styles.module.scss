@@ -39,5 +39,14 @@
 		.dropdown_fullwidth {
 			width: 100%;
 		}
+		.sort-group_cleaner-btn {
+			color: var(--color-grey-200);
+			display: flex;
+			justify-content: start;
+			padding: 0;
+		}
+		.sort-group_cleaner-btn__active {
+			color: var(--color-error-red);
+		}
 	}
 }
