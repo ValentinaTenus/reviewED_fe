@@ -9,7 +9,7 @@ type DescriptionSectionProperties = {
 const DescriptionSection: React.FC<DescriptionSectionProperties> = ({
 	description,
 }) => {
-	return <div className={styles["main_content"]}>{description}</div>;
+	return <div className={styles["description"]}>{description}</div>;
 };
 
 export { DescriptionSection };

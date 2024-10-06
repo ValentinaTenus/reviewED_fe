@@ -17,6 +17,7 @@ type ReviewsStatsProperties = {
 
 const ReviewsStatsBar: React.FC<ReviewsStatsProperties> = ({ stats }) => {
 	const [isRatingBarShown, setIsRatingBarShown] = useState<boolean>(false);
+	const [isMobileMode, setIsMobileMode] = useState<boolean>(false);
 
 	const { data: course } = useGetCourseByIdQuery("1");
 
@@ -24,8 +25,10 @@ const ReviewsStatsBar: React.FC<ReviewsStatsProperties> = ({ stats }) => {
 
 	useEffect(() => {
 		if (scrWidth <= ScreenBreakpoints.MOBILE) {
+			setIsMobileMode(true);
 			setIsRatingBarShown(false);
 		} else {
+			setIsMobileMode(false);
 			setIsRatingBarShown(true);
 		}
 	}, [scrWidth]);
@@ -53,14 +56,14 @@ const ReviewsStatsBar: React.FC<ReviewsStatsProperties> = ({ stats }) => {
 			)}
 			{isRatingBarShown && <RatingBar stats={stats} />}
 
-			{!isRatingBarShown && (
+			{isMobileMode && ( 
 				<Button
 					className={styles["stats-container__button"]}
 					onClick={() => setIsRatingBarShown(!isRatingBarShown)}
 					size={ButtonSize.MEDIUM}
 					variant={ButtonVariant.OUTLINED}
 				>
-					Подивитись детальніше
+					{isRatingBarShown ? "Сховати" : "Подивитись детальніше"}
 				</Button>
 			)}
 		</div>

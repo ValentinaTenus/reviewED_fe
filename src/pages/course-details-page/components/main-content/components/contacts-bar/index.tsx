@@ -33,10 +33,12 @@ const ContactsBar = forwardRef<HTMLDivElement, ContactsBarProperties>(
 					iconName={IconName.BANK}
 					title={course ? course.company.name : ""}
 				/>
-				<Contact
-					iconName={IconName.GLOBAL}
-					title={course ? course.website : ""}
-				/>
+				{course && course.website !== "None" && (
+					<Contact
+						iconName={IconName.GLOBAL}
+						title={course.website}
+					/>
+				)}
 				<aside className={styles["contacts__button-container"]}>
 					<Button size={ButtonSize.MEDIUM} variant={ButtonVariant.PRIMARY}>
 						Зв&apos;язатися з компанією
