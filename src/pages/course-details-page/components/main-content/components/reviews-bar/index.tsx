@@ -26,13 +26,19 @@ const ReviewsBar: React.FC = () => {
 	return (
 		<div className={styles["reviews-bar"]}>
 			<h3 className={styles["reviews-bar__header"]}>Відгуки</h3>
-	{	mockList.length	? <ReviewsList /> :
-	<article className={styles["reviews-bar__no-reviews"]}>
-		<img className={styles["reviews-bar__picture"]} src={Image} alt="" />
-		<p className={styles["reviews-bar__big-text"]}>Тут ще ніхто не залишив відгук</p>
-		<p className={styles["reviews-bar__small-text"]}>Станьте першим, хто поділиться враженням!</p>
-	</article>
-	}
+			{mockList.length ? (
+				<ReviewsList />
+			) : (
+				<article className={styles["reviews-bar__no-reviews"]}>
+					<img className={styles["reviews-bar__picture"]} src={Image} alt="" />
+					<p className={styles["reviews-bar__big-text"]}>
+						Тут ще ніхто не залишив відгук
+					</p>
+					<p className={styles["reviews-bar__small-text"]}>
+						Станьте першим, хто поділиться враженням!
+					</p>
+				</article>
+			)}
 			{stats && <ReviewsStatsBar stats={mockStats} />}
 			<Button
 				className={styles["reviews-bar__button"]}

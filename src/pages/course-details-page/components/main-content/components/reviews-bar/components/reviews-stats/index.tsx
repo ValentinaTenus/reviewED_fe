@@ -56,7 +56,7 @@ const ReviewsStatsBar: React.FC<ReviewsStatsProperties> = ({ stats }) => {
 			)}
 			{isRatingBarShown && <RatingBar stats={stats} />}
 
-			{isMobileMode && ( 
+			{isMobileMode && (
 				<Button
 					className={styles["stats-container__button"]}
 					onClick={() => setIsRatingBarShown(!isRatingBarShown)}
