@@ -74,6 +74,13 @@ h4 {
 	margin-bottom: 40px;
 }
 
+.small-sb {
+	font-weight: var(--font-weight-semi-bold);
+	font-size: var(--font-size-main-text);
+	line-height: 1.4;
+	color: var(--color-grey-470);
+}
+
 /*-----------------------------*/
 
 @media (max-width: 1200px) {
