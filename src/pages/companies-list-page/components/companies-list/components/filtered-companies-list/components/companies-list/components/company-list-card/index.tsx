@@ -15,7 +15,9 @@ const CompanyListCard: React.FC<Properties> = ({ company }) => {
 	const navigate = useNavigate();
 
 	const handleRedirect = useCallback(() => {
-		navigate(`${AppRoute.COMPANY_DETAILS}${company.id}`);
+		navigate(
+			AppRoute.COMPANY_DETAILS.replace(":companyId", company.id.toString()),
+		);
 	}, [company, navigate]);
 
 	return (

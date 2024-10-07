@@ -20,8 +20,8 @@ type CoursesState = {
 const initialState: CoursesState = {
 	courses: null,
 	filters: {
-		category_by_id: [{ id: "", name: "Всі курси" }],
-		city: [{ id: "", name: "Всі міста" }],
+		category_by_id: [],
+		city: [],
 		subcategory_by_id: [],
 		title: "",
 	},
@@ -31,7 +31,7 @@ const coursesSlice = createSlice({
 	initialState,
 	name: "courses",
 	reducers: {
-		clearFilters(state) {
+		clearFilters: (state) => {
 			state.filters = {};
 		},
 		setCourses: (state, action: PayloadAction<Course[]>) => {

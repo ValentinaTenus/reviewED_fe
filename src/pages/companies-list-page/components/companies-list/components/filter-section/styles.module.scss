@@ -28,6 +28,13 @@
   width: 230px;
 }
 
+.companies_filter__subcategory {
+  color: var(--color-grey-950);
+  font-size: var(--font-size-main-text);
+}
+.companies_filter__subcategory_title {
+  color: var(--color-grey-500);
+}
 @media (max-width: 1280px) {
   .companies_filter__content {
     gap: 34px;

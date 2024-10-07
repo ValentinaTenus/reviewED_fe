@@ -27,6 +27,13 @@ export const reviewsApi = api.injectEndpoints({
 				return response.results;
 			},
 		}),
+		likeReview: builder.mutation<undefined, LikeReviewRequest>({
+			query: (reviewData) => ({
+				method: HttpMethods.POST,
+				url: `${reviewsApiPath.LIKE_COMPANIES_REVIEWS}${reviewData.reviewId}/`,
+			}),
+		}),
+
 		sendReport: builder.mutation<ReviewReport, SendReportRequest>({
 			query: (reviewData) => ({
 				body: {
@@ -46,8 +53,18 @@ export const reviewsApi = api.injectEndpoints({
 				url: `${reviewsApiPath.POST_COMPANIES_REVIEWS}${reviewData.companyId}/`,
 			}),
 		}),
+		unlikeReview: builder.mutation<undefined, LikeReviewRequest>({
+			query: (reviewData) => ({
+				method: HttpMethods.DELETE,
+				url: `${reviewsApiPath.LIKE_COMPANIES_REVIEWS}${reviewData.reviewId}/`,
+			}),
+		}),
 	}),
 });
+
+export type LikeReviewRequest = {
+	reviewId: number;
+};
 
 export type SendReviewRequest = {
 	companyId: number;
@@ -63,6 +80,8 @@ export type SendReportRequest = {
 
 export const {
 	useGetReviewsByCompanyIdQuery,
+	useLikeReviewMutation,
 	useSendReportMutation,
 	useSendReviewMutation,
+	useUnlikeReviewMutation,
 } = reviewsApi;

@@ -1,9 +1,5 @@
 const moderationsReviewSortOptionsByStatus = [
 	{
-		label: "Стан перевірки",
-		value: "",
-	},
-	{
 		label: "Опубліковано",
 		value: "approved",
 	},
