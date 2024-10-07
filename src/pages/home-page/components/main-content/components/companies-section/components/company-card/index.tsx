@@ -16,7 +16,7 @@ const CompanyCard: React.FC<CompanyCardProperties> = ({ company }) => {
 		<Link
 			className={styles["item_card"]}
 			key={company.id}
-			to={`${AppRoute.COMPANY_DETAILS}${company.id}`}
+			to={AppRoute.COMPANY_DETAILS.replace(":companyId", company.id.toString())}
 		>
 			<div className={styles["item_rating_container"]}>
 				<p className={styles["reviews_amount"]}>
