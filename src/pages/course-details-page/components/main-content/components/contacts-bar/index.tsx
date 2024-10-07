@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { forwardRef } from "react";
+import { forwardRef, useState } from "react";
 
 import { Button } from "~/common/components";
 import { ButtonSize, ButtonVariant, IconName } from "~/common/enums/index";
@@ -8,7 +7,9 @@ import { type GetCourseByIdResponseDto } from "~/common/types";
 import { Contact } from "./components/contact";
 import styles from "./styles.module.scss";
 
+const PHONES_INDEX = 0;
 const EMAIL_INDEX_IN_ARRAY = 1;
+const FIRST_PHONE_INDEX = 1;
 
 type ContactsBarProperties = {
 	course: GetCourseByIdResponseDto | undefined;
@@ -32,11 +33,13 @@ const ContactsBar = forwardRef<HTMLDivElement, ContactsBarProperties>(
 		};
 
 		const contactsArray = course?.contact.split(/\r?\n/);
-		const phonesArray = contactsArray && contactsArray[0].split(/\(/).slice(1);
+		const phonesArray =
+			contactsArray &&
+			contactsArray[PHONES_INDEX].split(/\(/).slice(FIRST_PHONE_INDEX);
 		const formattedTelsArray = phonesArray?.map((item, index) => (
 			<span
-				key={index}
 				className={styles["contacts__phone"]}
+				key={index}
 			>{`+38 (${item}`}</span>
 		));
 
@@ -58,15 +61,13 @@ const ContactsBar = forwardRef<HTMLDivElement, ContactsBarProperties>(
 						{isContactsShown && (
 							<>
 								{formattedTelsArray && (
-									<Contact iconName={IconName.CALL}>
-										{
-											<div className={styles["contacts__phone-container"]}>
-												{formattedTelsArray}
-											</div>
-										}
+									<Contact iconName={IconName.PHONE}>
+										<div className={styles["contacts__phone-container"]}>
+											{formattedTelsArray}
+										</div>
 									</Contact>
 								)}
-								{email && <Contact iconName={IconName.SMS}>{email}</Contact>}
+								{email && <Contact iconName={IconName.EMAIL}>{email}</Contact>}
 							</>
 						)}
 						<aside className={styles["contacts__button-container"]}>

@@ -1,5 +1,6 @@
 import React from "react";
 
+import Image from "~/assets/images/no-reviews.png";
 import { Button } from "~/common/components";
 import { ButtonSize, ButtonVariant } from "~/common/enums/index";
 import { useGetReviewsStatsQuery } from "~/redux/reviews/reviews-stats-api";
@@ -7,7 +8,6 @@ import { useGetReviewsStatsQuery } from "~/redux/reviews/reviews-stats-api";
 import { ReviewsList } from "./components/reviews-list";
 import { ReviewsStatsBar } from "./components/reviews-stats";
 import styles from "./styles.module.scss";
-import Image from "~/assets/images/no-reviews.png";
 
 const MOCK_COURSE_ID = 1;
 const mockStats = {
@@ -30,7 +30,7 @@ const ReviewsBar: React.FC = () => {
 				<ReviewsList />
 			) : (
 				<article className={styles["reviews-bar__no-reviews"]}>
-					<img className={styles["reviews-bar__picture"]} src={Image} alt="" />
+					<img alt="" className={styles["reviews-bar__picture"]} src={Image} />
 					<p className={styles["reviews-bar__big-text"]}>
 						Тут ще ніхто не залишив відгук
 					</p>
