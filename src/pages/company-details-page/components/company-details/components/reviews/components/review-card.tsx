@@ -1,6 +1,6 @@
 import { Rating } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { AuthorAvatar, Icon } from "~/common/components";
 import { AppRoute, IconName } from "~/common/enums";
@@ -25,6 +25,8 @@ const ReviewCard: React.FC<{
 }> = ({ review }) => {
 	const dispatch = useAppDispatch();
 
+	const navigate = useNavigate();
+
 	const RATING_SCALE = 1.0;
 	const ONE = 1;
 
@@ -33,8 +35,7 @@ const ReviewCard: React.FC<{
 	const isUserInAccount = useAppSelector((state) => state.auth.user);
 
 	const handleOpenReportModal = () => {
-		if (isUserInAccount === null)
-			window.location.href = AppRoute.PRIVACY_POLICY;
+		if (isUserInAccount === null) navigate(AppRoute.AUTH);
 		else setIsReportModalOpen(true);
 	};
 
@@ -69,8 +70,7 @@ const ReviewCard: React.FC<{
 	}, [userLikedCompanyReviews, review.id]);
 
 	const handleLike = async () => {
-		if (isUserInAccount === null)
-			window.location.href = AppRoute.PRIVACY_POLICY;
+		if (isUserInAccount === null) navigate(AppRoute.AUTH);
 		else {
 			try {
 				await likeReview({ reviewId: review.id }).unwrap();

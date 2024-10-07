@@ -1,5 +1,6 @@
 import { Alert, Rating } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { Button, Icon } from "~/common/components";
 import { AppRoute, ButtonVariant, IconName } from "~/common/enums";
@@ -22,6 +23,8 @@ const Statistics: React.FC<{
 	const HUNDRED = 100;
 	const THREE_SECONDS = 3000;
 
+	const navigate = useNavigate();
+
 	const formattedRating = (company.avg_rating / ONE).toFixed(ONE);
 	const formattedRatingOverall = (company.avg_overall_rating / ONE).toFixed(
 		ONE,
@@ -38,7 +41,7 @@ const Statistics: React.FC<{
 	const handleOpenReviewModal = () => {
 		if (!isButtonInactive) setIsReviewModalOpen(true);
 		else if (isUserInAccount !== null) setIsReviewed(true);
-		else window.location.href = AppRoute.AUTH;
+		else navigate(AppRoute.AUTH);
 	};
 
 	const handleCloseReviewModal = () => {
