@@ -35,6 +35,7 @@ const SortDropdown: React.FC<Properties> = ({
 	isIconButton = false,
 	isWithCleaner,
 	menuStaticStyle,
+	name,
 	onChange,
 	onSetIsClean,
 	options,
