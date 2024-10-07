@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { forwardRef } from "react";
 
 import { Button } from "~/common/components";
@@ -6,6 +7,8 @@ import { type GetCourseByIdResponseDto } from "~/common/types";
 
 import { Contact } from "./components/contact";
 import styles from "./styles.module.scss";
+
+const EMAIL_INDEX_IN_ARRAY = 1;
 
 type ContactsBarProperties = {
 	course: GetCourseByIdResponseDto | undefined;
@@ -22,33 +25,69 @@ const defineLocation = (location: string): string => {
 
 const ContactsBar = forwardRef<HTMLDivElement, ContactsBarProperties>(
 	({ course, title }, ref) => {
+		const [isContactsShown, setIsContactsShown] = useState(false);
+
+		const handleShowContact = () => {
+			setIsContactsShown(true);
+		};
+
+		const contactsArray = course?.contact.split(/\r?\n/);
+		const phonesArray = contactsArray && contactsArray[0].split(/\(/).slice(1);
+		const formattedTelsArray = phonesArray?.map((item, index) => (
+			<span
+				key={index}
+				className={styles["contacts__phone"]}
+			>{`+38 (${item}`}</span>
+		));
+
+		const email = contactsArray?.[EMAIL_INDEX_IN_ARRAY];
+
 		return (
-			<div className={styles["contacts-bar"]} ref={ref}>
-				<div className={styles["contacts-header"]}>{title}</div>
-				<Contact
-					iconName={IconName.LOCATION}
-					title={course ? defineLocation(course.location) : ""}
-				/>
-				<Contact
-					iconName={IconName.BANK}
-					title={course ? course.company.name : ""}
-				/>
-				{course && course.website !== "None" && (
-					<Contact
-						iconName={IconName.GLOBAL}
-						title={course.website}
-					/>
+			<div className={styles["contacts__bar"]} ref={ref}>
+				<div className={styles["contacts__header"]}>{title}</div>
+				{course && (
+					<>
+						<Contact iconName={IconName.LOCATION}>
+							{defineLocation(course.location)}
+						</Contact>
+						<Contact iconName={IconName.BANK}>{course.company.name}</Contact>
+
+						{course.website !== "None" && (
+							<Contact iconName={IconName.GLOBAL}>{course.website}</Contact>
+						)}
+						{isContactsShown && (
+							<>
+								{formattedTelsArray && (
+									<Contact iconName={IconName.CALL}>
+										{
+											<div className={styles["contacts__phone-container"]}>
+												{formattedTelsArray}
+											</div>
+										}
+									</Contact>
+								)}
+								{email && <Contact iconName={IconName.SMS}>{email}</Contact>}
+							</>
+						)}
+						<aside className={styles["contacts__button-container"]}>
+							<Button size={ButtonSize.MEDIUM} variant={ButtonVariant.PRIMARY}>
+								Зв&apos;язатися з компанією
+							</Button>
+
+							{!isContactsShown && (
+								<Button
+									onClick={() => handleShowContact()}
+									size={ButtonSize.MEDIUM}
+									variant={ButtonVariant.OUTLINED}
+								>
+									<p className={styles["contacts__bold-content"]}>
+										Показати контакти
+									</p>
+								</Button>
+							)}
+						</aside>
+					</>
 				)}
-				<aside className={styles["contacts__button-container"]}>
-					<Button size={ButtonSize.MEDIUM} variant={ButtonVariant.PRIMARY}>
-						Зв&apos;язатися з компанією
-					</Button>
-					<Button size={ButtonSize.MEDIUM} variant={ButtonVariant.OUTLINED}>
-						<p className={styles["contacts__bold-content"]}>
-							Показати контакти
-						</p>
-					</Button>
-				</aside>
 			</div>
 		);
 	},

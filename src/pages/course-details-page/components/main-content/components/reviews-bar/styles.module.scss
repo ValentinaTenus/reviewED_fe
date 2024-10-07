@@ -20,6 +20,34 @@
 	height: 40px;
 }
 
+.reviews-bar__no-reviews {
+	grid-area: rvs;
+	height: 294px;
+}
+.reviews-bar__picture {
+	display: block;
+	margin: 40px auto 32px;
+}
+
+.reviews-bar__big-text {
+	color: var(--color-grey-reviews-big);
+	font-family: var(--font-family-main);
+	font-size: var(--font-size-title-h4);
+	font-weight: var(--font-weight-bold);
+	line-height: 130%;
+	text-align: center;
+
+}
+
+.reviews-bar__no-reviews {
+	color: var(--color-grey-reviews-small);
+	font-family: var(--font-family-main);
+	font-size: var(--font-size-main-text);
+	font-weight: var(--font-weight-text);
+	line-height: 140%;
+	text-align: center;
+}
+
 @media (max-width: 768px) {
 	.reviews-bar__button {
 		width: 100%;

@@ -5,7 +5,7 @@ import { Footer, Header } from "~/common/components";
 import { MainContent } from "./components";
 import styles from "./styles.module.scss";
 
-const MOCK_ID = "124";
+const MOCK_ID = "1104";
 
 const CourseDetailsPage: React.FC = () => {
 	return (

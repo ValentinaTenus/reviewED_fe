@@ -9,6 +9,7 @@ import ArrowUp from "~/assets/images/arrow-up.svg?react";
 import Audience from "~/assets/images/audience.svg?react";
 import Bank from "~/assets/images/bank.svg?react";
 import Phone from "~/assets/images/call.svg?react";
+import Call from "~/assets/images/call.svg?react";
 import Close from "~/assets/images/close.svg?react";
 import Copy from "~/assets/images/copy.svg?react";
 import DollarSign from "~/assets/images/dollar-circle.svg?react";
@@ -28,6 +29,7 @@ import Price from "~/assets/images/price.svg?react";
 import SearchIcon from "~/assets/images/search-normal.svg?react";
 import Share from "~/assets/images/share.svg?react";
 import ShieldTick from "~/assets/images/shield-tick.svg?react";
+import Sms from "~/assets/images/sms.svg?react";
 import Email from "~/assets/images/sms.svg?react";
 import SortIcon from "~/assets/images/sort.svg?react";
 import Star from "~/assets/images/star.svg?react";
@@ -50,6 +52,7 @@ const iconNameToSvg: Record<
 	arrowUp: ArrowUp,
 	audience: Audience,
 	bank: Bank,
+	call: Call,
 	close: Close,
 	copy: Copy,
 	dollarSign: DollarSign,
@@ -72,6 +75,7 @@ const iconNameToSvg: Record<
 	share: Share,
 	shieldTick: ShieldTick,
 	sort: SortIcon,
+	sms: Sms,
 	star: Star,
 	tableView: TableView,
 	teacher: Teacher,
