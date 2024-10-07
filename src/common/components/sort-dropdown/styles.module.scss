@@ -25,10 +25,6 @@
 .dropdown_container {
 	overflow: visible;
 	position: relative;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	gap: 16px;
 }
 
 .sort__button {
@@ -49,6 +45,12 @@
 .sort__button_icon:focus,
 .sort__button_icon:active {
 	color: var(--color-black);
+}
+
+.dropdown_trigger_wrapp {
+	width: 100%;
+	display: flex;
+	gap: 16px;
 }
 
 .dropdown_trigger {

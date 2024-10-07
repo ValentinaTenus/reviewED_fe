@@ -119,7 +119,7 @@ const SortDropdown: React.FC<Properties> = ({
 					</IconButton>
 				)}
 				{!isIconButton && (
-					<>
+					<div className={styles["dropdown_trigger_wrapp"]}>
 						<div
 							className={clsx(styles["dropdown_trigger"], {
 								[styles["open"]]: isOpen,
@@ -135,6 +135,7 @@ const SortDropdown: React.FC<Properties> = ({
 								<ArrowDown className={styles["dropdown_icon"]} />
 							)}
 						</div>
+
 						{isWithCleaner && (
 							<IconButton
 								className={clsx(
@@ -146,7 +147,7 @@ const SortDropdown: React.FC<Properties> = ({
 								<Icon name={IconName.CLOSE_CIRCLE} />
 							</IconButton>
 						)}
-					</>
+					</div>
 				)}
 				{isOpen && !isDisabled && (
 					<div
