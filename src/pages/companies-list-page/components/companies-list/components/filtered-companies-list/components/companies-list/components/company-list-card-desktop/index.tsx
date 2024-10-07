@@ -2,9 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import ShieldTick from "~/assets/images/shield-tick.svg?react";
-import { StarRating } from "~/common/components/index";
+import { AvatarGroup, Logo, StarRating } from "~/common/components/index";
 import { AppRoute, RatingSize } from "~/common/enums/index";
 import { Company } from "~/common/types/index";
+import { useGetReviewsByCompanyIdQuery } from "~/redux/reviews/reviews-companies-api";
 
 import styles from "./styles.module.scss";
 
@@ -13,16 +14,20 @@ type Properties = {
 };
 
 const CompanyListCardDesktop: React.FC<Properties> = ({ company }) => {
+	const { data: companyReviews } = useGetReviewsByCompanyIdQuery(
+		company.id.toString(),
+	);
+	const avatars = companyReviews?.map((review) => review.author_avatar) ?? [];
 	return (
 		<Link
 			className={styles["company_list_card__container"]}
-			to={`${AppRoute.COMPANY_DETAILS}${company.id}`}
+			to={AppRoute.COMPANY_DETAILS.replace(":companyId", company.id.toString())}
 		>
 			<div className={styles["company_list_card__title"]}>
-				<img
-					alt={company.name}
+				<Logo
 					className={styles["company_list_card__logo"]}
-					src={company.logo}
+					logo={company.logo}
+					name={company.name}
 				/>
 				<span className={styles["company_list_card__name"]}>
 					{company.name}
@@ -36,6 +41,7 @@ const CompanyListCardDesktop: React.FC<Properties> = ({ company }) => {
 			<div className={styles["company_list_card__reviews_container"]}>
 				<div className={styles["company_list_card__reviews"]}>
 					<div className={styles["company_list_card__reviewer_avatars"]} />
+					<AvatarGroup avatars={avatars} />
 					<span className={styles["company_list_card__review_amount"]}>
 						{company.total_reviews_count} відгуків
 					</span>

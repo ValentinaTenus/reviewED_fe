@@ -1,7 +1,7 @@
 .header_wrapper {
   border-bottom: 1.5px solid var(--color-grey-950);
   margin: 0 auto;
-  padding: 8px 86px;
+  padding: 8px 94px;
   position: relative;
   width: 100%;
 }
@@ -21,7 +21,7 @@
   gap: 80px;
 }
 
-.logo {
+.header_logo {
   height: 36px;
   width: 174px;
 }
@@ -121,11 +121,18 @@
 
 .logout__button {
   padding: 0;
+  justify-content: start;
+  width: 100%;
 }
 
 @media (max-width: 768px) {
   .header_wrapper {
     padding: 8px 20px;
+  }
+
+  .header_logo {
+    height: 24px;
+    width: 116px;
   }
 
   .menu__button {

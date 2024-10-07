@@ -1,6 +1,13 @@
-.categories_header {
+.categories__header {
 	font-family: var(--font-family-main);
 	font-size: var(--font-size-title-mobile-h2);
 	font-weight: var(--font-weight-semi-bold);
-  margin-bottom: 12px;
+	margin-bottom: 12px;
+}
+
+.categories__list {
+	column-gap: 100px;
+	display: flex;
+	flex-wrap: wrap;
+	row-gap: 20px;
 }

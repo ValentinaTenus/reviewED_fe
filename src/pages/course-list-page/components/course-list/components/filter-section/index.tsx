@@ -1,9 +1,10 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
-import { BreadCrumb, SearchBar, SortDropdown } from "~/common/components/index";
-import { CoursesSortOptions } from "~/common/constants";
+import { BreadCrumb, SearchBar } from "~/common/components/index";
+import { ScreenBreakpoints } from "~/common/constants";
 import { AppRoute } from "~/common/enums/index";
-import { Category } from "~/common/types/index";
+import { useGetScreenWidth } from "~/common/hooks";
+import { type FilterType } from "~/common/types/index";
 
 import { FilterModal } from "./components/index";
 import styles from "./styles.module.scss";
@@ -13,23 +14,35 @@ const BreadCrumbPaths = [
 	{ label: "Курси", path: AppRoute.ALL_COURSES },
 ];
 
+const DEFAULT_FILTER_LENGTH = 0;
+
 type FilterSectionProperties = {
-	categories: Category[];
+	onApplyFiltersAndSearch: () => void;
 	onChangeSearchTerm: (searchTerm: string) => void;
-	onChangeSortBy: (sortBy: number | string) => void;
-	onChooseCategory: (categoryId: string) => void;
-	onChooseSubCategory: (categoryId: string) => void;
-	screenWidth: number;
+	onChooseLocation: (locations: FilterType[]) => void;
+	onChooseSubCategory: (subcategories: FilterType[]) => void;
+	onClearFilters: () => void;
 	searchTerm: string;
-	selectedCategoryId: string;
+	selectedLocations: FilterType[];
+	selectedSubCategories: FilterType[];
 };
 
 const FilterSection: React.FC<FilterSectionProperties> = ({
+	onApplyFiltersAndSearch,
 	onChangeSearchTerm,
-	onChangeSortBy,
+	onChooseLocation,
+	onChooseSubCategory,
+	onClearFilters,
 	searchTerm,
+	selectedLocations,
+	selectedSubCategories,
 }) => {
+	const screenWidth = useGetScreenWidth();
+
 	const [isOpen, setIsOpen] = useState(false);
+	const [filterLenght, setFilterLenght] = useState<number>(
+		DEFAULT_FILTER_LENGTH,
+	);
 
 	const handleOpenFilter = useCallback(() => {
 		setIsOpen(true);
@@ -39,23 +52,37 @@ const FilterSection: React.FC<FilterSectionProperties> = ({
 		setIsOpen(false);
 	}, []);
 
+	useEffect(() => {
+		setFilterLenght(selectedLocations.length + selectedSubCategories.length);
+	}, [selectedLocations, selectedSubCategories]);
+
 	return (
 		<div className={styles["course_filter__container"]}>
 			<BreadCrumb items={BreadCrumbPaths} />
 			<SearchBar
-				filtersLength={3}
+				filtersLength={filterLenght}
 				isFilterButton
 				onOpenFilter={handleOpenFilter}
 				onSubmit={onChangeSearchTerm}
-				placeholder="Find your perfect course"
+				placeholder={
+					screenWidth > ScreenBreakpoints.MOBILE
+						? "Знайди свій ідеальний курс"
+						: "Пошук"
+				}
 				value={searchTerm}
 			/>
-			{isOpen && <FilterModal onClose={handleCloseFilter} />}
-			<SortDropdown
-				name="sort"
-				onChange={onChangeSortBy}
-				options={CoursesSortOptions}
-			/>
+			{isOpen && (
+				<FilterModal
+					isOpen={isOpen}
+					onApplyFiltersAndSearch={onApplyFiltersAndSearch}
+					onChooseLocation={onChooseLocation}
+					onChooseSubCategory={onChooseSubCategory}
+					onClearFilters={onClearFilters}
+					onClose={handleCloseFilter}
+					selectedLocations={selectedLocations}
+					selectedSubCategories={selectedSubCategories}
+				/>
+			)}
 		</div>
 	);
 };

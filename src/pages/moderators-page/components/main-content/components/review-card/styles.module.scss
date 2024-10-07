@@ -1,0 +1,361 @@
+@mixin tablet {
+	@media (min-width: 768px) {
+		@content;
+	}
+}
+
+@mixin desktop {
+	@media (min-width: 1280px) {
+		@content;
+	}
+}
+
+.card {
+	max-width: 934px;
+	font-family: var(--font-family-main);
+	position: relative;
+	padding: 36px 16px;
+	border: 1px solid var(--color-grey-400);
+	border-radius: 16px;
+	box-shadow: 2px 2px 12px 0 var(--color-shadow-light-grey);
+	background: var(--color-white);
+
+	@include tablet {
+		padding: 36px;
+		border-radius: 40px;
+	}
+
+	@include desktop {
+		padding: 48px;
+	}
+
+	&__state {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 120px;
+		height: 60px;
+		border-radius: 0 0 16px 16px;
+		position: absolute;
+		top: 0;
+		right: 16px;
+		line-height: 140%;
+		font-weight: var(--font-weight-text);
+		font-size: var(--font-size-title-h5);
+		color: var(--color-grey-950);
+
+		@include tablet {
+			width: 143px;
+			right: 36px;
+		}
+
+		@include desktop {
+			height: 76px;
+			right: 48px;
+		}
+
+		&--pending {
+			background-color: var(--color-yellow-200);
+		}
+
+		&--approved {
+			border-bottom: 1px solid var(--color-grey-400);
+			border-left: 1px solid var(--color-grey-400);
+			border-right: 1px solid var(--color-grey-400);
+		}
+
+		&--rejected {
+			background-color: var(--color-grey-200);
+			text-align: center;
+		}
+	}
+
+	&__content {
+		margin-bottom: 24px;
+
+		@include tablet {
+			margin-bottom: 32px;
+		}
+
+		@include desktop {
+			margin-bottom: 40px;
+		}
+	}
+
+	&__title {
+		margin-bottom: 24px;
+
+		@include tablet {
+			margin-bottom: 32px;
+		}
+
+		@include desktop {
+			margin-bottom: 40px;
+		}
+	}
+
+	&__buttons {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+
+		@include tablet {
+			flex-direction: row;
+			gap: 24px;
+		}
+	}
+}
+
+.info {
+	&__links {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		margin-bottom: 24px;
+		letter-spacing: -0.06em;
+		font-weight: var(--font-weight-bold);
+		font-size: var(--font-size-title-large);
+
+		@include desktop {
+			margin-bottom: 32px;
+			gap: 14px;
+		}
+	}
+
+	&__link-text {
+		line-height: 140%;
+		color: var(--color-grey-700);
+
+		@include tablet {
+			font-size: var(--font-size-title-h5);
+			line-height: 150%;
+		}
+	}
+
+	&__link {
+		color: var(--color-blue-icons);
+		word-break: break-all;
+		border-bottom: 1px solid var(--color-blue-icons);
+
+		@include tablet {
+			font-size: var(--font-size-title-large);
+			line-height: 140%;
+		}
+
+		@include desktop {
+			font-size: var(--font-size-title-h4);
+			line-height: 130%;
+		}
+	}
+
+	&__UID-text {
+		font-weight: var(--font-weight-bold);
+		font-size: var(--font-size-title-h5);
+		line-height: 150%;
+		letter-spacing: -0.06em;
+		color: var(--color-grey-700);
+		margin-bottom: 16px;
+	}
+
+	&__UID-number {
+		font-size: var(--font-size-title-h4);
+		line-height: 130%;
+		color: var(--color-grey-950);
+	}
+}
+
+.title {
+	position: relative;
+	display: flex;
+	gap: 8px;
+	padding-bottom: 28px;
+
+	@include tablet {
+		gap: 20px;
+		padding-bottom: 0;
+	}
+
+	&__img {
+		width: 110px;
+		height: 54px;
+
+		@include tablet {
+			width: 120px;
+			height: 60px;
+		}
+
+		@include desktop {
+			width: 128px;
+			height: 63px;
+		}
+	}
+
+	&__text {
+		font-weight: var(--font-weight-bold);
+		font-size: var(--font-size-title-h4);
+		line-height: 130%;
+		color: var(--color-grey-950);
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		text-align: left;
+
+		@include tablet {
+			font-weight: var(--font-weight-extra-bold);
+			font-size: var(--font-size-title-mobile-h2);
+		}
+	}
+
+	&__stars {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+
+		@include tablet {
+			left: 140px;
+		}
+
+		@include desktop {
+			left: 148px;
+		}
+	}
+}
+
+.content {
+	border-bottom: 1px solid var(--color-grey-300);
+	border-top: 1px solid var(--color-grey-300);
+	padding: 16px 0px;
+	background-color: var(--color-white);
+
+	@include tablet {
+		padding: 24px 0;
+	}
+
+	&__info {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: 12px;
+
+		@include tablet {
+			margin-bottom: 16px;
+		}
+
+		@include desktop {
+			margin-bottom: 24px;
+		}
+	}
+
+	&__date {
+		font-weight: var(--font-weight-bold);
+		font-size: var(--font-size-title-large);
+		line-height: 140%;
+		letter-spacing: -0.06em;
+		color: var(--color-grey-800);
+
+		@include desktop {
+			font-size: var(--font-size-title-h4);
+			line-height: 130%;
+		}
+	}
+
+	&__time {
+		color: var(--color-grey-700);
+	}
+
+	&__text {
+		font-weight: var(--font-weight-text);
+		font-size: var(--font-size-title-h5);
+		line-height: 140%;
+		color: var(--color-grey-950);
+		margin-bottom: 6px;
+		word-break: break-all;
+
+		&_button {
+			font-weight: var(--font-weight-bold);
+			font-size: var(--font-size-main-text);
+			line-height: 140%;
+			color: var(--color-grey-950);
+			border-bottom: 1px solid var(--color-grey-950);
+		}
+
+		&--truncated {
+			white-space: nowrap;
+			display: inline-block;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			line-clamp: 12;
+			-webkit-line-clamp: 12;
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			white-space: normal;
+
+			@include tablet {
+				line-clamp: 6;
+				-webkit-line-clamp: 6;
+			}
+
+			@include desktop {
+				line-clamp: 5;
+				-webkit-line-clamp: 5;
+			}
+		}
+	}
+}
+
+.button_fixed {
+	font-weight: var(--font-weight-bold);
+	line-height: 150%;
+	letter-spacing: -0.06em;
+	border-radius: 40px;
+
+	@include tablet {
+		width: 178px;
+	}
+}
+
+.rating_block .stars_block * {
+	width: 14px;
+	height: 14px;
+
+	@include desktop {
+		width: 18px;
+		height: 18px;
+	}
+}
+
+.rating_block > span:last-child {
+	line-height: 140%;
+	font-weight: var(--font-weight-bold);
+}
+
+.rating_block .stars_block {
+	@include desktop {
+		gap: 4px;
+	}
+}
+
+.rating_block {
+	gap: 8px;
+}
+
+.rating_block_big .stars_block_big {
+	@include tablet {
+		gap: 4px;
+	}
+
+	@include desktop {
+		gap: 6px;
+	}
+}
+
+.rating_block_big > span:last-child {
+	letter-spacing: -0.06em;
+}
+
+.rating_block_big .stars_block_big * {
+	@include desktop {
+		width: 20px;
+		height: 20px;
+	}
+}

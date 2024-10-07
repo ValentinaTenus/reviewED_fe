@@ -9,6 +9,7 @@ import {
 	CoursesLinksSmartphones,
 	CoursesLinksTablets,
 	OthersFooterLinks,
+	OthersFooterLinksMobile,
 	ScreenBreakpoints,
 	SocialLinks,
 } from "~/common/constants/index";
@@ -23,16 +24,22 @@ import styles from "./styles.module.scss";
 
 const Footer: React.FC = () => {
 	const [companiesLinks, setCompaniesLinks] = useState<FooterNavigationLink[]>(
-		[],
+		CompaniesLinksDesktop,
 	);
-	const [coursesLinks, setCoursesLinks] = useState<FooterNavigationLink[]>([]);
+	const [coursesLinks, setCoursesLinks] =
+		useState<FooterNavigationLink[]>(CoursesLinksDesktop);
+	const [othersLinks, setOthersLinks] =
+		useState<FooterNavigationLink[]>(OthersFooterLinks);
 
 	const updateVisibleItems = () => {
 		const screenWidth = window.innerWidth;
 
-		if (screenWidth <= ScreenBreakpoints.TABLET) {
+		if (screenWidth <= ScreenBreakpoints.SMALL_MOBILE) {
+			setOthersLinks(OthersFooterLinksMobile);
+		} else if (screenWidth <= ScreenBreakpoints.TABLET) {
 			setCompaniesLinks(CompaniesLinksSmartphones);
 			setCoursesLinks(CoursesLinksSmartphones);
+			setOthersLinks(OthersFooterLinks);
 		} else if (screenWidth <= ScreenBreakpoints.DESKTOP) {
 			setCompaniesLinks(CompaniesLinksTablets);
 			setCoursesLinks(CoursesLinksTablets);
@@ -74,7 +81,7 @@ const Footer: React.FC = () => {
 						<NavigationBlock
 							classNameLink={styles["footer_content__small_link"]}
 							header="Інше"
-							links={OthersFooterLinks}
+							links={othersLinks}
 						/>
 					</div>
 				</div>

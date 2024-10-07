@@ -45,6 +45,7 @@
   margin: 8px 0;
   line-height: 19.6px;
   padding: 16px;
+  outline: none;
   width: 100%;
 }
 
@@ -79,7 +80,7 @@
 
 .input:focus {
   color: var(--color-grey-400);
-  border: 3px solid var(--color-grey-400);
+  border: 1px solid var(--color-grey-400);
 }
 
 .input:focus::placeholder, .icon {
@@ -87,7 +88,11 @@
 }
 
 .input:active, .input:focus {
-  border: 1px solid var(--color-grey-700);
+  border: 3px solid var(--color-grey-700);
+  color: var(--color-grey-950);
+}
+
+.input__filled {
   color: var(--color-grey-950);
 }
 

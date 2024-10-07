@@ -11,10 +11,13 @@ import Bank from "~/assets/images/bank.svg?react";
 import Phone from "~/assets/images/call.svg?react";
 import Close from "~/assets/images/close.svg?react";
 import Delete from "~/assets/images/delete.svg?react";
+import CloseCircle from "~/assets/images/close-circle.svg?react";
+import Copy from "~/assets/images/copy.svg?react";
 import DollarSign from "~/assets/images/dollar-circle.svg?react";
 import Edit from "~/assets/images/edit.svg?react";
 import Facebook from "~/assets/images/facebook.svg?react";
 import Filter from "~/assets/images/filter.svg?react";
+import Flag from "~/assets/images/flag.svg?react";
 import Global from "~/assets/images/global.svg?react";
 import Linkedin from "~/assets/images/iconoir_linkedin.svg?react";
 import Like from "~/assets/images/like.svg?react";
@@ -37,6 +40,7 @@ import Star from "~/assets/images/star.svg?react";
 import TableView from "~/assets/images/table-view.svg?react";
 import Teacher from "~/assets/images/teacher.svg?react";
 import Warning from "~/assets/images/warning.svg?react";
+import Users from "~/assets/images/users.svg?react";
 import Xrp from "~/assets/images/xrp-(xrp).svg?react";
 import Youtube from "~/assets/images/youtube.svg?react";
 import { type IconName } from "~/common/enums/index";
@@ -55,11 +59,14 @@ const iconNameToSvg: Record<
 	bank: Bank,
 	close: Close,
 	delete: Delete,
+	close_circle: CloseCircle,
+	copy: Copy,
 	dollarSign: DollarSign,
 	edit: Edit,
 	email: Email,
 	facebook: Facebook,
 	filter: Filter,
+	flag: Flag,
 	global: Global,
 	like: Like,
 	linkedin: Linkedin,
@@ -82,6 +89,7 @@ const iconNameToSvg: Record<
 	tableView: TableView,
 	teacher: Teacher,
 	warning: Warning,
+	users: Users,
 	xrp: Xrp,
 	youtube: Youtube,
 };

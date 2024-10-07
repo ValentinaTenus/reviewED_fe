@@ -14,7 +14,7 @@ type Properties = {
 	isTitleClickable?: boolean;
 	label?: string;
 	name: string;
-	onChange: (value: { isTitle: boolean; value: number | string }) => void;
+	onChange: (params: { isTitle: boolean; option: DropdownOption }) => void;
 	options: DropdownOption[];
 	placeholder?: string;
 };
@@ -41,7 +41,7 @@ const Dropdown: React.FC<Properties> = ({
 		const { label, value } = option;
 		setSelectedOption({ label, value });
 		setIsOpen(false);
-		onChange({ isTitle: false, value });
+		onChange({ isTitle: false, option });
 	};
 
 	const handleTitleClick = (option: DropdownOption) => {
@@ -50,7 +50,7 @@ const Dropdown: React.FC<Properties> = ({
 		} else {
 			handleOptionClick(option);
 		}
-		onChange({ isTitle: true, value: option.value });
+		onChange({ isTitle: true, option });
 	};
 
 	const handleToggleDropdown = useCallback(() => {

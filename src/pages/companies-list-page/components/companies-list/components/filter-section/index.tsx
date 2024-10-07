@@ -6,7 +6,7 @@ import {
 	ScreenBreakpoints,
 } from "~/common/constants/index";
 import { AppRoute } from "~/common/enums/index";
-import { Category } from "~/common/types/index";
+import { Category, FilterType } from "~/common/types/index";
 
 import { CompaniesCategories, FilterSectionText } from "./components/index";
 import styles from "./styles.module.scss";
@@ -21,14 +21,18 @@ const BreadCrumbPaths = [
 	},
 ];
 
+const ZERO = 0;
+
 type FilterSectionProperties = {
 	categories: Category[];
 	onChangeSearchTerm: (searchTerm: string) => void;
 	onChangeSortBy: (sortBy: number | string) => void;
 	onChooseCategory: (categoryId: number) => void;
+	onSubmitSearchTerm: (searchTerm: string) => void;
 	screenWidth: number;
 	searchTerm: string;
-	selectedCategoryId: number;
+	selectedCategoryIds: number[];
+	selectedSubcategory: FilterType[];
 };
 
 const FilterSection: React.FC<FilterSectionProperties> = ({
@@ -36,9 +40,11 @@ const FilterSection: React.FC<FilterSectionProperties> = ({
 	onChangeSearchTerm,
 	onChangeSortBy,
 	onChooseCategory,
+	onSubmitSearchTerm,
 	screenWidth,
 	searchTerm,
-	selectedCategoryId,
+	selectedCategoryIds,
+	selectedSubcategory,
 }) => {
 	return (
 		<div className={styles["companies_filter__container"]}>
@@ -49,13 +55,19 @@ const FilterSection: React.FC<FilterSectionProperties> = ({
 				<div className={styles["companies_filter__search_and_categories"]}>
 					<div className={styles["companies_filter__search_bar"]}>
 						<SearchBar
-							onSubmit={onChangeSearchTerm}
-							placeholder="Знайди свою ідеальну компанію"
+							onChangeSearchTerm={onChangeSearchTerm}
+							onSubmit={onSubmitSearchTerm}
+							placeholder={
+								screenWidth > ScreenBreakpoints.MOBILE
+									? "Знайди свою ідеальну компанію"
+									: "Пошук"
+							}
 							value={searchTerm}
 						/>
 						{screenWidth > ScreenBreakpoints.TABLET && (
 							<SortDropdown
-								name="sort"
+								className={styles["companies_filter__sort"]}
+								name="Сортувати за"
 								onChange={onChangeSortBy}
 								options={CompaniesSortOptions}
 							/>
@@ -64,8 +76,16 @@ const FilterSection: React.FC<FilterSectionProperties> = ({
 					<CompaniesCategories
 						categories={categories}
 						onSelectCategory={onChooseCategory}
-						selectedCategoryId={selectedCategoryId}
+						selectedCategoryIds={selectedCategoryIds}
 					/>
+					{selectedSubcategory.length > ZERO && (
+						<div className={styles["companies_filter__subcategory"]}>
+							<span className={styles["companies_filter__subcategory_title"]}>
+								Вибрана підкатегорія:
+							</span>{" "}
+							{selectedSubcategory[ZERO]?.name}
+						</div>
+					)}
 				</div>
 			</div>
 		</div>

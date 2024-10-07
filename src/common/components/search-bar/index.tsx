@@ -14,7 +14,7 @@ import {
 	ButtonVariant,
 	IconName,
 } from "~/common/enums/index";
-import { useAppForm } from "~/common/hooks/index";
+import { useAppForm, useGetScreenWidth } from "~/common/hooks/index";
 import { type DropdownOption } from "~/common/types/index";
 
 import styles from "./styles.module.scss";
@@ -23,6 +23,7 @@ type SearchBarProperties = {
 	filtersLength?: number;
 	iconSearch?: boolean;
 	isFilterButton?: boolean;
+	onChangeSearchTerm?: (searchTerm: string) => void;
 	onInputChange?: (value: string) => [];
 	onOpenFilter?: () => void;
 	onSubmit: (searchTerm: string) => void;
@@ -34,17 +35,18 @@ const SearchBar: React.FC<SearchBarProperties> = ({
 	filtersLength,
 	iconSearch = false,
 	isFilterButton,
+	onChangeSearchTerm,
 	onInputChange,
 	onOpenFilter,
 	onSubmit,
 	placeholder,
 	value,
 }) => {
-	const screenWidth = window.innerWidth;
 	const [searchTerm, setSearchTerm] = useState(value);
 	const [filteredSuggestions, setFilteredSuggestions] = useState<
 		DropdownOption[]
 	>([]);
+	const screenWidth = useGetScreenWidth();
 
 	const { control, errors, handleSubmit } = useAppForm({
 		defaultValues: {
@@ -64,8 +66,12 @@ const SearchBar: React.FC<SearchBarProperties> = ({
 					setFilteredSuggestions(suggestions);
 				}
 			}
+
+			if (onChangeSearchTerm) {
+				onChangeSearchTerm(value);
+			}
 		},
-		[onInputChange],
+		[onInputChange, onChangeSearchTerm],
 	);
 
 	const handleFormSubmit = useCallback(
@@ -106,9 +112,12 @@ const SearchBar: React.FC<SearchBarProperties> = ({
 							}
 							className={styles["filter-button"]}
 							onClick={onOpenFilter}
+							type={ButtonType.BUTTON}
 							variant={ButtonVariant.DEFAULT}
 						>
-							Фільтр ({filtersLength})
+							{screenWidth > ScreenBreakpoints.TABLET
+								? `Фільтр (${filtersLength})`
+								: ""}
 						</Button>
 					)}
 					{screenWidth > ScreenBreakpoints.TABLET ? (
@@ -123,7 +132,10 @@ const SearchBar: React.FC<SearchBarProperties> = ({
 							</Button>
 						</div>
 					) : (
-						<IconButton className={styles["search__icon_button"]}>
+						<IconButton
+							className={styles["search__icon_button"]}
+							type={ButtonType.SUBMIT}
+						>
 							<Icon
 								className={styles["search__icon_button__icon"]}
 								name={IconName.SEARCH}

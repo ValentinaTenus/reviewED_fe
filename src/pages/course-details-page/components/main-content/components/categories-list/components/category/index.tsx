@@ -1,24 +1,25 @@
 import React from "react";
 
+import { type Category } from "~/common/types";
+
 import { CategoryItem } from "./components/category-item";
 import styles from "./styles.module.scss";
 
 type CategoryProperties = {
-	categoryName: string;
+	category: Category;
 };
 
-const mockSkills = ["Програмування, розробка"];
-const Category: React.FC<CategoryProperties> = ({ categoryName }) => {
+const CategoryBlock: React.FC<CategoryProperties> = ({ category }) => {
 	return (
 		<div>
-			<h4 className={styles["categories_header"]}>{categoryName}</h4>
-			<ul className={styles["categories_list"]}>
-				{mockSkills.map((item, index) => {
-					return <CategoryItem key={index} title={item} />;
+			<h4 className={styles["category__header"]}>{category.name}</h4>
+			<ul className={styles["subcategories__list"]}>
+				{category.subcategories.map((item, index) => {
+					return <CategoryItem key={index} title={item.name} />;
 				})}
 			</ul>
 		</div>
 	);
 };
 
-export { Category };
+export { CategoryBlock };

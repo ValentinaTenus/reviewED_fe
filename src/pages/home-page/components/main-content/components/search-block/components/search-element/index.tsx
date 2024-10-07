@@ -13,7 +13,12 @@ import {
 	IconName,
 } from "~/common/enums/index";
 import { useAppForm } from "~/common/hooks/index";
-import { Company, Course, DropdownOption } from "~/common/types/index";
+import {
+	Company,
+	Course,
+	DropdownOption,
+	FilterType,
+} from "~/common/types/index";
 import { useGetCategoriesQuery } from "~/redux/categories/categories-api";
 import { useGetCompaniesByFilterQuery } from "~/redux/companies/companies-api";
 import {
@@ -33,7 +38,6 @@ import {
 
 import {
 	getDropdownOptionsFormat,
-	mapCompanies,
 	mapCoursesCategories,
 	mapLocations,
 } from "../../helpers/index";
@@ -60,7 +64,7 @@ type SearchElementProperties = {
 };
 
 const SearchElement: React.FC<SearchElementProperties> = ({
-	companies,
+	// companies,
 	onSearch,
 }) => {
 	const dispatch = useAppDispatch();
@@ -74,9 +78,11 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 	const [selectedCategory, setSelectedCategory] = useState<string>(
 		categories[INDEX_COMPANIES].value,
 	);
-	const [selectedLocation, setSelectedLocation] = useState<string>("");
-	const [selectedCompanyFromAll, setSelectedCompanyFromAll] =
-		useState<string>("");
+	const [selectedLocation, setSelectedLocation] = useState<FilterType>({
+		id: "",
+		name: "",
+	});
+
 	const [selectedCourseCategory, setSelectedCourseCategory] = useState<
 		null | string
 	>(null);
@@ -93,13 +99,15 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 
 	const [serverError, setServerError] = useState("");
 
-	const { data: filteredCourses, refetch: refetchCourses } =
+	const { data: filteredCoursesResponse, refetch: refetchCourses } =
 		useGetCoursesByFilterQuery(
 			{
-				category_by_id: selectedCourseCategory || "",
-				city: selectedLocation,
-				subcategory_by_id: selectedCourseSubCategory || "",
-				title: selectedCompanyFromAll ? selectedCompanyFromAll : searchTerm,
+				category_by_id: selectedCourseCategory ? [selectedCourseCategory] : [],
+				city: selectedLocation ? [selectedLocation.id] : [],
+				subcategory_by_id: selectedCourseSubCategory
+					? [selectedCourseSubCategory]
+					: [],
+				title: searchTerm,
 			},
 			{
 				refetchOnMountOrArgChange: false,
@@ -110,12 +118,16 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 	const { data: getCompaniesResponse, refetch: refetchCompanies } =
 		useGetCompaniesByFilterQuery(
 			{
-				city: selectedLocation,
+				category_by_id: selectedCourseCategory ? [+selectedCourseCategory] : [],
+				city: selectedLocation.id,
 				limit:
 					screenWidth > ScreenBreakpoints.TABLET
 						? CompaniesPerPageTableView.LARGE_SCREEN
 						: CompaniesPerPageTableView.SMALL_SCREEN,
-				name: selectedCompanyFromAll ? selectedCompanyFromAll : searchTerm,
+				name: searchTerm,
+				subcategory_by_id: selectedCourseSubCategory
+					? [+selectedCourseSubCategory]
+					: [],
 			},
 			{
 				refetchOnMountOrArgChange: false,
@@ -130,7 +142,6 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 	const coursesCategoriesOptions = mapCoursesCategories(
 		fetchedCategories || [],
 	);
-	const companiesOptions = mapCompanies(companies);
 
 	useEffect(() => {
 		dispatch(clearCompaniesFilters());
@@ -172,10 +183,10 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 			} else {
 				if (
 					selectedCategory === categories[INDEX_COURSES].value &&
-					filteredCourses
+					filteredCoursesResponse?.results
 				) {
 					const mappedCourses = getDropdownOptionsFormat({
-						courses: filteredCourses,
+						courses: filteredCoursesResponse.results,
 					});
 					setFilteredSuggestions(mappedCourses);
 				}
@@ -194,35 +205,29 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 		[
 			dispatch,
 			getCompaniesResponse?.results,
-			filteredCourses,
+			filteredCoursesResponse?.results,
 			selectedCategory,
 		],
 	);
 
 	const handleSelectCategory = useCallback(
-		({ value }: { value: number | string }) => {
-			setSelectedCategory(value.toString());
+		({ option }: { option: DropdownOption }) => {
+			setSelectedCategory(option.value.toString());
 
-			if (value.toLocaleString() === categories[INDEX_COURSES].value) {
+			if (option.value.toString() === categories[INDEX_COURSES].value) {
 				void dispatch(setCompaniesFilters({ city: "", name: "" }));
 				void dispatch(
 					setCoursesFilters({
-						city: selectedLocation,
+						category_by_id: [{ id: "", name: "Всі курси" }],
+						city: [{ id: "", name: "Всі міста" }],
+						subcategory_by_id: [],
 						title: searchTerm,
 					}),
 				);
 			} else {
 				void dispatch(
-					setCoursesFilters({
-						category_by_id: "",
-						city: "",
-						subcategory_by_id: "",
-						title: "",
-					}),
-				);
-				void dispatch(
 					setCompaniesFilters({
-						city: selectedLocation,
+						city: selectedLocation.id,
 						name: searchTerm,
 					}),
 				);
@@ -232,51 +237,91 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 	);
 
 	const handleSelectLocation = useCallback(
-		({ value }: { value: number | string }) => {
-			setSelectedLocation(value.toString());
+		({ option }: { option: DropdownOption }) => {
+			const selectedLocation = {
+				id: option.value.toString(),
+				name: option.label,
+			};
+			setSelectedLocation(selectedLocation);
 
 			if (selectedCategory === categories[INDEX_COMPANIES].value) {
-				void dispatch(setCompaniesFilters({ city: value.toString() }));
+				void dispatch(setCompaniesFilters({ city: option.value.toString() }));
 			}
 
 			if (selectedCategory === categories[INDEX_COURSES].value) {
-				void dispatch(setCoursesFilters({ city: value.toString() }));
+				void dispatch(setCoursesFilters({ city: [selectedLocation] }));
 			}
 		},
 		[dispatch, selectedCategory],
 	);
 
-	const handleSelectedCompanyFromAll = useCallback(
-		({ value }: { value: number | string }) => {
-			setSelectedCompanyFromAll(value.toString());
-			void dispatch(setCompaniesFilters({ name: value.toString() }));
-		},
-		[dispatch],
-	);
-
 	const handleSelectedCoursesCategory = useCallback(
-		({ isTitle, value }: { isTitle: boolean; value: number | string }) => {
+		({ isTitle, option }: { isTitle: boolean; option: DropdownOption }) => {
 			if (isTitle) {
 				setSelectedCourseSubCategory(null);
-				setSelectedCourseCategory(value.toString());
-				void dispatch(
-					setCoursesFilters({
-						category_by_id: value.toString(),
-						subcategory_by_id: "",
-					}),
-				);
+				setSelectedCourseCategory(option.value.toString());
+
+				if (selectedCategory === categories[INDEX_COURSES].value) {
+					void dispatch(
+						setCoursesFilters({
+							category_by_id: [
+								{ id: option.value.toString(), name: option.label },
+							],
+							subcategory_by_id: [],
+						}),
+					);
+				} else {
+					void dispatch(
+						setCompaniesFilters({
+							category_by_id: [
+								{ id: option.value.toString(), name: option.label },
+							],
+							subcategory_by_id: [],
+						}),
+					);
+				}
 			} else {
-				setSelectedCourseCategory(null);
-				setSelectedCourseSubCategory(value.toString());
-				void dispatch(
-					setCoursesFilters({
-						category_by_id: "",
-						subcategory_by_id: value.toString(),
-					}),
+				const categoryOfSubcategory = fetchedCategories?.find((category) => {
+					return category.subcategories.find((sb) => sb.id === option.value);
+				}) ?? { id: "", name: "" };
+
+				setSelectedCourseCategory(
+					categoryOfSubcategory?.id?.toString() ?? null,
 				);
+				setSelectedCourseSubCategory(option.value.toString());
+
+				if (selectedCategory === categories[INDEX_COURSES].value) {
+					void dispatch(
+						setCoursesFilters({
+							category_by_id: [
+								{
+									id: categoryOfSubcategory?.id.toString(),
+									name: categoryOfSubcategory?.name.toString(),
+								},
+							],
+							subcategory_by_id: [
+								{ id: option.value.toString(), name: option.label },
+							],
+						}),
+					);
+				} else {
+					void dispatch(
+						setCompaniesFilters({
+							category_by_id: [
+								{
+									id: categoryOfSubcategory?.id.toString(),
+									name: categoryOfSubcategory?.name.toString(),
+								},
+							],
+							subcategory_by_id: [
+								{ id: option.value.toLocaleString(), name: option.label },
+							],
+						}),
+					);
+				}
 			}
 		},
-		[dispatch],
+		[selectedCategory, dispatch, fetchedCategories],
 	);
 
 	const handleSuggestionClick = useCallback((suggestion: number | string) => {
@@ -293,10 +338,10 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 					navigate(AppRoute.ALL_COMPANIES);
 				}
 			} else {
-				const result = await refetchCourses().unwrap();
-				onSearch(result);
+				const response = await refetchCourses().unwrap();
+				onSearch(response.results);
 
-				if (result.length > ZERO_INDEX) {
+				if (response.results.length > ZERO_INDEX) {
 					navigate(AppRoute.ALL_COURSES);
 				}
 			}
@@ -359,42 +404,23 @@ const SearchElement: React.FC<SearchElementProperties> = ({
 							/>
 						</div>
 						<div className={styles["search_dropdown_wrapper"]}>
-							{selectedCategory === categories[INDEX_COURSES].value ? (
-								<Dropdown
-									className={styles["search_dropdown"]}
-									label={
-										selectedCategory === categories[INDEX_COURSES].value
-											? "Всі курси"
-											: "Всі компанії"
-									}
-									name="allCourses"
-									onChange={handleSelectedCoursesCategory}
-									options={coursesCategoriesOptions}
-									placeholder={
-										selectedCategory === categories[INDEX_COURSES].value
-											? "Всі курси"
-											: "Всі компанії"
-									}
-								/>
-							) : (
-								<Dropdown
-									className={styles["search_dropdown"]}
-									isTitleClickable={false}
-									label={
-										selectedCategory === categories[INDEX_COURSES].value
-											? "Всі курси"
-											: "Всі компанії"
-									}
-									name="allCompanies"
-									onChange={handleSelectedCompanyFromAll}
-									options={companiesOptions}
-									placeholder={
-										selectedCategory === categories[INDEX_COURSES].value
-											? "Всі курси"
-											: "Всі компанії"
-									}
-								/>
-							)}
+							<Dropdown
+								className={styles["search_dropdown"]}
+								isTitleClickable
+								label={
+									selectedCategory === categories[INDEX_COURSES].value
+										? "Всі курси"
+										: "Всі компанії"
+								}
+								name="allCompanies"
+								onChange={handleSelectedCoursesCategory}
+								options={coursesCategoriesOptions}
+								placeholder={
+									selectedCategory === categories[INDEX_COURSES].value
+										? "Всі курси"
+										: "Всі компанії"
+								}
+							/>
 						</div>
 					</div>
 					<div className={styles["search_button_wrapper"]}>

@@ -1,0 +1,28 @@
+.filter_items__container {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.clear_filters__button {
+  align-items: center;
+  color: var(--color-blue-icons);
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  padding: 0;
+  min-width: fit-content;
+
+  &:hover {
+    color: var(--color-light-blue-selected-items);
+  }
+}
+
+.clear_filters__button_text {
+  border-bottom: 1px solid var(--color-blue-icons);
+
+  &:hover {
+    border-bottom:  1px solid var(--color-light-blue-selected-items);
+  }
+}

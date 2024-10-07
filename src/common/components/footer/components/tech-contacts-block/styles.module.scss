@@ -31,11 +31,34 @@
   gap: 8px;
 }
 
+.footer_content__contact-icon {
+  color: var(--color-white);
+  height: 24px;
+  width: 24px;
+}
+
 .footer_content__contact-link {
+  border-bottom: 1px solid transparent;
   text-decoration: none; 
   color: inherit; 
+  transition: border-color 0.3s;
+  width: max-content;
   
   &:hover {
-    text-decoration: underline; 
+    border-color: var(--color-grey-50); 
+  }
+}
+
+@media (max-width: 768px) {
+
+  .footer_content__contacts {
+    font-size: var(--font-size-title-large);
+    font-weight: var(--font-weight-text);
+  }
+
+  .footer_content__contact-icon {
+    color: var(--color-white);
+    height: 18px;
+    width: 18px;
   }
 }

@@ -1,0 +1,10 @@
+.default_logo {
+	align-items: center;
+	background-color: var(--color-grey-500);
+	color: var(--color-white);
+	display: flex;
+	justify-content: center;
+	font-size: var(--font-size-title);
+	font-weight: var(--font-weight-bold);
+	text-transform: uppercase;
+}

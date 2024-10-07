@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { AppRoute } from "~/common/enums/index";
-import { Course } from "~/common/types/index";
+import { type GetCoursesResult } from "~/common/types/index";
 
 import {
 	CourseCard,
@@ -13,7 +13,7 @@ import {
 import styles from "./styles.module.scss";
 
 type TopCoursesSectionProperties = {
-	courses: Course[];
+	courses: GetCoursesResult[];
 	screenWidth: number;
 };
 
@@ -24,7 +24,7 @@ const TopCoursesSection: React.FC<TopCoursesSectionProperties> = ({
 	const navigate = useNavigate();
 
 	const handleSeeAllClick = useCallback(() => {
-		navigate(AppRoute.TOP_COURSES);
+		navigate(AppRoute.ALL_COURSES);
 	}, [navigate]);
 
 	return (
@@ -40,6 +40,7 @@ const TopCoursesSection: React.FC<TopCoursesSectionProperties> = ({
 						className={styles["item_card"]}
 						course={course}
 						key={course.id}
+						type="top-course"
 					/>
 				))}
 			</ItemsContentWrapperSection>

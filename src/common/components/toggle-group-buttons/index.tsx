@@ -8,9 +8,9 @@ import { ButtonVariant } from "~/common/enums";
 import styles from "./styles.module.scss";
 
 type Properties = {
-	activeButtonValue: DropdownKey;
-	handleButtonClick: (value: DropdownKey) => void;
-	toggleButtonGroupData: DropdownKey[];
+	activeButtonValue: string;
+	handleButtonClick: (value: string) => void;
+	toggleButtonGroupData: string[];
 };
 
 const ToggleGroupButtons: React.FC<Properties> = ({

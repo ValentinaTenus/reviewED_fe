@@ -13,9 +13,9 @@ type PaginationProps = {
 };
 
 const DOTS = "...";
-const VISIBLE_PAGES = 5;
-const INITIAL_THRESHOLD = 3;
-const END_THRESHOLD = 3;
+const VISIBLE_PAGES = 3;
+const INITIAL_THRESHOLD = 2;
+const END_THRESHOLD = 2;
 const DEFAULT_PAGE_NUMBER = 10;
 const FIRST_PAGE = 1;
 
@@ -31,7 +31,6 @@ const Pagination: React.FC<PaginationProps> = ({
 	const [currentButton, setCurrentButton] = useState<number | string>(
 		defaultCurrentPage,
 	);
-
 	const numberOfPages = Array.from({ length: pages }, (_, i) => i + FIRST_PAGE);
 
 	const getDisplayedPages = (

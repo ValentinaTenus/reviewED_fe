@@ -13,7 +13,6 @@
 .filtered_companies__view_by {
   align-self: flex-end;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   gap: 8px;
 }
@@ -57,5 +56,9 @@
 
   .filtered_companies__view_text {
     display: none;
+  }
+
+  .filtered_companies__sort_dropdown {
+    position: static;
   }
 }

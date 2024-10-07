@@ -18,6 +18,9 @@ import {
 	HomePage,
 	ModeratorsPage,
 	MyReviewsPage,
+	PrivacyPolicyPage,
+	UserRequests,
+	UserReviews,
 } from "./pages/index.ts";
 import { store } from "./redux/store.ts";
 
@@ -58,11 +61,23 @@ const routes = createBrowserRouter([
 			},
 			{
 				element: <CourseDetailsPage />,
-				path: AppRoute.COURSE_DETAILS_TEST,
+				path: AppRoute.COURSE_DETAILS,
 			},
 			{
 				element: <CourseList />,
 				path: AppRoute.ALL_COURSES,
+			},
+			{
+				element: <UserReviews />,
+				path: AppRoute.USER_REVIEWS,
+			},
+			{
+				element: <UserRequests />,
+				path: AppRoute.USER_REQUESTS,
+			},
+			{
+				element: <PrivacyPolicyPage />,
+				path: AppRoute.PRIVACY_POLICY,
 			},
 		],
 		element: <App />,

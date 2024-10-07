@@ -1,17 +1,16 @@
-import React, { forwardRef, useState } from "react";
+import React, { useState } from "react";
 
 import { Button, Icon } from "~/common/components";
 import { ButtonVariant, IconName } from "~/common/enums";
-import { Company, Course } from "~/common/types";
+import { Company, GetCoursesResult } from "~/common/types";
 
 import { CourseCard } from "./components/course-card/course-card";
 import styles from "./styles.module.scss";
 
-// eslint-disable-next-line react/display-name
-const Courses = forwardRef<
+const Courses = React.forwardRef<
 	HTMLDivElement,
-	{ company: Company; courses: Course[] }
->(({ company, courses }, ref) => {
+	{ company: Company; courses: GetCoursesResult[] }
+>(({ courses }, ref) => {
 	const [showAll, setShowAll] = useState(false);
 
 	const toggleShowAll = () => {
@@ -31,7 +30,7 @@ const Courses = forwardRef<
 			<div className={styles["courses_cards"]}>
 				{displayedCourses.map((course, index) => (
 					<div className={styles["course_card"]} key={index}>
-						<CourseCard company={company} course={course} />
+						<CourseCard course={course} />
 					</div>
 				))}
 			</div>
@@ -44,5 +43,7 @@ const Courses = forwardRef<
 		</div>
 	);
 });
+
+Courses.displayName = "Courses";
 
 export { Courses };
