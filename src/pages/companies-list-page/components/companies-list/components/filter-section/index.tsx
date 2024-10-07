@@ -6,7 +6,7 @@ import {
 	ScreenBreakpoints,
 } from "~/common/constants/index";
 import { AppRoute } from "~/common/enums/index";
-import { Category } from "~/common/types/index";
+import { Category, FilterType } from "~/common/types/index";
 
 import { CompaniesCategories, FilterSectionText } from "./components/index";
 import styles from "./styles.module.scss";
@@ -21,6 +21,8 @@ const BreadCrumbPaths = [
 	},
 ];
 
+const ZERO = 0;
+
 type FilterSectionProperties = {
 	categories: Category[];
 	onChangeSearchTerm: (searchTerm: string) => void;
@@ -30,6 +32,7 @@ type FilterSectionProperties = {
 	screenWidth: number;
 	searchTerm: string;
 	selectedCategoryIds: number[];
+	selectedSubcategory: FilterType[];
 };
 
 const FilterSection: React.FC<FilterSectionProperties> = ({
@@ -41,6 +44,7 @@ const FilterSection: React.FC<FilterSectionProperties> = ({
 	screenWidth,
 	searchTerm,
 	selectedCategoryIds,
+	selectedSubcategory,
 }) => {
 	return (
 		<div className={styles["companies_filter__container"]}>
@@ -74,6 +78,14 @@ const FilterSection: React.FC<FilterSectionProperties> = ({
 						onSelectCategory={onChooseCategory}
 						selectedCategoryIds={selectedCategoryIds}
 					/>
+					{selectedSubcategory.length > ZERO && (
+						<div className={styles["companies_filter__subcategory"]}>
+							<span className={styles["companies_filter__subcategory_title"]}>
+								Вибрана підкатегорія:
+							</span>{" "}
+							{selectedSubcategory[ZERO]?.name}
+						</div>
+					)}
 				</div>
 			</div>
 		</div>
