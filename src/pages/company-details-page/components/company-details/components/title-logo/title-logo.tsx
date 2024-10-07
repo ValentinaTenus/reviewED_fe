@@ -13,7 +13,7 @@ const TitleLogo: React.FC<{
 	if (company) {
 		const RATING_SCALE = 1.0;
 
-		const formattedRating = (company.avg_overall_rating / RATING_SCALE).toFixed(
+		const formattedRating = (company.avg_rating / RATING_SCALE).toFixed(
 			RATING_SCALE,
 		);
 

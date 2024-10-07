@@ -1,3 +1,4 @@
+export { AUTHOR_AVATAR_NONE } from "./author-avatar-none";
 export { CITIES } from "./cities";
 export {
 	CompaniesLinksDesktop,

@@ -1,3 +1,4 @@
+export { AuthorAvatar } from "./author-avatar/index";
 export { AvatarGroup } from "./avatar-group/index";
 export { BreadCrumb } from "./breadcrumb/index";
 export { Button } from "./button/index";

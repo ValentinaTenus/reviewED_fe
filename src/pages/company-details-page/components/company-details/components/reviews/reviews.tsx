@@ -1,6 +1,7 @@
-import { forwardRef, useState } from "react";
+import { forwardRef, useCallback, useMemo, useState } from "react";
 
-import { Pagination } from "~/common/components";
+import { Pagination, SortDropdown } from "~/common/components";
+import { ReviewsSortOptions } from "~/common/constants";
 import { Company, Review } from "~/common/types";
 import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
 
@@ -30,6 +31,25 @@ const Reviews = forwardRef<
 
 	const [pageCount] = useState(pages);
 
+	const [sortBy, setSortBy] = useState<string>("rating");
+
+	const handleChangeSortBy = useCallback((newSortBy: number | string) => {
+		setSortBy(newSortBy.toString());
+	}, []);
+
+	const sortedReviews = useMemo(() => {
+		if (!reviews) return [];
+
+		return reviews.slice().sort((a, b) => {
+			if (sortBy === "rating") {
+				return b.rating - a.rating;
+			} else if (sortBy === "-rating") {
+				return a.rating - b.rating;
+			}
+			return ZERO;
+		});
+	}, [reviews, sortBy]);
+
 	const reviewsCount =
 		reviews?.reduce(
 			(acc, review) => {
@@ -44,7 +64,19 @@ const Reviews = forwardRef<
 			<div className={styles["reviews_section"]}>
 				<div className={styles["reviews_container"]} ref={ref}>
 					<h2 className={styles["reviews_heading"]}>Відгуки</h2>
-					{reviews?.map((review, index) => (
+					<div className={styles["reviews_sort"]}>
+						<span
+							className={`${globalStyles["small-sb"]} ${styles["reviews_sort-span"]}`}
+						>
+							Сортувати за
+						</span>
+						<SortDropdown
+							aiEnd={false}
+							onChange={handleChangeSortBy}
+							options={ReviewsSortOptions}
+						/>
+					</div>
+					{sortedReviews.map((review, index) => (
 						<div className={styles["review"]} key={index}>
 							<ReviewCard review={review} />
 						</div>

@@ -1,5 +1,7 @@
 import React, { useRef } from "react";
 
+import { BreadCrumb } from "~/common/components";
+import { AppRoute } from "~/common/enums";
 import { useGetCompanyByIdQuery } from "~/redux/companies/companies-api";
 import { useGetCoursesByFilterQuery } from "~/redux/courses/courses-api";
 import { useGetReviewsByCompanyIdQuery } from "~/redux/reviews/reviews-companies-api";
@@ -35,9 +37,26 @@ const CompanyDetails: React.FC<{ companyId: string }> = ({ companyId }) => {
 
 	const { data: reviews } = useGetReviewsByCompanyIdQuery(companyId);
 
+	const BreadCrumbPaths = [
+		{
+			label: "Головна сторінка",
+			path: AppRoute.ROOT,
+		},
+		{
+			label: "Пошук",
+			path: AppRoute.ALL_COMPANIES,
+		},
+		{
+			label: `${company?.name}`,
+		},
+	];
+
 	if (company && coursesResponse?.results) {
 		return (
 			<div className={styles["company-details_container"]}>
+				<div className={styles["breadcrumb"]}>
+					<BreadCrumb items={BreadCrumbPaths} />
+				</div>
 				<TitleLogo company={company} />
 				<Menu
 					aboutRef={aboutRef}
