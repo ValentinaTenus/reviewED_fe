@@ -1,11 +1,20 @@
 import { Rating } from "@mui/material";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-import { Icon } from "~/common/components";
-import { IconName } from "~/common/enums";
+import { AuthorAvatar, Icon } from "~/common/components";
+import { AppRoute, IconName } from "~/common/enums";
 import { Review } from "~/common/types";
 import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
+import { useAppDispatch, useAppSelector } from "~/redux/hooks.type";
+import {
+	useLikeReviewMutation,
+	useUnlikeReviewMutation,
+} from "~/redux/reviews/reviews-companies-api";
+import {
+	likeCompanyReview,
+	unlikeCompanyReview,
+} from "~/redux/reviews/reviews-slice";
 
 import { ReportModal } from "./components/report-modal";
 import { ShareModal } from "./components/share-modal";
@@ -14,12 +23,20 @@ import styles from "./styles.module.scss";
 const ReviewCard: React.FC<{
 	review: Review;
 }> = ({ review }) => {
+	const dispatch = useAppDispatch();
+
+	const navigate = useNavigate();
+
 	const RATING_SCALE = 1.0;
+	const ONE = 1;
 
 	const [isReportModalOpen, setIsReportModalOpen] = useState(false);
 
+	const isUserInAccount = useAppSelector((state) => state.auth.user);
+
 	const handleOpenReportModal = () => {
-		setIsReportModalOpen(true);
+		if (isUserInAccount === null) navigate(AppRoute.AUTH);
+		else setIsReportModalOpen(true);
 	};
 
 	const handleCloseReportModal = () => {
@@ -36,10 +53,48 @@ const ReviewCard: React.FC<{
 		setIsShareModalOpen(false);
 	};
 
+	const [likesCount, setLikesCount] = useState(review.count_likes);
+	const [isLiked, setIsLiked] = useState(false);
+
+	const [likeReview] = useLikeReviewMutation();
+	const [unlikeReview] = useUnlikeReviewMutation();
+
+	const userLikedCompanyReviews = useAppSelector(
+		(state) => state.reviews.userLikedCompanyReviews,
+	);
+
+	useEffect(() => {
+		if (userLikedCompanyReviews) {
+			setIsLiked(userLikedCompanyReviews.includes(review.id));
+		}
+	}, [userLikedCompanyReviews, review.id]);
+
+	const handleLike = async () => {
+		if (isUserInAccount === null) navigate(AppRoute.AUTH);
+		else {
+			try {
+				await likeReview({ reviewId: review.id }).unwrap();
+				setLikesCount((prevCount) => prevCount + ONE);
+				setIsLiked(true);
+				dispatch(likeCompanyReview(review.id));
+			} catch {
+				await unlikeReview({ reviewId: review.id }).unwrap();
+				setLikesCount((prevCount) => prevCount - ONE);
+				setIsLiked(false);
+				dispatch(unlikeCompanyReview(review.id));
+			}
+		}
+	};
+
 	return (
 		<>
 			<div className={styles["review_top"]}>
 				<div className={styles["review_profile"]}>
+					<AuthorAvatar
+						className={styles["review_avatar"]}
+						name={review.author_name}
+						src={review.author_avatar}
+					/>
 					<div className={styles["review_profile-info"]}>
 						<div className={styles["review_profile-name-verified"]}>
 							<span className={globalStyles["large_sb"]}>
@@ -115,11 +170,16 @@ const ReviewCard: React.FC<{
 						<Icon className={styles["review_share"]} name={IconName.SHARE} />
 						<span className={globalStyles["small_r"]}>Share</span>
 					</Link>
-					<Link className={styles["review_icon-text"]} to="#">
-						<Icon className={styles["review_like"]} name={IconName.LIKE} />
-						<span className={globalStyles["small_r"]}>
-							{review.count_likes}
-						</span>
+					<Link
+						className={styles["review_icon-text"]}
+						onClick={handleLike}
+						to="#"
+					>
+						<Icon
+							className={`${styles["review_like"]} ${isLiked ? styles["liked"] : ""}`}
+							name={IconName.LIKE}
+						/>
+						<span className={globalStyles["small_r"]}>{likesCount}</span>
 					</Link>
 				</div>
 			</div>

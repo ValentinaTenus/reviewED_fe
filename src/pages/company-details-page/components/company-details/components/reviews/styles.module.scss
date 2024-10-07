@@ -14,6 +14,15 @@
 	font-size: var(--font-size-title);
 }
 
+.reviews_sort {
+	margin-bottom: 30px;
+}
+
+.reviews_sort-span {
+	display: inline-block;
+	margin-bottom: 10px;
+}
+
 .review:not(:last-child) {
 	position: relative;
 	margin-bottom: 60px;

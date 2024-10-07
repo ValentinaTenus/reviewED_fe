@@ -1,7 +1,11 @@
 const ReviewsSortOptions = [
 	{
 		label: "Найпопулярніші",
-		value: "avg_overall_rating",
+		value: "rating",
+	},
+	{
+		label: "Найменш популярні",
+		value: "-rating",
 	},
 ];
 

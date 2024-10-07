@@ -7,19 +7,13 @@
 
 .review_profile {
 	display: flex;
-	position: relative;
-	padding-left: 70px;
 	height: 60px;
 }
 
-.review_profile::before {
-	position: absolute;
-	content: "";
+.review_avatar {
 	width: 60px;
 	height: 60px;
-	border-radius: 50%;
-	background-color: var(--color-grey-480);
-	left: 0;
+	margin-right: 10px;
 }
 
 .review_profile-name-verified {
@@ -116,6 +110,17 @@
 
 .see-more {
 	display: none;
+}
+
+.liked {
+	color: var(--color-blue-icons);
+}
+
+.alert {
+	position: fixed;
+	left: 50%;
+	top: 5%;
+	transform: translateX(-50%);
 }
 
 /*-----------------------------*/
@@ -280,11 +285,7 @@
 		height: 50px;
 	}
 
-	.review_profile {
-		padding-left: 55px;
-	}
-
-	.review_profile::before {
+	.review_avatar {
 		width: 50px;
 		height: 50px;
 	}

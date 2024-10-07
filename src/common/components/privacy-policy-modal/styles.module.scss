@@ -1,0 +1,135 @@
+.privacy_policy {
+  background-color: rgba($color: #333, $alpha: 0.6);
+	font-family: var(--font-family-main);
+	display: flex;
+  align-items: center;
+	justify-content: center;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	top: 0;
+	z-index: 100;
+  width: 100%;
+
+  &__content {
+    background-color: var(--color-white);
+    box-shadow: 2px 2px 12px 0 var(--color-shadow-grey);
+    border-radius: 16px;
+    display: flex;
+    gap: 40px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 56px 28px 0 56px;
+    width: 780px;
+    z-index: 110;
+
+    &-info {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      height: 496px;
+      overflow: auto;
+      padding-right: 28px;
+
+      &-title{
+        text-align: center;
+        font-family: var(--font-family-main);
+        font-size: var(--font-size-title-h2);
+        font-weight: var(--font-weight-bold);
+        line-height: 24px;
+      }
+  
+      &-text {
+        font-family: var(--font-family-main);
+        font-size: var(--font-size-title-h5);
+        line-height: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+  
+        &-paragraph {
+          text-align: justify;
+        }
+  
+        &-list {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          list-style: decimal;
+          padding-left: 24px;
+          text-align: justify;
+        }
+      }
+    }
+
+    &-form {
+      padding: 0 24px;
+    }
+
+    &-error {
+      align-self: self-start;
+      color: var(--color-error-red);
+      padding-left: 24px;
+    }
+
+    &-buttons {
+      border-top: 1px solid var(--color-grey-200);
+      display: flex;
+      gap: 32px;
+      justify-content: space-between;
+      padding: 32px 0 56px 0;
+      width: 100%;
+
+      &-button {
+        padding: 12px 64px;
+        height: 48px;
+        font-size: var(--font-size-title-h5);
+        width: 100%;
+
+        &-reject {
+          background-color: var(--color-grey-200);
+
+          &:hover {
+            background-color: var(--color-grey-500);
+          }
+
+          &:disabled {
+            background-color: var(--color-grey-100);
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1280px) {
+  .privacy_policy {
+    &__content {
+      gap: 32px;
+      width: 678px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .privacy_policy {
+    &__content {
+      border-radius: 0;
+      gap: 32px;
+      height: calc(100% - 76.8px);
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+
+      &-info {
+        height: 100%;
+      }
+
+      &-buttons {
+        flex-direction: column;
+      }
+    }
+  }
+}

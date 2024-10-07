@@ -167,7 +167,6 @@
 .title {
 	position: relative;
 	display: flex;
-
 	gap: 8px;
 	padding-bottom: 28px;
 
@@ -196,6 +195,10 @@
 		font-size: var(--font-size-title-h4);
 		line-height: 130%;
 		color: var(--color-grey-950);
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		text-align: left;
 
 		@include tablet {
 			font-weight: var(--font-weight-extra-bold);
@@ -266,6 +269,7 @@
 		line-height: 140%;
 		color: var(--color-grey-950);
 		margin-bottom: 6px;
+		word-break: break-all;
 
 		&_button {
 			font-weight: var(--font-weight-bold);
@@ -322,6 +326,7 @@
 
 .rating_block > span:last-child {
 	line-height: 140%;
+	font-weight: var(--font-weight-bold);
 }
 
 .rating_block .stars_block {

@@ -1,0 +1,33 @@
+.reviews-bar {
+	display: grid;
+	gap: 24px;
+	grid-template-areas: "hdr hdr" "rvs sts" "rvs btn";
+	grid-template-rows: 71px 230px 1fr;
+}
+
+.reviews-bar__header {
+	color: var(--color-black);
+	font-family: var(--font-family-main);
+	font-weight: var(--font-weight-extra-bold);
+	font-size: var(--font-size-title);
+	grid-area: hdr;
+	line-height: 130%;
+}
+
+.reviews-bar__button {
+	grid-area: btn;
+	width: 536px;
+}
+
+@media (max-width: 768px) {
+	.reviews-bar__button {
+		width: 100%;
+	}
+
+	.reviews-bar {
+		display: grid;
+		gap: 16px;
+		grid-template-areas: "hdr" "sts" "btn" "rvs";
+		grid-template-rows: 71px 230px 1fr auto;
+	}
+}

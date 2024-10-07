@@ -6,6 +6,7 @@ type CompanyFilter = {
 	category_by_id?: FilterType[];
 	city?: string;
 	name?: string;
+	subcategory_by_id?: FilterType[];
 };
 
 type CompaniesState = {
@@ -19,6 +20,7 @@ const initialState: CompaniesState = {
 		category_by_id: [],
 		city: undefined,
 		name: "",
+		subcategory_by_id: [],
 	},
 };
 
@@ -26,12 +28,13 @@ const companiesSlice = createSlice({
 	initialState,
 	name: "companies",
 	reducers: {
-		clearFilters(state) {
+		clearFilters: (state) => {
 			state.filters = {
 				...state.filters,
 				category_by_id: [],
 				city: undefined,
 				name: "",
+				subcategory_by_id: [],
 			};
 		},
 		setCompanies: (state, action: PayloadAction<Company[]>) => {

@@ -21,7 +21,7 @@ const CompanyListCardDesktop: React.FC<Properties> = ({ company }) => {
 	return (
 		<Link
 			className={styles["company_list_card__container"]}
-			to={`${AppRoute.COMPANY_DETAILS}${company.id}`}
+			to={AppRoute.COMPANY_DETAILS.replace(":companyId", company.id.toString())}
 		>
 			<div className={styles["company_list_card__title"]}>
 				<Logo

@@ -1,10 +1,12 @@
-import { Rating } from "@mui/material";
-import React, { useState } from "react";
+import { Alert, Rating } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { Button, Icon } from "~/common/components";
-import { ButtonVariant, IconName } from "~/common/enums";
+import { AppRoute, ButtonVariant, IconName } from "~/common/enums";
 import { type GetCompanyByIdResponse } from "~/common/types";
 import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
+import { useAppSelector } from "~/redux/hooks.type";
 
 import { ReviewModal } from "./components/review-modal";
 import styles from "./styles.module.scss";
@@ -19,6 +21,14 @@ const Statistics: React.FC<{
 	const ONE = 1;
 	const ZERO = 0;
 	const HUNDRED = 100;
+	const THREE_SECONDS = 3000;
+
+	const navigate = useNavigate();
+
+	const formattedRating = (company.avg_rating / ONE).toFixed(ONE);
+	const formattedRatingOverall = (company.avg_overall_rating / ONE).toFixed(
+		ONE,
+	);
 
 	const [isVisible, setIsVisible] = useState(false);
 
@@ -29,12 +39,42 @@ const Statistics: React.FC<{
 	const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
 	const handleOpenReviewModal = () => {
-		setIsReviewModalOpen(true);
+		if (!isButtonInactive) setIsReviewModalOpen(true);
+		else if (isUserInAccount !== null) setIsReviewed(true);
+		else navigate(AppRoute.AUTH);
 	};
 
 	const handleCloseReviewModal = () => {
 		setIsReviewModalOpen(false);
 	};
+
+	const [isButtonInactive, setIsButtonInactive] = useState(false);
+
+	const userCompanyReviews = useAppSelector(
+		(state) => state.reviews.userCompanyReviews,
+	);
+
+	const isUserInAccount = useAppSelector((state) => state.auth.user);
+
+	useEffect(() => {
+		if (userCompanyReviews.includes(company.id) || isUserInAccount === null) {
+			setIsButtonInactive(true);
+		} else {
+			setIsButtonInactive(false);
+		}
+	}, [userCompanyReviews, isUserInAccount, company.id]);
+
+	const [isReviewed, setIsReviewed] = useState(false);
+
+	useEffect(() => {
+		if (isReviewed) {
+			const timer = setTimeout(() => {
+				setIsReviewed(false);
+			}, THREE_SECONDS);
+
+			return () => clearTimeout(timer);
+		}
+	}, [isReviewed]);
 
 	return (
 		<div className={styles["reviews_stats-container"]}>
@@ -51,7 +91,7 @@ const Statistics: React.FC<{
 						<span
 							className={`${globalStyles["stats_span"]} ${styles["span_before-rating"]}`}
 						>
-							{company.avg_rating}
+							{formattedRating}
 						</span>
 						<Rating
 							name="half-rating-read"
@@ -123,7 +163,7 @@ const Statistics: React.FC<{
 						<span
 							className={`${globalStyles["stats_span"]} ${styles["span_before-rating"]}`}
 						>
-							{company.avg_overall_rating}
+							{formattedRatingOverall}
 						</span>
 						<Rating
 							name="half-rating-read"
@@ -142,6 +182,11 @@ const Statistics: React.FC<{
 				isOpen={isReviewModalOpen}
 				onClose={handleCloseReviewModal}
 			/>
+			{isReviewed && (
+				<Alert className={styles["alert"]} severity="info" variant="filled">
+					You have already left a review for this company
+				</Alert>
+			)}
 		</div>
 	);
 };

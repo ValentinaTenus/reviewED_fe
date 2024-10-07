@@ -15,29 +15,43 @@ const FIRST_OPTION = 0;
 type Properties = {
 	aiEnd?: boolean;
 	className?: string;
+	isClean?: boolean;
 	isDisabled?: boolean;
 	isIconButton?: boolean;
+	isWithCleaner?: boolean;
 	menuStaticStyle?: boolean;
 	name?: string;
 	onChange: (value: DropdownOption["value"]) => void;
+	onSetIsClean?: (state: boolean) => void;
 	options: DropdownOption[];
+	title?: string;
 };
 
 const SortDropdown: React.FC<Properties> = ({
 	aiEnd = true,
 	className,
+	isClean,
 	isDisabled,
 	isIconButton = false,
+	isWithCleaner,
 	menuStaticStyle,
 	name,
 	onChange,
+	onSetIsClean,
 	options,
+	title,
 }) => {
 	const [selectedOption, setSelectedOption] = useState<
 		DropdownOption | undefined
 	>(undefined);
 	const [isOpen, setIsOpen] = useState(false);
 	const dropdownRef = useRef<HTMLDivElement>(null);
+
+	const definedTitle = selectedOption
+		? selectedOption.label
+		: title
+			? title
+			: options[FIRST_OPTION].label;
 
 	const handleOptionClick = (option: DropdownOption) => {
 		const { label, value } = option;
@@ -52,6 +66,11 @@ const SortDropdown: React.FC<Properties> = ({
 		}
 	}, [isDisabled, isOpen]);
 
+	const handleCleanOption = useCallback(() => {
+		setSelectedOption(undefined);
+		onChange("");
+	}, [setSelectedOption, onChange]);
+
 	useEffect(() => {
 		const handleClickOutside = (e: MouseEvent) => {
 			if (
@@ -65,6 +84,13 @@ const SortDropdown: React.FC<Properties> = ({
 		document.addEventListener("mousedown", handleClickOutside);
 		return () => document.removeEventListener("mousedown", handleClickOutside);
 	}, []);
+
+	useEffect(() => {
+		if (isClean && onSetIsClean) {
+			setSelectedOption(undefined);
+			onSetIsClean(false);
+		}
+	}, [isClean, onSetIsClean, setSelectedOption]);
 
 	return (
 		<div
@@ -93,19 +119,33 @@ const SortDropdown: React.FC<Properties> = ({
 					</IconButton>
 				)}
 				{!isIconButton && (
-					<div
-						className={clsx(styles["dropdown_trigger"], {
-							[styles["open"]]: isOpen,
-						})}
-						onClick={handleToggleDropdown}
-					>
-						{selectedOption
-							? selectedOption.label
-							: options[FIRST_OPTION].label}
-						{isOpen ? (
-							<ArrowUp className={styles["dropdown_icon"]} />
-						) : (
-							<ArrowDown className={styles["dropdown_icon"]} />
+					<div className={styles["dropdown_trigger_wrapp"]}>
+						<div
+							className={clsx(styles["dropdown_trigger"], {
+								[styles["open"]]: isOpen,
+								[styles["selected"]]: !isOpen && selectedOption && title,
+							})}
+							onClick={handleToggleDropdown}
+						>
+							{definedTitle}
+
+							{isOpen ? (
+								<ArrowUp className={styles["dropdown_icon"]} />
+							) : (
+								<ArrowDown className={styles["dropdown_icon"]} />
+							)}
+						</div>
+
+						{isWithCleaner && (
+							<IconButton
+								className={clsx(
+									styles["dropdown_cleaner-icon"],
+									!selectedOption && styles["dropdown_cleaner-icon_disabled"],
+								)}
+								onClick={handleCleanOption}
+							>
+								<Icon name={IconName.CLOSE_CIRCLE} />
+							</IconButton>
 						)}
 					</div>
 				)}
@@ -115,20 +155,24 @@ const SortDropdown: React.FC<Properties> = ({
 							styles["dropdown_menu"],
 							isIconButton && styles["icon_button__menu"],
 							menuStaticStyle && styles["dropdown_menu-static"],
+							isWithCleaner && styles["dropdown_menu_with-cleaner"],
 						)}
 					>
-						{options.map((option, index) => (
-							<div
-								className={clsx(
-									styles["dropdown_item"],
-									isIconButton && styles["icon_button__menu_item"],
-								)}
-								key={index}
-								onClick={() => handleOptionClick(option)}
-							>
-								{option.label}
-							</div>
-						))}
+						{options.map(
+							(option, index) =>
+								option.label !== definedTitle && (
+									<div
+										className={clsx(
+											styles["dropdown_item"],
+											isIconButton && styles["icon_button__menu_item"],
+										)}
+										key={index}
+										onClick={() => handleOptionClick(option)}
+									>
+										{option.label}
+									</div>
+								),
+						)}
 					</div>
 				)}
 			</div>

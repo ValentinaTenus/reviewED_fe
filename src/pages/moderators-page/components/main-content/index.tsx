@@ -29,8 +29,8 @@ const INDEX_ONE = 1;
 const MainModeratorsContent: React.FC = () => {
 	const [searchedID, setSearchedID] = useState<string>("");
 	const [filterByStatus, setFilterByStatus] =
-		useState<DropdownOption["value"]>();
-	const [sortByPeriod, setSortByPeriod] = useState<DropdownOption["value"]>();
+		useState<DropdownOption["value"]>("");
+	const [sortByPeriod, setSortByPeriod] = useState<DropdownOption["value"]>("");
 	const [filterByType, setFilterByType] =
 		useState<keyof typeof ButtonGroupData>("Компанії");
 	const [isOpenSerchFiltersModal, setIsOpenSerchFiltersModal] = useState(false);
@@ -48,15 +48,13 @@ const MainModeratorsContent: React.FC = () => {
 
 	const handleSetFilterByStatus = useCallback(
 		(sortOption: DropdownOption["value"]) => {
-			if (sortOption) setFilterByStatus(sortOption);
-			if (!sortOption) setFilterByStatus(undefined);
+			setFilterByStatus(sortOption);
 		},
 		[setFilterByStatus],
 	);
 	const handleSetSortByPeriod = useCallback(
 		(sortOption: DropdownOption["value"]) => {
-			if (sortOption) setSortByPeriod(sortOption);
-			if (!sortOption) setSortByPeriod(undefined);
+			setSortByPeriod(sortOption);
 		},
 		[setSortByPeriod],
 	);
@@ -86,8 +84,12 @@ const MainModeratorsContent: React.FC = () => {
 		} else {
 			const res = await getModeratorsReviewsByFilters({
 				id: searchedID,
-				ordering: sortByPeriod as GetModerationReviewsRequest["ordering"],
-				status: filterByStatus as GetModerationReviewsRequest["status"],
+				ordering: sortByPeriod
+					? (sortByPeriod as GetModerationReviewsRequest["ordering"])
+					: undefined,
+				status: filterByStatus
+					? (filterByStatus as GetModerationReviewsRequest["status"])
+					: undefined,
 				type: ButtonGroupData[filterByType],
 			});
 			setFetchResult(res.data);
@@ -145,6 +147,9 @@ const MainModeratorsContent: React.FC = () => {
 						filterByType={filterByType}
 						handleSetFilterByStatus={handleSetFilterByStatus}
 						handleSetSortByPeriod={handleSetSortByPeriod}
+						isActiveGroupCleaner={
+							Boolean(sortByPeriod) || Boolean(filterByStatus)
+						}
 						setFilterByType={setFilterByType}
 					/>
 				)}
