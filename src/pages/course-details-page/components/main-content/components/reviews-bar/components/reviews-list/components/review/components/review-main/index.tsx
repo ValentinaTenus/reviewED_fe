@@ -37,7 +37,7 @@ const ReviewMain: React.FC<ReviewMainProperties> = ({ text }) => {
 	};
 
 	defineTextHeight();
-	
+
 	return (
 		<div className={styles["review__main"]}>
 			<section className={styles["review__text"]} ref={textRef}>

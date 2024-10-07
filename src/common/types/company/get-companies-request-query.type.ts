@@ -5,6 +5,7 @@ type GetCompaniesRequestQuery = {
 	name?: string;
 	offset?: number;
 	sort?: string;
+	subcategory_by_id?: number[];
 };
 
 export { type GetCompaniesRequestQuery };
