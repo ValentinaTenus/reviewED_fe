@@ -1,9 +1,5 @@
 const moderationsReviewSortOptionsByPeriod = [
 	{
-		label: "Період",
-		value: "",
-	},
-	{
 		label: "Найновіші",
 		value: "-time_added",
 	},

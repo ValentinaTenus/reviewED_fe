@@ -9,7 +9,12 @@ import {
 import { HttpMethods, HttpStatusCode } from "~/common/enums/index";
 import { type GetTokensResponseDto } from "~/common/types/index";
 
-import { setIsRefreshing, setTokens, setUser } from "./auth/auth-slice";
+import {
+	removeTokens,
+	setIsRefreshing,
+	setTokens,
+	setUser,
+} from "./auth/auth-slice";
 import { authApiPath } from "./auth/constants";
 import { type RootState } from "./store";
 
@@ -61,6 +66,7 @@ const baseQueryWithReauth: BaseQueryFn<
 				} else {
 					api.dispatch(setIsRefreshing(false));
 					api.dispatch(setUser(null));
+					api.dispatch(removeTokens());
 				}
 			}
 		}

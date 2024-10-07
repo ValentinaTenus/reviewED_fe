@@ -4,7 +4,7 @@ enum AppRoute {
 	AUTH = "/auth",
 	AUTH_SUCCESS = "auth/success",
 	COMPANY_DETAILS = "/company-details/:companyId",
-	COURSE_DETAILS = "/course-details/",
+	COURSE_DETAILS = "/course-details/:id",
 	FAQ_PAGE = "/faq-page",
 	MODERATORS_PAGE = "/moderators-page",
 	PRIVACY_POLICY = "/privacy-policy",

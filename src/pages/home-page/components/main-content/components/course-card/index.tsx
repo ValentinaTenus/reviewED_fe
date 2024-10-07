@@ -23,7 +23,7 @@ const CourseCard: React.FC<CourseCardProperties> = ({
 		<Link
 			className={clsx(styles["item_card"], className)}
 			key={course.id}
-			to={`${AppRoute.COURSE_DETAILS}${course.id}`}
+			to={AppRoute.COURSE_DETAILS.replace(":id", course.id.toString())}
 		>
 			<div className={styles["item_loco_container"]}>
 				<Logo

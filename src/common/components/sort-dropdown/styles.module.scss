@@ -25,6 +25,10 @@
 .dropdown_container {
 	overflow: visible;
 	position: relative;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 16px;
 }
 
 .sort__button {
@@ -48,6 +52,7 @@
 }
 
 .dropdown_trigger {
+	flex-grow: 1;
 	align-items: center;
 	background-color: var(--color-white);
 	border: 1px solid var(--color-grey-300);
@@ -74,9 +79,21 @@
 	border-radius: 24px 24px 0 0;
 }
 
+.dropdown_trigger.selected {
+	background-color: var(--color-grey-200);
+}
+
 .dropdown_icon {
 	width: 24px;
 	height: 24px;
+}
+
+.dropdown_cleaner-icon {
+	width: 24px;
+}
+
+.dropdown_cleaner-icon_disabled {
+	color: var(--color-grey-200);
 }
 
 .dropdown_menu {
@@ -92,6 +109,11 @@
 	z-index: 10;
 	width: 100%;
 }
+
+.dropdown_menu_with-cleaner {
+	max-width: calc(100% - 40px);
+}
+
 .dropdown_menu-static {
 	position: static;
 }

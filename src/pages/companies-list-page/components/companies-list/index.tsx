@@ -10,7 +10,7 @@ import {
 	ViewStyle,
 } from "~/common/enums/index";
 import { useGetScreenWidth } from "~/common/hooks";
-import { Category } from "~/common/types/index";
+import { Category, FilterType } from "~/common/types/index";
 import { NotFound } from "~/pages/home-page/components/main-content/components/search-block/components";
 import { useGetCategoriesQuery } from "~/redux/categories/categories-api";
 import { useGetCompaniesByFilterQuery } from "~/redux/companies/companies-api";
@@ -36,13 +36,20 @@ const CompaniesContent: React.FC = () => {
 	const { filters } = useAppSelector((state) => state.companies);
 	const { user } = useAppSelector((state) => state.auth);
 
+	const categoriesFilter =
+		filters?.category_by_id && filters?.category_by_id?.length > ZERO_LENGTH
+			? filters?.category_by_id.map((c) => +c.id)
+			: null;
+
 	const [searchTerm, setSearchTerm] = useState(filters?.name || "");
 	const [pageCount, setPageCount] = useState(DEFAULT_PAGE_COUNT);
 	const [sortBy, setSortBy] = useState<string>("");
-	const [selectedCategoryIds, setSelectedCategoryIds] = useState<number[]>([
-		ALL_CATEGORIES_ID,
-	]);
-
+	const [selectedCategoryIds, setSelectedCategoryIds] = useState<number[]>(
+		categoriesFilter ?? [ALL_CATEGORIES_ID],
+	);
+	const [selectedSubCategoryIds, setSelectedSubCategoryIds] = useState<
+		FilterType[]
+	>(filters?.subcategory_by_id ?? []);
 	const [currentPage, setCurrentPage] = useState(DEFAULT_CURRENT_PAGE);
 	const [companiesPerPage, setCompaniesPerPage] = useState(
 		DEFAULT_COMPANIES_PER_PAGE,
@@ -69,6 +76,7 @@ const CompaniesContent: React.FC = () => {
 			name: searchTerm,
 			offset: (currentPage - INDEX_ONE) * companiesPerPage,
 			sort: sortBy,
+			subcategory_by_id: selectedSubCategoryIds.map((sc) => +sc.id),
 		},
 		{
 			refetchOnMountOrArgChange: true,
@@ -119,6 +127,8 @@ const CompaniesContent: React.FC = () => {
 
 	const handleChooseCategory = useCallback(
 		(chosenCategoryId: number) => {
+			setSelectedSubCategoryIds([]);
+
 			if (chosenCategoryId === ALL_CATEGORIES_ID) {
 				setSelectedCategoryIds([ALL_CATEGORIES_ID]);
 			} else if (selectedCategoryIds.includes(ALL_CATEGORIES_ID)) {
@@ -188,6 +198,7 @@ const CompaniesContent: React.FC = () => {
 					screenWidth={screenWidth}
 					searchTerm={searchTerm}
 					selectedCategoryIds={selectedCategoryIds}
+					selectedSubcategory={selectedSubCategoryIds ?? []}
 				/>
 			)}
 			{isCompaniesLoading && (
