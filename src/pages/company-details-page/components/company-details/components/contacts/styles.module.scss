@@ -27,6 +27,11 @@
 	align-items: center;
 }
 
+.contact_item_text {
+	font-size: var(--font-size-title-h5);
+	font-weight: var(--font-weight-bold);
+}
+
 .contacts_buttons {
 	display: flex;
 	gap: 8px;
@@ -69,6 +74,10 @@
 @media (max-width: 768px) {
 	.contacts_buttons {
 		flex-direction: column;
-		gap: 5px;
+		gap: 8px;
+	}
+
+	.contacts_heading {
+		font-size: var(--font-size-title-h4);
 	}
 }

@@ -40,6 +40,15 @@ const TitleLogo: React.FC<{
 						</div>
 					</div>
 				</div>
+				<div className={styles["rating_mobile"]}>
+					<Rating
+						name="half-rating-read"
+						precision={0.5}
+						readOnly
+						value={company?.avg_rating}
+					/>
+					<span>({formattedRating})</span>
+				</div>
 			</>
 		);
 	}

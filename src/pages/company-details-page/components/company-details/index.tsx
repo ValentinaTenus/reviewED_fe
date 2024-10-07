@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import { BreadCrumb } from "~/common/components";
-import { AppRoute } from "~/common/enums/index";
+import { BreadCrumb, Spinner } from "~/common/components";
+import { AppRoute, SpinnerVariant } from "~/common/enums/index";
 import { useGetCompanyByIdQuery } from "~/redux/companies/companies-api";
 import { useGetCoursesByFilterQuery } from "~/redux/courses/courses-api";
 import { useGetReviewsByCompanyIdQuery } from "~/redux/reviews/reviews-companies-api";
@@ -38,7 +38,7 @@ type Properties = {
 
 const CompanyDetails: React.FC<Properties> = ({ companyId }) => {
 	const [breadcrumbs, setBreadcrumbs] = useState<BreadCrumbType[]>([]);
-	const { data: company } = useGetCompanyByIdQuery(companyId);
+	const { data: company, isFetching } = useGetCompanyByIdQuery(companyId);
 
 	const filters = {
 		category_by_id: [""],
@@ -67,6 +67,14 @@ const CompanyDetails: React.FC<Properties> = ({ companyId }) => {
 	const reviewsRef = useRef(null);
 
 	const { data: reviews } = useGetReviewsByCompanyIdQuery(companyId);
+
+	if (isFetching) {
+		return (
+			<div className={styles["company-details_spinner"]}>
+				<Spinner variant={SpinnerVariant.MEDIUM} />
+			</div>
+		);
+	}
 
 	if (company && coursesResponse?.results) {
 		return (

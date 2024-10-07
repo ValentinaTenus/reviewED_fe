@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 
-import { Button, Icon } from "~/common/components";
+import { Button, CourseCard, Icon } from "~/common/components";
 import { ButtonVariant, IconName } from "~/common/enums";
 import { type GetCompanyByIdResponse, GetCoursesResult } from "~/common/types";
 
-import { CourseCard } from "./components/course-card/course-card";
 import styles from "./styles.module.scss";
 
 const Courses = React.forwardRef<
@@ -35,7 +34,7 @@ const Courses = React.forwardRef<
 			<div className={styles["courses_cards"]}>
 				{displayedCourses.map((course, index) => (
 					<div className={styles["course_card"]} key={index}>
-						<CourseCard course={course} />
+						<CourseCard course={course} isLogoShown={false} />
 					</div>
 				))}
 			</div>

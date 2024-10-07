@@ -27,10 +27,42 @@
 	line-height: 1.3;
 }
 
+.rating_mobile {
+	display: none;
+}
+
 /*-----------------------------*/
 
 @media (max-width: 1280px) {
 	.title-logo_container {
 		gap: 16px;
+	}
+}
+
+@media (max-width: 768px) {
+	.title-logo_container {
+		gap: 8px;
+
+		.logo_image {
+			height: 52px;
+			width: 104px;
+		}
+	}
+
+	.title {
+		font-size: var(--font-size-title-h4);
+		font-weight: var(--font-weight-bold);
+		line-height: 1.3;
+	}
+
+	.title-rating_container {
+		display: flex;
+		justify-content: center;
+	}
+
+	.rating_mobile {
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 }

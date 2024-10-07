@@ -39,3 +39,19 @@
 		font-size: var(--font-size-title-mobile-h2);
 	}
 }
+
+@media (max-width: 1280px) {
+	.courses {
+		gap: 12px;
+	}
+}
+
+@media (max-width: 1280px) {
+	.courses {
+		gap: 20px;
+	}
+
+	.courses_heading {
+		font-size: var(--font-size-title-h4);
+	}
+}

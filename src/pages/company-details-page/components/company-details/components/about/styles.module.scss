@@ -11,6 +11,7 @@
 .about_text {
 	max-width: 907px;
 	font-weight: var(--font-weight-semi-bold);
+	text-align: justify;
 }
 
 /*-----------------------------*/
@@ -79,5 +80,11 @@
 
 	.subcategories_list {
 		gap: 8px;
+	}
+}
+
+@media (max-width: 768px) {
+	.about_heading {
+		font-size:  var(--font-size-title-h4);
 	}
 }

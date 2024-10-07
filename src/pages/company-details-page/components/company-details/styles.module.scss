@@ -4,6 +4,14 @@
 	gap: 40px;
 }
 
+.company_details_spinner {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	width: 100%;
+}
+
 .company-details_container {
 	padding: 0 94px;
 }
@@ -114,18 +122,23 @@ h4 {
 	.company-details_container {
 		padding: 0 20px;
 	}
+
+	.company-details_title {
+		gap: 16px;
+	}
 }
 
 @media (max-width: 768px) {
-	// .company-details{
-	// 	padding: 30px 50px 0px;
-	// }
 
 	h2 {
 		font-size: var(--font-size-title-h4);
 	}
 
 	._verified-span {
+		display: none;
+	}
+
+	.rating {
 		display: none;
 	}
 }

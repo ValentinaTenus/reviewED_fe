@@ -32,21 +32,27 @@ const Contacts = React.forwardRef<
 								className={styles["contacts_location"]}
 								name={IconName.LOCATION}
 							/>
-							<span className={globalStyles["p-sb"]}>
-								{company.city} Online
+							<span className={styles["contact_item_text"]}>
+								{company.city}
 							</span>
 						</li>
 						<li className={styles["contacts_item"]}>
 							<Icon className={styles["contacts_bank"]} name={IconName.BANK} />
-							<span className={globalStyles["p-sb"]}>{company.name}</span>
+							<span className={styles["contact_item_text"]}>
+								{company.name}
+							</span>
 						</li>
-						<li className={styles["contacts_item"]}>
-							<Icon
-								className={styles["contacts_global"]}
-								name={IconName.GLOBAL}
-							/>
-							<span className={globalStyles["p-sb"]}>{company.website}</span>
-						</li>
+						{company.website !== "None" && (
+							<li className={styles["contacts_item"]}>
+								<Icon
+									className={styles["contacts_global"]}
+									name={IconName.GLOBAL}
+								/>
+								<span className={styles["contact_item_text"]}>
+									{company.website}
+								</span>
+							</li>
+						)}
 						<li
 							className={`${styles["contacts_item"]} ${!isContactsShow && styles["hidden"]}`}
 						>
