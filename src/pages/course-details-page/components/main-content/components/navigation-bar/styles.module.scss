@@ -1,7 +1,13 @@
 .navbar__wrapper {
-	padding-bottom: 50px;
+	background-color: var(--color-grey-50);
+	height: 73px;
 	overflow-x: auto;
+	padding-bottom: 50px;
+	position: sticky;
+	top: 0px;
 	white-space: nowrap;
+	width: 100%;
+	z-index: 1;
 }
 
 .navbar {
@@ -33,3 +39,12 @@
 	position: absolute;
 	width: 100%;
 }
+
+
+@media (max-width: 480px)  {
+	.navbar__wrapper {
+
+		height: 54px;
+
+	}
+  }

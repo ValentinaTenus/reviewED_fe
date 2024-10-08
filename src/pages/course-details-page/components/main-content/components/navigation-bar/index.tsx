@@ -5,6 +5,7 @@ import styles from "./styles.module.scss";
 type NavBarProperties = {
 	aboutCompany: React.RefObject<HTMLDivElement>;
 	aboutCourse: React.RefObject<HTMLDivElement>;
+	reviews: React.RefObject<HTMLDivElement>;
 };
 
 const scrollToSection = (sectionRef: React.RefObject<HTMLDivElement>) => {
@@ -13,7 +14,11 @@ const scrollToSection = (sectionRef: React.RefObject<HTMLDivElement>) => {
 	}
 };
 
-const NavBar: React.FC<NavBarProperties> = ({ aboutCompany, aboutCourse }) => {
+const NavBar: React.FC<NavBarProperties> = ({
+	aboutCompany,
+	aboutCourse,
+	reviews,
+}) => {
 	const [active, setActive] = useState("Про курс");
 
 	const handleNavigationClick = (
@@ -42,6 +47,14 @@ const NavBar: React.FC<NavBarProperties> = ({ aboutCompany, aboutCourse }) => {
 					}}
 				>
 					Про компанію
+				</li>
+				<li
+					className={`${styles["navbar__item"]} ${active === "Відгуки" ? styles["item_active"] : ""}`}
+					onClick={() => {
+						handleNavigationClick("Відгуки", reviews);
+					}}
+				>
+					Відгуки
 				</li>
 			</ul>
 		</nav>

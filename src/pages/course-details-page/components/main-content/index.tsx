@@ -31,6 +31,7 @@ const MainContent: React.FC<MainContentProperties> = ({ courseId }) => {
 
 	const aboutCourseRef = useRef(null);
 	const aboutCompanyRef = useRef(null);
+	const reviewsRef = useRef(null);
 
 	return (
 		<div className={styles["main-content__wrapper"]}>
@@ -38,7 +39,11 @@ const MainContent: React.FC<MainContentProperties> = ({ courseId }) => {
 			{course && (
 				<div className={styles["main-content"]}>
 					<PageTitle course={course} />
-					<NavBar aboutCompany={aboutCompanyRef} aboutCourse={aboutCourseRef} />
+					<NavBar
+						aboutCompany={aboutCompanyRef}
+						aboutCourse={aboutCourseRef}
+						reviews={reviewsRef}
+					/>
 					<Header ref={aboutCourseRef} title="Про курс" />
 					<PricingBar price={course ? course.price : ""} />
 					<TargetGroupSection targetGroup={course ? course.age : ""} />
@@ -49,7 +54,7 @@ const MainContent: React.FC<MainContentProperties> = ({ courseId }) => {
 						ref={aboutCompanyRef}
 						title="Про компанію"
 					/>
-					<ReviewsBar />
+					<ReviewsBar ref={reviewsRef} />
 				</div>
 			)}
 		</div>

@@ -1,4 +1,4 @@
-import React from "react";
+import { forwardRef } from "react";
 
 import Image from "~/assets/images/no-reviews.png";
 import { Button } from "~/common/components";
@@ -18,14 +18,16 @@ const mockStats = {
 	"two": 100,
 };
 
-const mockList = [];
+const mockList = ["Just mock thing to not have it empty"];
 
-const ReviewsBar: React.FC = () => {
+const ReviewsBar = forwardRef<HTMLDivElement>((_: unknown, ref) => {
 	const { data: stats } = useGetReviewsStatsQuery(MOCK_COURSE_ID);
 
 	return (
 		<div className={styles["reviews-bar"]}>
-			<h3 className={styles["reviews-bar__header"]}>Відгуки</h3>
+			<h3 className={styles["reviews-bar__header"]} ref={ref}>
+				Відгуки
+			</h3>
 			{mockList.length ? (
 				<ReviewsList />
 			) : (
@@ -49,6 +51,8 @@ const ReviewsBar: React.FC = () => {
 			</Button>
 		</div>
 	);
-};
+});
+
+ReviewsBar.displayName = "ReviewsBar";
 
 export { ReviewsBar };

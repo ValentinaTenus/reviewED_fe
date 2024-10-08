@@ -1,5 +1,6 @@
 .main-content__wrapper {
     padding: 40px 80px;
+    position: relative;
   }
   
   .main-content {
@@ -10,6 +11,7 @@
     gap: 32px;
     margin: 40px auto 0;
     padding: 0;
+    position: relative;
   }
   
   @media (max-width: 768px)  {
