@@ -26,10 +26,10 @@ const ReviewModal: React.FC<{
 
 	const dispatch = useAppDispatch();
 
-	const ZERO = 0;
+	const ONE = 1;
 	const MIN_TEXT = 200;
 
-	const [rating, setRating] = useState<null | number>(ZERO);
+	const [rating, setRating] = useState<null | number>(ONE);
 	const [reviewText, setReviewText] = useState("");
 
 	const [sendReview] = useSendReviewMutation();
@@ -43,14 +43,14 @@ const ReviewModal: React.FC<{
 
 	const handleRatingChange = useCallback(
 		(_: React.SyntheticEvent, newValue: null | number) => {
-			setRating(newValue);
+			setRating(newValue ?? ONE);
 		},
 		[],
 	);
 
 	const handleCloseReviewModal = useCallback(() => {
 		onClose();
-		setRating(ZERO);
+		setRating(ONE);
 		setReviewText("");
 	}, [onClose, setRating, setReviewText]);
 
@@ -89,7 +89,7 @@ const ReviewModal: React.FC<{
 						<Rating
 							name="simple-controlled"
 							onChange={handleRatingChange}
-							precision={0.5}
+							precision={1}
 							value={rating}
 						/>
 					</div>
