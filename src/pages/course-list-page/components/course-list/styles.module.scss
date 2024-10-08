@@ -30,10 +30,16 @@
 	gap: 32px;
 }
 
-.courses_list {
+.courses_results {
 	display: flex;
 	flex-direction: column;
-	padding-left: 86px;
+	gap: 40px;
+}
+
+.courses_list {
+	display: flex;
+	justify-content: start;
+	flex-direction: column;
 	gap: 24px;
 }
 

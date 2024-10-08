@@ -3,6 +3,10 @@
 	font-size: var(--font-size-title-h5);
 }
 
+.checkbox_container {
+	display: flex;
+}
+
 .checkbox__input {
 	align-self: center;
 	border-radius: 6px;
