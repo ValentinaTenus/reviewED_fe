@@ -31,7 +31,7 @@ const ExpandableDescription: React.FC<ExpandableDescriptionProps> = ({
 					className={styles["expandable-description__toggle"]}
 					onClick={toggleDescription}
 				>
-					{isExpanded ? " Show Less" : " More Details"}
+					{isExpanded ? " Сховати" : " Показати більше"}
 				</span>
 			</p>
 		</div>

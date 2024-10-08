@@ -108,7 +108,7 @@ const ReviewCard: React.FC<{
 									name={IconName.SHIELD_TICK}
 								/>
 								<span className={globalStyles["_verified-span"]}>
-									Verified Via LinkedIn
+									Верифіковано через LinkedIn
 								</span>
 							</div>
 						</div>

@@ -1,4 +1,5 @@
 import { HttpMethods } from "~/common/enums/index.ts";
+import { GetCompanyByIdResponse } from "~/common/types/company/get-company-by-id-response-dto.type.ts";
 import {
 	type Company,
 	type GetCompaniesRequestQuery,
@@ -50,7 +51,7 @@ export const companiesApi = api.injectEndpoints({
 				return endpointName;
 			},
 		}),
-		getCompanyById: builder.query<Company, string | undefined>({
+		getCompanyById: builder.query<GetCompanyByIdResponse, string | undefined>({
 			query: (id) => ({
 				method: HttpMethods.GET,
 				url: `${companiesApiPath.ROOT}/${id}`,
