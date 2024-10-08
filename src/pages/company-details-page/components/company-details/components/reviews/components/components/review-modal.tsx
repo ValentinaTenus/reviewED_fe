@@ -3,17 +3,14 @@ import React, { useCallback, useState } from "react";
 
 import { Button } from "~/common/components/index";
 import { Modal } from "~/common/components/modal";
-import {
-	AppRoute,
-	ButtonSize,
-	ButtonVariant,
-	HttpStatusCode,
-} from "~/common/enums/index";
+import { PrivacyPolicyModal } from "~/common/components/privacy-policy-modal";
+import { ButtonSize, ButtonVariant } from "~/common/enums/index";
 import { Company } from "~/common/types";
 import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
 import { useAppDispatch } from "~/redux/hooks.type";
 import { useSendReviewMutation } from "~/redux/reviews/reviews-companies-api";
 import { addCompanyReview } from "~/redux/reviews/reviews-slice";
+import { useGetUserQuery } from "~/redux/user/user-api";
 
 import styles from "./styles.module.scss";
 
@@ -22,6 +19,11 @@ const ReviewModal: React.FC<{
 	isOpen: boolean;
 	onClose: () => void;
 }> = ({ company, isOpen, onClose }) => {
+	const { data: user } = useGetUserQuery(undefined);
+
+	const [isPrivacyPolicyModalOpen, setIsPrivacyPolicyModalOpen] =
+		useState(false);
+
 	const dispatch = useAppDispatch();
 
 	const ZERO = 0;
@@ -53,18 +55,13 @@ const ReviewModal: React.FC<{
 	}, [onClose, setRating, setReviewText]);
 
 	const handleSubmit = useCallback(async () => {
-		const response = await sendReview({
+		await sendReview({
 			companyId: company.id,
 			rating: rating,
 			text: reviewText,
 		});
-		if (response.error) {
-			if (
-				"status" in response.error &&
-				response.error.status !== HttpStatusCode.FORBIDDEN
-			) {
-				window.location.href = AppRoute.PRIVACY_POLICY;
-			}
+		if (user?.policy_agreed === false) {
+			setIsPrivacyPolicyModalOpen(true);
 		} else {
 			dispatch(addCompanyReview(company.id));
 		}
@@ -76,6 +73,7 @@ const ReviewModal: React.FC<{
 		reviewText,
 		sendReview,
 		handleCloseReviewModal,
+		user?.policy_agreed,
 	]);
 
 	return (
@@ -123,6 +121,10 @@ const ReviewModal: React.FC<{
 					</Button>
 				</div>
 			</Modal>
+			<PrivacyPolicyModal
+				isOpen={isPrivacyPolicyModalOpen}
+				onClose={() => setIsPrivacyPolicyModalOpen(false)}
+			/>
 		</>
 	);
 };

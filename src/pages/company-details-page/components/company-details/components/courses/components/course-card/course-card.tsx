@@ -97,7 +97,7 @@ const CourseCard: React.FC<{
 					</div>
 				</div>
 				<Link
-					to={`${AppRoute.COURSE_DETAILS.replace(":id", course.id.toString())}${course.id}`}
+					to={`${AppRoute.COURSE_DETAILS.replace(":id", course.id.toString())}`}
 				>
 					<Button variant={ButtonVariant.PRIMARY}>Read reviews</Button>
 				</Link>
