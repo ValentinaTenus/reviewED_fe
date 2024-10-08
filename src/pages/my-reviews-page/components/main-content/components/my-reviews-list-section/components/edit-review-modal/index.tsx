@@ -1,34 +1,30 @@
 import React, { useCallback, useState } from "react";
 
-import { Button, Icon, Input, StarRating } from "~/common/components";
-import {
-	ButtonSize,
-	ButtonType,
-	ButtonVariant,
-	IconName,
-} from "~/common/enums";
-import { useAppForm } from "~/common/hooks";
+import { Button, Input, Logo, StarRating } from "~/common/components";
+import { ButtonSize, ButtonType, ButtonVariant } from "~/common/enums";
+import { useAppForm, useTransformDate } from "~/common/hooks";
 import { MyReview } from "~/common/types/my-reviews";
 
-import { DialogModal } from "../dialog-modal";
+import { DialogModal, IconsSection } from "../";
 import styles from "./styles.module.scss";
 
 interface Properties {
-	isOpen: boolean;
-	isEditing: boolean;
-	review: MyReview;
-	handleEditReview: (data: { text: string; rating: number }) => void;
 	handleCloseEditReview: () => void;
+	handleEditReview: (data: { rating: number; text: string }) => void;
+	isEditing: boolean;
+	isOpen: boolean;
+	review: MyReview;
 }
 
 const EditReviewModal: React.FC<Properties> = ({
-	isOpen,
-	isEditing,
-	review,
-	handleEditReview,
 	handleCloseEditReview,
+	handleEditReview,
+	isEditing,
+	isOpen,
+	review,
 }) => {
-	const [rating, setRating] = useState<number | null>(null);
+	const [rating, setRating] = useState<null | number>(null);
+	const { formattedDate } = useTransformDate(review.time_added);
 	const { control, errors, handleSubmit } = useAppForm({
 		defaultValues: {
 			text: review?.text || "",
@@ -37,14 +33,17 @@ const EditReviewModal: React.FC<Properties> = ({
 
 	const handleClose = useCallback(() => {
 		handleCloseEditReview();
-	}, []);
+	}, [handleCloseEditReview]);
 
 	const onEditReview = useCallback(
 		({ text }: { text: string }) => {
 			if (!text) return;
-			handleEditReview({ text, rating: rating || review.rating });
+
+			const finalRating = rating !== null ? Math.ceil(rating) : review.rating;
+
+			handleEditReview({ rating: finalRating, text });
 		},
-		[rating],
+		[rating, handleEditReview, review.rating],
 	);
 
 	const handleStarClick = useCallback((rating: number) => {
@@ -52,25 +51,29 @@ const EditReviewModal: React.FC<Properties> = ({
 	}, []);
 
 	return (
-		<DialogModal isOpen={isOpen} onClose={handleClose} classNames="edit-modal">
+		<DialogModal classNames="edit-modal" isOpen={isOpen} onClose={handleClose}>
 			<div className={styles["review-content"]}>
 				<div className={styles["review-content__info"]}>
 					<div className={styles["info__left"]}>
 						<div className={styles["info__img-wrapper"]}>
-							<img alt="" className={styles["img"]} src={review.logo} />
+							<Logo
+								className={styles["item__img"]}
+								logo={review.logo}
+								name={review.related_entity_name}
+							/>
 						</div>
 						<div className={styles["info__name"]}>
 							{review.related_entity_name}
 						</div>
 					</div>
 					<div className={styles["info__right"]}>
-						<div className={styles["date"]}>{review.time_added}</div>
+						<div className={styles["date"]}>{formattedDate}</div>
 						<StarRating
 							averageRating={rating || review.rating}
-							isNumberShown={false}
-							isEditRating
 							classNameStarsBlock={styles["rating_stars--edit"]}
 							handleClick={handleStarClick}
+							isEditRating
+							isNumberShown={false}
 						/>
 					</div>
 				</div>
@@ -78,14 +81,7 @@ const EditReviewModal: React.FC<Properties> = ({
 				<div className={styles["review-content__body"]}>
 					<div className={styles["review-content__text"]}>{review.text}</div>
 					<div className={styles["review-content__icons"]}>
-						<div className={styles["icon-share"]}>
-							<Icon name={IconName.SHARE} />
-							<span>Share</span>
-						</div>
-						<div className={styles["icon-like"]}>
-							<Icon name={IconName.LIKE} />
-							<span>{review.count_likes} likes</span>
-						</div>
+						<IconsSection likesCount={review.likes_count} />
 					</div>
 				</div>
 

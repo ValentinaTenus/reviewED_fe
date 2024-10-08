@@ -1,38 +1,42 @@
-import React from "react";
-import styles from "./styles.module.scss";
 import clsx from "clsx";
+import React, { useCallback } from "react";
 
 import { Icon } from "~/common/components";
 import { MyReviewOptions } from "~/common/types/my-reviews";
-import { DialogModal } from "../../../dialog-modal";
+
+import { DialogModal } from "../";
+import styles from "./styles.module.scss";
 
 type Properties = {
 	isOpen: boolean;
-	options: MyReviewOptions[];
 	onSelect: (option: string) => void;
+	options: MyReviewOptions[];
 	setIsOpenActionsModal: (value: boolean) => void;
 };
 
 const ActionsReviewModal: React.FC<Properties> = ({
 	isOpen,
-	options,
 	onSelect,
+	options,
 	setIsOpenActionsModal,
 }) => {
-	const handleClose = () => {	
+	const handleClose = useCallback(() => {
 		setIsOpenActionsModal(false);
-	};
+	}, [setIsOpenActionsModal]);
 
-	const handleSelect = (option: string) => {
-		onSelect(option);
-		setIsOpenActionsModal(false);
-	};
+	const handleSelect = useCallback(
+		(option: string) => {
+			onSelect(option);
+			setIsOpenActionsModal(false);
+		},
+		[onSelect, setIsOpenActionsModal],
+	);
 
 	return (
 		<DialogModal
+			classNames="actions-modal"
 			isOpen={isOpen}
 			onClose={handleClose}
-			classNames="actions-modal"
 		>
 			<div className={styles["actions-modal"]}>
 				<div className={styles["actions-modal__title"]}>Actions</div>

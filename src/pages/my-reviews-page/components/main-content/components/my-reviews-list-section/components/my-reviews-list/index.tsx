@@ -1,27 +1,28 @@
-import React, { useState } from "react";
-import styles from "./styles.module.scss";
+import React, { useCallback, useState } from "react";
 
 import { MyReview, MyReviewCategory } from "~/common/types/my-reviews";
-import { ReviewListItem } from "../reviews-list-item";
+
+import { ReviewListItem } from "../";
+import styles from "./styles.module.scss";
 
 interface Properties {
 	category: MyReviewCategory;
+	handleClickDeleteReview: (entityId: null | number) => void;
+	handleClickEditReview: (entityId: null | number) => void;
 	reviews: MyReview[];
-	handleClickDeleteReview: (entityId: number | null) => void;
-	handleClickEditReview: (entityId: number | null) => void;
 }
 
 const MyReviewsList: React.FC<Properties> = ({
 	category,
-	reviews,
 	handleClickDeleteReview,
 	handleClickEditReview,
+	reviews,
 }) => {
 	const [activePopup, setActivePopup] = useState<null | number>(null);
 
-	const handleTogglePopup = (item: null | number) => {
+	const handleTogglePopup = useCallback((item: null | number) => {
 		setActivePopup((prev) => (prev === item ? null : item));
-	};
+	}, []);
 
 	return (
 		<ul className={styles["my-reviews-list__list"]}>

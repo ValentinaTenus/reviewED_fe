@@ -1,25 +1,26 @@
 import clsx from "clsx";
-import type React from "react";
 import { useEffect } from "react";
+import type React from "react";
 
-import styles from "./styles.module.scss";
 import { Icon } from "~/common/components";
 import { IconName } from "~/common/enums";
 
+import styles from "./styles.module.scss";
+
 type Properties = {
 	children?: React.ReactNode;
+	classNames?: keyof typeof styles;
 	isOpen: boolean;
 	onClose: () => void;
 	withIconClose?: boolean;
-	classNames?: keyof typeof styles;
 };
 
 const DialogModal: React.FC<Properties> = ({
 	children,
+	classNames,
 	isOpen,
 	onClose,
 	withIconClose = false,
-	classNames,
 }) => {
 	// Prevent background scrolling when the modal is open
 	useEffect(() => {

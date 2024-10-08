@@ -24,24 +24,24 @@ type RatingProperties = {
 	averageRating: number;
 	className?: string;
 	classNameStarsBlock?: string;
+	handleClick?: (rating: number) => void;
+	isEditRating?: boolean;
 	isNumberShown?: boolean;
 	isOneStar?: boolean;
 	size?: RatingSize;
 	variant?: StarRatingVariant;
-	isEditRating?: boolean
-	handleClick?: (rating: number) => void
 };
 
 const StarRating: React.FC<RatingProperties> = ({
 	averageRating,
 	className,
 	classNameStarsBlock,
+	handleClick,
+	isEditRating,
 	isNumberShown = true,
 	isOneStar,
 	size = RatingSize.SMALL,
 	variant = StarRatingVariant.DEFAULT,
-	isEditRating,
-	handleClick
 }) => {
 	const totalStars = TOTAL_STARTS;
 
@@ -59,13 +59,24 @@ const StarRating: React.FC<RatingProperties> = ({
 					<StarIcon />
 				</span>
 			)}
-			<div className={clsx(styles["rating_stars"], isEditRating && styles['rating_stars--edit'], classNameStarsBlock,)}>
+			<div
+				className={clsx(
+					styles["rating_stars"],
+					isEditRating && styles["rating_stars--edit"],
+					classNameStarsBlock,
+				)}
+			>
 				{!isOneStar &&
 					[...Array(totalStars)].map((_, index) => {
 						const ratingValue = index + INCREMENT_RATING_NUMBER;
 
 						return (
-							<div key={index} onClick={handleClick ? () => handleClick(ratingValue) : undefined}>
+							<div
+								key={index}
+								onClick={
+									handleClick ? () => handleClick(ratingValue) : undefined
+								}
+							>
 								{averageRating >= ratingValue ? (
 									<StarIcon className={styles["star"]} key={index} />
 								) : (

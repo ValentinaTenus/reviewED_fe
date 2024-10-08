@@ -1,32 +1,31 @@
 import React, { useCallback } from "react";
-import styles from "./styles.module.scss";
 
 import { Button, Icon } from "~/common/components";
 import { ButtonSize, ButtonVariant, IconName } from "~/common/enums";
-import { DialogModal } from "../dialog-modal";
 
-interface Properties {
-	isOpen: boolean;
-	isDeleting: boolean;
-	handleDeleteReview: () => void;
+import { DialogModal } from "../";
+import styles from "./styles.module.scss";
+
+type Properties = {
 	handleCloseDeleteReview: () => void;
-}
+	handleDeleteReview: () => void;
+	isDeleting: boolean;
+	isOpen: boolean;
+};
 
 const DeleteReviewModal: React.FC<Properties> = ({
-	isOpen,
-	isDeleting,
-	handleDeleteReview,
 	handleCloseDeleteReview,
+	handleDeleteReview,
+	isDeleting,
+	isOpen,
 }) => {
-	if (!isOpen) return null;
-
 	const handleClose = useCallback(() => {
 		handleCloseDeleteReview();
-	}, []);
+	}, [handleCloseDeleteReview]);
 
 	const handleClickDelete = useCallback(() => {
 		handleDeleteReview();
-	}, []);
+	}, [handleDeleteReview]);
 
 	return (
 		<DialogModal

@@ -1,17 +1,23 @@
-import React, { useCallback, useEffect, useState } from "react";
 import clsx from "clsx";
-import styles from "./styles.module.scss";
+import React, { useCallback, useState } from "react";
+import { Link } from "react-router-dom";
 
-import { Icon } from "~/common/components/index";
-import { StarRating } from "~/common/components/star-rating";
+import { Icon, Logo, StarRating } from "~/common/components/index";
 import { IconName } from "~/common/enums/index";
+import { useTransformDate } from "~/common/hooks";
 import {
 	MyReview,
 	MyReviewCategory,
 	MyReviewOptions,
 } from "~/common/types/my-reviews";
-import { PopupMenu } from "../popup-menu";
-import { ActionsReviewModal } from "../actions-review-modal";
+
+import {
+	ActionsReviewModal,
+	IconsSection,
+	PopupMenu,
+	ReviewTextSection,
+} from "../";
+import styles from "./styles.module.scss";
 
 const MY_REVIEW_OPTIONS: MyReviewOptions[] = [
 	{ iconName: IconName.EDIT, value: "edit" },
@@ -19,22 +25,13 @@ const MY_REVIEW_OPTIONS: MyReviewOptions[] = [
 	{ iconName: IconName.DELETE, value: "delete" },
 ];
 
-// Constants for breakpoints and max preview lengths
-const MAX_PREVIEW_LENGTH_DESKTOP = 200;
-const MAX_PREVIEW_LENGTH_MOBILE = 150;
-const MAX_PREVIEW_LENGTH_TABLET = 230;
-const MAX_PREVIEW_LENGTH_LARGE_SCREEN = 350;
-const MAX_PREVIEW_LENGTH_EXTRA_LARGE = 190;
 const MOBILE_BREAKPOINT = 576;
-const TABLET_BREAKPOINT = 630;
-const LARGE_SCREEN_BREAKPOINT = 888;
-const ZERO_NUMBER = 0;
 
 interface Properties {
 	activePopup: null | number;
 	category: MyReviewCategory;
-	handleClickDeleteReview: (entityId: number | null) => void;
-	handleClickEditReview: (entityId: number | null) => void;
+	handleClickDeleteReview: (entityId: null | number) => void;
+	handleClickEditReview: (entityId: null | number) => void;
 	handleTogglePopup: (item: null | number) => void;
 	review: MyReview;
 }
@@ -48,10 +45,7 @@ const ReviewListItem: React.FC<Properties> = ({
 	review,
 }) => {
 	const [isOpenActionsModal, setIsOpenActionsModal] = useState<boolean>(false);
-	const [showFullText, setShowFullText] = useState(false);
-	const [maxPreviewLength, setMaxPreviewLength] = useState(
-		MAX_PREVIEW_LENGTH_DESKTOP,
-	);
+	const { formattedDate } = useTransformDate(review.time_added);
 
 	const togglePopup = useCallback(() => {
 		// If the popup is already active for this review - close it
@@ -60,19 +54,27 @@ const ReviewListItem: React.FC<Properties> = ({
 		} else {
 			handleTogglePopup(review.id);
 		}
-	}, [activePopup, review.id]);
+	}, [activePopup, review.id, handleTogglePopup]);
 
-	const handleSelect = useCallback((option: string) => {
-		if (option === "edit") {
-			handleClickEditReview(review.id);
-		}
+	const handleSelect = useCallback(
+		(option: string) => {
+			if (option === "edit") {
+				handleClickEditReview(review.id);
+			}
 
-		if (option === "delete") {
-			handleClickDeleteReview(review.id);
-		}
+			if (option === "delete") {
+				handleClickDeleteReview(review.id);
+			}
 
-		handleTogglePopup(null);
-	}, []);
+			handleTogglePopup(null);
+		},
+		[
+			handleTogglePopup,
+			handleClickDeleteReview,
+			handleClickEditReview,
+			review.id,
+		],
+	);
 
 	const handleClickMoreOptions = useCallback(() => {
 		const width = window.innerWidth;
@@ -86,36 +88,7 @@ const ReviewListItem: React.FC<Properties> = ({
 
 		handleTogglePopup(null);
 		setIsOpenActionsModal(true);
-	}, [review.id]);
-
-	const toggleText = useCallback(
-		() => setShowFullText(!showFullText),
-		[showFullText],
-	);
-
-	const handleResize = useCallback(() => {
-		const width = window.innerWidth;
-
-		if (width <= MOBILE_BREAKPOINT) {
-			setMaxPreviewLength(MAX_PREVIEW_LENGTH_MOBILE);
-		} else if (width <= TABLET_BREAKPOINT) {
-			setMaxPreviewLength(MAX_PREVIEW_LENGTH_TABLET);
-		} else if (width <= LARGE_SCREEN_BREAKPOINT) {
-			setMaxPreviewLength(MAX_PREVIEW_LENGTH_LARGE_SCREEN);
-		} else {
-			setMaxPreviewLength(MAX_PREVIEW_LENGTH_EXTRA_LARGE);
-		}
-	}, []);
-
-	useEffect(() => {
-		handleResize();
-
-		window.addEventListener("resize", handleResize);
-
-		return () => {
-			window.removeEventListener("resize", handleResize);
-		};
-	}, [handleResize]);
+	}, [review.id, handleTogglePopup]);
 
 	return (
 		<li className={styles["list__item"]}>
@@ -146,7 +119,11 @@ const ReviewListItem: React.FC<Properties> = ({
 								category === "course" && styles["course"],
 							)}
 						>
-							<img alt="" className={styles["item__img"]} src={review.logo} />
+							<Logo
+								className={styles["item__img"]}
+								logo={review.logo}
+								name={review.related_entity_name}
+							/>
 						</div>
 						<div className={styles["item__info-content"]}>
 							<h3 className={styles["item__info-name"]}>
@@ -192,7 +169,8 @@ const ReviewListItem: React.FC<Properties> = ({
 								category === "course" && styles["course"],
 							)}
 						>
-							<span>By</span> <a href="/">{review.author_full_name}</a>
+							<span>By</span>{" "}
+							<Link to={`/company-details/${review.id}`}>Company name</Link>
 						</div>
 
 						<div className={styles["status"]}>
@@ -217,52 +195,14 @@ const ReviewListItem: React.FC<Properties> = ({
 							<span>Review ID:</span>
 							{review.id}
 						</div>
-						<div className={styles["date"]}>{review.time_added}</div>
+						<div className={styles["date"]}>{formattedDate}</div>
 					</div>
-					<div className={styles["review__body"]}>
-						{showFullText ? (
-							<>
-								{review.text}
-								<p className={styles["body__close"]} onClick={toggleText}>
-									Close
-								</p>
-								<div
-									className={clsx(
-										styles["icons"],
-										styles["review__body-icons"],
-									)}
-								>
-									<div
-										className={styles["icons-left"]}
-										onClick={() => handleClickEditReview(review.id)}
-									>
-										<Icon name={IconName.EDIT} /> <span>Edit</span>
-									</div>
-									<div className={styles["icons-right"]}>
-										<Icon name={IconName.SHARE} /> <span>Share</span>
-										<Icon className="like-icon" name={IconName.LIKE} />{" "}
-										<span>21</span>
-									</div>
-								</div>
-							</>
-						) : (
-							<>
-								{review.text.length > maxPreviewLength ? (
-									<>
-										{review.text.slice(ZERO_NUMBER, maxPreviewLength)}
-										<span
-											className={styles["body__more-details"]}
-											onClick={toggleText}
-										>
-											... More details
-										</span>
-									</>
-								) : (
-									review.text
-								)}
-							</>
-						)}
-					</div>
+					<ReviewTextSection
+						handleClickEditReview={handleClickEditReview}
+						id={review.id}
+						likesCount={review.likes_count}
+						text={review.text}
+					/>
 				</div>
 			</div>
 
@@ -296,25 +236,21 @@ const ReviewListItem: React.FC<Properties> = ({
 					</div>
 				</div>
 
-				<div className={clsx(styles["icons"], styles["icons-bottom"])}>
-					<div
-						className={styles["icons-left"]}
-						onClick={() => handleClickEditReview(review.id)}
-					>
-						<Icon name={IconName.EDIT} /> <span>Edit</span>
-					</div>
-					<div className={styles["icons-right"]}>
-						<Icon name={IconName.SHARE} /> <span>Share</span>
-						<Icon className="like-icon" name={IconName.LIKE} /> <span>21</span>
-					</div>
+				<div className={styles["icons-bottom"]}>
+					<IconsSection
+						handleClickEdit={handleClickEditReview}
+						likesCount={review.likes_count}
+						reviewId={review.id}
+						withEditIcon
+					/>
 				</div>
 			</div>
 
 			{isOpenActionsModal && (
 				<ActionsReviewModal
-					options={MY_REVIEW_OPTIONS}
-					onSelect={handleSelect}
 					isOpen={isOpenActionsModal}
+					onSelect={handleSelect}
+					options={MY_REVIEW_OPTIONS}
 					setIsOpenActionsModal={setIsOpenActionsModal}
 				/>
 			)}
