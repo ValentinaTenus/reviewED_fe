@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "~/assets/styles/index.scss";
 
 import { App } from "./app/App.tsx";
+import { ModeratorRoute, PrivateRoute } from "./common/components/index.ts";
 import { AppRoute } from "./common/enums/app-route.enum.ts";
 import { AuthSuccess } from "./pages/auth/auth-success.tsx";
 import { CourseList } from "./pages/course-list-page/index.tsx";
@@ -43,10 +44,6 @@ const routes = createBrowserRouter([
 				path: AppRoute.ALL_COMPANIES,
 			},
 			{
-				element: <ModeratorsPage />,
-				path: AppRoute.MODERATORS_PAGE,
-			},
-			{
 				element: <FaqPage />,
 				path: AppRoute.FAQ_PAGE,
 			},
@@ -63,16 +60,32 @@ const routes = createBrowserRouter([
 				path: AppRoute.ALL_COURSES,
 			},
 			{
-				element: <UserReviews />,
-				path: AppRoute.USER_REVIEWS,
-			},
-			{
-				element: <UserRequests />,
-				path: AppRoute.USER_REQUESTS,
-			},
-			{
 				element: <PrivacyPolicyPage />,
 				path: AppRoute.PRIVACY_POLICY,
+			},
+			{
+				children: [
+					{
+						element: <UserReviews />,
+						path: AppRoute.USER_REVIEWS,
+					},
+					{
+						element: <UserRequests />,
+						path: AppRoute.USER_REQUESTS,
+					},
+				],
+				element: <PrivateRoute />,
+				path: AppRoute.ROOT,
+			},
+			{
+				children: [
+					{
+						element: <ModeratorsPage />,
+						path: AppRoute.MODERATORS_PAGE,
+					},
+				],
+				element: <ModeratorRoute />,
+				path: AppRoute.ROOT,
 			},
 		],
 		element: <App />,
