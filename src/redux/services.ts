@@ -46,28 +46,26 @@ const baseQueryWithReauth: BaseQueryFn<
 			result.error.status === HttpStatusCode.UNAUTHORIZED &&
 			refresh
 		) {
-			if (!(api.getState() as RootState).auth.isRefreshing) {
-				api.dispatch(setIsRefreshing(true));
-				const refreshResult = await baseQuery(
-					{
-						body: { refresh },
-						method: HttpMethods.POST,
-						url: authApiPath.REFRESH_TOKEN,
-					},
-					api,
-					extraOptions,
-				);
+			api.dispatch(setIsRefreshing(true));
+			const refreshResult = await baseQuery(
+				{
+					body: { refresh },
+					method: HttpMethods.POST,
+					url: authApiPath.REFRESH_TOKEN,
+				},
+				api,
+				extraOptions,
+			);
 
-				if (refreshResult.data) {
-					const data = refreshResult.data as GetTokensResponseDto;
-					api.dispatch(setTokens(data));
-					api.dispatch(setIsRefreshing(false));
-					result = await baseQuery(args, api, extraOptions);
-				} else {
-					api.dispatch(setIsRefreshing(false));
-					api.dispatch(setUser(null));
-					api.dispatch(removeTokens());
-				}
+			if (refreshResult.data) {
+				const data = refreshResult.data as GetTokensResponseDto;
+				api.dispatch(setTokens(data));
+				api.dispatch(setIsRefreshing(false));
+				result = await baseQuery(args, api, extraOptions);
+			} else {
+				api.dispatch(setIsRefreshing(false));
+				api.dispatch(setUser(null));
+				api.dispatch(removeTokens());
 			}
 		}
 
