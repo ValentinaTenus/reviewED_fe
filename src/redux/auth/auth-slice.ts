@@ -1,7 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { type GetTokensResponseDto } from "~/common/types/index";
-import { UserWithStaff } from "~/common/types/user";
+import {
+	type GetTokensResponseDto,
+	type UserWithStaff,
+} from "~/common/types/index";
 
 type AuthState = {
 	access: null | string;

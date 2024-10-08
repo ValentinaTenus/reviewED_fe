@@ -1,6 +1,7 @@
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import clsx from "clsx";
 import React, { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import {
 	BreadCrumb,
@@ -8,8 +9,14 @@ import {
 	Checkbox,
 	Footer,
 	Header,
+	Icon,
 } from "~/common/components/index";
-import { AppRoute, ButtonVariant } from "~/common/enums/index";
+import {
+	AppRoute,
+	ButtonSize,
+	ButtonVariant,
+	IconName,
+} from "~/common/enums/index";
 import { useAppSelector } from "~/redux/hooks.type";
 import { useAgreePolicyMutation } from "~/redux/user/user-api";
 
@@ -26,6 +33,8 @@ const BreadCrumbPaths = [
 ];
 
 const PrivacyPolicyPage: React.FC = () => {
+	const navigate = useNavigate();
+
 	const [isPolicyAgreed, setIsPolicyAgreed] = useState(false);
 	const [serverError, setServerError] = useState("");
 	const [agreePolicy, { error, isSuccess }] = useAgreePolicyMutation();
@@ -58,6 +67,10 @@ const PrivacyPolicyPage: React.FC = () => {
 	const handleRejectPrivacyPolicy = useCallback(() => {
 		setIsPolicyAgreed(false);
 	}, []);
+
+	const handleRedirectToMainPage = useCallback(() => {
+		navigate(AppRoute.ROOT);
+	}, [navigate]);
 
 	return (
 		<div className={styles["privacy_policy_page"]}>
@@ -126,7 +139,7 @@ const PrivacyPolicyPage: React.FC = () => {
 								</li>
 							</ol>
 						</div>
-						{user && (
+						{user && !user.policy_agreed && !isSuccess && (
 							<div className={styles["privacy_policy__content-form"]}>
 								<Checkbox
 									label="З політикою конфіденційності Сайту ознайомлений(а)"
@@ -141,7 +154,23 @@ const PrivacyPolicyPage: React.FC = () => {
 							{serverError}
 						</p>
 					)}
-					{user && (
+					{user && user.policy_agreed && (
+						<Button
+							appendedIcon={
+								<Icon
+									className={styles["privacy_policy__content-button-icon"]}
+									name={IconName.ARROW_RIGHT}
+								/>
+							}
+							className={styles["privacy_policy__content-button"]}
+							onClick={handleRedirectToMainPage}
+							size={ButtonSize.MEDIUM}
+							variant={ButtonVariant.PRIMARY}
+						>
+							Перейти на головну сторінку
+						</Button>
+					)}
+					{user && !user.policy_agreed && !isSuccess && (
 						<div className={styles["privacy_policy__content-buttons"]}>
 							<Button
 								className={clsx(
