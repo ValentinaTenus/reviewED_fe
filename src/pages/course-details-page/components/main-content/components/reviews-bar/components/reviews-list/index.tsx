@@ -7,6 +7,8 @@ const ReviewsList: React.FC = () => {
 	return (
 		<div className={styles["reviews-list"]}>
 			<Review />
+			<Review />
+			<Review />
 		</div>
 	);
 };

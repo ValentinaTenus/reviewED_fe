@@ -13,7 +13,9 @@ const CourseDetailsPage: React.FC = () => {
 		return (
 			<div className={styles["course_details_page"]}>
 				<Header />
-				<MainContent courseId={id} />
+				<div className={styles["course_details_page-main"]}>
+					<MainContent courseId={id} />
+				</div>
 				<Footer />
 			</div>
 		);

@@ -10,50 +10,47 @@ type RatingBarProperties = {
 };
 
 const MIN_LINE_WIDTH = 4;
-const MAX_LINE_WIDTH = 188;
 const PERCENT_NUMBER = 100;
+const WIDTH_RATIO_MAX_LINE_TO_CONTAINER = 0.6943;
 
 const RatingBar: React.FC<RatingBarProperties> = ({ stats }) => {
-	const calculatePixelsUnit = (): number => {
+	const calculateWidthPercent = (rating: number): string => {
+		if (!rating) return `${MIN_LINE_WIDTH}px`;
+
 		const ratingsArray: number[] = Object.values(stats);
-		if (ratingsArray.every((item) => item <= PERCENT_NUMBER))
-			return (MAX_LINE_WIDTH - MIN_LINE_WIDTH) / PERCENT_NUMBER;
 
-		const maxRatings = Math.max(...ratingsArray);
-		return (maxRatings - MIN_LINE_WIDTH) / PERCENT_NUMBER;
-	};
-
-	const pixelsUnit = calculatePixelsUnit();
-
-	const defineWidth = (ratingValue: number): number => {
-		if (ratingValue) return MIN_LINE_WIDTH;
-		return pixelsUnit * ratingValue + MIN_LINE_WIDTH;
+		if (ratingsArray.every((item) => item <= PERCENT_NUMBER)) {
+			return `calc(${rating * WIDTH_RATIO_MAX_LINE_TO_CONTAINER}% + ${MIN_LINE_WIDTH}px)`;
+		} else {
+			const maxRating = Math.max(...ratingsArray);
+			return `calc(${(rating / maxRating) * PERCENT_NUMBER * WIDTH_RATIO_MAX_LINE_TO_CONTAINER}% + ${MIN_LINE_WIDTH}px)`;
+		}
 	};
 
 	return (
 		<div className={styles["rating-bar"]}>
 			<RatingLine
-				lineWidth={defineWidth(stats.five)}
+				lineWidth={calculateWidthPercent(stats.five)}
 				rate="5"
 				ratingNumber={stats.five}
 			/>
 			<RatingLine
-				lineWidth={defineWidth(stats.four)}
+				lineWidth={calculateWidthPercent(stats.four)}
 				rate="4"
 				ratingNumber={stats.four}
 			/>
 			<RatingLine
-				lineWidth={defineWidth(stats.three)}
+				lineWidth={calculateWidthPercent(stats.three)}
 				rate="3"
 				ratingNumber={stats.three}
 			/>
 			<RatingLine
-				lineWidth={defineWidth(stats.two)}
+				lineWidth={calculateWidthPercent(stats.two)}
 				rate="2"
 				ratingNumber={stats.two}
 			/>
 			<RatingLine
-				lineWidth={defineWidth(stats.one)}
+				lineWidth={calculateWidthPercent(stats.one)}
 				rate="1"
 				ratingNumber={stats.one}
 			/>
