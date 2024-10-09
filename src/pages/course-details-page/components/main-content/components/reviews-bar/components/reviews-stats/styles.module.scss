@@ -4,7 +4,6 @@
 	display: flex;
 	gap: 20px;
 	grid-area: sts;
-	height: 230px;
 	width: 536px;
 	padding: 20px;
 }
@@ -16,6 +15,11 @@
 	width: 100%;
 }
 
+.stats-container__button {
+	line-height: 150%;
+	padding: 10px 0;
+}
+
 @media (max-width: 768px) {
 	.reviews-stats {
 		width: 100%;
@@ -25,5 +29,6 @@
 @media (max-width: 480px) {
 	.reviews-stats {
 		flex-direction: column;
+		height: auto;
 	}
 }

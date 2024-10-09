@@ -4,6 +4,7 @@ import { CourseCard, Pagination, Spinner } from "~/common/components/index";
 import { CoursesFilterType, SpinnerVariant } from "~/common/enums/index";
 import { useGetScreenWidth } from "~/common/hooks";
 import { FilterType } from "~/common/types";
+import { NotFound } from "~/pages/home-page/components/main-content/components/search-block/components";
 import { useLazyGetCoursesByFilterQuery } from "~/redux/courses/courses-api";
 import { clearFilters } from "~/redux/courses/courses-slice";
 import { useAppDispatch, useAppSelector } from "~/redux/hooks.type";
@@ -45,7 +46,7 @@ const CourseContent: React.FC = () => {
 		filters?.city || [],
 	);
 
-	const [getCourses, { data: coursesResponse, isLoading }] =
+	const [getCourses, { data: coursesResponse, isFetching }] =
 		useLazyGetCoursesByFilterQuery();
 
 	const handleSelectSubCategory = useCallback(
@@ -111,6 +112,16 @@ const CourseContent: React.FC = () => {
 	);
 
 	const handleChangeSearchTerm = useCallback(
+		(newSearchTerm: string) => {
+			if (newSearchTerm.trim() === "") {
+				setSearchTerm(newSearchTerm);
+				handleApplyFiltersAndSearch(newSearchTerm);
+			}
+		},
+		[handleApplyFiltersAndSearch],
+	);
+
+	const handleSubmitSearchTerm = useCallback(
 		(newSearchTerm: string) => {
 			setSearchTerm(newSearchTerm);
 			handleApplyFiltersAndSearch(newSearchTerm);
@@ -185,6 +196,7 @@ const CourseContent: React.FC = () => {
 					onChooseLocation={handleSelectLocation}
 					onChooseSubCategory={handleSelectSubCategory}
 					onClearFilters={handleClearFilters}
+					onSubmitSearchTerm={handleSubmitSearchTerm}
 					searchTerm={searchTerm}
 					selectedLocations={selectedLocations}
 					selectedSubCategories={selectedSubCategories}
@@ -206,28 +218,31 @@ const CourseContent: React.FC = () => {
 						resultTerm={searchTerm}
 					/>
 				</div>
-				{isLoading && (
+				{isFetching && (
 					<div className={styles["spinner"]}>
 						<Spinner variant={SpinnerVariant.MEDIUM} />
 					</div>
 				)}
 			</div>
-			<div className={styles["courses_list"]}>
-				{coursesResponse && coursesResponse.results.length > ZERO_LENGTH ? (
-					coursesResponse.results.map((course) => (
-						<CourseCard course={course} key={course.id} />
-					))
-				) : (
-					<p>No courses available</p>
+			{coursesResponse &&
+				coursesResponse.results.length > ZERO_LENGTH &&
+				!isFetching && (
+					<div className={styles["courses_results"]}>
+						<div className={styles["courses_list"]}>
+							{coursesResponse.results.map((course) => (
+								<CourseCard course={course} key={course.id} />
+							))}
+						</div>
+						<Pagination
+							defaultCurrentPage={currentPage}
+							pages={pageCount}
+							setCurrentPage={setCurrentPage}
+						/>
+					</div>
 				)}
-			</div>
-			{coursesResponse && coursesResponse.results.length > ZERO_LENGTH && (
-				<Pagination
-					defaultCurrentPage={currentPage}
-					pages={pageCount}
-					setCurrentPage={setCurrentPage}
-				/>
-			)}
+			{coursesResponse &&
+				coursesResponse.results.length === ZERO_LENGTH &&
+				!isFetching && <NotFound />}
 		</>
 	);
 };

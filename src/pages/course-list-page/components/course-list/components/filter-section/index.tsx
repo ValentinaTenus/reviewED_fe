@@ -11,7 +11,7 @@ import styles from "./styles.module.scss";
 
 const BreadCrumbPaths = [
 	{ label: "Головна сторінка", path: AppRoute.ROOT },
-	{ label: "Курси", path: AppRoute.ALL_COURSES },
+	{ label: "Курси" },
 ];
 
 const DEFAULT_FILTER_LENGTH = 0;
@@ -22,6 +22,7 @@ type FilterSectionProperties = {
 	onChooseLocation: (locations: FilterType[]) => void;
 	onChooseSubCategory: (subcategories: FilterType[]) => void;
 	onClearFilters: () => void;
+	onSubmitSearchTerm: (searchTerm: string) => void;
 	searchTerm: string;
 	selectedLocations: FilterType[];
 	selectedSubCategories: FilterType[];
@@ -33,6 +34,7 @@ const FilterSection: React.FC<FilterSectionProperties> = ({
 	onChooseLocation,
 	onChooseSubCategory,
 	onClearFilters,
+	onSubmitSearchTerm,
 	searchTerm,
 	selectedLocations,
 	selectedSubCategories,
@@ -62,8 +64,9 @@ const FilterSection: React.FC<FilterSectionProperties> = ({
 			<SearchBar
 				filtersLength={filterLenght}
 				isFilterButton
+				onChangeSearchTerm={onChangeSearchTerm}
 				onOpenFilter={handleOpenFilter}
-				onSubmit={onChangeSearchTerm}
+				onSubmit={onSubmitSearchTerm}
 				placeholder={
 					screenWidth > ScreenBreakpoints.MOBILE
 						? "Знайди свій ідеальний курс"

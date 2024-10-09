@@ -13,7 +13,9 @@ const CompanyDetailsPage: React.FC = () => {
 		return (
 			<div className={styles["company-details_page"]}>
 				<Header />
-				<CompanyDetails companyId={companyId} />
+				<div className={styles["company-details_page-main"]}>
+					<CompanyDetails companyId={companyId} />
+				</div>
 				<Footer />
 			</div>
 		);

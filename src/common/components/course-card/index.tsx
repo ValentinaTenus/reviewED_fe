@@ -19,9 +19,10 @@ import styles from "./styles.module.scss";
 type CourseCardProps = {
 	className?: string;
 	course: GetCoursesResult;
+	isLogoShown?: boolean;
 };
 
-const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
+const CourseCard: React.FC<CourseCardProps> = ({ course, isLogoShown }) => {
 	const CHAR_LIMIT_MOBILE = 107;
 	const CHAR_LIMIT_DESKTOP = 303;
 
@@ -57,11 +58,13 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
 			<div className={styles["course-card__head"]}>
 				<h2 className={styles["course-card__title"]}>{course.title}</h2>
 				<div className={styles["course-card__logo"]}>
-					<Logo
-						className={styles["course-card__logo-image"]}
-						logo={course.company_logo}
-						name={course.company}
-					/>
+					{isLogoShown && (
+						<Logo
+							className={styles["course-card__logo-image"]}
+							logo={course.company_logo}
+							name={course.company}
+						/>
+					)}
 					<StarRating
 						averageRating={course.avg_rating}
 						isOneStar={isOneStar}
@@ -72,7 +75,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
 
 			<div className={styles["course-card__data"]}>
 				<div className={styles["course-card__company"]}>
-					By:
+					Компанія:
 					<span className={styles["course-card__company-name"]}>
 						{course.company}
 					</span>
@@ -91,7 +94,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
 						className={styles["course-card__price-icon"]}
 						name={IconName.DOLLAR_SIGN}
 					/>
-					UAH {course.price}
+					{course.price}
 				</div>
 			</div>
 
@@ -148,7 +151,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
 						className={styles["course-card__reviews-info-avatar"]}
 					/>
 					<span className={styles["course-card__reviews-info-count"]}>
-						{course.reviews_count} Reviews
+						{course.reviews_count} Відгуки
 					</span>
 					<span className={styles["course-card__reviews-info-verified"]}>
 						<Icon
@@ -165,7 +168,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
 						className={styles["course-card__reviews-button"]}
 						variant={ButtonVariant.PRIMARY}
 					>
-						Read reviews
+						Читати відгуки
 					</Button>
 				</Link>
 			</div>

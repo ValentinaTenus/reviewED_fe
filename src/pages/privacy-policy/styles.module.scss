@@ -25,6 +25,7 @@
       display: flex;
       flex-direction: column;
       gap: 40px;
+      width: 100%;
 
       &-title{
         text-align: center;
@@ -64,6 +65,17 @@
       align-self: self-start;
       color: var(--color-error-red);
       padding-left: 24px;
+    }
+
+    &-button {
+      display: flex;
+      align-items: center;
+
+      &-icon {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+      }
     }
 
     &-buttons {
@@ -127,6 +139,23 @@
 
       &-buttons {
         flex-direction: column;
+      }
+
+    &-button {
+      margin: 0 auto;
+      width: 90%;
+    }
+    }
+  }
+}
+@media (max-width: 320px) {
+
+  .privacy_policy {
+    &__content {
+      &-info {
+        &-title {
+          font-size: var(--font-size-title-h4);
+        }
       }
     }
   }

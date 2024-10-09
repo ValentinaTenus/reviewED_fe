@@ -1,3 +1,13 @@
 .course_details_page {
+	display: flex;
+	flex-direction: column;
 	min-height: 100vh;
+
+	&-main {
+		display: flex;
+		flex-direction: column;
+		flex-grow: 1;
+		align-items: center;
+		justify-content: center;
+	}
 }
