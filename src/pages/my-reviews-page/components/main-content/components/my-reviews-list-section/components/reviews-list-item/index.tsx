@@ -170,7 +170,7 @@ const ReviewListItem: React.FC<Properties> = ({
 							)}
 						>
 							<span>By</span>{" "}
-							<Link to={`/company-details/${review.id}`}>Company name</Link>
+							<Link to={`/company-details/${review.company_id}`}>{review.company_name}</Link>
 						</div>
 
 						<div className={styles["status"]}>
