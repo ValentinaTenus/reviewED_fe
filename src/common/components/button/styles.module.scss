@@ -149,3 +149,22 @@
 	font-size: var(--font-size-h5);
 	transition: background-color 0.3s;
 }
+
+.button__secondary {
+	color: var(--color-grey-900);
+	background-color: var(--color-grey-200);
+}
+
+.button__secondary:hover {
+	background-color: var(--color-grey-300);
+}
+
+.button__delete {
+	color: var(--color-white);
+	background-color: var(--color-error-red);
+}
+
+.button__delete:hover {
+	color: var(--color-white);
+	background-color: var(--color-red-500);
+}

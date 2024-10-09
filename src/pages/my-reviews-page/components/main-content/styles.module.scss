@@ -1,0 +1,31 @@
+.main_content_wrapper {
+	flex: 1;
+	padding: 0px 86px;
+}
+
+.main_content {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	gap: 36px;
+	margin: 0 auto;
+	max-width: 1252px;
+	width: 100%;
+	padding: 0;
+}
+
+@media (max-width: 1280px) {
+	.main_content_wrapper {
+		padding: 0px 48px;
+	}
+}
+
+@media (max-width: 768px) {
+	.main_content_wrapper {
+		padding: 0px 20px;
+	}
+
+	.main_content {
+		gap: 20px;
+	}
+}

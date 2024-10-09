@@ -1,0 +1,42 @@
+.review-text {
+	line-height: 140%;
+	font-size: var(--font-size-main-text);
+	font-weight: var(--font-weight-text);
+
+	&__more-details {
+		color: var(--color-blue-icons);
+		cursor: pointer;
+	}
+
+	&__close {
+		color: var(--color-blue-icons);
+		margin: 16px 0px;
+		cursor: pointer;
+	}
+
+	&__full-text-icons {
+		display: block;
+		margin-top: 16px;
+	}
+}
+
+@media (max-width: 888px) {
+	.review-text {
+		border: 1px solid #d9d9d9;
+		border-radius: 8px;
+		padding: 8px;
+		background: var(--color-grey-50);
+
+		&__icons {
+			display: none;
+		}
+
+		&__close {
+			margin-bottom: 0px;
+		}
+
+		&__full-text-icons {
+			display: none;
+		}
+	}
+}
