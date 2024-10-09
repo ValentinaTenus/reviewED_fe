@@ -1,9 +1,11 @@
 .navbar__wrapper {
+	align-items: center;
 	background-color: var(--color-grey-50);
+	display: flex;
 	height: 73px;
 	overflow-x: auto;
-	padding-bottom: 50px;
 	position: sticky;
+	scroll-margin: 0px;
 	top: 0px;
 	white-space: nowrap;
 	width: 100%;

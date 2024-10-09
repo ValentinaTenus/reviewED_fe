@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import styles from "./styles.module.scss";
 
@@ -14,12 +14,39 @@ const scrollToSection = (sectionRef: React.RefObject<HTMLDivElement>) => {
 	}
 };
 
+
+
 const NavBar: React.FC<NavBarProperties> = ({
 	aboutCompany,
 	aboutCourse,
 	reviews,
 }) => {
 	const [active, setActive] = useState("Про курс");
+
+	const intersectionCallback = (entries: any) => {
+		entries.forEach((entry: any) => {
+		  if (entry.isIntersecting) {
+			setActive(entry.target.innerHTML);
+
+		  }
+		});
+	  };
+	
+	  useEffect(() => {
+		const options = {
+			rootMargin: "0px 0px -80% 0px",
+			threshold: 0.51,
+			 };
+			
+			 const observer = new IntersectionObserver(intersectionCallback, options);
+   
+	   observer.observe(aboutCompany.current as Element);
+	   observer.observe(aboutCourse.current as Element);
+	   observer.observe(reviews.current as Element);
+
+	   return () => {observer.disconnect()};
+	  }, [active]);
+
 
 	const handleNavigationClick = (
 		activeStateValue: string,
