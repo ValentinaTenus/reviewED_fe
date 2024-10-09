@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import "~/assets/styles/index.scss";
+import "react-toastify/dist/ReactToastify.css";
 
 import { App } from "./app/App.tsx";
 import { ProtectedRouteIsStaff } from "./common/components/index.ts";

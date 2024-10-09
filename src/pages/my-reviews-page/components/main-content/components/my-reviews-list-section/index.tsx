@@ -1,5 +1,6 @@
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import React, { useCallback, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 import { Pagination, Spinner } from "~/common/components";
 import { SpinnerVariant } from "~/common/enums";
@@ -110,12 +111,20 @@ const MyReviewsListSection: React.FC<Properties> = ({ category }) => {
 		setEntityId(null);
 	}, []);
 
+	const handleError = (error: unknown, fallbackMessage?: string) => {
+		if (error instanceof Error) {
+			toast.error(`Error: ${error.message}`);
+		} else {
+			toast.error(fallbackMessage || "Something went wrong");
+		}
+	};
+
 	const handleDeleteReview = useCallback(async () => {
 		if (entityId) {
 			try {
 				await deleteMyReview({ category, entityId }).unwrap();
 			} catch (error) {
-				// add react-tostify
+				handleError(error, "Failed to delete review");
 			} finally {
 				handleCloseDeleteReview();
 			}
@@ -128,7 +137,7 @@ const MyReviewsListSection: React.FC<Properties> = ({ category }) => {
 				try {
 					await editMyReview({ body: data, category, entityId }).unwrap();
 				} catch (error) {
-					// add react-tostify
+					handleError(error, "Failed to edit review");
 				} finally {
 					handleCloseEditReview();
 				}
