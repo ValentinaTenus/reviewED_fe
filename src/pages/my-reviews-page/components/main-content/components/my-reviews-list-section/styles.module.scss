@@ -1,0 +1,14 @@
+.spinner {
+	margin: 50px 0px;
+}
+
+.error {
+	margin: 50px 0px;
+	align-items: center;
+	color: var(--color-error-red);
+	display: flex;
+	font-size: var(--font-size-title-large);
+	justify-content: center;
+	height: 100%;
+	width: 100%;
+}

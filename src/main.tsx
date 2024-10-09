@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import "~/assets/styles/index.scss";
+import "react-toastify/dist/ReactToastify.css";
 
 import { App } from "./app/App.tsx";
 import {
@@ -21,6 +22,7 @@ import {
 	CourseDetailsPage,
 	HomePage,
 	ModeratorsPage,
+	MyReviewsPage,
 	PrivacyPolicyPage,
 	UserRequests,
 	UserReviews,
@@ -53,6 +55,10 @@ const routes = createBrowserRouter([
 			{
 				element: <FaqPage />,
 				path: AppRoute.FAQ_PAGE,
+			},
+			{
+				element: <MyReviewsPage />,
+				path: AppRoute.MY_REVIEWS_PAGE,
 			},
 			{
 				element: <CompanyDetailsPage />,
