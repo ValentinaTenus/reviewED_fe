@@ -3,6 +3,7 @@ const reviewsApiPath = {
 	COURSES_REVIEWS: "/reviews/courses/list/",
 	LIKE_COMPANIES_REVIEWS: "/reviews-like/company/",
 	POST_COMPANIES_REVIEWS: "/reviews/companies/",
+	POST_COURSES_REVIEWS: "/reviews/courses/",
 	POST_REPORTS: "/reviews/report/",
 	REVIEWS_BY_COURSE_ID: "/reviews/courses/list/",
 	REVIEWS_BY_USER_ID: "/reviews-page/user/",

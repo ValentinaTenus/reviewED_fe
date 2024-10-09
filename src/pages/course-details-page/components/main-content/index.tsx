@@ -72,7 +72,7 @@ const MainContent: React.FC<MainContentProperties> = ({ courseId }) => {
 								ref={aboutCompanyRef}
 								title="Про компанію"
 							/>
-							<ReviewsBar ref={reviewsRef}/>
+							<ReviewsBar course={course} ref={reviewsRef} />
 						</div>
 					)}
 				</>

@@ -16,6 +16,7 @@ export {
 	type GetCourseByIdResponseDto,
 	type GetCoursesRequestQuery,
 	type GetCoursesResult,
+	type SendCourseRequest,
 } from "./courses/index";
 export { type DropdownOption } from "./dropdown-option";
 export {
