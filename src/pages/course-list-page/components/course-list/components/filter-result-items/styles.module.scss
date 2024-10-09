@@ -21,6 +21,7 @@
 
 .clear_filters__button_text {
   border-bottom: 1px solid var(--color-blue-icons);
+  font-size: var(--font-size-title-h5);
 
   &:hover {
     border-bottom:  1px solid var(--color-light-blue-selected-items);

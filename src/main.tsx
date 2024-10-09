@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "~/assets/styles/index.scss";
 
 import { App } from "./app/App.tsx";
+import { ProtectedRouteIsStaff } from "./common/components/index.ts";
 import { AppRoute } from "./common/enums/app-route.enum.ts";
 import { AuthSuccess } from "./pages/auth/auth-success.tsx";
 import { CourseList } from "./pages/course-list-page/index.tsx";
@@ -43,7 +44,7 @@ const routes = createBrowserRouter([
 				path: AppRoute.ALL_COMPANIES,
 			},
 			{
-				element: <ModeratorsPage />,
+				element: <ProtectedRouteIsStaff element={<ModeratorsPage />} />,
 				path: AppRoute.MODERATORS_PAGE,
 			},
 			{

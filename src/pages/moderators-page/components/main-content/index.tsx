@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 
 import { Modal, SearchBar, Spinner } from "~/common/components";
 import { ScreenBreakpoints } from "~/common/constants";
 import { ButtonGroupData, SpinnerVariant } from "~/common/enums";
 import { useGetScreenWidth } from "~/common/hooks";
 import {
-	DropdownOption,
 	GetModerationReviewsRequest,
 	GetModerationReviewsResponse,
 } from "~/common/types";
@@ -28,16 +28,16 @@ const INDEX_ONE = 1;
 
 const MainModeratorsContent: React.FC = () => {
 	const [searchedID, setSearchedID] = useState<string>("");
-	const [filterByStatus, setFilterByStatus] =
-		useState<DropdownOption["value"]>("");
-	const [sortByPeriod, setSortByPeriod] = useState<DropdownOption["value"]>("");
-	const [filterByType, setFilterByType] =
-		useState<keyof typeof ButtonGroupData>("Компанії");
 	const [isOpenSerchFiltersModal, setIsOpenSerchFiltersModal] = useState(false);
 	const [fetchResult, setFetchResult] = useState<
 		GetModerationReviewsResponse | undefined
 	>();
 	const screenWidth = useGetScreenWidth();
+
+	const [searchParams] = useSearchParams();
+	const filterByType = searchParams.get("type") || "Компанії";
+	const filterByStatus = searchParams.get("status");
+	const sortByPeriod = searchParams.get("ordering");
 
 	const handleSetSearchTerm = useCallback(
 		(term: string) => {
@@ -46,18 +46,6 @@ const MainModeratorsContent: React.FC = () => {
 		[setSearchedID],
 	);
 
-	const handleSetFilterByStatus = useCallback(
-		(sortOption: DropdownOption["value"]) => {
-			setFilterByStatus(sortOption);
-		},
-		[setFilterByStatus],
-	);
-	const handleSetSortByPeriod = useCallback(
-		(sortOption: DropdownOption["value"]) => {
-			setSortByPeriod(sortOption);
-		},
-		[setSortByPeriod],
-	);
 	const handleSetIsOpenSerchFiltersModal = useCallback(
 		() => setIsOpenSerchFiltersModal((prev) => !prev),
 		[setIsOpenSerchFiltersModal],
@@ -73,7 +61,7 @@ const MainModeratorsContent: React.FC = () => {
 		if (searchedID) {
 			const res = await getModeratorsReviewByID({
 				id: searchedID,
-				type: ButtonGroupData[filterByType],
+				type: ButtonGroupData[filterByType as keyof typeof ButtonGroupData],
 			});
 			setFetchResult({
 				count: res.data ? INDEX_ONE : INDEX_ZERO,
@@ -90,7 +78,7 @@ const MainModeratorsContent: React.FC = () => {
 				status: filterByStatus
 					? (filterByStatus as GetModerationReviewsRequest["status"])
 					: undefined,
-				type: ButtonGroupData[filterByType],
+				type: ButtonGroupData[filterByType as keyof typeof ButtonGroupData],
 			});
 			setFetchResult(res.data);
 		}
@@ -134,7 +122,6 @@ const MainModeratorsContent: React.FC = () => {
 				<div className={styles["search_block"]}>
 					<p className={styles["search_title"]}>Пошук за UID</p>
 					<SearchBar
-						filtersLength={3}
 						isFilterButton={screenWidth <= ScreenBreakpoints.MOBILE}
 						onOpenFilter={handleSetIsOpenSerchFiltersModal}
 						onSubmit={handleSetSearchTerm}
@@ -143,15 +130,7 @@ const MainModeratorsContent: React.FC = () => {
 					/>
 				</div>
 				{useGetScreenWidth() > ScreenBreakpoints.MOBILE && (
-					<ModeratorsReviewFilterSection
-						filterByType={filterByType}
-						handleSetFilterByStatus={handleSetFilterByStatus}
-						handleSetSortByPeriod={handleSetSortByPeriod}
-						isActiveGroupCleaner={
-							Boolean(sortByPeriod) || Boolean(filterByStatus)
-						}
-						setFilterByType={setFilterByType}
-					/>
+					<ModeratorsReviewFilterSection />
 				)}
 			</section>
 
@@ -180,12 +159,7 @@ const MainModeratorsContent: React.FC = () => {
 					isOpen={isOpenSerchFiltersModal}
 					onClose={handleSetIsOpenSerchFiltersModal}
 				>
-					<ModeratorsReviewFilterSection
-						filterByType={filterByType}
-						handleSetFilterByStatus={handleSetFilterByStatus}
-						handleSetSortByPeriod={handleSetSortByPeriod}
-						setFilterByType={setFilterByType}
-					/>
+					<ModeratorsReviewFilterSection />
 				</Modal>
 			)}
 		</div>

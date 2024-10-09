@@ -5,18 +5,16 @@ import {
 	fetchBaseQuery,
 	FetchBaseQueryError,
 } from "@reduxjs/toolkit/query/react";
+import { Mutex } from "async-mutex";
 
-import { HttpMethods, HttpStatusCode } from "~/common/enums/index";
-import { type GetTokensResponseDto } from "~/common/types/index";
+import { HttpMethods, HttpStatusCode } from "~/common/enums";
+import { GetTokensResponseDto } from "~/common/types";
 
-import {
-	removeTokens,
-	setIsRefreshing,
-	setTokens,
-	setUser,
-} from "./auth/auth-slice";
+import { logout, setIsRefreshing, setTokens } from "./auth/auth-slice";
 import { authApiPath } from "./auth/constants";
-import { type RootState } from "./store";
+import { RootState } from "./store";
+
+const mutex = new Mutex();
 
 const baseQuery = fetchBaseQuery({
 	baseUrl: `${import.meta.env.VITE_BASE_URL}`,
@@ -39,15 +37,18 @@ const baseQueryWithReauth: BaseQueryFn<
 	const state = api.getState() as RootState;
 	const { refresh } = state.auth;
 
-	try {
-		let result = await baseQuery(args, api, extraOptions);
-		if (
-			result.error &&
-			result.error.status === HttpStatusCode.UNAUTHORIZED &&
-			refresh
-		) {
-			if (!(api.getState() as RootState).auth.isRefreshing) {
-				api.dispatch(setIsRefreshing(true));
+	await mutex.waitForUnlock();
+	let result = await baseQuery(args, api, extraOptions);
+
+	if (
+		result.error &&
+		result.error.status === HttpStatusCode.UNAUTHORIZED &&
+		refresh
+	) {
+		if (!mutex.isLocked()) {
+			const release = await mutex.acquire();
+
+			try {
 				const refreshResult = await baseQuery(
 					{
 						body: { refresh },
@@ -64,17 +65,18 @@ const baseQueryWithReauth: BaseQueryFn<
 					api.dispatch(setIsRefreshing(false));
 					result = await baseQuery(args, api, extraOptions);
 				} else {
-					api.dispatch(setIsRefreshing(false));
-					api.dispatch(setUser(null));
-					api.dispatch(removeTokens());
+					api.dispatch(logout());
 				}
+			} finally {
+				release();
 			}
+		} else {
+			await mutex.waitForUnlock();
+			result = await baseQuery(args, api, extraOptions);
 		}
-
-		return result;
-	} catch (error) {
-		return { error: error as FetchBaseQueryError };
 	}
+
+	return result;
 };
 
 export const api = createApi({

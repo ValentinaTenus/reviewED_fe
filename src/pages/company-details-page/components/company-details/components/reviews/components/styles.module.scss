@@ -18,13 +18,13 @@
 
 .review_profile-name-verified {
 	display: flex;
-	gap: 10px;
+	gap: 8px;
 }
 
 .review_profile-info {
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+	justify-content: center;
 	gap: 5px;
 }
 
@@ -61,12 +61,12 @@
 .review_icon-text {
 	display: flex;
 	align-items: center;
-	gap: 10px;
+	gap: 8px;
 }
 
 .review_share-like {
 	display: flex;
-	gap: 15px;
+	gap: 20px;
 	align-items: center;
 }
 

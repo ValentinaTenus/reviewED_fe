@@ -43,7 +43,7 @@ const FilterResultTitle: React.FC<Properties> = ({
 			<SortDropdown
 				className={styles["filter_result__sort"]}
 				isIconButton={screenWidth < ScreenBreakpoints.TABLET}
-				name="Cортувати за"
+				name={screenWidth > ScreenBreakpoints.TABLET ? "Cортувати за" : ""}
 				onChange={onChangeSortBy}
 				options={CoursesSortOptions}
 			/>

@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 import ArrowDown from "~/assets/images/arrow-down.svg?react";
 import ArrowUp from "~/assets/images/arrow-up.svg?react";
@@ -21,9 +22,10 @@ type Properties = {
 	isWithCleaner?: boolean;
 	menuStaticStyle?: boolean;
 	name?: string;
-	onChange: (value: DropdownOption["value"]) => void;
+	onChange?: (value: DropdownOption["value"]) => void;
 	onSetIsClean?: (state: boolean) => void;
 	options: DropdownOption[];
+	searchParam?: string;
 	title?: string;
 };
 
@@ -39,25 +41,39 @@ const SortDropdown: React.FC<Properties> = ({
 	onChange,
 	onSetIsClean,
 	options,
+	searchParam,
 	title,
 }) => {
 	const [selectedOption, setSelectedOption] = useState<
 		DropdownOption | undefined
 	>(undefined);
 	const [isOpen, setIsOpen] = useState(false);
+	const [searchParams, setSearchParams] = useSearchParams();
+
+	const selectedOptionFromSearchParams = searchParams.get(searchParam || "");
+
 	const dropdownRef = useRef<HTMLDivElement>(null);
 
-	const definedTitle = selectedOption
-		? selectedOption.label
-		: title
-			? title
-			: options[FIRST_OPTION].label;
+	const definedTitle = selectedOptionFromSearchParams
+		? options.find((option) => option.value === selectedOptionFromSearchParams)
+				?.label
+		: selectedOption
+			? selectedOption.label
+			: title
+				? title
+				: options[FIRST_OPTION].label;
 
 	const handleOptionClick = (option: DropdownOption) => {
 		const { label, value } = option;
 		setSelectedOption({ label, value });
 		setIsOpen(false);
-		onChange(value);
+		if (onChange) onChange(value);
+		if (searchParam) {
+			setSearchParams((prev) => {
+				prev.set(searchParam, option.value.toString());
+				return prev;
+			});
+		}
 	};
 
 	const handleToggleDropdown = useCallback(() => {
@@ -68,8 +84,14 @@ const SortDropdown: React.FC<Properties> = ({
 
 	const handleCleanOption = useCallback(() => {
 		setSelectedOption(undefined);
-		onChange("");
-	}, [setSelectedOption, onChange]);
+		if (onChange) onChange("");
+		if (searchParam) {
+			setSearchParams((prev) => {
+				prev.set(searchParam, "");
+				return prev;
+			});
+		}
+	}, [setSelectedOption, onChange, setSearchParams, searchParam]);
 
 	useEffect(() => {
 		const handleClickOutside = (e: MouseEvent) => {
@@ -123,7 +145,10 @@ const SortDropdown: React.FC<Properties> = ({
 						<div
 							className={clsx(styles["dropdown_trigger"], {
 								[styles["open"]]: isOpen,
-								[styles["selected"]]: !isOpen && selectedOption && title,
+								[styles["selected"]]:
+									!isOpen &&
+									(selectedOptionFromSearchParams || selectedOption) &&
+									title,
 							})}
 							onClick={handleToggleDropdown}
 						>
@@ -140,7 +165,8 @@ const SortDropdown: React.FC<Properties> = ({
 							<IconButton
 								className={clsx(
 									styles["dropdown_cleaner-icon"],
-									!selectedOption && styles["dropdown_cleaner-icon_disabled"],
+									!(selectedOptionFromSearchParams || selectedOption) &&
+										styles["dropdown_cleaner-icon_disabled"],
 								)}
 								onClick={handleCleanOption}
 							>

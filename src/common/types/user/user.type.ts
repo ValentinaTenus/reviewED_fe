@@ -3,6 +3,7 @@ type User = {
 	full_name: string;
 	id: number;
 	picture: string;
+	policy_agreed: boolean;
 	profile_link: string;
 };
 
