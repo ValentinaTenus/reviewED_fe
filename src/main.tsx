@@ -57,7 +57,7 @@ const routes = createBrowserRouter([
 				path: AppRoute.FAQ_PAGE,
 			},
 			{
-				element: <MyReviewsPage />,
+				element: <ProtectedRouteIsLogined element={<MyReviewsPage />} />,
 				path: AppRoute.MY_REVIEWS_PAGE,
 			},
 			{

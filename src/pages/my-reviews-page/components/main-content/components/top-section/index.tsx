@@ -1,9 +1,10 @@
 import React from "react";
-import styles from "./styles.module.scss";
 
 import { Icon } from "~/common/components/index";
 import { IconName } from "~/common/enums/index";
 import { useAppSelector } from "~/redux/hooks.type";
+
+import styles from "./styles.module.scss";
 
 const TopSection: React.FC = () => {
 	const { user } = useAppSelector((state) => state.auth);
