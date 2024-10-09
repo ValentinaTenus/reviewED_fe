@@ -6,7 +6,10 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "~/assets/styles/index.scss";
 
 import { App } from "./app/App.tsx";
-import { ProtectedRouteIsStaff } from "./common/components/index.ts";
+import {
+	ProtectedRouteIsLogined,
+	ProtectedRouteIsStaff,
+} from "./common/components/index.ts";
 import { AppRoute } from "./common/enums/app-route.enum.ts";
 import { AuthSuccess } from "./pages/auth/auth-success.tsx";
 import { CourseList } from "./pages/course-list-page/index.tsx";
@@ -64,11 +67,11 @@ const routes = createBrowserRouter([
 				path: AppRoute.ALL_COURSES,
 			},
 			{
-				element: <UserReviews />,
+				element: <ProtectedRouteIsLogined element={<UserReviews />} />,
 				path: AppRoute.USER_REVIEWS,
 			},
 			{
-				element: <UserRequests />,
+				element: <ProtectedRouteIsLogined element={<UserRequests />} />,
 				path: AppRoute.USER_REQUESTS,
 			},
 			{
