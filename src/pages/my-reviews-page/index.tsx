@@ -12,8 +12,8 @@ const MyReviewsPage: React.FC = () => {
 			<BreadCrumb
 				className="bread_crumb__container"
 				items={[
-					{ label: "Main page", path: "/" },
-					{ label: "My reviews", path: "/my-reviews-page" },
+					{ label: "Головна сторінка", path: "/" },
+					{ label: "Мої відгуки", path: "/my-reviews-page" },
 				]}
 			/>
 			<MainContent />

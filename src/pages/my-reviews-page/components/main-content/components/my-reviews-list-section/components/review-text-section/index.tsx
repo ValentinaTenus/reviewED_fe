@@ -67,7 +67,7 @@ const ReviewTextSection: React.FC<Properties> = ({
 				<>
 					<span>{text}</span>
 					<p className={styles["review-text__close"]} onClick={toggleText}>
-						Close
+						Закрити
 					</p>
 					<div className={styles["review-text__icons"]}>
 						<IconsSection
@@ -87,7 +87,7 @@ const ReviewTextSection: React.FC<Properties> = ({
 								className={styles["review-text__more-details"]}
 								onClick={toggleText}
 							>
-								... More details
+								... Детальніше
 							</span>
 						</>
 					) : (

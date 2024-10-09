@@ -29,7 +29,7 @@ const PopupMenu: React.FC<PopupMenuProps> = ({ onSelect, options }) => {
 						onClick={() => handleSelect(option.value)}
 					>
 						<Icon name={option.iconName} />
-						<span>{option.value}</span>
+						<span>{option.label}</span>
 					</div>
 				))}
 			</div>

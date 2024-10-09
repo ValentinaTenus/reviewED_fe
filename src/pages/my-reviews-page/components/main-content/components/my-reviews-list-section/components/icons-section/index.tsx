@@ -30,17 +30,17 @@ const IconsSection: React.FC<Properties> = ({
 			>
 				{withEditIcon && (
 					<div>
-						<Icon name={IconName.EDIT} /> <span>Edit</span>
+						<Icon name={IconName.EDIT} /> <span>Редагувати</span>
 					</div>
 				)}
 			</div>
 			<div className={styles["icons__right"]}>
 				<div>
-					<Icon name={IconName.SHARE} /> <span>Share</span>
+					<Icon name={IconName.SHARE} /> <span>Поділитися</span>
 				</div>
 				<div>
 					<Icon className="like-icon" name={IconName.LIKE} />
-					<span>{likesCount}</span>
+					<span className={styles["like-count"]}>{likesCount}</span>
 				</div>
 			</div>
 		</div>
