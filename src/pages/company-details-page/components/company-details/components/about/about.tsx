@@ -2,6 +2,7 @@ import clsx from "clsx";
 import React from "react";
 import { Link } from "react-router-dom";
 
+import { AppRoute } from "~/common/enums";
 import { type GetCompanyByIdResponse } from "~/common/types";
 import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
 
@@ -36,7 +37,7 @@ const About = React.forwardRef<
 											<Link
 												className={styles["subcategory_name"]}
 												key={subIndex}
-												to="#"
+												to={`${AppRoute.ALL_COURSES}?subcategory=${subcategory.id}`}
 											>
 												{subcategory.name}
 											</Link>
