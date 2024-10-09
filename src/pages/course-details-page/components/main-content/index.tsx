@@ -58,6 +58,7 @@ const MainContent: React.FC<MainContentProperties> = ({ courseId }) => {
 							<NavBar
 								aboutCompany={aboutCompanyRef}
 								aboutCourse={aboutCourseRef}
+								reviews={reviewsRef}
 							/>
 							<Header ref={aboutCourseRef} title="Про курс" />
 							<PricingBar price={course ? course.price : ""} />
