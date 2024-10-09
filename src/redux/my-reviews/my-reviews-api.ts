@@ -45,7 +45,10 @@ export const myRewiewsApi = api.injectEndpoints({
 			query: ({ params, userId }) => {
 				return {
 					method: HttpMethods.GET,
-					params,
+					params: {
+						...params,
+						sort: "time_added:desc",
+					},
 					url: `${myReviewsApiPath.MY_REVIEWS_USER}/${userId}`,
 				};
 			},
