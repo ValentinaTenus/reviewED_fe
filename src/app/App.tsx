@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
+import { Slide, ToastContainer } from "react-toastify";
 
 import { updatePageTab } from "~/common/helpers";
 import { useGetUser } from "~/common/hooks/use-get-user.hook";
 import { useAppSelector } from "~/redux/hooks.type";
 import { type RootState } from "~/redux/store";
-import { Slide, ToastContainer } from "react-toastify";
 
 const App: React.FC = () => {
 	const location = useLocation();
@@ -27,9 +27,9 @@ const App: React.FC = () => {
 		<>
 			<Outlet />
 			<ToastContainer
-				position="top-right"
 				autoClose={5000}
 				pauseOnHover={false}
+				position="top-right"
 				theme="light"
 				transition={Slide}
 			/>

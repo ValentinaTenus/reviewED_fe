@@ -3,7 +3,7 @@ import React, { useCallback, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { Icon, Logo, StarRating } from "~/common/components/index";
-import { IconName } from "~/common/enums/index";
+import { AppRoute, IconName } from "~/common/enums/index";
 import { useTransformDate } from "~/common/hooks";
 import {
 	MyReview,
@@ -170,7 +170,14 @@ const ReviewListItem: React.FC<Properties> = ({
 							)}
 						>
 							<span>By</span>{" "}
-							<Link to={`/company-details/${review.company_id}`}>{review.company_name}</Link>
+							<Link
+								to={AppRoute.COMPANY_DETAILS.replace(
+									":companyId",
+									review.company_id.toString(),
+								)}
+							>
+								{review.company_name}
+							</Link>
 						</div>
 
 						<div className={styles["status"]}>

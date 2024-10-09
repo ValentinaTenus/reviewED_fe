@@ -1,8 +1,8 @@
 type MyReview = {
 	author_full_name: string;
-	company_reviews_count: number;
 	company_id: number;
 	company_name: string;
+	company_reviews_count: number;
 	id: number;
 	likes_count: number;
 	logo: string;
