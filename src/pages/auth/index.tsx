@@ -1,10 +1,16 @@
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import React, { useCallback, useState } from "react";
+import { Link } from "react-router-dom";
 
 import AuthImage from "~/assets/images/auth-image.png";
 import Logo from "~/assets/images/logo.svg?react";
 import { Button, Icon, Spinner } from "~/common/components/index";
-import { ButtonVariant, IconName, SpinnerVariant } from "~/common/enums/index";
+import {
+	AppRoute,
+	ButtonVariant,
+	IconName,
+	SpinnerVariant,
+} from "~/common/enums/index";
 import { useLazyGetLoginUrlQuery } from "~/redux/auth/auth-api";
 
 import styles from "./styles.module.scss";
@@ -40,8 +46,13 @@ const AuthPage: React.FC = () => {
 				/>
 			</div>
 			<div className={styles["auth_form__container"]}>
-				<Logo className={styles["auth_form__logo"]} />
-				<h2 className={styles["auth__form_title"]}>Вхід</h2>
+				<Link
+					className={styles["auth_form__logo_container"]}
+					to={AppRoute.ROOT}
+				>
+					<Logo className={styles["auth_form__logo"]} />
+				</Link>
+				<h2 className={styles["auth__form_title"]}>Авторизація</h2>
 				<Button
 					aria-label="Login with LinkedIn"
 					className={styles["auth__form_button"]}
