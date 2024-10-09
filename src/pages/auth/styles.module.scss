@@ -30,6 +30,17 @@
   width: 40%;
 }
 
+.auth_form__logo_container {
+  border: 1px solid transparent;
+  border-radius: 16px;
+  transition: border-color 0.3s;
+  padding: 8px;
+
+  &:hover {
+    border-color: var(--color-grey-950);
+  }
+}
+
 .auth_form__logo {
   height: 50px;
   width: 240px;
@@ -37,6 +48,7 @@
 
 .auth__form_title {
   color: var(--color-grey-950);
+  font-family: var(--font-family-main);
   font-size: var(--font-size-title-h2);
   font-weight: var( --font-weight-bold);
 }
