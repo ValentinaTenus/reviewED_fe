@@ -23,3 +23,4 @@ export {
 export { ReviewsSortOptions } from "./reviews-sort-options";
 export { ScreenBreakpoints } from "./screen-breakpoints";
 export { SocialLinks } from "./social-media-links";
+export { tabs } from "./tabs";
