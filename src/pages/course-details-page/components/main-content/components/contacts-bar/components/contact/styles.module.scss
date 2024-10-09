@@ -1,12 +1,19 @@
 .contact {
 	align-items: center;
 	display: flex;
+	gap: 8px;
+	font-size: var(--font-size-title-h5);
 	letter-spacing: -0.06em;
 	line-height: 150%;
 }
 
 .contact__icon {
 	height: 24px;
-	margin-right: 8px;
 	width: 24px;
+}
+
+@media (max-width: 1280px) {
+	.contact {
+		gap: 12px;
+	}
 }

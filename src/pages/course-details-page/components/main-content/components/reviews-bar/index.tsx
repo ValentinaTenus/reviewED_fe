@@ -9,19 +9,14 @@ import { ReviewsList } from "./components/reviews-list";
 import { ReviewsStatsBar } from "./components/reviews-stats";
 import styles from "./styles.module.scss";
 
-const MOCK_COURSE_ID = 1;
-const mockStats = {
-	"five": 0,
-	"four": 1,
-	"one": 110,
-	"three": 2,
-	"two": 100,
-};
-
 const mockList = [];
 
-const ReviewsBar: React.FC = () => {
-	const { data: stats } = useGetReviewsStatsQuery(MOCK_COURSE_ID);
+type Properties = {
+	courseId: string;
+};
+
+const ReviewsBar: React.FC<Properties> = ({ courseId }) => {
+	const { data: stats } = useGetReviewsStatsQuery(+courseId);
 
 	return (
 		<div className={styles["reviews-bar"]}>
@@ -39,7 +34,7 @@ const ReviewsBar: React.FC = () => {
 					</p>
 				</article>
 			)}
-			{stats && <ReviewsStatsBar stats={mockStats} />}
+			{stats && <ReviewsStatsBar courseId={courseId} stats={stats} />}
 			<Button
 				className={styles["reviews-bar__button"]}
 				size={ButtonSize.MEDIUM}

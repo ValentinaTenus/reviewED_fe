@@ -1,12 +1,12 @@
 .title_wrapper {
 	display: grid;
 	grid-template-areas: "logo title" "logo rating";
-	gap: 12px 20px;
-
+	column-gap: 12px;
 }
 
 .title_logo {
-	max-height: 68px;
+	height: 68px;
+	width: 138px;
 	grid-area: logo;
 }
 
@@ -19,4 +19,32 @@
 
 .title_rating {
 	grid-area: rating;
+	justify-content: start;
+}
+
+@media (max-width: 1280px) {
+	.title_wrapper {
+		column-gap: 16px;
+	}	
+}
+
+@media (max-width: 768px) {
+	.title_wrapper {
+		grid-template-areas: "logo title" "rating rating";
+		gap: 8px;
+	}
+
+	.title_logo {
+		height: 52px;
+		width: 104px;
+	}
+
+	.title_name {
+		font-size: var(--font-size-title-h4);
+		align-self: center;
+	}
+
+	.title_rating {
+		justify-content: center;
+	}
 }

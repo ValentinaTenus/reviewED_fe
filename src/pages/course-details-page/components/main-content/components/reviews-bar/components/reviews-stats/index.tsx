@@ -12,19 +12,23 @@ import { StatsBar } from "./components/stats-bar";
 import styles from "./styles.module.scss";
 
 type ReviewsStatsProperties = {
+	courseId: string;
 	stats: ReviewsStats;
 };
 
-const ReviewsStatsBar: React.FC<ReviewsStatsProperties> = ({ stats }) => {
+const ReviewsStatsBar: React.FC<ReviewsStatsProperties> = ({
+	courseId,
+	stats,
+}) => {
 	const [isRatingBarShown, setIsRatingBarShown] = useState<boolean>(false);
 	const [isMobileMode, setIsMobileMode] = useState<boolean>(false);
 
-	const { data: course } = useGetCourseByIdQuery("1");
+	const { data: course } = useGetCourseByIdQuery(courseId);
 
 	const scrWidth = useGetScreenWidth();
 
 	useEffect(() => {
-		if (scrWidth <= ScreenBreakpoints.MOBILE) {
+		if (scrWidth <= ScreenBreakpoints.TABLET) {
 			setIsMobileMode(true);
 			setIsRatingBarShown(false);
 		} else {
@@ -41,31 +45,32 @@ const ReviewsStatsBar: React.FC<ReviewsStatsProperties> = ({ stats }) => {
 						result={`${course.reviews_count}`}
 						title="Загальна кількість"
 					/>
-					<StatsBar
-						result={`${course.avg_rating}`}
-						title="Середній рейтинг"
-						visualization={
-							<StarRating
-								averageRating={course.avg_rating}
-								isNumberShown={false}
-								size={RatingSize.MEDIUM}
-							/>
-						}
-					/>
+					<div className={styles["stats-average"]}>
+						<StatsBar
+							result={`${course.avg_rating}`}
+							title="Середній рейтинг"
+							visualization={
+								<StarRating
+									averageRating={course.avg_rating}
+									isNumberShown={false}
+									size={RatingSize.MEDIUM}
+								/>
+							}
+						/>
+						{isMobileMode && (
+							<Button
+								className={styles["stats-container__button"]}
+								onClick={() => setIsRatingBarShown(!isRatingBarShown)}
+								size={ButtonSize.MEDIUM}
+								variant={ButtonVariant.OUTLINED}
+							>
+								{isRatingBarShown ? "Сховати" : "Подивитись детальніше"}
+							</Button>
+						)}
+					</div>
 				</div>
 			)}
 			{isRatingBarShown && <RatingBar stats={stats} />}
-
-			{isMobileMode && (
-				<Button
-					className={styles["stats-container__button"]}
-					onClick={() => setIsRatingBarShown(!isRatingBarShown)}
-					size={ButtonSize.MEDIUM}
-					variant={ButtonVariant.OUTLINED}
-				>
-					{isRatingBarShown ? "Сховати" : "Подивитись детальніше"}
-				</Button>
-			)}
 		</div>
 	);
 };

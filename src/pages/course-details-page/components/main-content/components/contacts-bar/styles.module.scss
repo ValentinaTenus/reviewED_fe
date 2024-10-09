@@ -2,7 +2,7 @@
 	color: var(--grey-950);
 	display: flex;
 	flex-direction: column;
-	gap: 16px;
+	gap: 24px;
 	font-family: var(--font-family-main);
 	font-size: var(--font-size-title-h5);
 	font-weight: var(--font-weight-bold);
@@ -12,6 +12,12 @@
 	font-family: var(--font-family-main);
 	font-size: var(--font-size-title);
 	font-weight: var(--font-weight-extra-bold);
+}
+
+.contacts__items {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
 }
 
 .contacts__button-container {
@@ -34,8 +40,23 @@
 	font-weight: var(--font-weight-bold);
 }
 
+@media (max-width: 1280px) {
+	.contacts__bar {
+		gap: 20px;
+		font-size: var(--font-size-title-mobile-h2);
+	}
+
+	.contacts__header {
+		font-size: var(--font-size-title-mobile-h2);
+	}
+}
+
 @media (max-width: 768px) {
 	.contacts__button-container {
 		flex-direction: column;
+	}
+
+	.contacts__header {
+		font-size: var(--font-size-title-h4);
 	}
 }

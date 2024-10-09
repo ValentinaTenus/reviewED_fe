@@ -3,6 +3,7 @@
 	gap: 24px;
 	grid-template-areas: "hdr hdr" "rvs sts" "rvs btn";
 	grid-template-rows: 71px 230px 1fr;
+	width: 100%;
 }
 
 .reviews-bar__header {
@@ -48,15 +49,19 @@
 	text-align: center;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1280px) {
 	.reviews-bar__button {
 		width: 100%;
 	}
 
 	.reviews-bar {
 		display: grid;
-		gap: 16px;
+		gap: 20px;
 		grid-template-areas: "hdr" "sts" "btn" "rvs";
 		grid-template-rows: auto;
+	}
+
+	.reviews-bar__header {
+		font-size: var(--font-size-title-h4);
 	}
 }

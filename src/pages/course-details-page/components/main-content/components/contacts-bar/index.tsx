@@ -49,7 +49,7 @@ const ContactsBar = forwardRef<HTMLDivElement, ContactsBarProperties>(
 			<div className={styles["contacts__bar"]} ref={ref}>
 				<div className={styles["contacts__header"]}>{title}</div>
 				{course && (
-					<>
+					<div className={styles["contacts__items"]}>
 						<Contact iconName={IconName.LOCATION}>
 							{defineLocation(course.location)}
 						</Contact>
@@ -87,7 +87,7 @@ const ContactsBar = forwardRef<HTMLDivElement, ContactsBarProperties>(
 								</Button>
 							)}
 						</aside>
-					</>
+					</div>
 				)}
 			</div>
 		);
