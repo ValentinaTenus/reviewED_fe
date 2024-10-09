@@ -173,7 +173,7 @@ const ReviewListItem: React.FC<Properties> = ({
 							<Link
 								to={AppRoute.COMPANY_DETAILS.replace(
 									":companyId",
-									review.company_id.toString(),
+									review.company_id?.toString(),
 								)}
 							>
 								{review.company_name}
