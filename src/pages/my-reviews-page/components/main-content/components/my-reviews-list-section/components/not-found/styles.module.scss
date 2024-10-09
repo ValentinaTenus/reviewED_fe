@@ -1,0 +1,41 @@
+.not-found_container {
+	max-width: 1252px;
+	padding: 120px 10px;
+	width: 100%;
+}
+
+.not-found_content {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+  color: var(--color-grey-400);
+	font-family: var(--font-family-main);
+  line-height: 140%;
+	justify-content: center;
+	gap: 24px;
+
+  h2 {
+    font-size: var(--font-size-title);
+    font-weight: var(--font-weight-extra-bold);
+  }
+
+  h6 {
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-main-text);
+  }
+
+  p {
+    font-size: var(--font-size-title-h4);
+  }
+}
+
+.not-found_image {
+	height: 121px;
+	width: 132px;
+}
+
+@media (max-width: 768px) {
+	.not-found_container {
+		padding: 56px 10px;
+	}
+}

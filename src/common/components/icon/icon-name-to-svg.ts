@@ -12,7 +12,9 @@ import Phone from "~/assets/images/call.svg?react";
 import Close from "~/assets/images/close.svg?react";
 import CloseCircle from "~/assets/images/close-circle.svg?react";
 import Copy from "~/assets/images/copy.svg?react";
+import Delete from "~/assets/images/delete.svg?react";
 import DollarSign from "~/assets/images/dollar-circle.svg?react";
+import Edit from "~/assets/images/edit.svg?react";
 import Facebook from "~/assets/images/facebook.svg?react";
 import Filter from "~/assets/images/filter.svg?react";
 import Flag from "~/assets/images/flag.svg?react";
@@ -22,9 +24,12 @@ import Like from "~/assets/images/like.svg?react";
 import LinkedInLogo from "~/assets/images/linkedIn-logo.svg?react";
 import ListView from "~/assets/images/list-view.svg?react";
 import Location from "~/assets/images/location.svg?react";
+import Messages from "~/assets/images/messages.svg?react";
 import Minus from "~/assets/images/minus.svg?react";
+import More from "~/assets/images/more.svg?react";
 import People from "~/assets/images/people.svg?react";
 import Plus from "~/assets/images/plus.svg?react";
+import PlusSquare from "~/assets/images/plus-square.svg?react";
 import Price from "~/assets/images/price.svg?react";
 import SearchIcon from "~/assets/images/search-normal.svg?react";
 import Share from "~/assets/images/share.svg?react";
@@ -35,6 +40,7 @@ import Star from "~/assets/images/star.svg?react";
 import TableView from "~/assets/images/table-view.svg?react";
 import Teacher from "~/assets/images/teacher.svg?react";
 import Users from "~/assets/images/users.svg?react";
+import Warning from "~/assets/images/warning.svg?react";
 import Xrp from "~/assets/images/xrp-(xrp).svg?react";
 import Youtube from "~/assets/images/youtube.svg?react";
 import { type IconName } from "~/common/enums/index";
@@ -54,7 +60,9 @@ const iconNameToSvg: Record<
 	close: Close,
 	close_circle: CloseCircle,
 	copy: Copy,
+	delete: Delete,
 	dollarSign: DollarSign,
+	edit: Edit,
 	email: Email,
 	facebook: Facebook,
 	filter: Filter,
@@ -65,10 +73,13 @@ const iconNameToSvg: Record<
 	linkedinLogo: LinkedInLogo,
 	listView: ListView,
 	location: Location,
+	messages: Messages,
 	minus: Minus,
+	more: More,
 	people: People,
 	phone: Phone,
 	plus: Plus,
+	plusSquare: PlusSquare,
 	price: Price,
 	search: SearchIcon,
 	share: Share,
@@ -78,6 +89,7 @@ const iconNameToSvg: Record<
 	tableView: TableView,
 	teacher: Teacher,
 	users: Users,
+	warning: Warning,
 	xrp: Xrp,
 	youtube: Youtube,
 };
