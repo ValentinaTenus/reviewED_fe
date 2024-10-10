@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 
 import { BreadCrumb, Spinner } from "~/common/components";
-import { SpinnerVariant } from "~/common/enums";
+import { AppRoute, SpinnerVariant } from "~/common/enums";
 import { useGetCourseByIdQuery } from "~/redux/courses/courses-api";
 
 import { CategoriesSection } from "./components/categories-list";
@@ -24,23 +24,15 @@ const MainContent: React.FC<MainContentProperties> = ({ courseId }) => {
 
 	const courseName: string = course?.title || "";
 
-	const breadcrumbs = [
-		{ label: "Головна сторінка", path: `../` },
-		{ label: "Пошук", path: "#" },
-		{ label: courseName, path: "#" },
-	];
-
 	const aboutCourseRef = useRef(null);
 	const aboutCompanyRef = useRef(null);
 	const reviewsRef = useRef(null);
 
-	// if(isFetching){
-	// 	return (
-	// 		<div className={styles["course-details_spinner"]}>
-	// 			<Spinner variant={SpinnerVariant.MEDIUM}/>
-	// 		</div>
-	// 	)
-	// }
+	const breadcrumbs = [
+		{ label: "Головна сторінка", path: AppRoute.ROOT },
+		{ label: "Курси", path: AppRoute.ALL_COURSES },
+		{ label: courseName },
+	];
 
 	return (
 		<div className={styles["main-content__wrapper"]}>
@@ -54,19 +46,25 @@ const MainContent: React.FC<MainContentProperties> = ({ courseId }) => {
 					<BreadCrumb items={breadcrumbs} />
 					{course && (
 						<div className={styles["main-content"]}>
-							<PageTitle course={course} />
-							<NavBar
-								aboutCompany={aboutCompanyRef}
-								aboutCourse={aboutCourseRef}
-								reviews={reviewsRef}
-							/>
-							<Header ref={aboutCourseRef} title="Про курс" />
-							<PricingBar price={course ? course.price : ""} />
-							<TargetGroupSection targetGroup={course ? course.age : ""} />
-							<DescriptionSection
-								description={course ? course.description : ""}
-							/>
-							<CategoriesSection course={course} />
+							<div className={styles["main-content__header"]}>
+								<PageTitle course={course} />
+								<NavBar
+									aboutCompany={aboutCompanyRef}
+									aboutCourse={aboutCourseRef}
+									reviews={reviewsRef}
+								/>
+							</div>
+
+							<div className={styles["main-content__about"]}>
+								<Header ref={aboutCourseRef} title="Про курс" />
+								<PricingBar price={course ? course.price : ""} />
+								<div className={styles["main-content__about-description"]}>
+									<TargetGroupSection targetGroup={course ? course.age : ""} />
+									<DescriptionSection description={course.description} />
+									<CategoriesSection course={course} />
+								</div>
+							</div>
+
 							<ContactsBar
 								course={course}
 								ref={aboutCompanyRef}

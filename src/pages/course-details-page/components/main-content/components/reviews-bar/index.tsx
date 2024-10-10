@@ -13,15 +13,7 @@ import { ReviewsList } from "./components/reviews-list";
 import { ReviewsStatsBar } from "./components/reviews-stats";
 import styles from "./styles.module.scss";
 
-const MOCK_COURSE_ID = 1;
 const THREE_SECONDS = 3000;
-const mockStats = {
-	"five": 0,
-	"four": 1,
-	"one": 110,
-	"three": 2,
-	"two": 100,
-};
 
 const mockList = ["Just mock thing to not have it empty"];
 
@@ -31,7 +23,7 @@ type ReviewsBarProperties = {
 
 const ReviewsBar = forwardRef<HTMLDivElement, ReviewsBarProperties>(
 	({ course }, ref) => {
-		const { data: stats } = useGetReviewsStatsQuery(MOCK_COURSE_ID);
+		const { data: stats } = useGetReviewsStatsQuery(course.id);
 		const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
 		const navigate = useNavigate();
@@ -55,15 +47,12 @@ const ReviewsBar = forwardRef<HTMLDivElement, ReviewsBarProperties>(
 		const isUserInAccount = useAppSelector((state) => state.auth.user);
 
 		useEffect(() => {
-			if (
-				userCourseReviews.includes(MOCK_COURSE_ID) ||
-				isUserInAccount === null
-			) {
+			if (userCourseReviews.includes(course.id) || isUserInAccount === null) {
 				setIsButtonInactive(true);
 			} else {
 				setIsButtonInactive(false);
 			}
-		}, [userCourseReviews, isUserInAccount, MOCK_COURSE_ID]);
+		}, [userCourseReviews, isUserInAccount, course.id]);
 
 		const [isReviewed, setIsReviewed] = useState(false);
 
@@ -99,7 +88,9 @@ const ReviewsBar = forwardRef<HTMLDivElement, ReviewsBarProperties>(
 						</p>
 					</article>
 				)}
-				{stats && <ReviewsStatsBar stats={mockStats} />}
+				{stats && (
+					<ReviewsStatsBar courseId={course.id.toString()} stats={stats} />
+				)}
 				<Button
 					className={styles["reviews-bar__button"]}
 					onClick={handleOpenReviewModal}

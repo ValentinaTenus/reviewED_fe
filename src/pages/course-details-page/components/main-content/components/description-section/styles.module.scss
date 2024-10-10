@@ -2,4 +2,14 @@
 	font-family: var(--font-family-main);
 	font-size: var(--font-size-title-h5);
 	font-weight: var(--font-weight-semi-bold);
+	display: flex;
+	flex-direction: column;
+	max-width: 85%;
+	text-align: justify;
+}
+
+@media (max-width: 768px) {
+	.description {
+		max-width: 100%;
+	}
 }

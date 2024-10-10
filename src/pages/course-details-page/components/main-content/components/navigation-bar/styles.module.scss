@@ -21,10 +21,11 @@
 	color: var(--color-grey-500);
 	cursor: pointer;
 	display: block;
+	font-family: var(--font-family-main);
 	font-size: var(--font-size-title-large);
 	font-weight: var(--font-weight-semi-bold);
 	line-height: 1.4;
-	padding: 0 15px;
+	padding: 24px;
 }
 
 .item_active {
@@ -35,18 +36,28 @@
 .item_active::after {
 	content: "";
 	background-color: var(--color-black);
-	bottom: -20px;
+	bottom: 0px;
 	height: 3px;
 	left: 0;
 	position: absolute;
 	width: 100%;
 }
 
+@media (max-width:1280px) {
+	.navbar {
+		gap: 20px;
+	}	
+}
+
+@media (max-width: 768px) {
+	.navbar__item {
+		font-size: var(--font-size-title-h5);
+		padding: 16px;
+	}
+}
 
 @media (max-width: 480px)  {
 	.navbar__wrapper {
-
 		height: 54px;
-
 	}
   }

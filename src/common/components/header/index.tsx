@@ -18,8 +18,10 @@ import styles from "./styles.module.scss";
 const Header: React.FC = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const [serverError, setServerError] = useState("");
+
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
+
 	const { refresh, user } = useAppSelector((state) => state.auth);
 
 	const [userLogout] = useLazyLogOutQuery();
@@ -107,7 +109,7 @@ const Header: React.FC = () => {
 											</>
 										) : (
 											<li className={styles["user_menu_list_item"]}>
-												<Link to={AppRoute.USER_REVIEWS}>Ваші відгуки</Link>
+												<Link to={AppRoute.MY_REVIEWS_PAGE}>Ваші відгуки</Link>
 											</li>
 										)}
 										<li className={styles["user_menu_list_item"]}>

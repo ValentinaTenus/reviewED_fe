@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 import { BreadCrumb, Spinner } from "~/common/components";
 import { AppRoute, SpinnerVariant } from "~/common/enums/index";
+import { BreadCrumbType } from "~/common/types";
 import { useGetCompanyByIdQuery } from "~/redux/companies/companies-api";
 import { useGetCoursesByFilterQuery } from "~/redux/courses/courses-api";
 import { useGetReviewsByCompanyIdQuery } from "~/redux/reviews/reviews-companies-api";
@@ -15,11 +16,6 @@ import {
 	TitleLogo,
 } from "./components/index";
 import styles from "./styles.module.scss";
-
-type BreadCrumbType = {
-	label: string;
-	path: string;
-};
 
 const BreadCrumbPaths = [
 	{
@@ -56,7 +52,6 @@ const CompanyDetails: React.FC<Properties> = ({ companyId }) => {
 	useEffect(() => {
 		const companyNameBreadcrumb = {
 			label: company?.name ?? "",
-			path: `${AppRoute.COMPANY_DETAILS}${companyId}`,
 		};
 		setBreadcrumbs([...BreadCrumbPaths, companyNameBreadcrumb]);
 	}, [companyId, company]);

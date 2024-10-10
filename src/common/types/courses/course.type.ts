@@ -12,7 +12,7 @@ type Course = {
 	categories: Category[];
 	company_logo: string;
 	contact: string;
-	description: string;
+	description: HTMLElement[];
 	id: number;
 	location: string;
 	price: string;
