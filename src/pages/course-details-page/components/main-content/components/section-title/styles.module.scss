@@ -13,3 +13,9 @@
 	width: 24px;
 	vertical-align: middle;
 }
+
+@media (max-width: 768px) {
+	.section_title {
+		font-size: var(--font-size-title-large);
+	}
+}

@@ -9,9 +9,9 @@ const tabs: Tabs = {
 	"/course-details": "Course Details | ReviewED",
 	"/faq-page": "FAQ | ReviewED",
 	"/moderators-page": "Moderators | ReviewED",
+	"/my-reviews-page": "My Reviews | ReviewED",
 	"/privacy-policy": "Privacy Policy | ReviewED",
 	"/user-requests": "Users Requests | ReviewED",
-	"/user-reviews": "Users Reviews | ReviewED",
 };
 
 export { tabs };

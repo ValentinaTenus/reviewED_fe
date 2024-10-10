@@ -4,7 +4,8 @@ export {
 	type LoginResponseDto,
 	type LogOutRequestDto,
 } from "./auth/index";
-export { type Category } from "./category/index";
+export { type BreadCrumbType } from "./breadcrumbs.type";
+export { type Category, type Subcategory } from "./category/index";
 export {
 	type Company,
 	type GetCompaniesRequestQuery,
@@ -16,6 +17,7 @@ export {
 	type GetCourseByIdResponseDto,
 	type GetCoursesRequestQuery,
 	type GetCoursesResult,
+	type SendCourseRequest,
 } from "./courses/index";
 export { type DropdownOption } from "./dropdown-option";
 export {

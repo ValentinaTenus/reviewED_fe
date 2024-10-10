@@ -15,6 +15,11 @@
 	width: 100%;
 }
 
+.stats-average {
+	display: flex;
+	flex-direction: column;
+}
+
 .stats-container__button {
 	line-height: 150%;
 	padding: 10px 0;

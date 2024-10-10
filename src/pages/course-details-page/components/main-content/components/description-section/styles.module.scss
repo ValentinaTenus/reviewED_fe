@@ -1,4 +1,5 @@
 .description {
+	margin-top: 20px;
 	font-family: var(--font-family-main);
 
 	h3 {
@@ -30,5 +31,11 @@
 
 	ul {
 		list-style: disc;
+	}
+}
+
+@media (max-width: 768px) {
+	.description {
+		max-width: 100%;
 	}
 }

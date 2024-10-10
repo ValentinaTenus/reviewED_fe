@@ -46,10 +46,12 @@ const ContactsBar = forwardRef<HTMLDivElement, ContactsBarProperties>(
 		const email = contactsArray?.[EMAIL_INDEX_IN_ARRAY];
 
 		return (
-			<div className={styles["contacts__bar"]} ref={ref}>
-				<div className={styles["contacts__header"]}>{title}</div>
+			<div className={styles["contacts__bar"]}>
+				<div className={styles["contacts__header"]} ref={ref}>
+					{title}
+				</div>
 				{course && (
-					<>
+					<div className={styles["contacts__items"]}>
 						<Contact iconName={IconName.LOCATION}>
 							{defineLocation(course.location)}
 						</Contact>
@@ -87,7 +89,7 @@ const ContactsBar = forwardRef<HTMLDivElement, ContactsBarProperties>(
 								</Button>
 							)}
 						</aside>
-					</>
+					</div>
 				)}
 			</div>
 		);
