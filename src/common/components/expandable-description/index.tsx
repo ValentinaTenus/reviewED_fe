@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 
 import styles from "./styles.module.scss";
+import DOMPurify from "dompurify";
 
 interface ExpandableDescriptionProps {
-	description: string;
+	description: string[];
 	maxLength: number;
 	startIndex?: number;
 }
@@ -21,19 +22,33 @@ const ExpandableDescription: React.FC<ExpandableDescriptionProps> = ({
 		setIsExpanded((prev) => !prev);
 	};
 
+	const sanitizedDescriptions = description.map((htmlContent) =>
+		DOMPurify.sanitize(htmlContent),
+	);
+	const joinedDescriptions = sanitizedDescriptions.join("");
+	const isDescriptionTooLong = joinedDescriptions.trim().length > maxLength;
+
 	return (
 		<div className={styles["expandable-description"]}>
-			<p className={styles["expandable-description__text"]}>
-				{isExpanded
-					? description
-					: `${description.substring(startIndex, maxLength)}...`}
-				<span
-					className={styles["expandable-description__toggle"]}
-					onClick={toggleDescription}
-				>
-					{isExpanded ? " Сховати" : " Показати більше"}
-				</span>
-			</p>
+			<div className={styles["expandable-description__text"]}>
+				{isExpanded ? (
+					<div dangerouslySetInnerHTML={{ __html: joinedDescriptions }} />
+				) : (
+					<div
+						dangerouslySetInnerHTML={{
+							__html: `${joinedDescriptions.trim().substring(startIndex, maxLength)}${isDescriptionTooLong ? "..." : ""}`,
+						}}
+					/>
+				)}
+				{isDescriptionTooLong && (
+					<span
+						className={styles["expandable-description__toggle"]}
+						onClick={toggleDescription}
+					>
+						{isExpanded ? " Сховати" : " Показати більше"}
+					</span>
+				)}
+			</div>
 		</div>
 	);
 };
