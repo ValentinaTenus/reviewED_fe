@@ -3,7 +3,7 @@ import React from "react";
 import styles from "./styles.module.scss";
 
 type DescriptionSectionProperties = {
-	description: HTMLElement[];
+	description: string[];
 };
 
 const DescriptionSection: React.FC<DescriptionSectionProperties> = ({

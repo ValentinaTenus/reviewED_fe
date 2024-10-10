@@ -7,7 +7,7 @@ type GetCompanyByIdResponse = {
 	categories: Category[];
 	city: string;
 	contact_person: string;
-	description: string;
+	description: string[];
 	email: string;
 	id: number;
 	logo: string;

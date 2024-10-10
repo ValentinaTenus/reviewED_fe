@@ -7,7 +7,10 @@ import "~/assets/styles/index.scss";
 import "react-toastify/dist/ReactToastify.css";
 
 import { App } from "./app/App.tsx";
-import { ProtectedRouteIsStaff } from "./common/components/index.ts";
+import {
+	ProtectedRouteIsLogined,
+	ProtectedRouteIsStaff,
+} from "./common/components/index.ts";
 import { AppRoute } from "./common/enums/app-route.enum.ts";
 import { AuthSuccess } from "./pages/auth/auth-success.tsx";
 import { CourseList } from "./pages/course-list-page/index.tsx";
@@ -53,7 +56,7 @@ const routes = createBrowserRouter([
 				path: AppRoute.FAQ_PAGE,
 			},
 			{
-				element: <MyReviewsPage />,
+				element: <ProtectedRouteIsLogined element={<MyReviewsPage />} />,
 				path: AppRoute.MY_REVIEWS_PAGE,
 			},
 			{
@@ -69,7 +72,7 @@ const routes = createBrowserRouter([
 				path: AppRoute.ALL_COURSES,
 			},
 			{
-				element: <UserRequests />,
+				element: <ProtectedRouteIsLogined element={<UserRequests />} />,
 				path: AppRoute.USER_REQUESTS,
 			},
 			{

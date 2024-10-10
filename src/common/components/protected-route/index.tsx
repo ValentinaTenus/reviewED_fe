@@ -12,3 +12,12 @@ export const ProtectedRouteIsStaff = ({
 	const { user } = useAppSelector((state) => state.auth);
 	return user?.is_staff ? element : <Navigate to={AppRoute.ROOT} />;
 };
+
+export const ProtectedRouteIsLogined = ({
+	element,
+}: {
+	element: React.JSX.Element;
+}) => {
+	const { user } = useAppSelector((state) => state.auth);
+	return user ? element : <Navigate to={AppRoute.ROOT} />;
+};

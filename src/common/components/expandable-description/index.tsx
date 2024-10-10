@@ -23,17 +23,27 @@ const ExpandableDescription: React.FC<ExpandableDescriptionProps> = ({
 
 	return (
 		<div className={styles["expandable-description"]}>
-			<p className={styles["expandable-description__text"]}>
-				{isExpanded
-					? description
-					: `${description.substring(startIndex, maxLength)}...`}
+			<div>
+				{isExpanded ? (
+					<p
+						className={styles["expandable-description__text"]}
+						dangerouslySetInnerHTML={{ __html: description }}
+					/>
+				) : (
+					<p
+						className={styles["expandable-description__text"]}
+						dangerouslySetInnerHTML={{
+							__html: `${description.substring(startIndex, maxLength)}...`,
+						}}
+					/>
+				)}
 				<span
 					className={styles["expandable-description__toggle"]}
 					onClick={toggleDescription}
 				>
 					{isExpanded ? " Сховати" : " Показати більше"}
 				</span>
-			</p>
+			</div>
 		</div>
 	);
 };

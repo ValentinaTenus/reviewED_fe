@@ -10,6 +10,8 @@ import { reviewsApiPath } from "./constans.ts";
 
 type ModerationReviewsRequest = {
 	id?: string;
+	limit?: number;
+	offset?: number;
 	ordering?: "-time_added" | "time_added";
 	status?: "approved" | "pending" | "rejected";
 	type?: "company" | "course";
@@ -39,6 +41,8 @@ export const reviewsModerationApi = api.injectEndpoints({
 				return {
 					method: HttpMethods.GET,
 					params: {
+						limit: filters.limit,
+						offset: filters.offset,
 						ordering: filters.ordering,
 						status: filters.status,
 						type: filters.type,
