@@ -1,7 +1,7 @@
+import DOMPurify from "dompurify";
 import React, { useState } from "react";
 
 import styles from "./styles.module.scss";
-import DOMPurify from "dompurify";
 
 interface ExpandableDescriptionProps {
 	description: string[];

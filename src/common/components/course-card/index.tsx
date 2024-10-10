@@ -136,11 +136,12 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, isLogoShown }) => {
 						</div>
 					))}
 				</div>
-
-				<ExpandableDescription
-					description={course.description}
-					maxLength={maxLength}
-				/>
+				{course.description && (
+					<ExpandableDescription
+						description={course.description}
+						maxLength={maxLength}
+					/>
+				)}
 			</div>
 
 			<div className={styles["course-card__reviews"]}>
