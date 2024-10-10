@@ -14,6 +14,7 @@ import { coursesApi } from "./courses/courses-api.ts";
 import { coursesReducer } from "./courses/courses-slice.ts";
 import { locationsApi } from "./locations/locations-api.ts";
 import { locationsReducer } from "./locations/locations-slice.ts";
+import { myRewiewsApi } from "./my-reviews/my-reviews-api.ts";
 import { reviewsApi } from "./reviews/reviews-api.ts";
 import { reviewsReducer } from "./reviews/reviews-slice.ts";
 import { reviewsModerationApi } from "./reviews-moderation/reviews-moderation-api.ts";
@@ -33,6 +34,7 @@ const rootReducer = combineReducers({
 	coursesApiSlice: coursesApi.reducer,
 	locations: locationsReducer,
 	locationsApiSlice: locationsApi.reducer,
+	myRewiews: myRewiewsApi.reducer,
 	reviews: reviewsReducer,
 	reviewsApiSlice: reviewsApi.reducer,
 	rewiewsModeration: reviewsModerationReducer,

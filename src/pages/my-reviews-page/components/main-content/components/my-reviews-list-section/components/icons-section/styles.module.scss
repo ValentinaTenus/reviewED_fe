@@ -1,0 +1,48 @@
+.icons {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	cursor: pointer;
+
+	&__right,
+	&__left {
+		div {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+
+			span {
+				color: var(--color-grey-500);
+			}
+		}
+	}
+
+	&__right {
+		display: flex;
+		gap: 20px;
+	}
+
+	svg {
+		height: 24px;
+		width: 24px;
+		color: var(--color-grey-900);
+	}
+}
+
+@media (max-width: 458px) {
+	.icons {
+		&__right,
+		&__left {
+			div {
+				span {
+					display: none;
+				}
+
+				.like-count {
+					display: block;
+				}
+			}
+		}
+	}
+}

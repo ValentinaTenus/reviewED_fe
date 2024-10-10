@@ -1,64 +1,70 @@
 .rating {
-  align-items: center;
-  display: flex;
-  justify-content: center;
+	align-items: center;
+	display: flex;
+	justify-content: center;
 }
 
 .rating_stars {
-  align-items: center;
-  display: flex;
-  justify-content: center;
+	align-items: center;
+	display: flex;
+	justify-content: center;
+
+	&--edit {
+		div {
+			cursor: pointer;
+		}
+	}
 }
 
 .rating__base {
-  gap: 8px;
+	gap: 8px;
 }
 
 .rating__base .rating_stars {
-  gap: 4px;
+	gap: 4px;
 }
 
 .rating__small_card {
-  gap: 4px; 
+	gap: 4px;
 }
 
-.rating__small_card .rating_stars{
-  gap: 2px;
+.rating__small_card .rating_stars {
+	gap: 2px;
 }
 
 .star {
-  width: 16px;
-  height: 16px;
-  color: var(--color-yellow-500);
+	width: 16px;
+	height: 16px;
+	color: var(--color-yellow-500);
 }
 
 .star_empty {
-  color: var(--color-grey-400);
+	color: var(--color-grey-400);
 }
 
 .average_rating {
-  font-family: var(--font-family-main);
-  font-size: var(--font-size-main-text);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-grey-950);
+	font-family: var(--font-family-main);
+	font-size: var(--font-size-main-text);
+	font-weight: var(--font-weight-bold);
+	color: var(--color-grey-950);
 }
 
 .size__small .star {
-  width: 16px;
-  height: 16px;
+	width: 16px;
+	height: 16px;
 }
 
 .size__small .average_rating {
-  font-size: var(--font-size-main-text);
-  font-weight: var(--font-weight-bold);
+	font-size: var(--font-size-main-text);
+	font-weight: var(--font-weight-bold);
 }
 
 .size__medium .star {
-  width: 18px;
-  height: 18px;
+	width: 18px;
+	height: 18px;
 }
 
 .size__large .star {
-  width: 24px;
-  height: 24px;
+	width: 24px;
+	height: 24px;
 }
