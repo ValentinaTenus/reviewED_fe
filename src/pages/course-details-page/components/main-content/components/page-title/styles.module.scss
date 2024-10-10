@@ -54,3 +54,10 @@
 		font-weight: var(--font-weight-bold);
 	}
 }
+
+@media (max-width: 480px) {
+	.title_name {
+		font-size: var(--font-size-title-h4);
+		font-weight: var(--font-weight-bold);
+	}
+}
