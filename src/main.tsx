@@ -25,7 +25,6 @@ import {
 	MyReviewsPage,
 	PrivacyPolicyPage,
 	UserRequests,
-	UserReviews,
 } from "./pages/index.ts";
 import { store } from "./redux/store.ts";
 
@@ -71,10 +70,6 @@ const routes = createBrowserRouter([
 			{
 				element: <CourseList />,
 				path: AppRoute.ALL_COURSES,
-			},
-			{
-				element: <ProtectedRouteIsLogined element={<UserReviews />} />,
-				path: AppRoute.USER_REVIEWS,
 			},
 			{
 				element: <ProtectedRouteIsLogined element={<UserRequests />} />,

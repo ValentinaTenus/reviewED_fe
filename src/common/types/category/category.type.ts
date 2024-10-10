@@ -9,4 +9,4 @@ type Category = {
 	subcategories: Subcategory[];
 };
 
-export { type Category };
+export { type Category, type Subcategory };

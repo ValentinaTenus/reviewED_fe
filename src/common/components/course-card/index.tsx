@@ -136,9 +136,9 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, isLogoShown }) => {
 						</div>
 					))}
 				</div>
-				{course.description.trim() !== "" && (
+				{course.description.join("").trim() !== "" && (
 					<ExpandableDescription
-						description={course.description}
+						description={course.description.join("")}
 						maxLength={maxLength}
 					/>
 				)}
