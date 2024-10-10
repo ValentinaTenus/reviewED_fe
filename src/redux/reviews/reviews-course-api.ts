@@ -2,6 +2,7 @@ import { HttpMethods } from "~/common/enums/index.ts";
 import {
 	type CourseReview,
 	type GetCourseReviews,
+	type SendCourseRequest,
 } from "~/common/types/index.ts";
 
 import { api } from "../services.ts";
@@ -18,8 +19,21 @@ export const reviewsApi = api.injectEndpoints({
 			},
 			transformResponse: (response: GetCourseReviews) => response.results,
 		}),
+		sendReview: builder.mutation<CourseReview, SendCourseRequest>({
+			query: (reviewData) => ({
+				body: {
+					rating: reviewData.rating,
+					text: reviewData.text,
+				},
+				method: HttpMethods.POST,
+				url: `${reviewsApiPath.POST_COURSES_REVIEWS}${reviewData.courseId}/`,
+			}),
+		}),
 	}),
 });
 
-export const { useGetCourseReviewsQuery, useLazyGetCourseReviewsQuery } =
-	reviewsApi;
+export const {
+	useGetCourseReviewsQuery,
+	useLazyGetCourseReviewsQuery,
+	useSendReviewMutation,
+} = reviewsApi;

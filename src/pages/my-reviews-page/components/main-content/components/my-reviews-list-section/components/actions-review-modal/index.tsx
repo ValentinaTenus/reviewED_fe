@@ -39,7 +39,7 @@ const ActionsReviewModal: React.FC<Properties> = ({
 			onClose={handleClose}
 		>
 			<div className={styles["actions-modal"]}>
-				<div className={styles["actions-modal__title"]}>Actions</div>
+				<div className={styles["actions-modal__title"]}>Дії</div>
 
 				<hr />
 
@@ -54,7 +54,7 @@ const ActionsReviewModal: React.FC<Properties> = ({
 							onClick={() => handleSelect(option.value)}
 						>
 							<Icon name={option.iconName} />
-							<span>{option.value}</span>
+							<span>{option.label}</span>
 						</div>
 					))}
 				</div>

@@ -67,7 +67,9 @@ const EditReviewModal: React.FC<Properties> = ({
 						</div>
 					</div>
 					<div className={styles["info__right"]}>
-						<div className={styles["date"]}>{formattedDate}</div>
+						<div className={styles["date"]}>
+							{formattedDate.replace(/\s+/g, "")}
+						</div>
 						<StarRating
 							averageRating={rating || review.rating}
 							classNameStarsBlock={styles["rating_stars--edit"]}
@@ -87,7 +89,7 @@ const EditReviewModal: React.FC<Properties> = ({
 
 				<div className={styles["review-content__edit"]}>
 					<form onSubmit={handleSubmit(onEditReview)}>
-						<div className={styles["edit__title"]}>Editing review</div>
+						<div className={styles["edit__title"]}>Редагування відгуку</div>
 						<div className={styles["edit__textarea"]}>
 							<Input
 								control={control}
@@ -99,10 +101,10 @@ const EditReviewModal: React.FC<Properties> = ({
 							/>
 							<div className={styles["edit__bottom"]}>
 								<div className={styles["edit__questing"]}>
-									<p>Are you sure you want to edit this review?</p>
+									<p>Ви впевнені, що хочете відредагувати цей відгук?</p>
 									<p>
-										Once edited, it will be sent to the moderator or review
-										again before it’s published.
+										Після редагування він буде надісланий модератору для
+										повторного розгляду перед публікацією.
 									</p>
 								</div>
 								<div className={styles["edit__buttons"]}>
@@ -111,7 +113,7 @@ const EditReviewModal: React.FC<Properties> = ({
 										size={ButtonSize.MEDIUM}
 										variant={ButtonVariant.SECONDARY}
 									>
-										Cancel
+										Скасувати
 									</Button>
 									<Button
 										disabled={isEditing}
@@ -119,7 +121,7 @@ const EditReviewModal: React.FC<Properties> = ({
 										type={ButtonType.SUBMIT}
 										variant={ButtonVariant.PRIMARY}
 									>
-										Edit
+										Видалити
 									</Button>
 								</div>
 							</div>

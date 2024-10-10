@@ -41,10 +41,10 @@ const DeleteReviewModal: React.FC<Properties> = ({
 							<Icon name={IconName.WARNING} />
 						</div>
 					</div>
-					<div className={styles["delete-modal__title"]}>Delete review?</div>
+					<div className={styles["delete-modal__title"]}>Видалити відгук?</div>
 					<div className={styles["delete-modal__text"]}>
-						<p>Are you sure you want to delete this review?</p>
-						<p>Once deleted, it cannot be recovered.</p>
+						<p>Ви впевнені, що хочете видалити цей відгук?</p>
+						<p>Після видалення його не можна буде відновити.</p>
 					</div>
 				</div>
 
@@ -57,7 +57,7 @@ const DeleteReviewModal: React.FC<Properties> = ({
 							size={ButtonSize.MEDIUM}
 							variant={ButtonVariant.SECONDARY}
 						>
-							Cancel
+							Скасувати
 						</Button>
 						<Button
 							disabled={isDeleting}
@@ -65,7 +65,7 @@ const DeleteReviewModal: React.FC<Properties> = ({
 							size={ButtonSize.MEDIUM}
 							variant={ButtonVariant.DELETE}
 						>
-							Delete
+							Видалити
 						</Button>
 					</div>
 				</div>

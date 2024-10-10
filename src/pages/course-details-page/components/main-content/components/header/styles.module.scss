@@ -1,5 +1,12 @@
-.main_content {
+.header {
 	font-family: var(--font-family-main);
 	font-size: var(--font-size-title);
 	font-weight: var(--font-weight-bold);
+	scroll-margin: 73px;
 }
+
+@media (max-width: 480px)  {
+	.header {
+		scroll-margin: 54px;
+	}
+  }

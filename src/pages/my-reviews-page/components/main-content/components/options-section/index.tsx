@@ -23,7 +23,7 @@ const OptionsSection: React.FC<Properties> = ({ category, handleClick }) => {
 						key={item}
 						onClick={() => handleClick(item as MyReviewCategory)}
 					>
-						{item} reviews
+						Відгуки про {item === "course" ? "курс" : "компанію"}
 					</li>
 				))}
 			</ul>

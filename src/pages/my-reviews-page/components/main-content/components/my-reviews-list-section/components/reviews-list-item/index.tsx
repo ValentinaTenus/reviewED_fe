@@ -20,12 +20,36 @@ import {
 import styles from "./styles.module.scss";
 
 const MY_REVIEW_OPTIONS: MyReviewOptions[] = [
-	{ iconName: IconName.EDIT, value: "edit" },
-	{ iconName: IconName.MESSAGES, value: "contact moderator" },
-	{ iconName: IconName.DELETE, value: "delete" },
+	{ iconName: IconName.EDIT, label: "редагувати", value: "edit" },
+	{
+		iconName: IconName.MESSAGES,
+		label: "зв'язатися з модератором",
+		value: "contact moderator",
+	},
+	{ iconName: IconName.DELETE, label: "видалити", value: "delete" },
 ];
 
+const STATUS_TRANSLATIONS = {
+	pending: "В очікуванні",
+	published: "Опубліковано",
+	removed: "Неуспішно",
+};
+
 const MOBILE_BREAKPOINT = 576;
+
+const SINGLE_COURSE = 1;
+const MIN_PLURAL_COURSE = 2;
+const MAX_PLURAL_COURSE = 4;
+
+const getCourseLabel = (count: number) => {
+	if (count === SINGLE_COURSE) {
+		return `${count} курс`;
+	} else if (count >= MIN_PLURAL_COURSE && count <= MAX_PLURAL_COURSE) {
+		return `${count} курси`;
+	} else {
+		return `${count} курсів`;
+	}
+};
 
 interface Properties {
 	activePopup: null | number;
@@ -136,13 +160,13 @@ const ReviewListItem: React.FC<Properties> = ({
 								)}
 							>
 								<p className={styles["details__reviews"]}>
-									Reviews: <span>{review.company_reviews_count}</span>
+									Відгуків: <span>{review.company_reviews_count}</span>
 								</p>
 								<p className={styles["details__courses"]}>
-									Courses: <span>{review.total_courses_count}</span>
+									Курсів: <span>{review.total_courses_count}</span>
 								</p>
 								<p className={styles["reviews-modile"]}>
-									{review.company_reviews_count} reviews
+									{review.company_reviews_count} відгуків
 								</p>
 							</div>
 						</div>
@@ -160,7 +184,7 @@ const ReviewListItem: React.FC<Properties> = ({
 								category === "course" && styles["course"],
 							)}
 						>
-							{review.total_courses_count} courses
+							{getCourseLabel(review.total_courses_count)}
 						</p>
 
 						<div
@@ -169,7 +193,7 @@ const ReviewListItem: React.FC<Properties> = ({
 								category === "course" && styles["course"],
 							)}
 						>
-							<span>By</span>{" "}
+							<span>Від</span>{" "}
 							<Link to={`/company-details/${review.company_id}`}>
 								{review.company_name}
 							</Link>
@@ -182,7 +206,7 @@ const ReviewListItem: React.FC<Properties> = ({
 									styles[`${review.status}`],
 								)}
 							>
-								{review.status === "removed" ? "Unsuccessful" : review.status}
+								{STATUS_TRANSLATIONS[review.status]}
 							</div>
 						</div>
 					</div>
@@ -194,10 +218,12 @@ const ReviewListItem: React.FC<Properties> = ({
 					<div className={styles["review-top"]}>
 						<div className={styles["review-top__detail"]}>
 							<StarRating averageRating={review.rating} isNumberShown={false} />
-							<span>Review ID:</span>
+							<span>ID відгуку:</span>
 							{review.id}
 						</div>
-						<div className={styles["date"]}>{formattedDate}</div>
+						<div className={styles["date"]}>
+							{formattedDate.replace(/\s+/g, "")}
+						</div>
 					</div>
 					<ReviewTextSection
 						handleClickEditReview={handleClickEditReview}
@@ -213,7 +239,7 @@ const ReviewListItem: React.FC<Properties> = ({
 					<div
 						className={clsx(styles["status-text"], styles[`${review.status}`])}
 					>
-						{review.status === "removed" ? "Unsuccessful" : review.status}
+						{STATUS_TRANSLATIONS[review.status]}
 					</div>
 					<div className={styles["status-icons"]}>
 						<div className={styles["icon-warning"]}>

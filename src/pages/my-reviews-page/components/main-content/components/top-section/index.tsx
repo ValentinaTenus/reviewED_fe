@@ -12,11 +12,11 @@ const TopSection: React.FC = () => {
 	return (
 		<div className={styles["top-section"]}>
 			<div className={styles["top-section__text"]}>
-				<h1 className={styles["top-section__title"]}>My Reviews</h1>
+				<h1 className={styles["top-section__title"]}>Мої відгуки</h1>
 				<h3 className={styles["top-section__subtitle"]}>
 					{user?.full_name}
 					<span>
-						<Icon name={IconName.SHIELD_TICK} withButton /> Verified Via
+						<Icon name={IconName.SHIELD_TICK} withButton /> Верифіковано через
 						LinkedIn
 					</span>
 				</h3>

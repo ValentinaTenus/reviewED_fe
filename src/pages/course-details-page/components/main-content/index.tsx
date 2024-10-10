@@ -32,6 +32,7 @@ const MainContent: React.FC<MainContentProperties> = ({ courseId }) => {
 
 	const aboutCourseRef = useRef(null);
 	const aboutCompanyRef = useRef(null);
+	const reviewsRef = useRef(null);
 
 	// if(isFetching){
 	// 	return (
@@ -57,6 +58,7 @@ const MainContent: React.FC<MainContentProperties> = ({ courseId }) => {
 							<NavBar
 								aboutCompany={aboutCompanyRef}
 								aboutCourse={aboutCourseRef}
+								reviews={reviewsRef}
 							/>
 							<Header ref={aboutCourseRef} title="Про курс" />
 							<PricingBar price={course ? course.price : ""} />
@@ -70,7 +72,7 @@ const MainContent: React.FC<MainContentProperties> = ({ courseId }) => {
 								ref={aboutCompanyRef}
 								title="Про компанію"
 							/>
-							<ReviewsBar />
+							<ReviewsBar course={course} ref={reviewsRef} />
 						</div>
 					)}
 				</>
