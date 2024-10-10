@@ -3,7 +3,7 @@
 	display: grid;
 	gap: 8px;
 	grid-template-areas: "user verif rating";
-	grid-template-columns: fit-content(30%) 1fr auto;
+	grid-template-columns: auto 1fr auto;
 	height: 60px;
 }
 
@@ -12,14 +12,16 @@
 	font-family: var(--font-family-main);
 	font-size: var(--font-size-main-text);
 	font-weight: var(--font-weight-text);
+	line-height: 140%;
 }
 
 .review__rating-block {
-	display: grid;
+	display: flex;
 	grid-area: rating;
-	justify-items: end;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: end;
 	height: 56px;
-	padding-top: 5px;
 }
 
 .review__user-block {
@@ -35,8 +37,14 @@
 	width: 60px;
 }
 
+.review__name-block {
+display: flex;
+flex-direction: column;
+height: 100%;
+justify-content: space-between;
+}
+
 .review__user-name {
-	display: flex;
 	font-family: var(--font-family-main);
 	font-size: var(--font-size-title-large);
 	font-weight: var(--font-weight-bold);
@@ -46,7 +54,6 @@
 
 .review__user-role {
 	color: var(--color-grey-400);
-	display: flex;
 	font-family: var(--font-family-main);
 	font-size: var(--font-size-main-text);
 	font-weight: var(--font-weight-text);
@@ -62,7 +69,6 @@
 	font-weight: var(--font-weight-text);
 	height: 50px;
 	line-height: 100%;
-	padding-top: 5px;
 }
 
 .review__verification-icon {

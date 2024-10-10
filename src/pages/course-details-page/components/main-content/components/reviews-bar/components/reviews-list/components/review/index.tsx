@@ -13,9 +13,9 @@ const Review: React.FC = () => {
 		<div className={styles["review"]}>
 			<ReviewHeader
 				date="Yesterday"
-				name="Some dude"
+				name="Іван Підкова"
 				rating={4}
-				role="Student"
+				role="Студент"
 			/>
 			<ReviewMain text={mockText} />
 			<ReviewFooter />

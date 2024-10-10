@@ -37,7 +37,7 @@ const ReviewFooter: React.FC = () => {
 					size={ButtonSize.SMALL}
 					variant={ButtonVariant.DEFAULT}
 				>
-					Numba of likes
+					700
 				</Button>
 			</aside>
 		</div>
