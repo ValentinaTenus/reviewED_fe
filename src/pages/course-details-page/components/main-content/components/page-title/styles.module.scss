@@ -2,7 +2,6 @@
 	display: grid;
 	grid-template-areas: "logo title" "logo rating";
 	gap: 12px 20px;
-
 }
 
 .title_logo {
@@ -19,4 +18,11 @@
 
 .title_rating {
 	grid-area: rating;
+}
+
+@media (max-width: 480px) {
+	.title_name {
+		font-size: var(--font-size-title-h4);
+		font-weight: var(--font-weight-bold);
+	}
 }
