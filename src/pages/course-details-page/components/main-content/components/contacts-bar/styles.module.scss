@@ -12,6 +12,7 @@
 	font-family: var(--font-family-main);
 	font-size: var(--font-size-title);
 	font-weight: var(--font-weight-extra-bold);
+	scroll-margin: 73px;
 }
 
 .contacts__items {
@@ -60,3 +61,9 @@
 		font-size: var(--font-size-title-h4);
 	}
 }
+
+@media (max-width: 480px)  {
+	.contacts__header {
+		scroll-margin: 54px;
+	}
+  }

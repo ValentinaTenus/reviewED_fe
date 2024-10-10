@@ -5,12 +5,14 @@ import { type RecentReview } from "~/common/types/index";
 type ReviewsState = {
 	recentReviews: null | RecentReview[];
 	userCompanyReviews: number[];
+	userCourseReviews: number[];
 	userLikedCompanyReviews: number[];
 };
 
 const initialState: ReviewsState = {
 	recentReviews: null,
 	userCompanyReviews: [],
+	userCourseReviews: [],
 	userLikedCompanyReviews: [],
 };
 
@@ -24,6 +26,11 @@ const reviewsSlice = createSlice({
 					...state.userCompanyReviews,
 					action.payload,
 				];
+			}
+		},
+		addCourseReview(state, action: PayloadAction<number>) {
+			if (!state.userCourseReviews.includes(action.payload)) {
+				state.userCourseReviews = [...state.userCourseReviews, action.payload];
 			}
 		},
 		likeCompanyReview(state, action: PayloadAction<number>) {
@@ -49,6 +56,7 @@ const reviewsSlice = createSlice({
 
 export const {
 	addCompanyReview,
+	addCourseReview,
 	likeCompanyReview,
 	setRecentReviews,
 	unlikeCompanyReview,

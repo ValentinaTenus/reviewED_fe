@@ -26,6 +26,7 @@ const MainContent: React.FC<MainContentProperties> = ({ courseId }) => {
 
 	const aboutCourseRef = useRef(null);
 	const aboutCompanyRef = useRef(null);
+	const reviewsRef = useRef(null);
 
 	const breadcrumbs = [
 		{ label: "Головна сторінка", path: AppRoute.ROOT },
@@ -50,6 +51,7 @@ const MainContent: React.FC<MainContentProperties> = ({ courseId }) => {
 								<NavBar
 									aboutCompany={aboutCompanyRef}
 									aboutCourse={aboutCourseRef}
+									reviews={reviewsRef}
 								/>
 							</div>
 
@@ -58,9 +60,7 @@ const MainContent: React.FC<MainContentProperties> = ({ courseId }) => {
 								<PricingBar price={course ? course.price : ""} />
 								<div className={styles["main-content__about-description"]}>
 									<TargetGroupSection targetGroup={course ? course.age : ""} />
-									<DescriptionSection
-										description={course ? course.description : ""}
-									/>
+									<DescriptionSection description={course.description} />
 									<CategoriesSection course={course} />
 								</div>
 							</div>
@@ -70,7 +70,7 @@ const MainContent: React.FC<MainContentProperties> = ({ courseId }) => {
 								ref={aboutCompanyRef}
 								title="Про компанію"
 							/>
-							<ReviewsBar courseId={courseId} />
+							<ReviewsBar course={course} ref={reviewsRef} />
 						</div>
 					)}
 				</>

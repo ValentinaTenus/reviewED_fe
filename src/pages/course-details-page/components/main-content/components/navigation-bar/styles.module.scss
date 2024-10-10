@@ -1,6 +1,15 @@
 .navbar__wrapper {
+	align-items: center;
+	background-color: var(--color-grey-50);
+	display: flex;
+	height: 73px;
 	overflow-x: auto;
+	position: sticky;
+	scroll-margin: 0px;
+	top: 0px;
 	white-space: nowrap;
+	width: 100%;
+	z-index: 1;
 }
 
 .navbar {
@@ -46,3 +55,10 @@
 		padding: 16px;
 	}
 }
+
+@media (max-width: 480px)  {
+	.navbar__wrapper {
+
+		height: 54px;
+	}
+  }

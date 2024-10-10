@@ -2,6 +2,7 @@
 	display: grid;
 	gap: 24px;
 	grid-template-areas: "hdr hdr" "rvs sts" "rvs btn";
+	grid-template-columns: 1fr auto;
 	grid-template-rows: 71px 230px 1fr;
 	width: 100%;
 }
@@ -13,17 +14,19 @@
 	font-size: var(--font-size-title);
 	grid-area: hdr;
 	line-height: 130%;
+	scroll-margin: 73px;
 }
 
 .reviews-bar__button {
 	grid-area: btn;
-	width: 536px;
 	height: 40px;
+	width: 536px;
 }
 
 .reviews-bar__no-reviews {
 	grid-area: rvs;
 	height: 294px;
+	width: 100%;
 }
 .reviews-bar__picture {
 	display: block;
@@ -37,7 +40,6 @@
 	font-weight: var(--font-weight-bold);
 	line-height: 130%;
 	text-align: center;
-
 }
 
 .reviews-bar__no-reviews {
@@ -65,3 +67,15 @@
 		font-size: var(--font-size-title-h4);
 	}
 }
+
+@media (max-width: 768px) {
+	.reviews-bar__button {
+		width: 100%;
+	}
+}
+
+@media (max-width: 480px)  {
+	.reviews-bar__header {
+		scroll-margin: 54px;
+	}
+  }
