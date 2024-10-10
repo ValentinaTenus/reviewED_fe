@@ -8,13 +8,13 @@ const NotFound: React.FC = () => {
 	return (
 		<div className={styles["not-found_container"]}>
 			<div className={styles["not-found_content"]}>
-				<h2>Reviews posted</h2>
+				<h2>Відгуки надіслані</h2>
 
 				<NotFoundImage className={styles["not-found_image"]} />
 
-				<h4>You haven’t submitted any Review</h4>
+				<h4>Ви не надіслали жодного відгуку</h4>
 				<p className={styles["not-found_text"]}>
-					When you leave a Review for moderation, they will be shown here.
+					Коли ви залишите відгук для модерації, вони будуть показані тут.
 				</p>
 			</div>
 		</div>

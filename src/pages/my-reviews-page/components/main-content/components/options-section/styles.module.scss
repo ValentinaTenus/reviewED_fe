@@ -20,7 +20,6 @@
 	font-family: var(--font-family-main);
 	font-weight: var(--font-weight-semi-bold);
 	letter-spacing: -0.06em;
-	text-transform: capitalize;
 	color: var(--color-grey-500);
 	position: relative;
 	z-index: 1;
@@ -40,6 +39,6 @@
 	}
 
 	.options-section__item {
-		padding: 16px;
+		padding: 10px;
 	}
 }
