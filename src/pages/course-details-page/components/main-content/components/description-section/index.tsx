@@ -1,3 +1,4 @@
+import DOMPurify from "dompurify";
 import React from "react";
 
 import styles from "./styles.module.scss";
@@ -9,7 +10,17 @@ type DescriptionSectionProperties = {
 const DescriptionSection: React.FC<DescriptionSectionProperties> = ({
 	description,
 }) => {
-	return <div className={styles["description"]}>{description}</div>;
+	const sanitizedDescription = DOMPurify.sanitize(description);
+
+	// Remove unnecessary commas and whitespace between tags
+	const cleanedDescription = sanitizedDescription.replace(/>,\s*</g, "><");
+
+	return (
+		<div
+			className={styles["description"]}
+			dangerouslySetInnerHTML={{ __html: cleanedDescription }}
+		/>
+	);
 };
 
 export { DescriptionSection };
