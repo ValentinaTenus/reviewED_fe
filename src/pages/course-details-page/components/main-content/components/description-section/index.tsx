@@ -1,20 +1,24 @@
+import DOMPurify from "dompurify";
 import React from "react";
 
 import styles from "./styles.module.scss";
 
 type DescriptionSectionProperties = {
-	description: HTMLElement[];
+	description: string[];
 };
 
 const DescriptionSection: React.FC<DescriptionSectionProperties> = ({
 	description,
 }) => {
+	const sanitizedDescriptions = description.map((htmlContent) =>
+		DOMPurify.sanitize(htmlContent),
+	);
+
 	return (
-		<ul className={styles["description"]}>
-			{description?.map((htmlContent, index) => (
-				<li dangerouslySetInnerHTML={{ __html: htmlContent }} key={index} />
-			))}
-		</ul>
+		<div
+			className={styles["description"]}
+			dangerouslySetInnerHTML={{ __html: sanitizedDescriptions.join("") }}
+		/>
 	);
 };
 
