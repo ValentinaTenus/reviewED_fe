@@ -1,13 +1,13 @@
-import { forwardRef, useEffect, useState } from "react";
+import { forwardRef, useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Image from "~/assets/images/no-reviews.png";
-import { Button } from "~/common/components";
+import { Button, SortDropdown } from "~/common/components";
 import { AppRoute, ButtonSize, ButtonVariant } from "~/common/enums/index";
 import { type GetCourseByIdResponseDto } from "~/common/types";
 import { useAppSelector } from "~/redux/hooks.type";
 import { useGetReviewsStatsQuery } from "~/redux/reviews/reviews-stats-api";
-
+import { ReviewsCourseSortOptions } from "~/common/constants";
 import { ReviewModal } from "./components/review-modal";
 import { ReviewsList } from "./components/reviews-list";
 import { ReviewsStatsBar } from "./components/reviews-stats";
@@ -77,11 +77,25 @@ const ReviewsBar = forwardRef<HTMLDivElement, ReviewsBarProperties>(
 			}
 		}, [isReviewed]);
 
+		const [sortBy, setSortBy] = useState<string>("rating");
+
+		const handleChangeSortBy = useCallback((newSortBy: number | string) => {
+			setSortBy(newSortBy.toString());
+		}, []);
+
 		return (
 			<div className={styles["reviews-bar"]}>
 				<h3 className={styles["reviews-bar__header"]} ref={ref}>
 					Відгуки
 				</h3>
+				<aside className={styles["reviews-bar__sorting"]}>
+					<p>Сортувати за</p>
+					<SortDropdown
+						aiEnd={false}
+						onChange={handleChangeSortBy}
+						options={ReviewsCourseSortOptions}
+					/>
+				</aside>
 				{mockList.length ? (
 					<ReviewsList />
 				) : (
