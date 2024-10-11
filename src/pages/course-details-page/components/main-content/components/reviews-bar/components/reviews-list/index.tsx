@@ -1,14 +1,19 @@
 import React from "react";
 
+import { type CourseReview } from "~/common/types";
 import { Review } from "./components/review";
 import styles from "./styles.module.scss";
 
-const ReviewsList: React.FC = () => {
+type ReviewListProperties = {
+	reviews: CourseReview[];
+};
+
+const ReviewsList: React.FC<ReviewListProperties> = ({ reviews }) => {
 	return (
 		<div className={styles["reviews-list"]}>
-			<Review />
-			<Review />
-			<Review />
+			{reviews.map((review, index) => (
+				<Review key={index} review={review} />
+			))}
 		</div>
 	);
 };
