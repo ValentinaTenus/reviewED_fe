@@ -1,6 +1,7 @@
 import React from "react";
 
 import { type CourseReview } from "~/common/types";
+
 import { Review } from "./components/review";
 import styles from "./styles.module.scss";
 

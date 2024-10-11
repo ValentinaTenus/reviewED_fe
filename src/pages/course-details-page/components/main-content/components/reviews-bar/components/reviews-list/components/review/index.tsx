@@ -1,6 +1,7 @@
 import React from "react";
 
 import { type CourseReview } from "~/common/types";
+
 import { ReviewFooter } from "./components/review-footer";
 import { ReviewHeader } from "./components/review-header";
 import { ReviewMain } from "./components/review-main";
@@ -10,7 +11,7 @@ type ReviewProperties = {
 	review: CourseReview;
 };
 
-const Review: React.FC<ReviewProperties> = ({review}) => {
+const Review: React.FC<ReviewProperties> = ({ review }) => {
 	return (
 		<div className={styles["review"]}>
 			<ReviewHeader
@@ -20,7 +21,7 @@ const Review: React.FC<ReviewProperties> = ({review}) => {
 				role={review.status}
 			/>
 			<ReviewMain text={review.text} />
-			<ReviewFooter />
+			<ReviewFooter review={review} />
 		</div>
 	);
 };

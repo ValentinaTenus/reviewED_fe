@@ -1,13 +1,17 @@
-import { forwardRef, useEffect, useState, useCallback } from "react";
+import { forwardRef, useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Image from "~/assets/images/no-reviews.png";
 import { Button, SortDropdown } from "~/common/components";
+import { ReviewsCourseSortOptions } from "~/common/constants";
 import { AppRoute, ButtonSize, ButtonVariant } from "~/common/enums/index";
-import { type GetCourseByIdResponseDto } from "~/common/types";
+import {
+	type CourseReview,
+	type GetCourseByIdResponseDto,
+} from "~/common/types";
 import { useAppSelector } from "~/redux/hooks.type";
 import { useGetReviewsStatsQuery } from "~/redux/reviews/reviews-stats-api";
-import { ReviewsCourseSortOptions } from "~/common/constants";
+
 import { ReviewModal } from "./components/review-modal";
 import { ReviewsList } from "./components/reviews-list";
 import { ReviewsStatsBar } from "./components/reviews-stats";
@@ -15,6 +19,7 @@ import styles from "./styles.module.scss";
 
 const MOCK_COURSE_ID = 1;
 const THREE_SECONDS = 3000;
+const ZERO = 0;
 const mockStats = {
 	"five": 0,
 	"four": 1,
@@ -26,7 +31,7 @@ const mockStats = {
 const mockText =
 	"Курс QA тестування перевершив мої очікування. Чітко структурована програма охопила всі ключові аспекти, від основ до автоматизації. Інструктори досвідчені та доступні, завжди готові допомогти. Практичні завдання дозволили закріпити знання на реальних кейсах. Рекомендую цей курс для старту в QA! Курс QA тестування перевершив мої очікування. Чітко структурована програма охопила всі ключові аспекти, від основ до автоматизації. Інструктори досвідчені та доступні, завжди готові допомогти. Практичні завдання дозволили закріпити знання на реальних кейсах. Рекомендую цей курс для старту в QA!Курс QA тестування перевершив мої очікування. Чітко структурована програма охопила всі ключові аспекти, від основ до автоматизації. Інструктори досвідчені та доступні, завжди готові допомогти. Практичні завдання дозволили закріпити знання на реальних кейсах. Рекомендую цей курс для старту в QA!Курс QA тестування перевершив мої очікування. Чітко структурована програма охопила всі ключові аспекти, від основ до автоматизації. Інструктори досвідчені та доступні, завжди готові допомогти. Практичні завдання дозволили закріпити знання на реальних кейсах. Рекомендую цей курс для старту в QA!Курс QA тестування перевершив мої очікування. Чітко структурована програма охопила всі ключові аспекти, від основ до автоматизації. Інструктори досвідчені та доступні, завжди готові допомогти. Практичні завдання дозволили закріпити знання на реальних кейсах. Рекомендую цей курс для старту в QA!Курс QA тестування перевершив мої очікування. Чітко структурована програма охопила всі ключові аспекти, від основ до автоматизації. Інструктори досвідчені та доступні, завжди готові допомогти. Практичні завдання дозволили закріпити знання на реальних кейсах. Рекомендую цей курс для старту в QA!Курс QA тестування перевершив мої очікування. Чітко структурована програма охопила всі ключові аспекти, від основ до автоматизації. Інструктори досвідчені та доступні, завжди готові допомогти. Практичні завдання дозволили закріпити знання на реальних кейсах. Рекомендую цей курс для старту в QA!Курс QA тестування перевершив мої очікування. Чітко структурована програма охопила всі ключові аспекти, від основ до автоматизації. Інструктори досвідчені та доступні, завжди готові допомогти. Практичні завдання дозволили закріпити знання на реальних кейсах. Рекомендую цей курс для старту в QA!";
 
-const mockList = [
+const mockList: CourseReview[] = [
 	{
 		author_avatar: "",
 		author_name: "Іван Підкова",
@@ -37,7 +42,7 @@ const mockList = [
 		rating: 4,
 		status: "Студент",
 		text: mockText,
-		time_added: "11-10-2024"
+		time_added: "11-10-2024",
 	},
 	{
 		author_avatar: "",
@@ -49,7 +54,7 @@ const mockList = [
 		rating: 5,
 		status: "Студент",
 		text: mockText,
-		time_added: "10-10-2024"
+		time_added: "10-10-2024",
 	},
 	{
 		author_avatar: "",
@@ -61,7 +66,7 @@ const mockList = [
 		rating: 3,
 		status: "Студент",
 		text: mockText,
-		time_added: "12-02-2024"
+		time_added: "12-02-2024",
 	},
 	{
 		author_avatar: "",
@@ -73,10 +78,9 @@ const mockList = [
 		rating: 5,
 		status: "Студент",
 		text: mockText,
-		time_added: "16-10-2023"
-	}
+		time_added: "16-10-2023",
+	},
 ];
-
 
 type ReviewsBarProperties = {
 	course: GetCourseByIdResponseDto;
@@ -136,6 +140,23 @@ const ReviewsBar = forwardRef<HTMLDivElement, ReviewsBarProperties>(
 			setSortBy(newSortBy.toString());
 		}, []);
 
+		const sortedReviews = useMemo(() => {
+			if (!mockList) return [];
+
+			return [...mockList].sort((a, b): number => {
+				switch (sortBy) {
+					case "new":
+						return b.time_added.localeCompare(a.time_added);
+					case "old":
+						return a.time_added.localeCompare(b.time_added);
+					case "rating":
+						return b.count_likes - a.count_likes;
+					default:
+						return ZERO;
+				}
+			});
+		}, [sortBy]);
+
 		return (
 			<div className={styles["reviews-bar"]}>
 				<h3 className={styles["reviews-bar__header"]} ref={ref}>
@@ -150,7 +171,7 @@ const ReviewsBar = forwardRef<HTMLDivElement, ReviewsBarProperties>(
 					/>
 				</aside>
 				{mockList.length ? (
-					<ReviewsList reviews={mockList}/>
+					<ReviewsList reviews={sortedReviews} />
 				) : (
 					<article className={styles["reviews-bar__no-reviews"]}>
 						<img

@@ -23,4 +23,4 @@ const ReviewsCourseSortOptions = [
 		value: "new",
 	},
 ];
-export { ReviewsSortOptions, ReviewsCourseSortOptions };
+export { ReviewsCourseSortOptions, ReviewsSortOptions };
