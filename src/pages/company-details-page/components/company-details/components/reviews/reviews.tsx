@@ -1,9 +1,14 @@
 import { forwardRef, useCallback, useMemo, useState } from "react";
 
+import NoReviews from "~/assets/images/no-reviews.png";
 import { Pagination, SortDropdown } from "~/common/components";
 import { ReviewsSortOptions } from "~/common/constants";
-import { type GetCompanyByIdResponse, Review } from "~/common/types";
+import {
+	type CompanyReview,
+	type GetCompanyByIdResponse,
+} from "~/common/types";
 import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
+import { useGetReviewsStatsQuery } from "~/redux/reviews/reviews-stats-api";
 
 import { ReviewCard } from "./components/review-card";
 import { Statistics } from "./components/statistics";
@@ -11,27 +16,28 @@ import styles from "./styles.module.scss";
 
 const Reviews = forwardRef<
 	HTMLDivElement,
-	{ company: GetCompanyByIdResponse; reviews: Review[] | undefined }
+	{ company: GetCompanyByIdResponse; reviews: CompanyReview[] | undefined }
 >(({ company, reviews }, ref) => {
 	const MIN_REVIEWS = 0;
 	const ZERO = 0;
-	const ONE = 1;
 
 	const DEFAULT_REVIEWS_PER_PAGE = 4;
 	const DEFAULT_CURRENT_PAGE = 1;
 
+	const { data: reviewsStat } = useGetReviewsStatsQuery({
+		id: company.id,
+		type: "company",
+	});
 	const [currentPage, setCurrentPage] = useState(DEFAULT_CURRENT_PAGE);
 	const [reviewsPerPage] = useState(DEFAULT_REVIEWS_PER_PAGE);
+	const [sortBy, setSortBy] = useState<string>("rating");
 
 	let pages = 0;
 
 	if (reviews) {
 		pages = Math.ceil(reviews.length / reviewsPerPage);
 	}
-
 	const [pageCount] = useState(pages);
-
-	const [sortBy, setSortBy] = useState<string>("rating");
 
 	const handleChangeSortBy = useCallback((newSortBy: number | string) => {
 		setSortBy(newSortBy.toString());
@@ -49,15 +55,6 @@ const Reviews = forwardRef<
 			return ZERO;
 		});
 	}, [reviews, sortBy]);
-
-	const reviewsCount =
-		reviews?.reduce(
-			(acc, review) => {
-				acc[review.rating] = (acc[review.rating] || ZERO) + ONE;
-				return acc;
-			},
-			{} as Record<number, number>,
-		) || {};
 
 	if (reviews?.length != MIN_REVIEWS) {
 		return (
@@ -89,7 +86,9 @@ const Reviews = forwardRef<
 						/>
 					)}
 				</div>
-				<Statistics company={company} reviewsCount={reviewsCount} />
+				{reviewsStat && (
+					<Statistics company={company} reviewsCount={reviewsStat} />
+				)}
 			</div>
 		);
 	} else {
@@ -99,9 +98,9 @@ const Reviews = forwardRef<
 					<h2 className={styles["reviews_heading"]}>Відгуки</h2>
 					<div className={styles["no-reviews"]}>
 						<img
-							alt="no reviews image"
+							alt="Not found reviews"
 							className={styles["no-reviews_image"]}
-							src="/src/assets/images/no-reviews.png"
+							src={NoReviews}
 						/>
 						<h4 className={styles["no-reviews_title"]}>
 							Тут ще ніхто не залишив відгук
@@ -111,7 +110,9 @@ const Reviews = forwardRef<
 						</p>
 					</div>
 				</div>
-				<Statistics company={company} reviewsCount={reviewsCount} />
+				{reviewsStat && (
+					<Statistics company={company} reviewsCount={reviewsStat} />
+				)}
 			</div>
 		);
 	}

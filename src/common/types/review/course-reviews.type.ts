@@ -1,4 +1,5 @@
 type CourseReview = {
+	author_avatar: string;
 	author_name: string;
 	company_name: string;
 	count_likes: number;
@@ -7,6 +8,7 @@ type CourseReview = {
 	rating: number;
 	status: string;
 	text: string;
+	time_added: string;
 };
 
 export { type CourseReview };

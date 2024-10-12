@@ -70,6 +70,11 @@
 	font-weight: var(--font-weight-bold);
 	padding: 12px 24px;
 	min-width: 200px;
+
+	
+	&:hover {
+		background-color: var(--color-grey-100);
+	}
 }
 
 .dropdown_trigger.disabled {

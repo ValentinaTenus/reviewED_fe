@@ -42,7 +42,7 @@ const FilterSection: React.FC<FilterSectionProperties> = ({
 	const screenWidth = useGetScreenWidth();
 
 	const [isOpen, setIsOpen] = useState(false);
-	const [filterLenght, setFilterLenght] = useState<number>(
+	const [filterLength, setFilterLength] = useState<number>(
 		DEFAULT_FILTER_LENGTH,
 	);
 
@@ -55,14 +55,14 @@ const FilterSection: React.FC<FilterSectionProperties> = ({
 	}, []);
 
 	useEffect(() => {
-		setFilterLenght(selectedLocations.length + selectedSubCategories.length);
+		setFilterLength(selectedLocations.length + selectedSubCategories.length);
 	}, [selectedLocations, selectedSubCategories]);
 
 	return (
 		<div className={styles["course_filter__container"]}>
 			<BreadCrumb items={BreadCrumbPaths} />
 			<SearchBar
-				filtersLength={filterLenght}
+				filtersLength={filterLength}
 				isFilterButton
 				onChangeSearchTerm={onChangeSearchTerm}
 				onOpenFilter={handleOpenFilter}

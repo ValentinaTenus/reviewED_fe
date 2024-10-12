@@ -7,7 +7,7 @@ const reviewsApiPath = {
 	POST_REPORTS: "/reviews/report/",
 	REVIEWS_BY_COURSE_ID: "/reviews/courses/list/",
 	REVIEWS_BY_USER_ID: "/reviews-page/user/",
-	REVIEWS_STATS_BY_COURSE_ID: "/reviews/stats/course/",
+	REVIEWS_STATS_BY_ID: "/reviews/stats/",
 	ROOT: "/reviews",
 	SHAREABLE_LINK: "/reviews/share/",
 } as const;

@@ -4,7 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { AuthorAvatar, Icon } from "~/common/components";
 import { AppRoute, IconName } from "~/common/enums";
-import { Review } from "~/common/types";
+import { useTransformDate } from "~/common/hooks";
+import { CompanyReview } from "~/common/types";
 import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
 import { useAppDispatch, useAppSelector } from "~/redux/hooks.type";
 import {
@@ -21,8 +22,10 @@ import { ShareModal } from "./components/share-modal";
 import styles from "./styles.module.scss";
 
 const ReviewCard: React.FC<{
-	review: Review;
+	review: CompanyReview;
 }> = ({ review }) => {
+	const { formattedDate } = useTransformDate(review.time_added);
+
 	const dispatch = useAppDispatch();
 
 	const navigate = useNavigate();
@@ -112,14 +115,14 @@ const ReviewCard: React.FC<{
 								</span>
 							</div>
 						</div>
-						<span className={globalStyles["small_r"]}>Студент</span>
+						<span className={globalStyles["small_r"]} />
 					</div>
 				</div>
 				<div className={styles["review_top-right"]}>
 					<span
 						className={`${styles["review_date"]} ${globalStyles["small_r"]}`}
 					>
-						Дата відгуку
+						{formattedDate.replace(/\s+/g, "")}
 					</span>
 					<div
 						className={`${globalStyles["rating"]} ${styles["review_phone-rating"]}`}
@@ -127,7 +130,7 @@ const ReviewCard: React.FC<{
 						<div className={styles["rating_stars"]}>
 							<Rating
 								name="half-rating-read"
-								precision={0.5}
+								precision={1}
 								readOnly
 								value={review.rating}
 							/>

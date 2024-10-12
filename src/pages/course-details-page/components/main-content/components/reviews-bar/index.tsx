@@ -1,11 +1,17 @@
-import { forwardRef, useEffect, useState } from "react";
+import { forwardRef, useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Image from "~/assets/images/no-reviews.png";
-import { Button } from "~/common/components";
-import { AppRoute, ButtonSize, ButtonVariant } from "~/common/enums/index";
+import { Button, Spinner } from "~/common/components";
+import {
+	AppRoute,
+	ButtonSize,
+	ButtonVariant,
+	SpinnerVariant,
+} from "~/common/enums/index";
 import { type GetCourseByIdResponseDto } from "~/common/types";
 import { useAppSelector } from "~/redux/hooks.type";
+import { useGetCourseReviewsQuery } from "~/redux/reviews/reviews-course-api";
 import { useGetReviewsStatsQuery } from "~/redux/reviews/reviews-stats-api";
 
 import { ReviewModal } from "./components/review-modal";
@@ -15,16 +21,26 @@ import styles from "./styles.module.scss";
 
 const THREE_SECONDS = 3000;
 
-const mockList = ["Just mock thing to not have it empty"];
-
 type ReviewsBarProperties = {
 	course: GetCourseByIdResponseDto;
 };
 
 const ReviewsBar = forwardRef<HTMLDivElement, ReviewsBarProperties>(
 	({ course }, ref) => {
-		const { data: stats } = useGetReviewsStatsQuery(course.id);
+		const isUserInAccount = useAppSelector((state) => state.auth.user);
+		const userCourseReviews = useAppSelector(
+			(state) => state.reviews.userCourseReviews,
+		);
+
+		const { data: stats } = useGetReviewsStatsQuery({
+			id: course.id,
+			type: "course",
+		});
+		const { data: reviews, isFetching } = useGetCourseReviewsQuery(course.id);
 		const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+
+		const [isReviewed, setIsReviewed] = useState(false);
+		const [isButtonInactive, setIsButtonInactive] = useState(false);
 
 		const navigate = useNavigate();
 
@@ -34,17 +50,9 @@ const ReviewsBar = forwardRef<HTMLDivElement, ReviewsBarProperties>(
 			else navigate(AppRoute.AUTH);
 		};
 
-		const handleCloseReviewModal = () => {
+		const handleCloseReviewModal = useCallback(() => {
 			setIsReviewModalOpen(false);
-		};
-
-		const [isButtonInactive, setIsButtonInactive] = useState(false);
-
-		const userCourseReviews = useAppSelector(
-			(state) => state.reviews.userCourseReviews,
-		);
-
-		const isUserInAccount = useAppSelector((state) => state.auth.user);
+		}, []);
 
 		useEffect(() => {
 			if (userCourseReviews?.includes(course.id) || isUserInAccount === null) {
@@ -53,8 +61,6 @@ const ReviewsBar = forwardRef<HTMLDivElement, ReviewsBarProperties>(
 				setIsButtonInactive(false);
 			}
 		}, [userCourseReviews, isUserInAccount, course.id]);
-
-		const [isReviewed, setIsReviewed] = useState(false);
 
 		useEffect(() => {
 			if (isReviewed) {
@@ -71,8 +77,9 @@ const ReviewsBar = forwardRef<HTMLDivElement, ReviewsBarProperties>(
 				<h3 className={styles["reviews-bar__header"]} ref={ref}>
 					Відгуки
 				</h3>
-				{mockList.length ? (
-					<ReviewsList />
+				{isFetching && <Spinner variant={SpinnerVariant.SMALL} />}
+				{reviews?.length && !isFetching ? (
+					<ReviewsList reviews={reviews} />
 				) : (
 					<article className={styles["reviews-bar__no-reviews"]}>
 						<img
