@@ -5,6 +5,30 @@
 		font-weight: var(--font-weight-regular);
 		line-height: 140%;
 		color: var(--color-grey-490);
+
+		ul,
+		ol {
+			margin: 12px 0px 12px 25px;
+			font-family: var(--font-family-main);
+			font-weight: var(--font-weight-semi-bold);
+			font-size: var(--font-size-title-h5);
+
+			li {
+				padding: 6px 0px;
+			}
+		}
+
+		ol {
+			list-style: decimal;
+		}
+
+		ul {
+			list-style: disc;
+		}
+
+		p {
+			margin: 20px 0px;
+		}
 	}
 
 	&__toggle {
