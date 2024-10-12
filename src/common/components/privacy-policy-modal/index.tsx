@@ -45,7 +45,11 @@ const PrivacyPolicyModal: React.FC<ModalProperties> = ({ isOpen, onClose }) => {
 				: { detail: "Виникла невідома помилка" };
 			setServerError(loadError.detail);
 		}
-	}, [error]);
+
+		if (isSuccess) {
+			onClose();
+		}
+	}, [error, isSuccess, onClose]);
 
 	const handleRejectPrivacyPolicy = useCallback(() => {
 		setIsPolicyAgreed(false);
