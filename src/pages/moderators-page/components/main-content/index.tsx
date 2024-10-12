@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 
-import { Modal, SearchBar, Spinner } from "~/common/components";
+import { Modal, Pagination, SearchBar, Spinner } from "~/common/components";
 import { ScreenBreakpoints } from "~/common/constants";
 import { ButtonGroupData, SpinnerVariant } from "~/common/enums";
 import { useGetScreenWidth } from "~/common/hooks";
@@ -25,6 +25,9 @@ import styles from "./styles.module.scss";
 
 const INDEX_ZERO = 0;
 const INDEX_ONE = 1;
+const DEFAULT_CURRENT_PAGE = 1;
+const DEFAULT_REVIEWS_PER_PAGE = 10;
+const DEFAULT_PAGE_COUNT = 0;
 
 const MainModeratorsContent: React.FC = () => {
 	const [searchedID, setSearchedID] = useState<string>("");
@@ -32,12 +35,14 @@ const MainModeratorsContent: React.FC = () => {
 	const [fetchResult, setFetchResult] = useState<
 		GetModerationReviewsResponse | undefined
 	>();
+	const [pageCount, setPageCount] = useState(DEFAULT_PAGE_COUNT);
 	const screenWidth = useGetScreenWidth();
 
-	const [searchParams] = useSearchParams();
+	const [searchParams, setSearchParams] = useSearchParams();
 	const filterByType = searchParams.get("type") || "Компанії";
 	const filterByStatus = searchParams.get("status");
 	const sortByPeriod = searchParams.get("ordering");
+	const currentPage = searchParams.get("page") || DEFAULT_CURRENT_PAGE;
 
 	const handleSetSearchTerm = useCallback(
 		(term: string) => {
@@ -49,6 +54,15 @@ const MainModeratorsContent: React.FC = () => {
 	const handleSetIsOpenSerchFiltersModal = useCallback(
 		() => setIsOpenSerchFiltersModal((prev) => !prev),
 		[setIsOpenSerchFiltersModal],
+	);
+
+	const handleSetCurrentPage = useCallback(
+		(page: number) =>
+			setSearchParams((prev) => {
+				prev.set("page", page.toString());
+				return prev;
+			}),
+		[setSearchParams],
 	);
 
 	const [getModeratorsReviewByID, { isFetching: isFetchingByID }] =
@@ -69,9 +83,13 @@ const MainModeratorsContent: React.FC = () => {
 				previous: null,
 				results: res.data ? [res.data] : [],
 			});
+
+			handleSetCurrentPage(DEFAULT_CURRENT_PAGE);
 		} else {
 			const res = await getModeratorsReviewsByFilters({
 				id: searchedID,
+				limit: DEFAULT_REVIEWS_PER_PAGE,
+				offset: (+currentPage - INDEX_ONE) * DEFAULT_REVIEWS_PER_PAGE,
 				ordering: sortByPeriod
 					? (sortByPeriod as GetModerationReviewsRequest["ordering"])
 					: undefined,
@@ -80,7 +98,10 @@ const MainModeratorsContent: React.FC = () => {
 					: undefined,
 				type: ButtonGroupData[filterByType as keyof typeof ButtonGroupData],
 			});
+
 			setFetchResult(res.data);
+			if (res.data?.count)
+				setPageCount(Math.ceil(res.data?.count / DEFAULT_REVIEWS_PER_PAGE));
 		}
 	}, [
 		filterByStatus,
@@ -89,6 +110,8 @@ const MainModeratorsContent: React.FC = () => {
 		getModeratorsReviewsByFilters,
 		searchedID,
 		sortByPeriod,
+		currentPage,
+		handleSetCurrentPage,
 	]);
 
 	useEffect(() => {
@@ -99,6 +122,7 @@ const MainModeratorsContent: React.FC = () => {
 		sortByPeriod,
 		filterByStatus,
 		handleUpdateModeratorsReviews,
+		currentPage,
 	]);
 
 	const dispatch = useDispatch();
@@ -152,6 +176,13 @@ const MainModeratorsContent: React.FC = () => {
 							review={review}
 						/>
 					))}
+				{fetchResult?.results && fetchResult?.results.length > INDEX_ONE && (
+					<Pagination
+						defaultCurrentPage={+currentPage}
+						pages={pageCount}
+						setCurrentPage={handleSetCurrentPage}
+					/>
+				)}
 			</main>
 
 			{isOpenSerchFiltersModal && screenWidth <= ScreenBreakpoints.MOBILE && (

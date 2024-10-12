@@ -8,14 +8,12 @@ import globalStyles from "~/pages/company-details-page/components/company-detail
 
 import styles from "./styles.module.scss";
 
-const INDEX_ONE = 1;
-
 const About = React.forwardRef<
 	HTMLDivElement,
 	{ company: GetCompanyByIdResponse }
 >(({ company }, ref) => {
 	const MIN_SUBCATEGORIES = 0;
-	const paragraphs = company.description.split("\n\n");
+	const paragraphs = company.description;
 
 	return (
 		<>
@@ -23,14 +21,7 @@ const About = React.forwardRef<
 				<h2 className={styles["about_heading"]}>Про компанію</h2>
 				<ul className={clsx(globalStyles["p-sb"], styles["about_text"])}>
 					{paragraphs.map((paragraph, index) => (
-						<li key={index}>
-							{paragraph.split("\n").map((line, i) => (
-								<React.Fragment key={i}>
-									{line}
-									{i < paragraph.split("\n").length - INDEX_ONE && <br />}
-								</React.Fragment>
-							))}
-						</li>
+						<li dangerouslySetInnerHTML={{ __html: paragraph }} key={index} />
 					))}
 				</ul>
 			</div>
