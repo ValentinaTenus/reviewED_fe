@@ -3,7 +3,7 @@ import React from "react";
 import Image from "~/assets/images/review_profile_pic.png";
 import { Icon, StarRating } from "~/common/components";
 import { IconName } from "~/common/enums";
-
+import { useTransformDate } from "~/common/hooks";
 import styles from "./styles.module.scss";
 
 type ReviewHeaderProperties = {
@@ -38,7 +38,7 @@ const ReviewHeader: React.FC<ReviewHeaderProperties> = ({
 				</p>
 			</section>
 			<section className={styles["review__rating-block"]}>
-				<p className={styles["review__date"]}>{date}</p>
+				<p className={styles["review__date"]}>{useTransformDate(date).formattedDate}</p>
 				<StarRating averageRating={rating} isNumberShown={false} />
 			</section>
 		</div>

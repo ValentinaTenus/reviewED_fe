@@ -42,7 +42,7 @@ const mockList: CourseReview[] = [
 		rating: 4,
 		status: "Студент",
 		text: mockText,
-		time_added: "11-10-2024",
+		time_added: "2024-10-11",
 	},
 	{
 		author_avatar: "",
@@ -54,7 +54,7 @@ const mockList: CourseReview[] = [
 		rating: 5,
 		status: "Студент",
 		text: mockText,
-		time_added: "10-10-2024",
+		time_added: "2024-10-10",
 	},
 	{
 		author_avatar: "",
@@ -66,7 +66,7 @@ const mockList: CourseReview[] = [
 		rating: 3,
 		status: "Студент",
 		text: mockText,
-		time_added: "12-02-2024",
+		time_added: "2024-02-12",
 	},
 	{
 		author_avatar: "",
@@ -78,7 +78,7 @@ const mockList: CourseReview[] = [
 		rating: 5,
 		status: "Студент",
 		text: mockText,
-		time_added: "16-10-2023",
+		time_added: "2023-10-16",
 	},
 ];
 
