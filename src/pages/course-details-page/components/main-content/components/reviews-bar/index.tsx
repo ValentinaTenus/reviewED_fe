@@ -47,7 +47,7 @@ const ReviewsBar = forwardRef<HTMLDivElement, ReviewsBarProperties>(
 		const isUserInAccount = useAppSelector((state) => state.auth.user);
 
 		useEffect(() => {
-			if (userCourseReviews.includes(course.id) || isUserInAccount === null) {
+			if (userCourseReviews?.includes(course.id) || isUserInAccount === null) {
 				setIsButtonInactive(true);
 			} else {
 				setIsButtonInactive(false);
