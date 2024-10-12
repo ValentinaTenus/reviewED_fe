@@ -4,23 +4,32 @@ import { useNavigate } from "react-router-dom";
 
 import { Button, Icon } from "~/common/components";
 import { AppRoute, ButtonVariant, IconName } from "~/common/enums";
-import { type GetCompanyByIdResponse } from "~/common/types";
+import { type GetCompanyByIdResponse, type ReviewsStats } from "~/common/types";
 import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
 import { useAppSelector } from "~/redux/hooks.type";
 
 import { ReviewModal } from "./components/review-modal";
 import styles from "./styles.module.scss";
 
+const numberToStringMap: Record<number, keyof ReviewsStats> = {
+	1: "one",
+	2: "two",
+	3: "three",
+	4: "four",
+	5: "five",
+};
+const STAR_RATING_LENGTH = 5;
+const STAR_RATING_VALUES = Array.from(
+	{ length: STAR_RATING_LENGTH },
+	(_, index) => STAR_RATING_LENGTH - index,
+);
+
 const Statistics: React.FC<{
 	company: GetCompanyByIdResponse;
-	reviewsCount: {
-		[key: number]: number;
-	};
+	reviewsCount: ReviewsStats;
 }> = ({ company, reviewsCount }) => {
-	const STARS_AMOUNT = 5;
-	const ONE = 1;
-	const ZERO = 0;
 	const HUNDRED = 100;
+	const ONE = 1;
 	const THREE_SECONDS = 3000;
 
 	const navigate = useNavigate();
@@ -114,30 +123,28 @@ const Statistics: React.FC<{
 					}`}
 				>
 					<ul>
-						{Array.from({ length: 6 }, (_, i) => STARS_AMOUNT - i).map(
-							(number) => (
-								<li className={styles["amount-stars"]} key={number}>
-									<Icon
-										className={styles["review_stats-star"]}
-										name={IconName.STAR}
-									/>
-									<span
-										className={`${globalStyles["p-sb"]} ${styles["stars-line"]}`}
-									>
-										{number}
-									</span>
-									<div
-										className={styles["line"]}
-										style={{
-											width: `${((reviewsCount[number] || ZERO) / (company.review_count || ONE)) * HUNDRED}%`,
-										}}
-									/>
-									<span className="reviews-count">
-										{reviewsCount[number] || ZERO}
-									</span>
-								</li>
-							),
-						)}
+						{STAR_RATING_VALUES.map((number) => (
+							<li className={styles["amount-stars"]} key={number}>
+								<Icon
+									className={styles["review_stats-star"]}
+									name={IconName.STAR}
+								/>
+								<span
+									className={`${globalStyles["p-sb"]} ${styles["stars-line"]}`}
+								>
+									{number}
+								</span>
+								<div
+									className={styles["line"]}
+									style={{
+										width: `${(reviewsCount[numberToStringMap[number]] / (company.review_count || ONE)) * HUNDRED}%`,
+									}}
+								/>
+								<span className="reviews-count">
+									{reviewsCount[numberToStringMap[number]]}
+								</span>
+							</li>
+						))}
 					</ul>
 				</div>
 			</div>
@@ -184,7 +191,7 @@ const Statistics: React.FC<{
 			/>
 			{isReviewed && (
 				<Alert className={styles["alert"]} severity="info" variant="filled">
-					You have already left a review for this company
+					Ви вже залишили відгук для цієї компанії
 				</Alert>
 			)}
 		</div>

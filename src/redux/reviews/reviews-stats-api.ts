@@ -6,11 +6,11 @@ import { reviewsApiPath } from "./constants.ts";
 
 export const reviewsApi = api.injectEndpoints({
 	endpoints: (builder) => ({
-		getReviewsStats: builder.query<ReviewsStats, number>({
-			query: (id) => {
+		getReviewsStats: builder.query<ReviewsStats, { id: number; type: string }>({
+			query: ({ id, type }) => {
 				return {
 					method: HttpMethods.GET,
-					url: reviewsApiPath.REVIEWS_STATS_BY_COURSE_ID + `${id}`,
+					url: `${reviewsApiPath.REVIEWS_STATS_BY_ID}${type}/${id}`,
 				};
 			},
 		}),

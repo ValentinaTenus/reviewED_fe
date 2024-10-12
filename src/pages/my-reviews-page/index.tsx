@@ -1,6 +1,7 @@
 import React from "react";
 
 import { BreadCrumb, Footer, Header } from "~/common/components/index";
+import { AppRoute } from "~/common/enums/index";
 
 import { MainContent } from "./components/index";
 import styles from "./styles.module.scss";
@@ -12,8 +13,8 @@ const MyReviewsPage: React.FC = () => {
 			<BreadCrumb
 				className="bread_crumb__container"
 				items={[
-					{ label: "Головна сторінка", path: "/" },
-					{ label: "Мої відгуки", path: "/my-reviews-page" },
+					{ label: "Головна сторінка", path: AppRoute.ROOT },
+					{ label: "Мої відгуки" },
 				]}
 			/>
 			<MainContent />
