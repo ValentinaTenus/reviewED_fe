@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useCallback, useEffect, useMemo, useState } from "react";
+import { forwardRef, useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Image from "~/assets/images/no-reviews.png";
@@ -11,7 +11,6 @@ import {
 	SpinnerVariant,
 } from "~/common/enums/index";
 import {
-	type CourseReview,
 	type GetCourseByIdResponseDto,
 } from "~/common/types";
 import { useAppSelector } from "~/redux/hooks.type";
@@ -24,6 +23,7 @@ import { ReviewsStatsBar } from "./components/reviews-stats";
 import styles from "./styles.module.scss";
 
 const THREE_SECONDS = 3000;
+const ZERO = 0;
 
 type ReviewsBarProperties = {
 	course: GetCourseByIdResponseDto;
@@ -83,9 +83,9 @@ const ReviewsBar = forwardRef<HTMLDivElement, ReviewsBarProperties>(
 		}, []);
 
 		const sortedReviews = useMemo(() => {
-			if (!mockList) return [];
+			if (!reviews) return [];
 
-			return [...mockList].sort((a, b): number => {
+			return [...reviews].sort((a, b): number => {
 				switch (sortBy) {
 					case "new":
 						return b.time_added.localeCompare(a.time_added);
@@ -114,7 +114,7 @@ const ReviewsBar = forwardRef<HTMLDivElement, ReviewsBarProperties>(
 				</aside>
 				{isFetching && <Spinner variant={SpinnerVariant.SMALL} />}
 				{reviews?.length && !isFetching ? (
-					<ReviewsList reviews={sortedReviews} reviews={reviews} />
+					<ReviewsList reviews={sortedReviews}/>
 				) : (
 					<article className={styles["reviews-bar__no-reviews"]}>
 						<img
