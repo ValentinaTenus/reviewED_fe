@@ -3,16 +3,16 @@ export type QuestionAndAnswerProperties = {
 	question: string;
 };
 
-export type DropdownKey = "Верефікація" | "Відгуки" | "Загальні";
+export type DropdownKey = "Верифікація" | "Відгуки" | "Загальні";
 export const toggleButtonGroupData: DropdownKey[] = [
 	"Загальні",
-	"Верефікація",
+	"Верифікація",
 	"Відгуки",
 ];
 
 export const dropdownData: Record<DropdownKey, QuestionAndAnswerProperties[]> =
 	{
-		Верефікація: [
+		Верифікація: [
 			{
 				answer: `Lorem ipsum dolor sit amet consectetur adipisicing elit. 
 		  Autem rerum delectus dolorum deleniti non fugiat doloribus excepturi aliquid 

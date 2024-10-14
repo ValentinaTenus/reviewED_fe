@@ -1,5 +1,6 @@
 .reviews-list {
-grid-area: rvs;
-
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	grid-area: rvs;
 }
- 

@@ -60,4 +60,8 @@
 		font-size: var(--font-size-title-h4);
 		font-weight: var(--font-weight-bold);
 	}
+
+	.title_wrapper {
+		grid-template-areas: "logo title" "rating rating";
+	}
 }

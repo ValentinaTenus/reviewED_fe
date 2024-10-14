@@ -1,9 +1,9 @@
 .reviews-bar {
 	display: grid;
 	gap: 24px;
-	grid-template-areas: "hdr hdr" "rvs sts" "rvs btn";
+	grid-template-areas: "hdr hdr" "srt srt" "rvs sts" "rvs btn";
 	grid-template-columns: 1fr auto;
-	grid-template-rows: 71px 230px 1fr;
+	grid-template-rows: 71px auto 230px 1fr;
 	width: 100%;
 }
 
@@ -15,6 +15,15 @@
 	grid-area: hdr;
 	line-height: 130%;
 	scroll-margin: 73px;
+}
+
+.reviews-bar__sorting {
+	display: flex;
+	flex-direction: column;
+
+	grid-area: srt;
+	height: 76px;
+	justify-content: space-between;
 }
 
 .reviews-bar__button {
@@ -57,9 +66,8 @@
 	}
 
 	.reviews-bar {
-		display: grid;
-		gap: 20px;
-		grid-template-areas: "hdr" "sts" "btn" "rvs";
+		gap: 16px;
+		grid-template-areas: "hdr" "sts" "btn" "srt" "rvs";
 		grid-template-rows: auto;
 	}
 
@@ -74,8 +82,8 @@
 	}
 }
 
-@media (max-width: 480px)  {
+@media (max-width: 480px) {
 	.reviews-bar__header {
 		scroll-margin: 54px;
 	}
-  }
+}

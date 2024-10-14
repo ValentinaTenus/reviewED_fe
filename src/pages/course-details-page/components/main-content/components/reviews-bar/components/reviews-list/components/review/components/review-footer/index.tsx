@@ -2,10 +2,15 @@ import React from "react";
 
 import { Button, Icon } from "~/common/components";
 import { ButtonSize, ButtonVariant, IconName } from "~/common/enums";
+import { type CourseReview } from "~/common/types";
 
 import styles from "./styles.module.scss";
 
-const ReviewFooter: React.FC = () => {
+type ReviewFooterProperties = {
+	review: CourseReview;
+};
+
+const ReviewFooter: React.FC<ReviewFooterProperties> = ({ review }) => {
 	return (
 		<div className={styles["review__footer"]}>
 			<Button
@@ -37,7 +42,7 @@ const ReviewFooter: React.FC = () => {
 					size={ButtonSize.SMALL}
 					variant={ButtonVariant.DEFAULT}
 				>
-					Numba of likes
+					{review.count_likes}
 				</Button>
 			</aside>
 		</div>
