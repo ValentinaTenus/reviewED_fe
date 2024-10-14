@@ -18,10 +18,10 @@ const Review: React.FC<ReviewProperties> = ({ review }) => {
 				date={review.time_added}
 				name={review.author_name}
 				rating={review.rating}
-				role=""
+				role={review.status}
 			/>
 			<ReviewMain text={review.text} />
-			<ReviewFooter />
+			<ReviewFooter review={review} />
 		</div>
 	);
 };

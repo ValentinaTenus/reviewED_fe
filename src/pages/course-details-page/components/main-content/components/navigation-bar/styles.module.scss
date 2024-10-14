@@ -6,6 +6,8 @@
 	overflow-x: auto;
 	position: sticky;
 	scroll-margin: 0px;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
 	top: 0px;
 	white-space: nowrap;
 	width: 100%;
@@ -21,7 +23,6 @@
 
 .navbar {
 	display: flex;
-	gap: 40px;
 }
 
 .navbar__item {
@@ -43,21 +44,21 @@
 .item_active::after {
 	content: "";
 	background-color: var(--color-black);
-	bottom: 0px;
+	bottom: -20px;
 	height: 3px;
 	left: 0;
 	position: absolute;
 	width: 100%;
 }
 
-@media (max-width:1280px) {
+@media (max-width: 1280px) {
 	.navbar__wrapper {
 		margin-bottom: 24px;
 	}
-	
+
 	.navbar {
 		gap: 20px;
-	}	
+	}
 }
 
 @media (max-width: 768px) {
@@ -67,8 +68,8 @@
 	}
 }
 
-@media (max-width: 480px)  {
+@media (max-width: 480px) {
 	.navbar__wrapper {
 		height: 54px;
 	}
-  }
+}

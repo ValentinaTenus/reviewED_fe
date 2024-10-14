@@ -9,4 +9,18 @@ const ReviewsSortOptions = [
 	},
 ];
 
-export { ReviewsSortOptions };
+const ReviewsCourseSortOptions = [
+	{
+		label: "Найпопулярніші",
+		value: "rating",
+	},
+	{
+		label: "Старі",
+		value: "old",
+	},
+	{
+		label: "Нові",
+		value: "new",
+	},
+];
+export { ReviewsCourseSortOptions, ReviewsSortOptions };

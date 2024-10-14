@@ -1,8 +1,9 @@
-import { forwardRef, useCallback, useEffect, useState } from "react";
+import { forwardRef, useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Image from "~/assets/images/no-reviews.png";
-import { Button, Spinner } from "~/common/components";
+import { Button, SortDropdown, Spinner } from "~/common/components";
+import { ReviewsCourseSortOptions } from "~/common/constants";
 import {
 	AppRoute,
 	ButtonSize,
@@ -20,6 +21,7 @@ import { ReviewsStatsBar } from "./components/reviews-stats";
 import styles from "./styles.module.scss";
 
 const THREE_SECONDS = 3000;
+const ZERO = 0;
 
 type ReviewsBarProperties = {
 	course: GetCourseByIdResponseDto;
@@ -72,14 +74,45 @@ const ReviewsBar = forwardRef<HTMLDivElement, ReviewsBarProperties>(
 			}
 		}, [isReviewed]);
 
+		const [sortBy, setSortBy] = useState<string>("rating");
+
+		const handleChangeSortBy = useCallback((newSortBy: number | string) => {
+			setSortBy(newSortBy.toString());
+		}, []);
+
+		const sortedReviews = useMemo(() => {
+			if (!reviews) return [];
+
+			return [...reviews].sort((a, b): number => {
+				switch (sortBy) {
+					case "new":
+						return b.time_added.localeCompare(a.time_added);
+					case "old":
+						return a.time_added.localeCompare(b.time_added);
+					case "rating":
+						return b.count_likes - a.count_likes;
+					default:
+						return ZERO;
+				}
+			});
+		}, [sortBy, reviews]);
+
 		return (
 			<div className={styles["reviews-bar"]}>
 				<h3 className={styles["reviews-bar__header"]} ref={ref}>
 					Відгуки
 				</h3>
+				<aside className={styles["reviews-bar__sorting"]}>
+					<p>Сортувати за</p>
+					<SortDropdown
+						aiEnd={false}
+						onChange={handleChangeSortBy}
+						options={ReviewsCourseSortOptions}
+					/>
+				</aside>
 				{isFetching && <Spinner variant={SpinnerVariant.SMALL} />}
 				{reviews?.length && !isFetching ? (
-					<ReviewsList reviews={reviews} />
+					<ReviewsList reviews={sortedReviews} />
 				) : (
 					<article className={styles["reviews-bar__no-reviews"]}>
 						<img
