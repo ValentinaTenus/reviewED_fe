@@ -15,7 +15,10 @@ export { Input } from "./input/index";
 export { Logo } from "./logo/index";
 export { Modal } from "./modal/index";
 export { Pagination } from "./pagination/index";
-export { ProtectedRouteIsStaff } from "./protected-route/index";
+export {
+	ProtectedRouteIsLogined,
+	ProtectedRouteIsStaff,
+} from "./protected-route/index";
 export { SearchBar } from "./search-bar/index";
 export { SearchInput } from "./search-input/index";
 export { SortDropdown } from "./sort-dropdown/index";

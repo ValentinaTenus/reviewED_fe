@@ -66,6 +66,11 @@
 	gap: 10px;
 	min-width: fit-content;
 	white-space: nowrap;
+	
+	&:hover {
+		color: var(--color-blue-icons);
+	}
+
 }
 
 .filter-button,

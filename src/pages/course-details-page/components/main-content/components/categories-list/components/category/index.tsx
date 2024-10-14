@@ -11,12 +11,12 @@ type CategoryProperties = {
 
 const CategoryBlock: React.FC<CategoryProperties> = ({ category }) => {
 	return (
-		<div>
+		<div className={styles["category"]}>
 			<h4 className={styles["category__header"]}>{category.name}</h4>
 			<ul className={styles["subcategories__list"]}>
-				{category.subcategories.map((item, index) => {
-					return <CategoryItem key={index} title={item.name} />;
-				})}
+				{category.subcategories.map((subcategory, index) => (
+					<CategoryItem key={index} subcategory={subcategory} />
+				))}
 			</ul>
 		</div>
 	);

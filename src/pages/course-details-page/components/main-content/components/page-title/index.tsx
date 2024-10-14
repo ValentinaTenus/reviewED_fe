@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Logo, StarRating } from "~/common/components";
+import { RatingSize } from "~/common/enums";
 import { type GetCourseByIdResponseDto } from "~/common/types";
 
 import styles from "./styles.module.scss";
@@ -22,6 +23,7 @@ const PageTitle: React.FC<PageTitleProperties> = ({ course }) => {
 			<StarRating
 				averageRating={course.avg_rating}
 				className={styles["title_rating"]}
+				size={RatingSize.MEDIUM}
 			/>
 		</div>
 	);

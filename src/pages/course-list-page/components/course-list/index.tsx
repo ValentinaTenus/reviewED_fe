@@ -1,10 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 import { CourseCard, Pagination, Spinner } from "~/common/components/index";
 import { CoursesFilterType, SpinnerVariant } from "~/common/enums/index";
 import { useGetScreenWidth } from "~/common/hooks";
 import { FilterType } from "~/common/types";
 import { NotFound } from "~/pages/home-page/components/main-content/components/search-block/components";
+import { useGetCategoriesQuery } from "~/redux/categories/categories-api";
 import { useLazyGetCoursesByFilterQuery } from "~/redux/courses/courses-api";
 import { clearFilters } from "~/redux/courses/courses-slice";
 import { useAppDispatch, useAppSelector } from "~/redux/hooks.type";
@@ -25,6 +27,13 @@ const INDEX_ONE = 1;
 const ZERO_LENGTH = 0;
 
 const CourseContent: React.FC = () => {
+	const location = useLocation();
+
+	const getQueryParams = useCallback(
+		() => new URLSearchParams(location.search),
+		[location.search],
+	);
+
 	const dispatch = useAppDispatch();
 	const { filters } = useAppSelector((state) => state.courses);
 	const screenWidth = useGetScreenWidth();
@@ -46,6 +55,7 @@ const CourseContent: React.FC = () => {
 		filters?.city || [],
 	);
 
+	const { data: categoriesFromApi } = useGetCategoriesQuery(undefined);
 	const [getCourses, { data: coursesResponse, isFetching }] =
 		useLazyGetCoursesByFilterQuery();
 
@@ -138,6 +148,24 @@ const CourseContent: React.FC = () => {
 			setReviewsCount(coursesResponse.reviews_count);
 		}
 	}, [coursesResponse?.count, coursesResponse?.reviews_count]);
+
+	useEffect(() => {
+		const queryParams = getQueryParams();
+		const subcategoryId = queryParams.get("subcategory") || ALL_CATEGORIES_ID;
+		const subcategory = categoriesFromApi
+			?.flatMap((category) => category.subcategories)
+			.find((sc) => sc.id === +subcategoryId);
+
+		if (subcategory) {
+			const selectedSubcategory: FilterType = {
+				id: subcategory.id.toString(),
+				name: subcategory.name,
+			};
+
+			setSelectedSubCategories([selectedSubcategory]);
+			handleSelectSubCategory([selectedSubcategory]);
+		}
+	}, [location, categoriesFromApi, getQueryParams, handleSelectSubCategory]);
 
 	useEffect(() => {
 		updateCoursesPageCount();

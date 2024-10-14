@@ -13,7 +13,6 @@ enum AppRoute {
 	PRIVACY_POLICY = "/privacy-policy",
 	ROOT = "/",
 	USER_REQUESTS = "/user-requests",
-	USER_REVIEWS = "/user-reviews",
 }
 
 export { AppRoute };

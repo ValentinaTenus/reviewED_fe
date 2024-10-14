@@ -61,10 +61,18 @@
 }
 
 @media (max-width: 1280px) {
+	.reviews-bar__button {
+		width: 100%;
+	}
+
 	.reviews-bar {
 		gap: 16px;
 		grid-template-areas: "hdr" "sts" "btn" "srt" "rvs";
 		grid-template-rows: auto;
+	}
+
+	.reviews-bar__header {
+		font-size: var(--font-size-title-h4);
 	}
 }
 

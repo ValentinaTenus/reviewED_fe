@@ -1,6 +1,6 @@
 import React from "react";
 
-import { type CourseReview } from "~/common/types";
+import { CourseReview } from "~/common/types";
 
 import { ReviewFooter } from "./components/review-footer";
 import { ReviewHeader } from "./components/review-header";

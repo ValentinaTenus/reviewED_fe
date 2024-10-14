@@ -1,5 +1,6 @@
 import { Rating } from "@mui/material";
-import React, { useCallback, useState } from "react";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import React, { useCallback, useEffect, useState } from "react";
 
 import { Button } from "~/common/components/index";
 import { Modal } from "~/common/components/modal";
@@ -31,6 +32,7 @@ const ReviewModal: React.FC<{
 
 	const [rating, setRating] = useState<null | number>(ONE);
 	const [reviewText, setReviewText] = useState("");
+	const [serverError, setServerError] = useState("");
 
 	const [sendReview] = useSendReviewMutation();
 
@@ -55,17 +57,29 @@ const ReviewModal: React.FC<{
 	}, [onClose, setRating, setReviewText]);
 
 	const handleSubmit = useCallback(async () => {
-		await sendReview({
-			companyId: company.id,
-			rating: rating,
-			text: reviewText,
-		});
 		if (user?.policy_agreed === false) {
 			setIsPrivacyPolicyModalOpen(true);
-		} else {
-			dispatch(addCompanyReview(company.id));
 		}
-		handleCloseReviewModal();
+
+		if (user?.policy_agreed === true) {
+			try {
+				await sendReview({
+					companyId: company.id,
+					rating: rating,
+					text: reviewText,
+				});
+
+				dispatch(addCompanyReview(company.id));
+				handleCloseReviewModal();
+			} catch (error) {
+				const loadError = ((error as FetchBaseQueryError).data as {
+					detail: string;
+				})
+					? ((error as FetchBaseQueryError).data as { detail: string })
+					: { detail: "Виникла невідома помилка" };
+				setServerError(loadError.detail);
+			}
+		}
 	}, [
 		company.id,
 		dispatch,
@@ -75,6 +89,12 @@ const ReviewModal: React.FC<{
 		handleCloseReviewModal,
 		user?.policy_agreed,
 	]);
+
+	useEffect(() => {
+		if (user?.policy_agreed) {
+			setIsPrivacyPolicyModalOpen(false);
+		}
+	}, [user]);
 
 	return (
 		<>
@@ -110,6 +130,7 @@ const ReviewModal: React.FC<{
 							<span>{reviewText.length}/2000</span>
 						</div>
 					</div>
+					{serverError && <p>{serverError}</p>}
 					<Button
 						className={styles["modal_submit-button"]}
 						disabled={reviewText.length < MIN_TEXT}

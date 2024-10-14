@@ -5,6 +5,17 @@
 	scroll-margin: 73px;
 }
 
+@media (max-width: 1280px) {
+	.main_content {
+		font-size: var(--font-size-title-mobile-h2);
+	}
+}
+
+@media (max-width: 768px) {
+	.main_content {
+		font-size: var(--font-size-title-h4);
+	}
+}
 @media (max-width: 480px)  {
 	.header {
 		scroll-margin: 54px;
