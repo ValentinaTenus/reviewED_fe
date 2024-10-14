@@ -2,6 +2,8 @@
 	display: grid;
 	grid-template-areas: "logo title" "logo rating";
 	gap: 12px 20px;
+	margin: 40px 0 32px 0;
+	width: fit-content;
 }
 
 .title_logo {
@@ -25,13 +27,15 @@
 @media (max-width: 1280px) {
 	.title_wrapper {
 		column-gap: 16px;
+		margin: 24px 0 12px 0;
 	}	
 }
 
 @media (max-width: 768px) {
 	.title_wrapper {
 		grid-template-areas: "logo title" "rating rating";
-		gap: 8px;
+		gap: 8px 16px;
+		margin: 24px 0 16px 0;
 	}
 
 	.title_logo {

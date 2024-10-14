@@ -1,7 +1,7 @@
 .about {
 	display: flex;
 	flex-direction: column;
-	gap: 24px;
+	gap: 12px;
 }
 
 .about_heading {
@@ -10,8 +10,39 @@
 
 .about_text {
 	max-width: 907px;
-	font-weight: var(--font-weight-semi-bold);
+	font-family: var(--font-family-main);
 	text-align: justify;
+
+	h3 {
+		font-weight: var(--font-weight-extra-bold);
+		font-size: var(--font-size-title-large);
+		color: var(--color-grey-950);
+
+		b {
+			font-weight: var(--font-weight-extra-bold);
+		}
+	}
+
+	ul,
+	ol {
+		margin: 12px 0px 12px 25px;
+		font-family: var(--font-family-main);
+		font-weight: var(--font-weight-semi-bold);
+		font-size: var(--font-size-title-h5);
+		color: var(--color-grey-900);
+
+		li {
+			padding: 6px 0px;
+		}
+	}
+
+	ol {
+		list-style: decimal;
+	}
+
+	ul {
+		list-style: disc;
+	}
 }
 
 /*-----------------------------*/
@@ -38,6 +69,7 @@
 	font-size: var(--font-size-main-text);
 	font-family: var(--font-family-roboto);
 	font-weight: var(--font-weight-bold);
+	width: 250px;
 }
 
 .subcategories_list {

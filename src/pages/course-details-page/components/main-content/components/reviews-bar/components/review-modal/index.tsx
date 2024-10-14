@@ -57,11 +57,10 @@ const ReviewModal: React.FC<{
 	}, [onClose, setRating, setReviewText]);
 
 	const handleSubmit = useCallback(async () => {
-
 		if (user?.policy_agreed === false) {
 			setIsPrivacyPolicyModalOpen(true);
-		} 
-	
+		}
+
 		if (user?.policy_agreed === true) {
 			try {
 				await sendReview({

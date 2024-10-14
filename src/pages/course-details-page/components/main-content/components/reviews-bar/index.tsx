@@ -10,9 +10,7 @@ import {
 	ButtonVariant,
 	SpinnerVariant,
 } from "~/common/enums/index";
-import {
-	type GetCourseByIdResponseDto,
-} from "~/common/types";
+import { type GetCourseByIdResponseDto } from "~/common/types";
 import { useAppSelector } from "~/redux/hooks.type";
 import { useGetCourseReviewsQuery } from "~/redux/reviews/reviews-course-api";
 import { useGetReviewsStatsQuery } from "~/redux/reviews/reviews-stats-api";
@@ -97,7 +95,7 @@ const ReviewsBar = forwardRef<HTMLDivElement, ReviewsBarProperties>(
 						return ZERO;
 				}
 			});
-		}, [sortBy]);
+		}, [sortBy, reviews]);
 
 		return (
 			<div className={styles["reviews-bar"]}>
@@ -114,7 +112,7 @@ const ReviewsBar = forwardRef<HTMLDivElement, ReviewsBarProperties>(
 				</aside>
 				{isFetching && <Spinner variant={SpinnerVariant.SMALL} />}
 				{reviews?.length && !isFetching ? (
-					<ReviewsList reviews={sortedReviews}/>
+					<ReviewsList reviews={sortedReviews} />
 				) : (
 					<article className={styles["reviews-bar__no-reviews"]}>
 						<img

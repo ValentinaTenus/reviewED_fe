@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import DOMPurify from "dompurify";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -13,17 +14,18 @@ const About = React.forwardRef<
 	{ company: GetCompanyByIdResponse }
 >(({ company }, ref) => {
 	const MIN_SUBCATEGORIES = 0;
-	const paragraphs = company.description;
+	const sanitizedDescriptions = company.description.map((htmlContent) =>
+		DOMPurify.sanitize(htmlContent),
+	);
 
 	return (
 		<>
 			<div className={styles["about"]} ref={ref}>
 				<h2 className={styles["about_heading"]}>Про компанію</h2>
-				<ul className={clsx(globalStyles["p-sb"], styles["about_text"])}>
-					{paragraphs.map((paragraph, index) => (
-						<li dangerouslySetInnerHTML={{ __html: paragraph }} key={index} />
-					))}
-				</ul>
+				<div
+					className={clsx(globalStyles["p-sb"], styles["about_text"])}
+					dangerouslySetInnerHTML={{ __html: sanitizedDescriptions.join("") }}
+				/>
 			</div>
 			<div className={styles["categories"]}>
 				<h3 className={styles["categories_heading"]}>
