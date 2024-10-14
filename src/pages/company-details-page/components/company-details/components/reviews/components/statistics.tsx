@@ -1,12 +1,14 @@
-import { Alert, Rating } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { Rating } from "@mui/material";
+import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import { Button, Icon } from "~/common/components";
 import { AppRoute, ButtonVariant, IconName } from "~/common/enums";
 import { type GetCompanyByIdResponse, type ReviewsStats } from "~/common/types";
 import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
 import { useAppSelector } from "~/redux/hooks.type";
+import { useGetMyReviewsQuery } from "~/redux/my-reviews/my-reviews-api";
 
 import { ReviewModal } from "./components/review-modal";
 import styles from "./styles.module.scss";
@@ -30,7 +32,20 @@ const Statistics: React.FC<{
 }> = ({ company, reviewsCount }) => {
 	const HUNDRED = 100;
 	const ONE = 1;
-	const THREE_SECONDS = 3000;
+
+	const { user } = useAppSelector((state) => state.auth);
+	const {
+		data: companyReviewsByUser,
+		refetch: refetchGetCompanyReviewsByUser,
+	} = useGetMyReviewsQuery(
+		{
+			params: { limit: 10, offset: 0, type: "company" },
+			userId: user?.id as number,
+		},
+		{
+			skip: typeof user?.id !== "number",
+		},
+	);
 
 	const navigate = useNavigate();
 
@@ -38,52 +53,43 @@ const Statistics: React.FC<{
 	const formattedRatingOverall = (company.avg_overall_rating / ONE).toFixed(
 		ONE,
 	);
-
 	const [isVisible, setIsVisible] = useState(false);
+	const [isCompanyReviewedByUser, setIsCompanyReviewedByUser] = useState(false);
+	const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
 	const handleToggleVisibility = () => {
 		setIsVisible(!isVisible);
 	};
 
-	const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
-
-	const handleOpenReviewModal = () => {
-		if (!isButtonInactive) setIsReviewModalOpen(true);
-		else if (isUserInAccount !== null) setIsReviewed(true);
-		else navigate(AppRoute.AUTH);
-	};
-
-	const handleCloseReviewModal = () => {
-		setIsReviewModalOpen(false);
-	};
-
-	const [isButtonInactive, setIsButtonInactive] = useState(false);
-
-	const userCompanyReviews = useAppSelector(
-		(state) => state.reviews.userCompanyReviews,
-	);
-
-	const isUserInAccount = useAppSelector((state) => state.auth.user);
-
-	useEffect(() => {
-		if (userCompanyReviews.includes(company.id) || isUserInAccount === null) {
-			setIsButtonInactive(true);
+	const handleOpenReviewModal = useCallback(() => {
+		if (user) {
+			if (!isCompanyReviewedByUser) {
+				setIsReviewModalOpen(true);
+			} else {
+				toast.error("Ви вже залишили відгук для цієї компанії");
+			}
 		} else {
-			setIsButtonInactive(false);
+			navigate(AppRoute.AUTH);
 		}
-	}, [userCompanyReviews, isUserInAccount, company.id]);
+	}, [navigate, isCompanyReviewedByUser, user]);
 
-	const [isReviewed, setIsReviewed] = useState(false);
+	const handleCloseReviewModal = useCallback(() => {
+		setIsReviewModalOpen(false);
+	}, []);
+
+	const handleReviewSubmit = useCallback(() => {
+		refetchGetCompanyReviewsByUser();
+	}, [refetchGetCompanyReviewsByUser]);
 
 	useEffect(() => {
-		if (isReviewed) {
-			const timer = setTimeout(() => {
-				setIsReviewed(false);
-			}, THREE_SECONDS);
+		const isCompanyReviewedByUser = companyReviewsByUser?.results.find(
+			(review) => review.related_entity_name === company.name,
+		);
 
-			return () => clearTimeout(timer);
+		if (isCompanyReviewedByUser) {
+			setIsCompanyReviewedByUser(true);
 		}
-	}, [isReviewed]);
+	}, [companyReviewsByUser?.results, company.name]);
 
 	return (
 		<div className={styles["reviews_stats-container"]}>
@@ -104,7 +110,7 @@ const Statistics: React.FC<{
 						</span>
 						<Rating
 							name="half-rating-read"
-							precision={0.5}
+							precision={1}
 							readOnly
 							value={company.avg_rating}
 						/>
@@ -174,7 +180,7 @@ const Statistics: React.FC<{
 						</span>
 						<Rating
 							name="half-rating-read"
-							precision={0.5}
+							precision={1}
 							readOnly
 							value={company.avg_rating}
 						/>
@@ -184,15 +190,13 @@ const Statistics: React.FC<{
 			<Button onClick={handleOpenReviewModal} variant={ButtonVariant.PRIMARY}>
 				Написати відгук
 			</Button>
-			<ReviewModal
-				company={company}
-				isOpen={isReviewModalOpen}
-				onClose={handleCloseReviewModal}
-			/>
-			{isReviewed && (
-				<Alert className={styles["alert"]} severity="info" variant="filled">
-					Ви вже залишили відгук для цієї компанії
-				</Alert>
+			{isReviewModalOpen && (
+				<ReviewModal
+					company={company}
+					isOpen={isReviewModalOpen}
+					onClose={handleCloseReviewModal}
+					onReviewSubmit={handleReviewSubmit}
+				/>
 			)}
 		</div>
 	);
