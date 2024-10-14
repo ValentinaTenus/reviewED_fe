@@ -9,3 +9,9 @@
 .review:last-of-type {
 	border: none;
 }
+
+@media (max-width: 480px) {
+	.review {
+		padding: 12px;
+	}
+}

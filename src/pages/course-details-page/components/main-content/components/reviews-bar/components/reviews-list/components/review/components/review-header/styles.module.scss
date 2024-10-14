@@ -5,6 +5,7 @@
 	grid-template-areas: "user verif rating";
 	grid-template-columns: auto 1fr auto;
 	min-height: 60px;
+	width: 100%;
 }
 
 .review__date {
@@ -93,5 +94,12 @@
 
 	.review__rating-block {
 		height: 49px;
+	}
+}
+
+@media (max-width: 370px) {
+	.review__header {
+		grid-template-areas: "user" "rating" "verif";
+		grid-template-columns: auto;
 	}
 }

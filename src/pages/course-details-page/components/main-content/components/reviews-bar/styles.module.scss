@@ -3,7 +3,7 @@
 	gap: 24px;
 	grid-template-areas: "hdr hdr" "srt srt" "rvs sts" "rvs btn";
 	grid-template-columns: 1fr auto;
-	grid-template-rows: 71px 230px 1fr;
+	grid-template-rows: 71px auto 230px 1fr;
 	width: 100%;
 }
 
@@ -18,7 +18,12 @@
 }
 
 .reviews-bar__sorting {
+	display: flex;
+	flex-direction: column;
+
 	grid-area: srt;
+	height: 76px;
+	justify-content: space-between;
 }
 
 .reviews-bar__button {
@@ -69,8 +74,8 @@
 	}
 }
 
-@media (max-width: 480px)  {
+@media (max-width: 480px) {
 	.reviews-bar__header {
 		scroll-margin: 54px;
 	}
-  }
+}

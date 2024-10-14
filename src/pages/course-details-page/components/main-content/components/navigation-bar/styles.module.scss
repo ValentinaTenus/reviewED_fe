@@ -6,6 +6,8 @@
 	overflow-x: auto;
 	position: sticky;
 	scroll-margin: 0px;
+	scrollbar-width: none;  
+	-ms-overflow-style: none; 
 	top: 0px;
 	white-space: nowrap;
 	width: 100%;
@@ -14,17 +16,18 @@
 
 .navbar {
 	display: flex;
-	gap: 40px;
+	gap: 20px;
 }
 
 .navbar__item {
 	color: var(--color-grey-500);
 	cursor: pointer;
 	display: block;
+	font-family: var(--font-family-main);
 	font-size: var(--font-size-title-large);
 	font-weight: var(--font-weight-semi-bold);
 	line-height: 1.4;
-	padding: 0 15px;
+	padding: 24px;
 }
 
 .item_active {
@@ -35,18 +38,34 @@
 .item_active::after {
 	content: "";
 	background-color: var(--color-black);
-	bottom: -20px;
-	height: 3px;
+	bottom: 0;
+	height: 4px;
 	left: 0;
 	position: absolute;
 	width: 100%;
 }
 
 
-@media (max-width: 480px)  {
-	.navbar__wrapper {
+@media (max-width: 767px) {
 
-		height: 54px;
-
+	.navbar__item {
+		padding: 16px;
 	}
-  }
+
+}
+
+@media (max-width: 480px) {
+	.navbar__wrapper {
+		height: 54px;
+	}
+
+	.navbar {
+		gap: 5px;
+	}
+
+	.navbar__item {
+		font-size: var(--font-size-title-h5);
+		padding: 16px;
+	}
+
+}
