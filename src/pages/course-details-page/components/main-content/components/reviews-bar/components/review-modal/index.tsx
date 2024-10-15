@@ -1,17 +1,17 @@
 import { Rating } from "@mui/material";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import React, { useCallback, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 import { Button } from "~/common/components/index";
 import { Modal } from "~/common/components/modal";
 import { PrivacyPolicyModal } from "~/common/components/privacy-policy-modal";
 import { ButtonSize, ButtonVariant } from "~/common/enums/index";
+import { useGetUser } from "~/common/hooks/use-get-user.hook";
 import { type GetCourseByIdResponseDto } from "~/common/types";
 import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
-import { useAppDispatch } from "~/redux/hooks.type";
+import { useAppSelector } from "~/redux/hooks.type";
 import { useSendReviewMutation } from "~/redux/reviews/reviews-course-api";
-import { addCourseReview } from "~/redux/reviews/reviews-slice";
-import { useGetUserQuery } from "~/redux/user/user-api";
 
 import styles from "./styles.module.scss";
 
@@ -19,22 +19,20 @@ const ReviewModal: React.FC<{
 	course: GetCourseByIdResponseDto;
 	isOpen: boolean;
 	onClose: () => void;
-}> = ({ course, isOpen, onClose }) => {
-	const { data: user } = useGetUserQuery(undefined);
+	onReviewSubmit: () => void;
+}> = ({ course, isOpen, onClose, onReviewSubmit }) => {
+	const ONE = 1;
+	const MIN_TEXT = 200;
+	const { refetch: refetchUser } = useGetUser();
+	const [sendReview] = useSendReviewMutation();
+
+	const { user } = useAppSelector((state) => state.auth);
 
 	const [isPrivacyPolicyModalOpen, setIsPrivacyPolicyModalOpen] =
 		useState(false);
 
-	const dispatch = useAppDispatch();
-
-	const ONE = 1;
-	const MIN_TEXT = 200;
-
 	const [rating, setRating] = useState<null | number>(ONE);
 	const [reviewText, setReviewText] = useState("");
-	const [serverError, setServerError] = useState("");
-
-	const [sendReview] = useSendReviewMutation();
 
 	const handleReviewChange = useCallback(
 		(event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -57,33 +55,38 @@ const ReviewModal: React.FC<{
 	}, [onClose, setRating, setReviewText]);
 
 	const handleSubmit = useCallback(async () => {
+		refetchUser();
 
-		if (user?.policy_agreed === false) {
+		if (!user?.policy_agreed) {
 			setIsPrivacyPolicyModalOpen(true);
-		} 
-	
-		if (user?.policy_agreed === true) {
-			try {
-				await sendReview({
-					courseId: course.id,
-					rating: rating,
-					text: reviewText,
-				});
+			return;
+		}
 
-				dispatch(addCourseReview(course.id));
-				handleCloseReviewModal();
-			} catch (error) {
+		try {
+			await sendReview({
+				courseId: course.id,
+				rating: rating,
+				text: reviewText,
+			}).unwrap();
+			toast.success(`Ваш відгук для ${course.title} успішно відправлено`);
+			onReviewSubmit();
+		} catch (error) {
+			if (error) {
 				const loadError = ((error as FetchBaseQueryError).data as {
 					detail: string;
 				})
 					? ((error as FetchBaseQueryError).data as { detail: string })
 					: { detail: "Виникла невідома помилка" };
-				setServerError(loadError.detail);
+				toast.error(loadError.detail);
 			}
+		} finally {
+			handleCloseReviewModal();
 		}
 	}, [
 		course.id,
-		dispatch,
+		course.title,
+		onReviewSubmit,
+		refetchUser,
 		rating,
 		reviewText,
 		sendReview,
@@ -95,7 +98,7 @@ const ReviewModal: React.FC<{
 		if (user?.policy_agreed) {
 			setIsPrivacyPolicyModalOpen(false);
 		}
-	}, [user]);
+	}, [user?.policy_agreed]);
 
 	return (
 		<>
@@ -132,7 +135,6 @@ const ReviewModal: React.FC<{
 						</div>
 					</div>
 
-					{serverError && <p>{serverError}</p>}
 					<Button
 						className={styles["modal_submit-button"]}
 						disabled={reviewText.length < MIN_TEXT}
@@ -144,10 +146,12 @@ const ReviewModal: React.FC<{
 					</Button>
 				</div>
 			</Modal>
-			<PrivacyPolicyModal
-				isOpen={isPrivacyPolicyModalOpen}
-				onClose={() => setIsPrivacyPolicyModalOpen(false)}
-			/>
+			{isPrivacyPolicyModalOpen && (
+				<PrivacyPolicyModal
+					isOpen={isPrivacyPolicyModalOpen}
+					onClose={() => setIsPrivacyPolicyModalOpen(false)}
+				/>
+			)}
 		</>
 	);
 };
