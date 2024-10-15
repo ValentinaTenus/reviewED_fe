@@ -106,7 +106,7 @@ const ReviewsBar = forwardRef<HTMLDivElement, ReviewsBarProperties>(
 						return ZERO;
 				}
 			});
-		}, [sortBy]);
+		}, [sortBy, reviews]);
 
 		return (
 			<div className={styles["reviews-bar"]}>

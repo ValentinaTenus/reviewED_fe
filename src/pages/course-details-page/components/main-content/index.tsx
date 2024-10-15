@@ -15,6 +15,8 @@ import { ReviewsBar } from "./components/reviews-bar";
 import { TargetGroupSection } from "./components/target-group-section";
 import styles from "./styles.module.scss";
 
+const ZERO_LENGTH = 0;
+
 type MainContentProperties = {
 	courseId: string;
 };
@@ -45,23 +47,22 @@ const MainContent: React.FC<MainContentProperties> = ({ courseId }) => {
 				<>
 					<BreadCrumb items={breadcrumbs} />
 					{course && (
-						<div className={styles["main-content"]}>
-							<div className={styles["main-content__header"]}>
-								<PageTitle course={course} />
-								<NavBar
-									aboutCompany={aboutCompanyRef}
-									aboutCourse={aboutCourseRef}
-									reviews={reviewsRef}
-								/>
-							</div>
-
+						<>
+							<PageTitle course={course} />
+							<NavBar
+								aboutCompany={aboutCompanyRef}
+								aboutCourse={aboutCourseRef}
+								reviews={reviewsRef}
+							/>
 							<div className={styles["main-content__about"]}>
 								<Header ref={aboutCourseRef} title="Про курс" />
 								<PricingBar price={course ? course.price : ""} />
 								<div className={styles["main-content__about-description"]}>
 									<TargetGroupSection targetGroup={course ? course.age : ""} />
 									<DescriptionSection description={course.description} />
-									<CategoriesSection course={course} />
+									{course.categories.length > ZERO_LENGTH && (
+										<CategoriesSection course={course} />
+									)}
 								</div>
 							</div>
 
@@ -71,7 +72,7 @@ const MainContent: React.FC<MainContentProperties> = ({ courseId }) => {
 								title="Про компанію"
 							/>
 							<ReviewsBar course={course} ref={reviewsRef} />
-						</div>
+						</>
 					)}
 				</>
 			)}

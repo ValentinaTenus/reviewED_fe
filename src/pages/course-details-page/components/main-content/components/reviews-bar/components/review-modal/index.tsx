@@ -56,7 +56,6 @@ const ReviewModal: React.FC<{
 
 	const handleSubmit = useCallback(async () => {
 		refetchUser();
-
 		if (!user?.policy_agreed) {
 			setIsPrivacyPolicyModalOpen(true);
 			return;
