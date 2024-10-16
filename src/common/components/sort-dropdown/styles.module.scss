@@ -50,7 +50,7 @@
 .dropdown_trigger_wrapp {
 	width: 100%;
 	display: flex;
-	gap: 16px;
+	gap: 4px;
 }
 
 .dropdown_trigger {
@@ -68,10 +68,9 @@
 	font-family: var(--font-family-main);
 	font-size: var(--font-size-title-h5);
 	font-weight: var(--font-weight-bold);
-	padding: 12px 24px;
+	padding: 11px 24px;
 	min-width: 200px;
 
-	
 	&:hover {
 		background-color: var(--color-grey-100);
 	}
@@ -97,6 +96,7 @@
 
 .dropdown_cleaner-icon {
 	width: 24px;
+	margin: 0 12px;
 }
 
 .dropdown_cleaner-icon_disabled {
@@ -118,7 +118,7 @@
 }
 
 .dropdown_menu_with-cleaner {
-	max-width: calc(100% - 40px);
+	max-width: calc(100% - (24px + 12px * 2 + 4px));
 }
 
 .dropdown_menu-static {

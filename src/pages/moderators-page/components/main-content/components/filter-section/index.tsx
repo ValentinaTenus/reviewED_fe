@@ -14,17 +14,9 @@ import { useGetScreenWidth } from "~/common/hooks";
 
 import styles from "./styles.module.scss";
 
-const initialSearchParamsObj = {
-	ordering: "",
-	status: "",
-	type: "",
-};
-
 const ModeratorsReviewFilterSection: React.FC = () => {
 	const [isClean, setIsClean] = useState(false);
-	const [searchParams, setSearchParams] = useSearchParams(
-		initialSearchParamsObj,
-	);
+	const [searchParams, setSearchParams] = useSearchParams();
 	const filterByType = searchParams.get("type");
 	const filterByStatus = searchParams.get("status");
 	const sortByPeriod = searchParams.get("ordering");
@@ -40,7 +32,11 @@ const ModeratorsReviewFilterSection: React.FC = () => {
 	);
 
 	const handleCleanSortGroup = () => {
-		setSearchParams(initialSearchParamsObj);
+		setSearchParams((prev) => {
+			prev.set("ordering", "");
+			prev.set("status", "");
+			return prev;
+		});
 		setIsClean(true);
 	};
 
@@ -55,9 +51,9 @@ const ModeratorsReviewFilterSection: React.FC = () => {
 					Оберіть категорію
 				</p>
 				<ToggleGroupButtons
-					activeButtonValue={filterByType || "Компанії"}
+					activeButtonValue={filterByType || "Курси"}
 					handleButtonClick={handleSetFilterByType}
-					toggleButtonGroupData={["Компанії", "Курси"]}
+					toggleButtonGroupData={["Курси", "Компанії"]}
 				/>
 			</div>
 			<div className={styles["fitters_block__sort"]}>

@@ -114,6 +114,12 @@ const SortDropdown: React.FC<Properties> = ({
 		}
 	}, [isClean, onSetIsClean, setSelectedOption]);
 
+	useEffect(() => {
+		if (searchParam) {
+			setSelectedOption(undefined);
+		}
+	}, [searchParam, selectedOptionFromSearchParams, setSelectedOption]);
+
 	return (
 		<div
 			className={`${styles["sort_container"]} ${

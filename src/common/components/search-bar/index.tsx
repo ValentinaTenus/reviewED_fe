@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React, { useCallback, useState } from "react";
 
 import FilterIcon from "~/assets/images/filter.svg?react";
@@ -20,8 +21,10 @@ import { type DropdownOption } from "~/common/types/index";
 import styles from "./styles.module.scss";
 
 type SearchBarProperties = {
+	containerStyles?: string;
 	filtersLength?: number;
 	iconSearch?: boolean;
+	inputStyles?: string;
 	isFilterButton?: boolean;
 	onChangeSearchTerm?: (searchTerm: string) => void;
 	onInputChange?: (value: string) => [];
@@ -32,8 +35,10 @@ type SearchBarProperties = {
 };
 
 const SearchBar: React.FC<SearchBarProperties> = ({
+	containerStyles,
 	filtersLength,
 	iconSearch = false,
+	inputStyles,
 	isFilterButton,
 	onChangeSearchTerm,
 	onInputChange,
@@ -60,6 +65,7 @@ const SearchBar: React.FC<SearchBarProperties> = ({
 
 			if (value.trim() === "") {
 				setFilteredSuggestions([]);
+				onSubmit("");
 			} else {
 				if (onInputChange) {
 					const suggestions = await onInputChange(value);
@@ -71,7 +77,7 @@ const SearchBar: React.FC<SearchBarProperties> = ({
 				onChangeSearchTerm(value);
 			}
 		},
-		[onInputChange, onChangeSearchTerm],
+		[onInputChange, onChangeSearchTerm, onSubmit],
 	);
 
 	const handleFormSubmit = useCallback(
@@ -89,12 +95,12 @@ const SearchBar: React.FC<SearchBarProperties> = ({
 	}, []);
 
 	return (
-		<div className={styles["container"]}>
+		<div className={clsx(styles["container"], containerStyles)}>
 			<form className={styles["search_form"]} onSubmit={handleFormSubmit}>
 				<div className={styles["form"]}>
 					<div className={styles["search_wrapper"]}>
 						<SearchInput
-							className={styles["search__input"]}
+							className={clsx(styles["search__input"], inputStyles)}
 							control={control}
 							errors={errors}
 							iconName={iconSearch ? IconName.SEARCH : null}

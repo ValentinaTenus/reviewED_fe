@@ -39,7 +39,7 @@ const MainModeratorsContent: React.FC = () => {
 	const screenWidth = useGetScreenWidth();
 
 	const [searchParams, setSearchParams] = useSearchParams();
-	const filterByType = searchParams.get("type") || "Компанії";
+	const filterByType = searchParams.get("type") || "Курси";
 	const filterByStatus = searchParams.get("status");
 	const sortByPeriod = searchParams.get("ordering");
 	const currentPage = searchParams.get("page") || DEFAULT_CURRENT_PAGE;
@@ -47,8 +47,13 @@ const MainModeratorsContent: React.FC = () => {
 	const handleSetSearchTerm = useCallback(
 		(term: string) => {
 			setSearchedID(term);
+			setSearchParams((prev) => {
+				prev.set("ordering", "");
+				prev.set("status", "");
+				return prev;
+			});
 		},
-		[setSearchedID],
+		[setSearchedID, setSearchParams],
 	);
 
 	const handleSetIsOpenSerchFiltersModal = useCallback(
@@ -85,6 +90,7 @@ const MainModeratorsContent: React.FC = () => {
 			});
 
 			handleSetCurrentPage(DEFAULT_CURRENT_PAGE);
+			setPageCount(DEFAULT_PAGE_COUNT);
 		} else {
 			const res = await getModeratorsReviewsByFilters({
 				id: searchedID,
@@ -146,6 +152,8 @@ const MainModeratorsContent: React.FC = () => {
 				<div className={styles["search_block"]}>
 					<p className={styles["search_title"]}>Пошук за UID</p>
 					<SearchBar
+						containerStyles={styles["searc-bar_container"]}
+						inputStyles={styles["searc-bar_input"]}
 						isFilterButton={screenWidth <= ScreenBreakpoints.MOBILE}
 						onOpenFilter={handleSetIsOpenSerchFiltersModal}
 						onSubmit={handleSetSearchTerm}
@@ -176,7 +184,7 @@ const MainModeratorsContent: React.FC = () => {
 							review={review}
 						/>
 					))}
-				{fetchResult?.results && fetchResult?.results.length > INDEX_ONE && (
+				{fetchResult?.results && pageCount > INDEX_ONE && (
 					<Pagination
 						defaultCurrentPage={+currentPage}
 						pages={pageCount}
