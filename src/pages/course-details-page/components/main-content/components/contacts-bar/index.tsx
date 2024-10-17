@@ -7,8 +7,9 @@ import {
 	ButtonVariant,
 	IconName,
 } from "~/common/enums/index";
-import { type GetCourseByIdResponseDto } from "~/common/types";
 import { useAppForm } from "~/common/hooks/index";
+import { type GetCourseByIdResponseDto } from "~/common/types";
+
 import { Contact } from "./components/contact";
 import styles from "./styles.module.scss";
 
@@ -33,9 +34,9 @@ const ContactsBar = forwardRef<HTMLDivElement, ContactsBarProperties>(
 	({ course, title }, ref) => {
 		const { control, errors } = useAppForm({
 			defaultValues: {
-				userName: "",
-				phoneNumber: "",
 				message: "",
+				phoneNumber: "",
+				userName: "",
 			},
 		});
 
