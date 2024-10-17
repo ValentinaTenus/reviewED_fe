@@ -41,6 +41,13 @@
 	font-weight: var(--font-weight-bold);
 }
 
+.form_button {
+	height: 40px;
+	margin-bottom: 32px;
+	margin-top: 24px;
+}
+
+
 @media (max-width: 1280px) {
 	.contacts__bar {
 		gap: 20px;

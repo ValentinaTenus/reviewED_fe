@@ -34,6 +34,7 @@ const ReviewsBar = forwardRef<HTMLDivElement, ReviewsBarProperties>(
 			id: course.id,
 			type: "course",
 		});
+
 		const { data: reviews, isFetching } = useGetCourseReviewsQuery(course.id);
 		const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
@@ -94,18 +95,20 @@ const ReviewsBar = forwardRef<HTMLDivElement, ReviewsBarProperties>(
 		const sortedReviews = useMemo(() => {
 			if (!reviews) return [];
 
-			return [...reviews].sort((a, b): number => {
-				switch (sortBy) {
-					case "new":
-						return b.time_added.localeCompare(a.time_added);
-					case "old":
-						return a.time_added.localeCompare(b.time_added);
-					case "rating":
-						return b.count_likes - a.count_likes;
-					default:
-						return ZERO;
-				}
-			});
+			if (reviews.length > ZERO) {
+				return [...reviews].sort((a, b): number => {
+					switch (sortBy) {
+						case "new":
+							return b.time_added.localeCompare(a.time_added);
+						case "old":
+							return a.time_added.localeCompare(b.time_added);
+						case "rating":
+							return b.count_likes - a.count_likes;
+						default:
+							return ZERO;
+					}
+				});
+			}
 		}, [sortBy, reviews]);
 
 		return (
@@ -122,7 +125,7 @@ const ReviewsBar = forwardRef<HTMLDivElement, ReviewsBarProperties>(
 					/>
 				</aside>
 				{isFetching && <Spinner variant={SpinnerVariant.SMALL} />}
-				{reviews?.length && !isFetching ? (
+				{reviews?.length && sortedReviews && !isFetching ? (
 					<ReviewsList reviews={sortedReviews} />
 				) : (
 					<article className={styles["reviews-bar__no-reviews"]}>
