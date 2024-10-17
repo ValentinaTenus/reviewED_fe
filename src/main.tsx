@@ -1,10 +1,11 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { ErrorBoundary } from "react-error-boundary";
 import { Provider } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
 
 import "~/assets/styles/index.scss";
-import "react-toastify/dist/ReactToastify.css";
 
 import { App } from "./app/App.tsx";
 import {
@@ -20,9 +21,11 @@ import {
 	CompaniesListPage,
 	CompanyDetailsPage,
 	CourseDetailsPage,
+	ErrorFallback,
 	HomePage,
 	ModeratorsPage,
 	MyReviewsPage,
+	NotFound,
 	PrivacyPolicyPage,
 	UserRequests,
 } from "./pages/index.ts";
@@ -79,8 +82,16 @@ const routes = createBrowserRouter([
 				element: <PrivacyPolicyPage />,
 				path: AppRoute.PRIVACY_POLICY,
 			},
+			{
+				element: <NotFound />,
+				path: "*",
+			},
 		],
-		element: <App />,
+		element: (
+			<ErrorBoundary FallbackComponent={ErrorFallback}>
+				<App />
+			</ErrorBoundary>
+		),
 		path: AppRoute.ROOT,
 	},
 ]);

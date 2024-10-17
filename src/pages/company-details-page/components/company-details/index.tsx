@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { BreadCrumb, Spinner } from "~/common/components";
 import { AppRoute, SpinnerVariant } from "~/common/enums/index";
 import { BreadCrumbType } from "~/common/types";
+import { NotFound } from "~/pages/home-page/components/main-content/components/search-block/components";
 import { useGetCompanyByIdQuery } from "~/redux/companies/companies-api";
 import { useGetCoursesByFilterQuery } from "~/redux/courses/courses-api";
 import { useGetReviewsByCompanyIdQuery } from "~/redux/reviews/reviews-companies-api";
@@ -34,7 +35,11 @@ type Properties = {
 
 const CompanyDetails: React.FC<Properties> = ({ companyId }) => {
 	const [breadcrumbs, setBreadcrumbs] = useState<BreadCrumbType[]>([]);
-	const { data: company, isFetching } = useGetCompanyByIdQuery(companyId);
+	const {
+		data: company,
+		error,
+		isFetching,
+	} = useGetCompanyByIdQuery(companyId);
 
 	const filters = {
 		category_by_id: [""],
@@ -62,6 +67,10 @@ const CompanyDetails: React.FC<Properties> = ({ companyId }) => {
 	const reviewsRef = useRef(null);
 
 	const { data: reviews } = useGetReviewsByCompanyIdQuery(companyId);
+
+	if (error && !company) {
+		return <NotFound />;
+	}
 
 	if (isFetching) {
 		return (

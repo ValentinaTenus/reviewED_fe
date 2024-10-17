@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 
 import { BreadCrumb, Spinner } from "~/common/components";
 import { AppRoute, SpinnerVariant } from "~/common/enums";
+import { NotFound } from "~/pages/home-page/components/main-content/components/search-block/components";
 import { useGetCourseByIdQuery } from "~/redux/courses/courses-api";
 
 import { CategoriesSection } from "./components/categories-list";
@@ -22,7 +23,7 @@ type MainContentProperties = {
 };
 
 const MainContent: React.FC<MainContentProperties> = ({ courseId }) => {
-	const { data: course, isFetching } = useGetCourseByIdQuery(courseId);
+	const { data: course, error, isFetching } = useGetCourseByIdQuery(courseId);
 
 	const courseName: string = course?.title || "";
 
@@ -46,6 +47,7 @@ const MainContent: React.FC<MainContentProperties> = ({ courseId }) => {
 			{!isFetching && (
 				<>
 					<BreadCrumb items={breadcrumbs} />
+					{error && !course && <NotFound />}
 					{course && (
 						<>
 							<PageTitle course={course} />
