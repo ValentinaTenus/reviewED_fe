@@ -1,6 +1,7 @@
 import { forwardRef, useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { toast } from "react-toastify";
 import Image from "~/assets/images/no-reviews.png";
 import { Button, SortDropdown, Spinner } from "~/common/components";
 import { ReviewsCourseSortOptions } from "~/common/constants";
@@ -14,13 +15,13 @@ import { type GetCourseByIdResponseDto } from "~/common/types";
 import { useAppSelector } from "~/redux/hooks.type";
 import { useGetCourseReviewsQuery } from "~/redux/reviews/reviews-course-api";
 import { useGetReviewsStatsQuery } from "~/redux/reviews/reviews-stats-api";
+import { useGetMyReviewsQuery } from "~/redux/my-reviews/my-reviews-api";
 
 import { ReviewModal } from "./components/review-modal";
 import { ReviewsList } from "./components/reviews-list";
 import { ReviewsStatsBar } from "./components/reviews-stats";
 import styles from "./styles.module.scss";
 
-const THREE_SECONDS = 3000;
 const ZERO = 0;
 
 type ReviewsBarProperties = {
@@ -29,50 +30,61 @@ type ReviewsBarProperties = {
 
 const ReviewsBar = forwardRef<HTMLDivElement, ReviewsBarProperties>(
 	({ course }, ref) => {
-		const isUserInAccount = useAppSelector((state) => state.auth.user);
-		const userCourseReviews = useAppSelector(
-			(state) => state.reviews.userCourseReviews,
-		);
-
 		const { data: stats } = useGetReviewsStatsQuery({
 			id: course.id,
 			type: "course",
 		});
+
 		const { data: reviews, isFetching } = useGetCourseReviewsQuery(course.id);
 		const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
-		const [isReviewed, setIsReviewed] = useState(false);
-		const [isButtonInactive, setIsButtonInactive] = useState(false);
+		const { user } = useAppSelector((state) => state.auth);
+		const {
+			data: courseReviewsByUser,
+			refetch: refetchGetCourseReviewsByUser,
+		} = useGetMyReviewsQuery(
+			{
+				params: { limit: 10, offset: 0, type: "course" },
+				userId: user?.id as number,
+			},
+			{
+				skip: typeof user?.id !== "number",
+			},
+		);
+
+		const [isCourseReviewedByUser, setIsCourseReviewedByUser] = useState(false);
 
 		const navigate = useNavigate();
 
-		const handleOpenReviewModal = () => {
-			if (!isButtonInactive) setIsReviewModalOpen(true);
-			else if (isUserInAccount !== null) setIsReviewed(true);
-			else navigate(AppRoute.AUTH);
-		};
+		const handleOpenReviewModal = useCallback(() => {
+			if (user) {
+				if (!isCourseReviewedByUser) {
+					setIsReviewModalOpen(true);
+				} else {
+					toast.error("Ви вже залишили відгук для цієї компанії");
+				}
+			} else {
+				navigate(AppRoute.AUTH);
+			}
+		}, [navigate, isCourseReviewedByUser, user]);
 
 		const handleCloseReviewModal = useCallback(() => {
 			setIsReviewModalOpen(false);
 		}, []);
 
-		useEffect(() => {
-			if (userCourseReviews?.includes(course.id) || isUserInAccount === null) {
-				setIsButtonInactive(true);
-			} else {
-				setIsButtonInactive(false);
-			}
-		}, [userCourseReviews, isUserInAccount, course.id]);
+		const handleReviewSubmit = useCallback(() => {
+			refetchGetCourseReviewsByUser();
+		}, [refetchGetCourseReviewsByUser]);
 
 		useEffect(() => {
-			if (isReviewed) {
-				const timer = setTimeout(() => {
-					setIsReviewed(false);
-				}, THREE_SECONDS);
+			const isCourseReviewedByUser = courseReviewsByUser?.results.find(
+				(review) => review.related_entity_name === course.title,
+			);
 
-				return () => clearTimeout(timer);
+			if (isCourseReviewedByUser) {
+				setIsCourseReviewedByUser(true);
 			}
-		}, [isReviewed]);
+		}, [courseReviewsByUser?.results, course.title]);
 
 		const [sortBy, setSortBy] = useState<string>("rating");
 
@@ -145,6 +157,7 @@ const ReviewsBar = forwardRef<HTMLDivElement, ReviewsBarProperties>(
 					course={course}
 					isOpen={isReviewModalOpen}
 					onClose={handleCloseReviewModal}
+					onReviewSubmit={handleReviewSubmit}
 				/>
 			</div>
 		);

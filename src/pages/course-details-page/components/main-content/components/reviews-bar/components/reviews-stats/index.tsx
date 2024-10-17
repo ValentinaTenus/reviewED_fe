@@ -28,7 +28,7 @@ const ReviewsStatsBar: React.FC<ReviewsStatsProperties> = ({
 	const scrWidth = useGetScreenWidth();
 
 	useEffect(() => {
-		if (scrWidth <= ScreenBreakpoints.TABLET) {
+		if (scrWidth <= ScreenBreakpoints.MOBILE) {
 			setIsMobileMode(true);
 			setIsRatingBarShown(false);
 		} else {

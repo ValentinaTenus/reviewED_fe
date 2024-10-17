@@ -1,9 +1,14 @@
-import { forwardRef, useState } from "react";
+import { forwardRef, useCallback, useState } from "react";
 
-import { Button } from "~/common/components";
-import { ButtonSize, ButtonVariant, IconName } from "~/common/enums/index";
+import { Button, Input, Modal } from "~/common/components";
+import {
+	ButtonSize,
+	ButtonType,
+	ButtonVariant,
+	IconName,
+} from "~/common/enums/index";
 import { type GetCourseByIdResponseDto } from "~/common/types";
-
+import { useAppForm } from "~/common/hooks/index";
 import { Contact } from "./components/contact";
 import styles from "./styles.module.scss";
 
@@ -26,11 +31,29 @@ const defineLocation = (location: string): string => {
 
 const ContactsBar = forwardRef<HTMLDivElement, ContactsBarProperties>(
 	({ course, title }, ref) => {
+		const { control, errors } = useAppForm({
+			defaultValues: {
+				userName: "",
+				phoneNumber: "",
+				message: "",
+			},
+		});
+
 		const [isContactsShown, setIsContactsShown] = useState(false);
 
-		const handleShowContact = () => {
+		const handleShowContact = useCallback(() => {
 			setIsContactsShown(true);
-		};
+		}, []);
+
+		const [isRefundModalOpen, setIsRefundModalOpen] = useState(false);
+
+		const handleOpenRefundModal = useCallback(() => {
+			setIsRefundModalOpen(true);
+		}, [isRefundModalOpen]);
+
+		const handleCloseRefundModal = useCallback(() => {
+			setIsRefundModalOpen(false);
+		}, [isRefundModalOpen]);
 
 		const contactsArray = course?.contact.split(/\r?\n/);
 		const phonesArray =
@@ -73,10 +96,52 @@ const ContactsBar = forwardRef<HTMLDivElement, ContactsBarProperties>(
 							</>
 						)}
 						<aside className={styles["contacts__button-container"]}>
-							<Button size={ButtonSize.MEDIUM} variant={ButtonVariant.PRIMARY}>
+							<Button
+								onClick={handleOpenRefundModal}
+								size={ButtonSize.MEDIUM}
+								variant={ButtonVariant.PRIMARY}
+							>
 								Зв&apos;язатися з компанією
 							</Button>
-
+							<Modal
+								isOpen={isRefundModalOpen}
+								onClose={handleCloseRefundModal}
+								title="Заявка на повернення коштів"
+							>
+								<form action="#">
+									<Input
+										control={control}
+										errors={errors}
+										label="Ім'я"
+										name="userName"
+										placeholder="Введіть ваше ім'я"
+									/>
+									<Input
+										control={control}
+										errors={errors}
+										label="Номер телефону"
+										name="phoneNumber"
+										placeholder="+38 (099) 999 9999"
+									/>
+									<Input
+										control={control}
+										errors={errors}
+										label="Ваш коментар"
+										name="message"
+										placeholder="Введіть текст коментаря"
+										rows={5}
+									/>
+									<Button
+										className={styles["form_button"]}
+										isFullWidth
+										onClick={() => console.log("Hey there")}
+										type={ButtonType.SUBMIT}
+										variant={ButtonVariant.PRIMARY}
+									>
+										Надіслати
+									</Button>
+								</form>
+							</Modal>
 							{!isContactsShown && (
 								<Button
 									onClick={() => handleShowContact()}
