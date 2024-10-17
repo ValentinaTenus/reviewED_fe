@@ -50,11 +50,11 @@ const ContactsBar = forwardRef<HTMLDivElement, ContactsBarProperties>(
 
 		const handleOpenRefundModal = useCallback(() => {
 			setIsRefundModalOpen(true);
-		}, [isRefundModalOpen]);
+		}, []);
 
 		const handleCloseRefundModal = useCallback(() => {
 			setIsRefundModalOpen(false);
-		}, [isRefundModalOpen]);
+		}, []);
 
 		const contactsArray = course?.contact.split(/\r?\n/);
 		const phonesArray =
@@ -135,7 +135,6 @@ const ContactsBar = forwardRef<HTMLDivElement, ContactsBarProperties>(
 									<Button
 										className={styles["form_button"]}
 										isFullWidth
-										onClick={() => console.log("Hey there")}
 										type={ButtonType.SUBMIT}
 										variant={ButtonVariant.PRIMARY}
 									>
