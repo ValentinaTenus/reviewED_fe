@@ -44,8 +44,8 @@
 .item_active::after {
 	content: "";
 	background-color: var(--color-black);
-	bottom: -20px;
-	height: 3px;
+	bottom: 0px;
+	height: 4px;
 	left: 0;
 	position: absolute;
 	width: 100%;

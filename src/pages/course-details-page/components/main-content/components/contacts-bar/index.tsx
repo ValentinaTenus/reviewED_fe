@@ -7,8 +7,9 @@ import {
 	ButtonVariant,
 	IconName,
 } from "~/common/enums/index";
-import { type GetCourseByIdResponseDto } from "~/common/types";
 import { useAppForm } from "~/common/hooks/index";
+import { type GetCourseByIdResponseDto } from "~/common/types";
+
 import { Contact } from "./components/contact";
 import styles from "./styles.module.scss";
 
@@ -33,9 +34,9 @@ const ContactsBar = forwardRef<HTMLDivElement, ContactsBarProperties>(
 	({ course, title }, ref) => {
 		const { control, errors } = useAppForm({
 			defaultValues: {
-				userName: "",
-				phoneNumber: "",
 				message: "",
+				phoneNumber: "",
+				userName: "",
 			},
 		});
 
@@ -49,11 +50,11 @@ const ContactsBar = forwardRef<HTMLDivElement, ContactsBarProperties>(
 
 		const handleOpenRefundModal = useCallback(() => {
 			setIsRefundModalOpen(true);
-		}, [isRefundModalOpen]);
+		}, []);
 
 		const handleCloseRefundModal = useCallback(() => {
 			setIsRefundModalOpen(false);
-		}, [isRefundModalOpen]);
+		}, []);
 
 		const contactsArray = course?.contact.split(/\r?\n/);
 		const phonesArray =
@@ -134,7 +135,6 @@ const ContactsBar = forwardRef<HTMLDivElement, ContactsBarProperties>(
 									<Button
 										className={styles["form_button"]}
 										isFullWidth
-										onClick={() => console.log("Hey there")}
 										type={ButtonType.SUBMIT}
 										variant={ButtonVariant.PRIMARY}
 									>

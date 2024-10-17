@@ -1,7 +1,7 @@
 import { forwardRef, useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import { toast } from "react-toastify";
+
 import Image from "~/assets/images/no-reviews.png";
 import { Button, SortDropdown, Spinner } from "~/common/components";
 import { ReviewsCourseSortOptions } from "~/common/constants";
@@ -13,9 +13,9 @@ import {
 } from "~/common/enums/index";
 import { type GetCourseByIdResponseDto } from "~/common/types";
 import { useAppSelector } from "~/redux/hooks.type";
+import { useGetMyReviewsQuery } from "~/redux/my-reviews/my-reviews-api";
 import { useGetCourseReviewsQuery } from "~/redux/reviews/reviews-course-api";
 import { useGetReviewsStatsQuery } from "~/redux/reviews/reviews-stats-api";
-import { useGetMyReviewsQuery } from "~/redux/my-reviews/my-reviews-api";
 
 import { ReviewModal } from "./components/review-modal";
 import { ReviewsList } from "./components/reviews-list";
