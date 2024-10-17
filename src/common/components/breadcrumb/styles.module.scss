@@ -34,9 +34,9 @@
 	font-size: var(--font-size-main-text);
 	font-weight: var(--font-weight-semi-bold);
 
-	 &:hover {
+	&:hover {
 		color: var(--color-grey-950);
-	 }
+	}
 }
 
 .bread_crumb__arrow {
@@ -56,5 +56,6 @@
 	.bread_crumb_link {
 		color: var(--color-grey-950);
 		font-weight: var(--font-weight-bold);
+		cursor: default;
 	}
 }

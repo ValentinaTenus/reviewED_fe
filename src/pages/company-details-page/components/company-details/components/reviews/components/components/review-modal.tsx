@@ -54,8 +54,6 @@ const ReviewModal: React.FC<{
 	}, [onClose, setRating, setReviewText]);
 
 	const handleSubmit = useCallback(async () => {
-		refetchUser();
-
 		if (!user?.policy_agreed) {
 			setIsPrivacyPolicyModalOpen(true);
 			return;
@@ -85,7 +83,6 @@ const ReviewModal: React.FC<{
 		company.id,
 		company.name,
 		onReviewSubmit,
-		refetchUser,
 		rating,
 		reviewText,
 		sendReview,
@@ -96,8 +93,9 @@ const ReviewModal: React.FC<{
 	useEffect(() => {
 		if (user?.policy_agreed) {
 			setIsPrivacyPolicyModalOpen(false);
+			refetchUser();
 		}
-	}, [user?.policy_agreed]);
+	}, [user?.policy_agreed, refetchUser]);
 
 	return (
 		<>
