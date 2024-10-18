@@ -65,7 +65,7 @@ const ReviewTextSection: React.FC<Properties> = ({
 		<div className={styles["review-text"]}>
 			{showFullText ? (
 				<>
-					<span>{text}</span>
+					<span className={styles["review-text-content"]}>{text}</span>
 					<p className={styles["review-text__close"]} onClick={toggleText}>
 						Закрити
 					</p>
