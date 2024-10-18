@@ -18,6 +18,7 @@ export {
 	type GetCoursesRequestQuery,
 	type GetCoursesResult,
 	type SendCourseRequest,
+	type SendReportRequest,
 } from "./courses/index";
 export { type DropdownOption } from "./dropdown-option";
 export {

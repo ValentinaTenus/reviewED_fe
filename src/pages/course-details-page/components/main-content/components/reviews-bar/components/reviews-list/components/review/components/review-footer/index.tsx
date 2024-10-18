@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { Button, Icon } from "~/common/components";
-import { ButtonSize, ButtonVariant, IconName } from "~/common/enums";
+import { AppRoute, ButtonSize, ButtonVariant, IconName } from "~/common/enums";
 import { type CourseReview } from "~/common/types";
+import { useAppSelector } from "~/redux/hooks.type";
 
+import { ReportModal } from "./components/report-modal/report-modal";
 import styles from "./styles.module.scss";
 
 type ReviewFooterProperties = {
@@ -11,18 +14,39 @@ type ReviewFooterProperties = {
 };
 
 const ReviewFooter: React.FC<ReviewFooterProperties> = ({ review }) => {
+	const navigate = useNavigate();
+
+	const isUserInAccount = useAppSelector((state) => state.auth.user);
+
+	const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+
+	const handleOpenReportModal = () => {
+		if (isUserInAccount === null) navigate(AppRoute.AUTH);
+		else setIsReportModalOpen(true);
+	};
+
+	const handleCloseReportModal = () => {
+		setIsReportModalOpen(false);
+	};
+
 	return (
 		<div className={styles["review__footer"]}>
 			<Button
 				className={styles["footer__button"]}
+				onClick={handleOpenReportModal}
 				prependedIcon={
 					<Icon className={styles["footer__icon"]} name={IconName.FLAG} />
 				}
 				size={ButtonSize.SMALL}
 				variant={ButtonVariant.DEFAULT}
 			>
-				Report
+				Поскаржитися
 			</Button>
+			<ReportModal
+				isOpen={isReportModalOpen}
+				onClose={handleCloseReportModal}
+				review={review}
+			/>
 			<aside className={styles["footer__button-container"]}>
 				<Button
 					className={styles["footer__button"]}
@@ -32,7 +56,7 @@ const ReviewFooter: React.FC<ReviewFooterProperties> = ({ review }) => {
 					size={ButtonSize.SMALL}
 					variant={ButtonVariant.DEFAULT}
 				>
-					Share
+					Поділитися
 				</Button>
 				<Button
 					className={styles["footer__button"]}

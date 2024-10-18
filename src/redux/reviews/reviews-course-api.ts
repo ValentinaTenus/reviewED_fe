@@ -2,7 +2,9 @@ import { HttpMethods } from "~/common/enums/index.ts";
 import {
 	type CourseReview,
 	type GetQueryResponse,
+	type ReviewReport,
 	type SendCourseRequest,
+	type SendReportRequest,
 } from "~/common/types/index.ts";
 
 import { api } from "../services.ts";
@@ -20,6 +22,15 @@ export const reviewsApi = api.injectEndpoints({
 			transformResponse: (response: GetQueryResponse<CourseReview>) =>
 				response.results,
 		}),
+		sendReport: builder.mutation<ReviewReport, SendReportRequest>({
+			query: (reviewData) => ({
+				body: {
+					reason: reviewData.reason,
+				},
+				method: HttpMethods.POST,
+				url: `${reviewsApiPath.POST_REPORTS}${reviewData.reviewType}/${reviewData.reviewId}`,
+			}),
+		}),
 		sendReview: builder.mutation<CourseReview, SendCourseRequest>({
 			query: (reviewData) => ({
 				body: {
@@ -36,5 +47,6 @@ export const reviewsApi = api.injectEndpoints({
 export const {
 	useGetCourseReviewsQuery,
 	useLazyGetCourseReviewsQuery,
+	useSendReportMutation,
 	useSendReviewMutation,
 } = reviewsApi;
