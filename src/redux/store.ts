@@ -16,6 +16,8 @@ import { locationsApi } from "./locations/locations-api.ts";
 import { locationsReducer } from "./locations/locations-slice.ts";
 import { myRewiewsApi } from "./my-reviews/my-reviews-api.ts";
 import { reviewsApi } from "./reviews/reviews-api.ts";
+import { companiesReviewsApi } from "./reviews/reviews-companies-api.ts";
+import { coursesReviewsApi } from "./reviews/reviews-course-api.ts";
 import { reviewsReducer } from "./reviews/reviews-slice.ts";
 import { reviewsModerationApi } from "./reviews-moderation/reviews-moderation-api.ts";
 import { reviewsModerationReducer } from "./reviews-moderation/reviews-moderation-slice.ts";
@@ -30,8 +32,10 @@ const rootReducer = combineReducers({
 	categoriesApiSlice: categoriesApi.reducer,
 	companies: companiesReducer,
 	companiesApiSlice: companiesApi.reducer,
+	companiesReviews: companiesReviewsApi.reducer,
 	courses: coursesReducer,
 	coursesApiSlice: coursesApi.reducer,
+	coursesReviews: coursesReviewsApi.reducer,
 	locations: locationsReducer,
 	locationsApiSlice: locationsApi.reducer,
 	myRewiews: myRewiewsApi.reducer,

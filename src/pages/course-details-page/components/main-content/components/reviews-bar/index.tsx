@@ -30,15 +30,18 @@ type ReviewsBarProperties = {
 
 const ReviewsBar = forwardRef<HTMLDivElement, ReviewsBarProperties>(
 	({ course }, ref) => {
+		const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+		const [isCourseReviewedByUser, setIsCourseReviewedByUser] = useState(false);
+
+		const navigate = useNavigate();
+
+		const { user } = useAppSelector((state) => state.auth);
+
 		const { data: stats } = useGetReviewsStatsQuery({
 			id: course.id,
 			type: "course",
 		});
-
 		const { data: reviews, isFetching } = useGetCourseReviewsQuery(course.id);
-		const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
-
-		const { user } = useAppSelector((state) => state.auth);
 		const {
 			data: courseReviewsByUser,
 			refetch: refetchGetCourseReviewsByUser,
@@ -52,12 +55,12 @@ const ReviewsBar = forwardRef<HTMLDivElement, ReviewsBarProperties>(
 			},
 		);
 
-		const [isCourseReviewedByUser, setIsCourseReviewedByUser] = useState(false);
-
-		const navigate = useNavigate();
-
 		const handleOpenReviewModal = useCallback(() => {
 			if (user) {
+				if (user.is_staff) {
+					toast.error("Модератор не може залишати відгуки");
+				}
+
 				if (!isCourseReviewedByUser) {
 					setIsReviewModalOpen(true);
 				} else {
@@ -116,14 +119,16 @@ const ReviewsBar = forwardRef<HTMLDivElement, ReviewsBarProperties>(
 				<h3 className={styles["reviews-bar__header"]} ref={ref}>
 					Відгуки
 				</h3>
-				<aside className={styles["reviews-bar__sorting"]}>
-					<p>Сортувати за</p>
-					<SortDropdown
-						aiEnd={false}
-						onChange={handleChangeSortBy}
-						options={ReviewsCourseSortOptions}
-					/>
-				</aside>
+				{reviews?.length && sortedReviews && (
+					<aside className={styles["reviews-bar__sorting"]}>
+						<p>Сортувати за</p>
+						<SortDropdown
+							aiEnd={false}
+							onChange={handleChangeSortBy}
+							options={ReviewsCourseSortOptions}
+						/>
+					</aside>
+				)}
 				{isFetching && <Spinner variant={SpinnerVariant.SMALL} />}
 				{reviews?.length && sortedReviews && !isFetching ? (
 					<ReviewsList reviews={sortedReviews} />

@@ -3,6 +3,10 @@
 	font-size: var(--font-size-main-text);
 	font-weight: var(--font-weight-text);
 
+	&-content {
+		word-break: break-all;
+	}
+	
 	&__more-details {
 		color: var(--color-blue-icons);
 		cursor: pointer;

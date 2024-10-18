@@ -63,6 +63,10 @@ const Statistics: React.FC<{
 
 	const handleOpenReviewModal = useCallback(() => {
 		if (user) {
+			if (user.is_staff) {
+				toast.error("Модератор не може залишати відгуки");
+			}
+
 			if (!isCompanyReviewedByUser) {
 				setIsReviewModalOpen(true);
 			} else {

@@ -115,7 +115,7 @@ const MyReviewsListSection: React.FC<Properties> = ({ category }) => {
 		if (error instanceof Error) {
 			toast.error(`Error: ${error.message}`);
 		} else {
-			toast.error(fallbackMessage || "Something went wrong");
+			toast.error(fallbackMessage || "Щось пішло не так");
 		}
 	};
 
@@ -124,7 +124,7 @@ const MyReviewsListSection: React.FC<Properties> = ({ category }) => {
 			try {
 				await deleteMyReview({ category, entityId }).unwrap();
 			} catch (error) {
-				handleError(error, "Failed to delete review");
+				handleError(error, "Не вдалося видалити відгук");
 			} finally {
 				handleCloseDeleteReview();
 			}
