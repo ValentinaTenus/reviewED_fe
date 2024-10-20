@@ -38,6 +38,20 @@ const ReviewsBar = forwardRef<HTMLDivElement, ReviewsBarProperties>(
 		const { data: reviews, isFetching } = useGetCourseReviewsQuery(course.id);
 		const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
+
+const mockReviews = [{
+	author_avatar: "none",
+	author_name: "Dude",
+	company_name: "Company",
+	count_likes: 100,
+	course_title: "My course",
+	id: 1000,
+	rating: 4,
+	status: "status",
+	text: "Hello there",
+	time_added: "2024-05-10"
+}];
+
 		const { user } = useAppSelector((state) => state.auth);
 		const {
 			data: courseReviewsByUser,
@@ -93,10 +107,10 @@ const ReviewsBar = forwardRef<HTMLDivElement, ReviewsBarProperties>(
 		}, []);
 
 		const sortedReviews = useMemo(() => {
-			if (!reviews) return [];
+			if (!mockReviews) return [];
 
-			if (reviews.length > ZERO) {
-				return [...reviews].sort((a, b): number => {
+			if (mockReviews.length > ZERO) {
+				return [...mockReviews].sort((a, b): number => {
 					switch (sortBy) {
 						case "new":
 							return b.time_added.localeCompare(a.time_added);
@@ -109,7 +123,7 @@ const ReviewsBar = forwardRef<HTMLDivElement, ReviewsBarProperties>(
 					}
 				});
 			}
-		}, [sortBy, reviews]);
+		}, [sortBy, mockReviews]);
 
 		return (
 			<div className={styles["reviews-bar"]}>
@@ -125,7 +139,7 @@ const ReviewsBar = forwardRef<HTMLDivElement, ReviewsBarProperties>(
 					/>
 				</aside>
 				{isFetching && <Spinner variant={SpinnerVariant.SMALL} />}
-				{reviews?.length && sortedReviews && !isFetching ? (
+				{mockReviews?.length && sortedReviews && !isFetching ? (
 					<ReviewsList reviews={sortedReviews} />
 				) : (
 					<article className={styles["reviews-bar__no-reviews"]}>

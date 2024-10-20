@@ -6,7 +6,7 @@ import { AppRoute, ButtonSize, ButtonVariant, IconName } from "~/common/enums";
 import { type CourseReview } from "~/common/types";
 import { useAppSelector } from "~/redux/hooks.type";
 
-import { ReportModal } from "./components/report-modal/report-modal";
+import { ReportModal } from "./components/report-modal";
 import styles from "./styles.module.scss";
 
 type ReviewFooterProperties = {

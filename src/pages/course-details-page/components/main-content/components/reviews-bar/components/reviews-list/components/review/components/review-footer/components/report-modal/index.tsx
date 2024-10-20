@@ -4,10 +4,9 @@ import { Button } from "~/common/components/index";
 import { Modal } from "~/common/components/modal";
 import { ButtonSize, ButtonVariant } from "~/common/enums/index";
 import { Review } from "~/common/types";
-import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
 import { useSendReportMutation } from "~/redux/reviews/reviews-course-api";
 
-import { ReportSuccessModal } from "./components/report-success-modal";
+import { ReportSuccessModal } from "./report-success-modal";
 import styles from "./styles.module.scss";
 
 const ReportModal: React.FC<{
@@ -64,7 +63,7 @@ const ReportModal: React.FC<{
 					<div className={styles["modal_review-block"]}>
 						<h4 className={styles["modal_label"]}>Ваш коментар</h4>
 						<textarea
-							className={`${styles["modal_review-textarea"]} ${globalStyles["body-r"]}`}
+							className={styles["modal_review-textarea"]}
 							id="review"
 							maxLength={2000}
 							onChange={handleReportChange}
@@ -72,7 +71,7 @@ const ReportModal: React.FC<{
 							value={reportText}
 						/>
 						<div
-							className={`${styles["modal_char-counter"]} ${globalStyles["small_r"]}`}
+							className={styles["modal_char-counter"]}
 						>
 							<span>Мінімальна к-ть символів - 200</span>
 							<span>{reportText.length}/2000</span>

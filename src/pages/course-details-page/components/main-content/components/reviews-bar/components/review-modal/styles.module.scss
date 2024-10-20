@@ -11,15 +11,19 @@
 }
 
 .modal_review-textarea {
-	width: 100%;
-	resize: none;
+	border-radius: 20px;
+	color: var(--color-grey-400);
+	font-size: var(--font-size-main-text);
 	height: 200px;
 	padding: 15px;
-	border-radius: 20px;
+	resize: none;
+	width: 100%;
 }
 
 .modal_char-counter {
+	color: var(--color-grey-460);
 	display: flex;
+	font-size: var(--font-size-main-text);
 	justify-content: space-between;
 	margin-bottom: 20px;
 }
