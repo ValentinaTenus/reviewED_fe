@@ -18,6 +18,11 @@
 	align-items: center;
 }
 
+.link-text {
+    color: var(--color-grey-400);
+	font-size: var(--font-size-main-text);
+}
+
 .copy-icon {
 	width: 24px;
 	height: 24px;

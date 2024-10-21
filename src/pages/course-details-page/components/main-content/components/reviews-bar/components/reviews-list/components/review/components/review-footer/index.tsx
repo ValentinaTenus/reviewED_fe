@@ -7,6 +7,7 @@ import { type CourseReview } from "~/common/types";
 import { useAppSelector } from "~/redux/hooks.type";
 
 import { ReportModal } from "./components/report-modal";
+import { ShareModal } from "./components/share-modal";
 import styles from "./styles.module.scss";
 
 type ReviewFooterProperties = {
@@ -27,6 +28,16 @@ const ReviewFooter: React.FC<ReviewFooterProperties> = ({ review }) => {
 
 	const handleCloseReportModal = () => {
 		setIsReportModalOpen(false);
+	};
+
+	const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+
+	const handleOpenShareModal = () => {
+		setIsShareModalOpen(true);
+	};
+
+	const handleCloseShareModal = () => {
+		setIsShareModalOpen(false);
 	};
 
 	return (
@@ -50,6 +61,7 @@ const ReviewFooter: React.FC<ReviewFooterProperties> = ({ review }) => {
 			<aside className={styles["footer__button-container"]}>
 				<Button
 					className={styles["footer__button"]}
+					onClick={handleOpenShareModal}
 					prependedIcon={
 						<Icon className={styles["footer__icon"]} name={IconName.SHARE} />
 					}
@@ -58,6 +70,11 @@ const ReviewFooter: React.FC<ReviewFooterProperties> = ({ review }) => {
 				>
 					Поділитися
 				</Button>
+				<ShareModal
+				isOpen={isShareModalOpen}
+				onClose={handleCloseShareModal}
+				review={review}
+			/>
 				<Button
 					className={styles["footer__button"]}
 					prependedIcon={

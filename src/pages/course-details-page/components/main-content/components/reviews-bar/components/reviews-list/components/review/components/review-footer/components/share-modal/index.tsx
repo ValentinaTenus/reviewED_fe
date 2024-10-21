@@ -5,7 +5,6 @@ import { Button, Icon } from "~/common/components/index";
 import { Modal } from "~/common/components/modal";
 import { ButtonVariant, IconName } from "~/common/enums/index";
 import { Review } from "~/common/types";
-import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
 import { useGetShareableLinkQuery } from "~/redux/reviews/reviews-api";
 
 import styles from "./styles.module.scss";
@@ -65,7 +64,7 @@ const ShareModal: React.FC<{
 				<div className={styles["modal_link"]}>
 					<div>
 						<Icon className={styles["copy-icon"]} name={IconName.COPY} />
-						<span className={globalStyles["body-r"]} id="linkText">
+						<span className={styles["link-text"]} id="linkText">
 							{shareableLinkData?.shareable_link}
 						</span>
 					</div>
