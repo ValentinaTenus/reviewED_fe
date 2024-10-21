@@ -82,6 +82,11 @@
   border-radius: 4px;
   height: 60px;
   width: 120px;
+
+  &-image {
+    height: 100%;
+    width: 100%;
+  }
 }
 
 .review_card__date {

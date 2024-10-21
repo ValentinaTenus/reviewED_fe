@@ -8,7 +8,7 @@ import {
 import { api } from "../services.ts";
 import { reviewsApiPath } from "./constants.ts";
 
-export const reviewsApi = api.injectEndpoints({
+export const coursesReviewsApi = api.injectEndpoints({
 	endpoints: (builder) => ({
 		getCourseReviews: builder.query<CourseReview[], number>({
 			query: (id) => {
@@ -20,14 +20,14 @@ export const reviewsApi = api.injectEndpoints({
 			transformResponse: (response: GetQueryResponse<CourseReview>) =>
 				response.results,
 		}),
-		sendReview: builder.mutation<CourseReview, SendCourseRequest>({
-			query: (reviewData) => ({
+		sendCourseReview: builder.mutation<CourseReview, SendCourseRequest>({
+			query: ({ courseId, rating, text }) => ({
 				body: {
-					rating: reviewData.rating,
-					text: reviewData.text,
+					rating: rating,
+					text: text,
 				},
 				method: HttpMethods.POST,
-				url: `${reviewsApiPath.POST_COURSES_REVIEWS}${reviewData.courseId}/`,
+				url: `${reviewsApiPath.POST_COURSES_REVIEWS}${courseId}/`,
 			}),
 		}),
 	}),
@@ -36,5 +36,5 @@ export const reviewsApi = api.injectEndpoints({
 export const {
 	useGetCourseReviewsQuery,
 	useLazyGetCourseReviewsQuery,
-	useSendReviewMutation,
-} = reviewsApi;
+	useSendCourseReviewMutation,
+} = coursesReviewsApi;

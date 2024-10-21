@@ -11,7 +11,7 @@ import { useGetUser } from "~/common/hooks/use-get-user.hook";
 import { type GetCourseByIdResponseDto } from "~/common/types";
 import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
 import { useAppSelector } from "~/redux/hooks.type";
-import { useSendReviewMutation } from "~/redux/reviews/reviews-course-api";
+import { useSendCourseReviewMutation } from "~/redux/reviews/reviews-course-api";
 
 import styles from "./styles.module.scss";
 
@@ -24,7 +24,7 @@ const ReviewModal: React.FC<{
 	const ONE = 1;
 	const MIN_TEXT = 200;
 	const { refetch: refetchUser } = useGetUser();
-	const [sendReview] = useSendReviewMutation();
+	const [sendReview] = useSendCourseReviewMutation();
 
 	const { user } = useAppSelector((state) => state.auth);
 
@@ -55,7 +55,6 @@ const ReviewModal: React.FC<{
 	}, [onClose, setRating, setReviewText]);
 
 	const handleSubmit = useCallback(async () => {
-		refetchUser();
 		if (!user?.policy_agreed) {
 			setIsPrivacyPolicyModalOpen(true);
 			return;
@@ -85,7 +84,6 @@ const ReviewModal: React.FC<{
 		course.id,
 		course.title,
 		onReviewSubmit,
-		refetchUser,
 		rating,
 		reviewText,
 		sendReview,
@@ -96,8 +94,9 @@ const ReviewModal: React.FC<{
 	useEffect(() => {
 		if (user?.policy_agreed) {
 			setIsPrivacyPolicyModalOpen(false);
+			refetchUser();
 		}
-	}, [user?.policy_agreed]);
+	}, [user?.policy_agreed, refetchUser]);
 
 	return (
 		<>
