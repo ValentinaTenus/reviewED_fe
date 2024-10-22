@@ -9,6 +9,11 @@
 	display: flex;
 	justify-content: center;
 
+	&-item {
+		display: flex;
+		align-items: center;
+	}
+
 	&--edit {
 		div {
 			cursor: pointer;

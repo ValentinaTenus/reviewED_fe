@@ -33,9 +33,7 @@ const Courses = React.forwardRef<
 			</h2>
 			<div className={styles["courses_cards"]}>
 				{displayedCourses.map((course, index) => (
-					<div className={styles["course_card"]} key={index}>
-						<CourseCard course={course} isLogoShown={false} />
-					</div>
+					<CourseCard course={course} isLogoShown={false} key={index} />
 				))}
 			</div>
 			{courses.length > MAX_NUMBER && (

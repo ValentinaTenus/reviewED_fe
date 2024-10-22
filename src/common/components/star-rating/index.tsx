@@ -72,6 +72,7 @@ const StarRating: React.FC<RatingProperties> = ({
 
 						return (
 							<div
+								className={styles["rating_stars-item"]}
 								key={index}
 								onClick={
 									handleClick ? () => handleClick(ratingValue) : undefined

@@ -84,8 +84,13 @@
   width: 120px;
 
   &-image {
+    border-radius: 4px;
     height: 100%;
     width: 100%;
+  }
+
+  &:hover{
+    border: 1px solid var(--color-grey-950);
   }
 }
 
@@ -101,6 +106,7 @@
   font-weight: var(--font-weight-text);
   min-height: 50px;
   line-height: 18.24px;
+  word-break: break-all;
 }
 
 .review_card__button {

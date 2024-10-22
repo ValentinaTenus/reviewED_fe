@@ -48,13 +48,13 @@ const ContactsBar = forwardRef<HTMLDivElement, ContactsBarProperties>(
 
 		const [isRefundModalOpen, setIsRefundModalOpen] = useState(false);
 
-		const handleOpenRefundModal = useCallback(() => {
-			setIsRefundModalOpen(true);
-		}, []);
-
 		const handleCloseRefundModal = useCallback(() => {
 			setIsRefundModalOpen(false);
 		}, []);
+
+		const handleContact = useCallback(() => {
+			window.location.href = `mailto:${course?.contact}`;
+		}, [course?.contact]);
 
 		const contactsArray = course?.contact.split(/\r?\n/);
 		const phonesArray =
@@ -82,23 +82,43 @@ const ContactsBar = forwardRef<HTMLDivElement, ContactsBarProperties>(
 						<Contact iconName={IconName.BANK}>{course.company.name}</Contact>
 
 						{course.website !== "None" && (
-							<Contact iconName={IconName.GLOBAL}>{course.website}</Contact>
+							<a
+								className={styles["contacts__link"]}
+								href={course.website}
+								rel="noopener noreferrer"
+								target="_blank"
+							>
+								<Contact iconName={IconName.GLOBAL}>{course.website}</Contact>
+							</a>
 						)}
 						{isContactsShown && (
 							<>
 								{formattedTelsArray && (
-									<Contact iconName={IconName.PHONE}>
-										<div className={styles["contacts__phone-container"]}>
-											{formattedTelsArray}
-										</div>
-									</Contact>
+									<a
+										className={styles["contacts__link"]}
+										href={`tel:${formattedTelsArray}`}
+									>
+										<Contact iconName={IconName.PHONE}>
+											<div className={styles["contacts__phone-container"]}>
+												{formattedTelsArray}
+											</div>
+										</Contact>
+									</a>
 								)}
-								{email && <Contact iconName={IconName.EMAIL}>{email}</Contact>}
+								{email && email !== "none email" && (
+									<a
+										className={styles["contacts__link"]}
+										href={`mailto:${email}`}
+									>
+										<Contact iconName={IconName.EMAIL}>{email}</Contact>
+									</a>
+								)}
 							</>
 						)}
 						<aside className={styles["contacts__button-container"]}>
 							<Button
-								onClick={handleOpenRefundModal}
+								className={styles["contact__connect_button"]}
+								onClick={handleContact}
 								size={ButtonSize.MEDIUM}
 								variant={ButtonVariant.PRIMARY}
 							>
