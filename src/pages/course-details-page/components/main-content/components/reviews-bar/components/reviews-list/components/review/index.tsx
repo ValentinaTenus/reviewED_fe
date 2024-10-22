@@ -18,7 +18,7 @@ const Review: React.FC<ReviewProperties> = ({ review }) => {
 				date={review.time_added}
 				name={review.author_name}
 				rating={review.rating}
-				role={review.status}
+				role=""
 			/>
 			<ReviewMain text={review.text} />
 			<ReviewFooter review={review} />

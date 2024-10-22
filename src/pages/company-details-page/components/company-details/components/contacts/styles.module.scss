@@ -39,7 +39,9 @@
 
 .contacts_button {
 	height: 40px;
-	font-weight: var(--font-weight-bold);
+	font-size: var(--font-size-title-h5);
+	font-weight: var(--font-weight-semi-bold);
+	padding: 8px 24px;
 }
 
 .contacts_location,

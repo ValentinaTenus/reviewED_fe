@@ -1,5 +1,4 @@
 import React, { useCallback } from "react";
-import { Link } from "react-router-dom";
 
 import { Button, Icon } from "~/common/components/index";
 import { Modal } from "~/common/components/modal";
@@ -75,40 +74,43 @@ const ShareModal: React.FC<{
 				</div>
 				<div className={styles["modal_buttons"]}>
 					<Button variant={ButtonVariant.SHARE_LINKEDIN}>
-						<Link
+						<a
 							className={styles["button"]}
-							target="_blank"
-							to={generateShareLink(
+							href={generateShareLink(
 								"linkedin",
 								shareableLinkData?.shareable_link,
 							)}
+							rel="noopener noreferrer"
+							target="_blank"
 						>
 							<Icon className={styles["icon"]} name={IconName.LINKEDIN} />
 							Поділитися
-						</Link>
+						</a>
 					</Button>
 					<Button variant={ButtonVariant.SHARE_FACEBOOK}>
-						<Link
+						<a
 							className={styles["button"]}
-							target="_blank"
-							to={generateShareLink(
+							href={generateShareLink(
 								"facebook",
 								shareableLinkData?.shareable_link,
 							)}
+							rel="noopener noreferrer"
+							target="_blank"
 						>
 							<Icon className={styles["icon"]} name={IconName.FACEBOOK} />
 							Поділитися
-						</Link>
+						</a>
 					</Button>
 					<Button variant={ButtonVariant.SHARE_TWITTER}>
-						<Link
+						<a
 							className={styles["button"]}
+							href={generateShareLink("x", shareableLinkData?.shareable_link)}
+							rel="noopener noreferrer"
 							target="_blank"
-							to={generateShareLink("x", shareableLinkData?.shareable_link)}
 						>
 							<Icon className={styles["icon"]} name={IconName.XRP} />
 							Поділитися
-						</Link>
+						</a>
 					</Button>
 				</div>
 			</div>

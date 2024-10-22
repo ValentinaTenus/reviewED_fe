@@ -11,7 +11,7 @@ import {
 import { api } from "../services.ts";
 import { reviewsApiPath } from "./constants.ts";
 
-export const reviewsApi = api.injectEndpoints({
+export const coursesReviewsApi = api.injectEndpoints({
 	endpoints: (builder) => ({
 		getCourseReviews: builder.query<CourseReview[], number>({
 			query: (id) => {
@@ -39,14 +39,20 @@ export const reviewsApi = api.injectEndpoints({
 				url: `${reviewsApiPath.POST_REPORTS}${reviewData.reviewType}/${reviewData.reviewId}`,
 			}),
 		}),
-		sendReview: builder.mutation<CourseReview, SendCourseRequest>({
-			query: (reviewData) => ({
+		sendCourseReview: builder.mutation<CourseReview, SendCourseRequest>({
+			query: ({ courseId, rating, text }) => ({
 				body: {
-					rating: reviewData.rating,
-					text: reviewData.text,
+					rating: rating,
+					text: text,
 				},
 				method: HttpMethods.POST,
-				url: `${reviewsApiPath.POST_COURSES_REVIEWS}${reviewData.courseId}/`,
+				url: `${reviewsApiPath.POST_COURSES_REVIEWS}${courseId}/`,
+			}),
+		}),
+		unlikeReview: builder.mutation<undefined, LikeReviewRequest>({
+			query: (reviewData) => ({
+				method: HttpMethods.DELETE,
+				url: `${reviewsApiPath.LIKE_COMPANIES_REVIEWS}${reviewData.reviewId}/`,
 			}),
 		}),
 		unlikeReview: builder.mutation<undefined, LikeReviewRequest>({
@@ -63,6 +69,6 @@ export const {
 	useLazyGetCourseReviewsQuery,
 	useLikeReviewMutation,
 	useSendReportMutation,
-	useSendReviewMutation,
+	useSendCourseReviewMutation,
 	useUnlikeReviewMutation,
-} = reviewsApi;
+} = coursesReviewsApi;

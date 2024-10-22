@@ -9,7 +9,7 @@ import {
 import { api } from "../services.ts";
 import { reviewsApiPath } from "./constants.ts";
 
-export const reviewsApi = api.injectEndpoints({
+export const companiesReviewsApi = api.injectEndpoints({
 	endpoints: (builder) => ({
 		getReviewsByCompanyId: builder.query<
 			GetReviewsByCompanyIdResponseDto[],
@@ -84,4 +84,4 @@ export const {
 	useSendReportMutation,
 	useSendReviewMutation,
 	useUnlikeReviewMutation,
-} = reviewsApi;
+} = companiesReviewsApi;

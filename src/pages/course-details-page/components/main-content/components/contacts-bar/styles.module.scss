@@ -6,6 +6,7 @@
 	font-family: var(--font-family-main);
 	font-size: var(--font-size-title-h5);
 	font-weight: var(--font-weight-bold);
+	margin-bottom: 32px;
 }
 
 .contacts__header {
@@ -41,6 +42,21 @@
 	font-weight: var(--font-weight-bold);
 }
 
+.contacts__link {
+	color: var(--color-grey-950);
+	&:hover {
+		color: var(--color-blue-icons);
+	}
+}
+
+.contact__connect_button {
+	width: 218px;
+	font-size: var(	--font-size-title-h5);
+	text-wrap: nowrap;
+	padding: 8px 24px;
+	font-weight: var(--font-weight-semi-bold);
+}
+
 .form_button {
 	height: 40px;
 	margin-bottom: 32px;
@@ -48,10 +64,12 @@
 }
 
 
+
 @media (max-width: 1280px) {
 	.contacts__bar {
 		gap: 20px;
 		font-size: var(--font-size-title-mobile-h2);
+		margin-bottom: 24px;
 	}
 
 	.contacts__header {

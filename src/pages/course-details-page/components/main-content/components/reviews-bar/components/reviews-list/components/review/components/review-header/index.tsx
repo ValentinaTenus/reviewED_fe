@@ -40,7 +40,7 @@ const ReviewHeader: React.FC<ReviewHeaderProperties> = ({
 					name={IconName.SHIELD_TICK}
 				/>
 				<p className={styles["review__verification-text"]}>
-					Верифіковано через LinkedIn
+					Verified Via LinkedIn
 				</p>
 			</section>
 			<section className={styles["review__rating-block"]}>

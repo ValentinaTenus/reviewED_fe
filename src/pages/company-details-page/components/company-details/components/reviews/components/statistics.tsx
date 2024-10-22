@@ -1,10 +1,10 @@
-import { Rating } from "@mui/material";
+import clsx from "clsx";
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import { Button, Icon } from "~/common/components";
-import { AppRoute, ButtonVariant, IconName } from "~/common/enums";
+import { Button, Icon, StarRating } from "~/common/components";
+import { AppRoute, ButtonVariant, IconName, RatingSize } from "~/common/enums";
 import { type GetCompanyByIdResponse, type ReviewsStats } from "~/common/types";
 import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
 import { useAppSelector } from "~/redux/hooks.type";
@@ -63,6 +63,10 @@ const Statistics: React.FC<{
 
 	const handleOpenReviewModal = useCallback(() => {
 		if (user) {
+			if (user.is_staff) {
+				toast.error("Модератор не може залишати відгуки");
+			}
+
 			if (!isCompanyReviewedByUser) {
 				setIsReviewModalOpen(true);
 			} else {
@@ -96,24 +100,30 @@ const Statistics: React.FC<{
 			<div className={styles["reviews_stats-card"]}>
 				<div className={styles["reviews_stats-left"]}>
 					<div className={styles["reviews_stats-total-amount"]}>
-						<p className={globalStyles["p-sb"]}>Загальна кількість</p>
+						<p
+							className={clsx(
+								globalStyles["p-sb"],
+								styles["reviews_stats-title"],
+							)}
+						>
+							Загальна кількість
+						</p>
 						<span className={globalStyles["stats_span"]}>
 							{company.review_count}
 						</span>
 					</div>
 					<div className={styles["reviews_stats-avg-rating"]}>
 						<p className={globalStyles["p-sb"]}>Середній рейтинг</p>
-						<span
-							className={`${globalStyles["stats_span"]} ${styles["span_before-rating"]}`}
-						>
-							{formattedRating}
-						</span>
-						<Rating
-							name="half-rating-read"
-							precision={1}
-							readOnly
-							value={company.avg_rating}
-						/>
+						<div className={styles["reviews_stats-avg-rating-data"]}>
+							<span className={globalStyles["stats_span"]}>
+								{formattedRating}
+							</span>
+							<StarRating
+								averageRating={company.avg_rating}
+								isNumberShown={false}
+								size={RatingSize.MEDIUM}
+							/>
+						</div>
 					</div>
 					<Button
 						className={styles["see-more"]}
@@ -128,27 +138,32 @@ const Statistics: React.FC<{
 						isVisible ? styles["show"] : ""
 					}`}
 				>
-					<ul>
+					<ul className={styles["reviews_stats-right-list"]}>
 						{STAR_RATING_VALUES.map((number) => (
 							<li className={styles["amount-stars"]} key={number}>
-								<Icon
-									className={styles["review_stats-star"]}
-									name={IconName.STAR}
-								/>
-								<span
-									className={`${globalStyles["p-sb"]} ${styles["stars-line"]}`}
-								>
-									{number}
-								</span>
-								<div
-									className={styles["line"]}
-									style={{
-										width: `${(reviewsCount[numberToStringMap[number]] / (company.review_count || ONE)) * HUNDRED}%`,
-									}}
-								/>
-								<span className="reviews-count">
-									{reviewsCount[numberToStringMap[number]]}
-								</span>
+								<div className={styles["amount-stars-content"]}>
+									<div className={styles["amount-stars-content-icon"]}>
+										<Icon
+											className={styles["review_stats-star"]}
+											name={IconName.STAR}
+										/>
+										<span
+											className={`${globalStyles["p-sb"]} ${styles["stars-line"]}`}
+										>
+											{number}
+										</span>
+									</div>
+
+									<div
+										className={styles["line"]}
+										style={{
+											width: `${(reviewsCount[numberToStringMap[number]] / (company.review_count || ONE)) * HUNDRED}%`,
+										}}
+									/>
+									<span className="reviews-count">
+										{reviewsCount[numberToStringMap[number]]}
+									</span>
+								</div>
 							</li>
 						))}
 					</ul>
@@ -173,21 +188,26 @@ const Statistics: React.FC<{
 						className={`${styles["reviews_stats-avg-rating"]} ${styles["reviews_stats-avg-rating-col"]}`}
 					>
 						<p className={globalStyles["p-sb"]}>Середній рейтинг</p>
-						<span
-							className={`${globalStyles["stats_span"]} ${styles["span_before-rating"]}`}
-						>
-							{formattedRatingOverall}
-						</span>
-						<Rating
-							name="half-rating-read"
-							precision={1}
-							readOnly
-							value={company.avg_rating}
-						/>
+						<div className={styles["reviews_stats-avg-rating-data"]}>
+							<span
+								className={`${globalStyles["stats_span"]} ${styles["span_before-rating"]}`}
+							>
+								{formattedRatingOverall}
+							</span>
+							<StarRating
+								averageRating={company.avg_rating}
+								isNumberShown={false}
+								size={RatingSize.MEDIUM}
+							/>
+						</div>
 					</div>
 				</div>
 			</div>
-			<Button onClick={handleOpenReviewModal} variant={ButtonVariant.PRIMARY}>
+			<Button
+				className={styles["reviews-stats__button"]}
+				onClick={handleOpenReviewModal}
+				variant={ButtonVariant.PRIMARY}
+			>
 				Написати відгук
 			</Button>
 			{isReviewModalOpen && (

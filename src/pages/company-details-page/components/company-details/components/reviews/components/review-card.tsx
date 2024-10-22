@@ -1,9 +1,8 @@
-import { Rating } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import { AuthorAvatar, Icon } from "~/common/components";
-import { AppRoute, IconName } from "~/common/enums";
+import { AuthorAvatar, Icon, StarRating } from "~/common/components";
+import { AppRoute, IconName, RatingSize } from "~/common/enums";
 import { useTransformDate } from "~/common/hooks";
 import { CompanyReview } from "~/common/types";
 import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
@@ -111,7 +110,7 @@ const ReviewCard: React.FC<{
 									name={IconName.SHIELD_TICK}
 								/>
 								<span className={globalStyles["_verified-span"]}>
-									Верифіковано через LinkedIn
+									Verified Via LinkedIn
 								</span>
 							</div>
 						</div>
@@ -128,11 +127,10 @@ const ReviewCard: React.FC<{
 						className={`${globalStyles["rating"]} ${styles["review_phone-rating"]}`}
 					>
 						<div className={styles["rating_stars"]}>
-							<Rating
-								name="half-rating-read"
-								precision={1}
-								readOnly
-								value={review.rating}
+							<StarRating
+								averageRating={review.rating}
+								isNumberShown={false}
+								size={RatingSize.MEDIUM}
 							/>
 						</div>
 						<Icon className={styles["review_star"]} name={IconName.STAR} />

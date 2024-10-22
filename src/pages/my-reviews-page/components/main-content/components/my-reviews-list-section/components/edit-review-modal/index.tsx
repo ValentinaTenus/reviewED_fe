@@ -121,7 +121,7 @@ const EditReviewModal: React.FC<Properties> = ({
 										type={ButtonType.SUBMIT}
 										variant={ButtonVariant.PRIMARY}
 									>
-										Видалити
+										Редагувати
 									</Button>
 								</div>
 							</div>

@@ -1,0 +1,36 @@
+.error_fallback__page {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+
+  &-content {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    gap: 40px;
+    padding: 40px 92px;
+
+   
+    &-text {
+      color: var(--color-error-red);
+      font-size: var(--font-size-title-h4);
+      text-align: center;
+    }
+  }
+}
+
+@media (max-width: 1280px) {
+  .error_fallback__page {
+    &-content {
+      padding: 40px 48px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .error_fallback__page {
+    &-content {
+      padding: 24px 20px;
+    }
+  }
+}

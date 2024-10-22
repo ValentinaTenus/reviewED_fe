@@ -30,15 +30,21 @@ type ReviewsBarProperties = {
 
 const ReviewsBar = forwardRef<HTMLDivElement, ReviewsBarProperties>(
 	({ course }, ref) => {
+		const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+		const [isCourseReviewedByUser, setIsCourseReviewedByUser] = useState(false);
+		const [sortBy, setSortBy] = useState<string>("rating");
+
+		const navigate = useNavigate();
+
+		const { user } = useAppSelector((state) => state.auth);
+
 		const { data: stats } = useGetReviewsStatsQuery({
 			id: course.id,
 			type: "course",
 		});
-
-		const { data: reviews, isFetching } = useGetCourseReviewsQuery(course.id);
-		const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
-
-		const { user } = useAppSelector((state) => state.auth);
+		const { data: courseReviews, isFetching } = useGetCourseReviewsQuery(
+			course.id,
+		);
 		const {
 			data: courseReviewsByUser,
 			refetch: refetchGetCourseReviewsByUser,
@@ -52,12 +58,12 @@ const ReviewsBar = forwardRef<HTMLDivElement, ReviewsBarProperties>(
 			},
 		);
 
-		const [isCourseReviewedByUser, setIsCourseReviewedByUser] = useState(false);
-
-		const navigate = useNavigate();
-
 		const handleOpenReviewModal = useCallback(() => {
 			if (user) {
+				if (user.is_staff) {
+					toast.error("Модератор не може залишати відгуки");
+				}
+
 				if (!isCourseReviewedByUser) {
 					setIsReviewModalOpen(true);
 				} else {
@@ -86,17 +92,15 @@ const ReviewsBar = forwardRef<HTMLDivElement, ReviewsBarProperties>(
 			}
 		}, [courseReviewsByUser?.results, course.title]);
 
-		const [sortBy, setSortBy] = useState<string>("rating");
-
 		const handleChangeSortBy = useCallback((newSortBy: number | string) => {
 			setSortBy(newSortBy.toString());
 		}, []);
 
 		const sortedReviews = useMemo(() => {
-			if (!reviews) return [];
+			if (!courseReviews) return [];
 
-			if (reviews.length > ZERO) {
-				return [...reviews].sort((a, b): number => {
+			if (courseReviews.results.length > ZERO) {
+				return [...courseReviews.results].sort((a, b): number => {
 					switch (sortBy) {
 						case "new":
 							return b.time_added.localeCompare(a.time_added);
@@ -109,23 +113,25 @@ const ReviewsBar = forwardRef<HTMLDivElement, ReviewsBarProperties>(
 					}
 				});
 			}
-		}, [sortBy, reviews]);
+		}, [sortBy, courseReviews]);
 
 		return (
 			<div className={styles["reviews-bar"]}>
 				<h3 className={styles["reviews-bar__header"]} ref={ref}>
 					Відгуки
 				</h3>
-				<aside className={styles["reviews-bar__sorting"]}>
-					<p>Сортувати за</p>
-					<SortDropdown
-						aiEnd={false}
-						onChange={handleChangeSortBy}
-						options={ReviewsCourseSortOptions}
-					/>
-				</aside>
+				{sortedReviews?.length && sortedReviews && (
+					<aside className={styles["reviews-bar__sorting"]}>
+						<p>Сортувати за</p>
+						<SortDropdown
+							aiEnd={false}
+							onChange={handleChangeSortBy}
+							options={ReviewsCourseSortOptions}
+						/>
+					</aside>
+				)}
 				{isFetching && <Spinner variant={SpinnerVariant.SMALL} />}
-				{reviews?.length && sortedReviews && !isFetching ? (
+				{sortedReviews?.length && sortedReviews && !isFetching ? (
 					<ReviewsList reviews={sortedReviews} />
 				) : (
 					<article className={styles["reviews-bar__no-reviews"]}>
@@ -145,6 +151,7 @@ const ReviewsBar = forwardRef<HTMLDivElement, ReviewsBarProperties>(
 				{stats && (
 					<ReviewsStatsBar courseId={course.id.toString()} stats={stats} />
 				)}
+
 				<Button
 					className={styles["reviews-bar__button"]}
 					onClick={handleOpenReviewModal}
