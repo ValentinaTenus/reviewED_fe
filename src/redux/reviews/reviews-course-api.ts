@@ -55,12 +55,6 @@ export const coursesReviewsApi = api.injectEndpoints({
 				url: `${reviewsApiPath.LIKE_COMPANIES_REVIEWS}${reviewData.reviewId}/`,
 			}),
 		}),
-		unlikeReview: builder.mutation<undefined, LikeReviewRequest>({
-			query: (reviewData) => ({
-				method: HttpMethods.DELETE,
-				url: `${reviewsApiPath.LIKE_COMPANIES_REVIEWS}${reviewData.reviewId}/`,
-			}),
-		}),
 	}),
 });
 
