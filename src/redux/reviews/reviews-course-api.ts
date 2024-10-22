@@ -30,15 +30,6 @@ export const coursesReviewsApi = api.injectEndpoints({
 			}),
 		}),
 
-		sendReport: builder.mutation<ReviewReport, SendReportRequest>({
-			query: (reviewData) => ({
-				body: {
-					reason: reviewData.reason,
-				},
-				method: HttpMethods.POST,
-				url: `${reviewsApiPath.POST_REPORTS}${reviewData.reviewType}/${reviewData.reviewId}`,
-			}),
-		}),
 		sendCourseReview: builder.mutation<CourseReview, SendCourseRequest>({
 			query: ({ courseId, rating, text }) => ({
 				body: {
@@ -47,6 +38,15 @@ export const coursesReviewsApi = api.injectEndpoints({
 				},
 				method: HttpMethods.POST,
 				url: `${reviewsApiPath.POST_COURSES_REVIEWS}${courseId}/`,
+			}),
+		}),
+		sendReport: builder.mutation<ReviewReport, SendReportRequest>({
+			query: (reviewData) => ({
+				body: {
+					reason: reviewData.reason,
+				},
+				method: HttpMethods.POST,
+				url: `${reviewsApiPath.POST_REPORTS}${reviewData.reviewType}/${reviewData.reviewId}`,
 			}),
 		}),
 		unlikeReview: builder.mutation<undefined, LikeReviewRequest>({
@@ -62,7 +62,7 @@ export const {
 	useGetCourseReviewsQuery,
 	useLazyGetCourseReviewsQuery,
 	useLikeReviewMutation,
-	useSendReportMutation,
 	useSendCourseReviewMutation,
+	useSendReportMutation,
 	useUnlikeReviewMutation,
 } = coursesReviewsApi;
