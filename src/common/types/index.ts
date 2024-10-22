@@ -35,6 +35,7 @@ export {
 	type GetModerationReviewsRequest,
 	type GetModerationReviewsResponse,
 	type GetReviewsByCompanyIdResponseDto,
+	type LikeReviewRequest,
 	type ModerationReviews,
 	type RecentReview,
 	type Review,

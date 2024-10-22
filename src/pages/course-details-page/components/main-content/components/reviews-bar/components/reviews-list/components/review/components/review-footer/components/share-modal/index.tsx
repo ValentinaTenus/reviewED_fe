@@ -88,7 +88,7 @@ const ShareModal: React.FC<{
 					</Button>
 					<Button variant={ButtonVariant.SHARE_FACEBOOK}>
 						<Link
-							className={styles["modal_buttons"]}
+							className={styles["button"]}
 							target="_blank"
 							to={generateShareLink(
 								"facebook",

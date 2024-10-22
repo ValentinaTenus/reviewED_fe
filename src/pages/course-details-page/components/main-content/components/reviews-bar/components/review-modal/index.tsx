@@ -125,9 +125,7 @@ const ReviewModal: React.FC<{
 							placeholder="Текст відгуку"
 							value={reviewText}
 						/>
-						<div
-							className={styles["modal_char-counter"]}
-						>
+						<div className={styles["modal_char-counter"]}>
 							<span>Мінімальна к-ть символів - 200</span>
 							<span>{reviewText.length}/2000</span>
 						</div>

@@ -1,10 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Button, Icon } from "~/common/components";
 import { AppRoute, ButtonSize, ButtonVariant, IconName } from "~/common/enums";
 import { type CourseReview } from "~/common/types";
-import { useAppSelector } from "~/redux/hooks.type";
+import { useAppDispatch, useAppSelector } from "~/redux/hooks.type";
+import {
+	useLikeReviewMutation,
+	useUnlikeReviewMutation,
+} from "~/redux/reviews/reviews-course-api";
+import {
+	likeCourseReview,
+	unlikeCourseReview,
+} from "~/redux/reviews/reviews-slice";
 
 import { ReportModal } from "./components/report-modal";
 import { ShareModal } from "./components/share-modal";
@@ -14,8 +22,12 @@ type ReviewFooterProperties = {
 	review: CourseReview;
 };
 
+const ONE = 1;
+
 const ReviewFooter: React.FC<ReviewFooterProperties> = ({ review }) => {
 	const navigate = useNavigate();
+
+	const dispatch = useAppDispatch();
 
 	const isUserInAccount = useAppSelector((state) => state.auth.user);
 
@@ -40,6 +52,38 @@ const ReviewFooter: React.FC<ReviewFooterProperties> = ({ review }) => {
 		setIsShareModalOpen(false);
 	};
 
+	const [likesCount, setLikesCount] = useState(review.count_likes);
+	const [isLiked, setIsLiked] = useState(false);
+
+	const [likeReview] = useLikeReviewMutation();
+	const [unlikeReview] = useUnlikeReviewMutation();
+
+	const userLikedCompanyReviews = useAppSelector(
+		(state) => state.reviews.userLikedCompanyReviews,
+	);
+
+	useEffect(() => {
+		if (userLikedCompanyReviews) {
+			setIsLiked(userLikedCompanyReviews.includes(review.id));
+		}
+	}, [userLikedCompanyReviews, review.id]);
+
+	const handleLike = async () => {
+		if (isUserInAccount === null) navigate(AppRoute.AUTH);
+		else {
+			try {
+				await likeReview({ reviewId: review.id }).unwrap();
+				setLikesCount((prevCount) => prevCount + ONE);
+				setIsLiked(true);
+				dispatch(likeCourseReview(review.id));
+			} catch {
+				await unlikeReview({ reviewId: review.id }).unwrap();
+				setLikesCount((prevCount) => prevCount - ONE);
+				setIsLiked(false);
+				dispatch(unlikeCourseReview(review.id));
+			}
+		}
+	};
 	return (
 		<div className={styles["review__footer"]}>
 			<Button
@@ -51,7 +95,11 @@ const ReviewFooter: React.FC<ReviewFooterProperties> = ({ review }) => {
 				size={ButtonSize.SMALL}
 				variant={ButtonVariant.DEFAULT}
 			>
-				Поскаржитися
+				<p
+					className={`${styles["footer__text"]} ${styles["footer__text_hoverable"]}`}
+				>
+					Поскаржитися
+				</p>
 			</Button>
 			<ReportModal
 				isOpen={isReportModalOpen}
@@ -68,22 +116,30 @@ const ReviewFooter: React.FC<ReviewFooterProperties> = ({ review }) => {
 					size={ButtonSize.SMALL}
 					variant={ButtonVariant.DEFAULT}
 				>
-					Поділитися
+					<p
+						className={`${styles["footer__text"]} ${styles["footer__text_hoverable"]}`}
+					>
+						Поділитися
+					</p>
 				</Button>
 				<ShareModal
-				isOpen={isShareModalOpen}
-				onClose={handleCloseShareModal}
-				review={review}
-			/>
+					isOpen={isShareModalOpen}
+					onClose={handleCloseShareModal}
+					review={review}
+				/>
 				<Button
 					className={styles["footer__button"]}
+					onClick={handleLike}
 					prependedIcon={
-						<Icon className={styles["footer__icon"]} name={IconName.LIKE} />
+						<Icon
+							className={`${styles["footer__icon"]} ${styles["footer__like-icon"]} ${isLiked ? styles["liked"] : ""}`}
+							name={IconName.LIKE}
+						/>
 					}
 					size={ButtonSize.SMALL}
 					variant={ButtonVariant.DEFAULT}
 				>
-					{review.count_likes}
+					<p className={styles["footer__text"]}>{likesCount}</p>
 				</Button>
 			</aside>
 		</div>

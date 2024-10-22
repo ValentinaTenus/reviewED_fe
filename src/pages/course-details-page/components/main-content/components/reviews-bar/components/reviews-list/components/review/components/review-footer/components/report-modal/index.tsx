@@ -70,9 +70,7 @@ const ReportModal: React.FC<{
 							placeholder="Текст відгуку"
 							value={reportText}
 						/>
-						<div
-							className={styles["modal_char-counter"]}
-						>
+						<div className={styles["modal_char-counter"]}>
 							<span>Мінімальна к-ть символів - 200</span>
 							<span>{reportText.length}/2000</span>
 						</div>

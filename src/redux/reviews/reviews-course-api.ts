@@ -2,6 +2,7 @@ import { HttpMethods } from "~/common/enums/index.ts";
 import {
 	type CourseReview,
 	type GetQueryResponse,
+	type LikeReviewRequest,
 	type ReviewReport,
 	type SendCourseRequest,
 	type SendReportRequest,
@@ -22,6 +23,13 @@ export const reviewsApi = api.injectEndpoints({
 			transformResponse: (response: GetQueryResponse<CourseReview>) =>
 				response.results,
 		}),
+		likeReview: builder.mutation<undefined, LikeReviewRequest>({
+			query: (reviewData) => ({
+				method: HttpMethods.POST,
+				url: `${reviewsApiPath.LIKE_COMPANIES_REVIEWS}${reviewData.reviewId}/`,
+			}),
+		}),
+
 		sendReport: builder.mutation<ReviewReport, SendReportRequest>({
 			query: (reviewData) => ({
 				body: {
@@ -41,12 +49,20 @@ export const reviewsApi = api.injectEndpoints({
 				url: `${reviewsApiPath.POST_COURSES_REVIEWS}${reviewData.courseId}/`,
 			}),
 		}),
+		unlikeReview: builder.mutation<undefined, LikeReviewRequest>({
+			query: (reviewData) => ({
+				method: HttpMethods.DELETE,
+				url: `${reviewsApiPath.LIKE_COMPANIES_REVIEWS}${reviewData.reviewId}/`,
+			}),
+		}),
 	}),
 });
 
 export const {
 	useGetCourseReviewsQuery,
 	useLazyGetCourseReviewsQuery,
+	useLikeReviewMutation,
 	useSendReportMutation,
 	useSendReviewMutation,
+	useUnlikeReviewMutation,
 } = reviewsApi;
