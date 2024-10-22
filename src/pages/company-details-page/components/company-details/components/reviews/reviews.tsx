@@ -32,12 +32,12 @@ const Reviews = forwardRef<
 	const [reviewsPerPage] = useState(DEFAULT_REVIEWS_PER_PAGE);
 	const [sortBy, setSortBy] = useState<string>("rating");
 
-	let pages = 0;
-
-	if (reviews) {
-		pages = Math.ceil(reviews.length / reviewsPerPage);
-	}
-	const [pageCount] = useState(pages);
+	const pageCount = useMemo(() => {
+		if (reviews) {
+			return Math.ceil(reviews.length / reviewsPerPage);
+		}
+		return DEFAULT_CURRENT_PAGE;
+	}, [reviews, reviewsPerPage]);
 
 	const handleChangeSortBy = useCallback((newSortBy: number | string) => {
 		setSortBy(newSortBy.toString());
@@ -59,60 +59,66 @@ const Reviews = forwardRef<
 	if (reviews?.length != MIN_REVIEWS) {
 		return (
 			<div className={styles["reviews_section"]}>
-				<div className={styles["reviews_container"]} ref={ref}>
-					<h2 className={styles["reviews_heading"]}>Відгуки</h2>
-					<div className={styles["reviews_sort"]}>
-						<span
-							className={`${globalStyles["small-sb"]} ${styles["reviews_sort-span"]}`}
-						>
-							Сортувати за
-						</span>
-						<SortDropdown
-							aiEnd={false}
-							onChange={handleChangeSortBy}
-							options={ReviewsSortOptions}
-						/>
-					</div>
-					{sortedReviews.map((review, index) => (
-						<div className={styles["review"]} key={index}>
-							<ReviewCard review={review} />
+				<h2 className={styles["reviews_heading"]}>Відгуки</h2>
+				<div className={styles["reviews_content"]}>
+					<div className={styles["reviews_container"]} ref={ref}>
+						<div className={styles["reviews_sort"]}>
+							<span
+								className={`${globalStyles["small-sb"]} ${styles["reviews_sort-span"]}`}
+							>
+								Сортувати за
+							</span>
+							<SortDropdown
+								aiEnd={false}
+								onChange={handleChangeSortBy}
+								options={ReviewsSortOptions}
+							/>
 						</div>
-					))}
-					{pageCount > DEFAULT_CURRENT_PAGE && (
-						<Pagination
-							defaultCurrentPage={currentPage}
-							pages={pageCount}
-							setCurrentPage={setCurrentPage}
-						/>
+						<div className={styles["reviews"]}>
+							{sortedReviews.map((review, index) => (
+								<div className={styles["review"]} key={index}>
+									<ReviewCard review={review} />
+								</div>
+							))}
+						</div>
+						{pageCount > DEFAULT_CURRENT_PAGE && (
+							<Pagination
+								defaultCurrentPage={currentPage}
+								pages={pageCount}
+								setCurrentPage={setCurrentPage}
+							/>
+						)}
+					</div>
+					{reviewsStat && (
+						<Statistics company={company} reviewsCount={reviewsStat} />
 					)}
 				</div>
-				{reviewsStat && (
-					<Statistics company={company} reviewsCount={reviewsStat} />
-				)}
 			</div>
 		);
 	} else {
 		return (
 			<div className={styles["reviews_section"]}>
-				<div className={styles["no-reviews_container"]} ref={ref}>
-					<h2 className={styles["reviews_heading"]}>Відгуки</h2>
-					<div className={styles["no-reviews"]}>
-						<img
-							alt="Not found reviews"
-							className={styles["no-reviews_image"]}
-							src={NoReviews}
-						/>
-						<h4 className={styles["no-reviews_title"]}>
-							Тут ще ніхто не залишив відгук
-						</h4>
-						<p className={globalStyles["body-r"]}>
-							Станьте першим, хто поділиться враженням!
-						</p>
+				<h2 className={styles["reviews_heading"]}>Відгуки</h2>
+				<div className={styles["reviews_content"]}>
+					<div className={styles["no-reviews_container"]} ref={ref}>
+						<div className={styles["no-reviews"]}>
+							<img
+								alt="Not found reviews"
+								className={styles["no-reviews_image"]}
+								src={NoReviews}
+							/>
+							<h4 className={styles["no-reviews_title"]}>
+								Тут ще ніхто не залишив відгук
+							</h4>
+							<p className={globalStyles["body-r"]}>
+								Станьте першим, хто поділиться враженням!
+							</p>
+						</div>
 					</div>
+					{reviewsStat && (
+						<Statistics company={company} reviewsCount={reviewsStat} />
+					)}
 				</div>
-				{reviewsStat && (
-					<Statistics company={company} reviewsCount={reviewsStat} />
-				)}
 			</div>
 		);
 	}
