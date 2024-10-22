@@ -35,7 +35,6 @@
 
 	&__data {
 		color: var(--color-grey-400);
-
 		font-family: var(--font-family-main);
 		font-size: var(--font-size-title-h5);
 		display: flex;
@@ -183,6 +182,7 @@
 		&-button {
 			background-color: var(--color-yellow-500);
 			font-size: var(--font-size-title-h5);
+			font-weight: var(--font-weight-semi-bold);
 			line-height: 1;
 			color: var(--color-grey-950);
 			border-radius: 40px;

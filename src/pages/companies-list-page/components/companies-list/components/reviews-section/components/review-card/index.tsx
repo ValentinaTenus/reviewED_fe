@@ -1,8 +1,14 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 import { Button, Icon, StarRating } from "~/common/components/index";
 import { IMAGE_UPLOAD_URL, ScreenBreakpoints } from "~/common/constants/index";
-import { ButtonVariant, IconName, RatingSize } from "~/common/enums/index";
+import {
+	AppRoute,
+	ButtonVariant,
+	IconName,
+	RatingSize,
+} from "~/common/enums/index";
 import { MyReview } from "~/common/types/my-reviews";
 import { useAppSelector } from "~/redux/hooks.type";
 
@@ -60,13 +66,19 @@ const ReviewCard: React.FC<ReviewCardProperties> = ({
 				</div>
 			</div>
 			<div className={styles["review_card__logo_and_rating"]}>
-				<div className={styles["review_card__company_logo"]}>
+				<Link
+					className={styles["review_card__company_logo"]}
+					to={AppRoute.COMPANY_DETAILS.replace(
+						":companyId",
+						userReview.company_id.toString(),
+					)}
+				>
 					<img
 						alt="Review company logo"
 						className={styles["review_card__company_logo-image"]}
 						src={`${IMAGE_UPLOAD_URL}${userReview.logo}`}
 					/>
-				</div>
+				</Link>
 				<div className={styles["review_card__date_and_rating"]}>
 					<StarRating
 						averageRating={userReview.rating}
