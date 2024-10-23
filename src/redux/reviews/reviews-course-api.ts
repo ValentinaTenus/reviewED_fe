@@ -10,15 +10,13 @@ import { reviewsApiPath } from "./constants.ts";
 
 export const coursesReviewsApi = api.injectEndpoints({
 	endpoints: (builder) => ({
-		getCourseReviews: builder.query<CourseReview[], number>({
+		getCourseReviews: builder.query<GetQueryResponse<CourseReview>, number>({
 			query: (id) => {
 				return {
 					method: HttpMethods.GET,
 					url: reviewsApiPath.REVIEWS_BY_COURSE_ID + `${id}`,
 				};
 			},
-			transformResponse: (response: GetQueryResponse<CourseReview>) =>
-				response.results,
 		}),
 		sendCourseReview: builder.mutation<CourseReview, SendCourseRequest>({
 			query: ({ courseId, rating, text }) => ({
