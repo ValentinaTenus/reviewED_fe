@@ -16,7 +16,7 @@ const ShareModal: React.FC<{
 }> = ({ isOpen, onClose, review }) => {
 	const FACEBOOK_SHARE_URL = import.meta.env.VITE_FACEBOOK_SHARE_URL;
 	const LINKEDIN_SHARE_URL = import.meta.env.VITE_LINKEDIN_SHARE_URL;
-	const X_SHARE_URL = import.meta.env.VITE_X_SHARE_URL;
+	const X_SHARE_URL = import.meta.env.VITE_X_UPLOAD_URL;
 
 	const handleCloseReviewModal = useCallback(() => {
 		onClose();
