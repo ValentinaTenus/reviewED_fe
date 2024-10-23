@@ -9,12 +9,16 @@ import styles from "./styles.module.scss";
 
 type Properties = {
 	activeButtonValue: string;
+	buttonGroupItemStyles?: string;
+	buttonGroupStyles?: string;
 	handleButtonClick: (value: string) => void;
 	toggleButtonGroupData: string[];
 };
 
 const ToggleGroupButtons: React.FC<Properties> = ({
 	activeButtonValue,
+	buttonGroupItemStyles,
+	buttonGroupStyles,
 	handleButtonClick,
 	toggleButtonGroupData,
 }) => {
@@ -23,11 +27,12 @@ const ToggleGroupButtons: React.FC<Properties> = ({
 	};
 
 	return (
-		<div className={styles["button-group"]}>
+		<div className={clsx(styles["button-group"], buttonGroupStyles)}>
 			{toggleButtonGroupData.map((buttonValue) => (
 				<Button
 					className={clsx(
 						styles["button-group__item"],
+						buttonGroupItemStyles,
 						activeButtonValue === buttonValue && styles["active"],
 					)}
 					isFullWidth

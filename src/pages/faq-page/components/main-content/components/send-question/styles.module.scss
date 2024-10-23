@@ -15,6 +15,7 @@
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
+	width: 50%;
 }
 
 .text_section_title {
@@ -31,7 +32,7 @@
 }
 
 .text_section_text {
-	font-size: var(--font-size-title-h4-title);
+	font-size: var(--font-size-title-h4);
 	font-weight: var(--font-weight-bold);
 }
 
@@ -42,13 +43,14 @@
 	flex-direction: column;
 	gap: 36px;
 	padding: 48px;
-	width: 511px;
+	flex: 50%;
 }
 
 .form_section_title {
 	font-size: var(--font-size-title-h2);
 	font-weight: var(--font-weight-bold);
-	align-self: start;
+	align-self: center;
+	line-height: 130%;
 }
 
 .send_question_form {
@@ -86,6 +88,7 @@
 	.send_question_text_section {
 		justify-content: center;
 		padding: 0 10px;
+		width: 100%;
 	}
 
 	.send_question_form_section {
@@ -94,11 +97,15 @@
 
 	.form_section_title {
 		align-self: center;
-		font-size: var(--font-size-title-mobile-h2);
 	}
 
 	.text_section_title {
 		align-self: center;
+		text-align: center;
+		font-size: var(--font-size-title-mobile-h1);
+	}
+	.text_section_text {
+		text-align: center;
 	}
 
 	.form_inputs {
@@ -113,8 +120,22 @@
 		width: calc(100% + 40px);
 	}
 
+	.text_section_title {
+		font-size: var(--font-size-title-mobile-h1);
+	}
+
 	.send_question_form_section {
 		gap: 20px;
 		padding: 24px 20px;
+	}
+}
+
+@media (max-width: 375px) {
+	.text_section_title {
+		font-size: var(--font-size-title-mobile-h2);
+	}
+
+	.text_section_text {
+		font-size: var(--font-size-title-h5);
 	}
 }
