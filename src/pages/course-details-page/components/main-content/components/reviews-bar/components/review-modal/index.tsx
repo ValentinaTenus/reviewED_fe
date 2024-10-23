@@ -9,7 +9,6 @@ import { PrivacyPolicyModal } from "~/common/components/privacy-policy-modal";
 import { ButtonSize, ButtonVariant } from "~/common/enums/index";
 import { useGetUser } from "~/common/hooks/use-get-user.hook";
 import { type GetCourseByIdResponseDto } from "~/common/types";
-import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
 import { useAppSelector } from "~/redux/hooks.type";
 import { useSendCourseReviewMutation } from "~/redux/reviews/reviews-course-api";
 
@@ -118,16 +117,14 @@ const ReviewModal: React.FC<{
 					<div className={styles["modal_review-block"]}>
 						<h4 className={styles["modal_label"]}>Ваш відгук</h4>
 						<textarea
-							className={`${styles["modal_review-textarea"]} ${globalStyles["body-r"]}`}
+							className={styles["modal_review-textarea"]}
 							id="review"
 							maxLength={2000}
 							onChange={handleReviewChange}
 							placeholder="Текст відгуку"
 							value={reviewText}
 						/>
-						<div
-							className={`${styles["modal_char-counter"]} ${globalStyles["small_r"]}`}
-						>
+						<div className={styles["modal_char-counter"]}>
 							<span>Мінімальна к-ть символів - 200</span>
 							<span>{reviewText.length}/2000</span>
 						</div>

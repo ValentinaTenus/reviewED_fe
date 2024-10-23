@@ -67,7 +67,7 @@ const ReviewsBar = forwardRef<HTMLDivElement, ReviewsBarProperties>(
 				if (!isCourseReviewedByUser) {
 					setIsReviewModalOpen(true);
 				} else {
-					toast.error("Ви вже залишили відгук для цієї компанії");
+					toast.error("Ви вже залишили відгук для цього курсу");
 				}
 			} else {
 				navigate(AppRoute.AUTH);

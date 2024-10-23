@@ -1,0 +1,61 @@
+.modal_content {
+	padding-bottom: 30px;
+}
+
+.modal_link {
+	background-color: var(--color-white);
+	padding: 15px 20px;
+	border-radius: 25px;
+	border: 1px solid var(--color-grey-50);
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 25px;
+	align-items: center;
+}
+
+.modal_link > div {
+	display: flex;
+	align-items: center;
+}
+
+.link-text {
+    color: var(--color-grey-400);
+	font-size: var(--font-size-main-text);
+}
+
+.copy-icon {
+	width: 24px;
+	height: 24px;
+	margin-right: 10px;
+}
+
+.copy-span {
+	color: var(--color-blue-icons);
+	text-decoration: underline;
+	font-weight: var(----font-weight-semi-bold);
+	font-size: var(--font-size-main-text);
+	cursor: pointer;
+}
+
+.modal_buttons {
+	display: flex;
+	justify-content: space-between;
+	gap: 10px;
+}
+
+.icon {
+	width: 24px;
+	height: 24px;
+}
+
+.button {
+	display: flex;
+	align-items: center;
+	gap: 7px;
+}
+
+@media (max-width: 768px) {
+	.modal_buttons {
+		flex-direction: column;
+	}
+}

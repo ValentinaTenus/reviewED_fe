@@ -2,7 +2,10 @@ import { HttpMethods } from "~/common/enums/index.ts";
 import {
 	type CourseReview,
 	type GetQueryResponse,
+	type LikeReviewRequest,
+	type ReviewReport,
 	type SendCourseRequest,
+	type SendReportRequest,
 } from "~/common/types/index.ts";
 
 import { api } from "../services.ts";
@@ -20,6 +23,13 @@ export const coursesReviewsApi = api.injectEndpoints({
 			transformResponse: (response: GetQueryResponse<CourseReview>) =>
 				response.results,
 		}),
+		likeReview: builder.mutation<undefined, LikeReviewRequest>({
+			query: (reviewData) => ({
+				method: HttpMethods.POST,
+				url: `${reviewsApiPath.LIKE_COMPANIES_REVIEWS}${reviewData.reviewId}/`,
+			}),
+		}),
+
 		sendCourseReview: builder.mutation<CourseReview, SendCourseRequest>({
 			query: ({ courseId, rating, text }) => ({
 				body: {
@@ -30,11 +40,29 @@ export const coursesReviewsApi = api.injectEndpoints({
 				url: `${reviewsApiPath.POST_COURSES_REVIEWS}${courseId}/`,
 			}),
 		}),
+		sendReport: builder.mutation<ReviewReport, SendReportRequest>({
+			query: (reviewData) => ({
+				body: {
+					reason: reviewData.reason,
+				},
+				method: HttpMethods.POST,
+				url: `${reviewsApiPath.POST_REPORTS}${reviewData.reviewType}/${reviewData.reviewId}`,
+			}),
+		}),
+		unlikeReview: builder.mutation<undefined, LikeReviewRequest>({
+			query: (reviewData) => ({
+				method: HttpMethods.DELETE,
+				url: `${reviewsApiPath.LIKE_COMPANIES_REVIEWS}${reviewData.reviewId}/`,
+			}),
+		}),
 	}),
 });
 
 export const {
 	useGetCourseReviewsQuery,
 	useLazyGetCourseReviewsQuery,
+	useLikeReviewMutation,
 	useSendCourseReviewMutation,
+	useSendReportMutation,
+	useUnlikeReviewMutation,
 } = coursesReviewsApi;
