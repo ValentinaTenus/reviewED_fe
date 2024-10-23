@@ -29,11 +29,13 @@ const QuestionAndAnswer = () => {
 	return (
 		<div className={styles["question_and_answer__container"]}>
 			<h1 className={styles["question_and_answer__title"]}>FAQ</h1>
-			<h3 className={styles["question_and_answer__subtitle"]}>
+			<h4 className={styles["question_and_answer__subtitle"]}>
 				Тут Ви можете знайти відповіді на найпоширеніші запитання.
-			</h3>
+			</h4>
 			<ToggleGroupButtons
 				activeButtonValue={activeButtonValue}
+				buttonGroupItemStyles={styles["question_and_answer__toggle-item"]}
+				buttonGroupStyles={styles["question_and_answer__toggle"]}
 				handleButtonClick={handleButtonClick}
 				toggleButtonGroupData={toggleButtonGroupData}
 			/>

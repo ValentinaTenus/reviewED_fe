@@ -77,7 +77,7 @@ const Input = <T extends FieldValues>({
 	);
 
 	const handleWordCount = (value: string) => {
-		const words = value.trim().split(/\s+/);
+		const words = value.trim().split("");
 		const count =
 			words[INITIAL_WORD_COUNT] === "" ? INITIAL_WORD_COUNT : words.length;
 		setWordCount(count);
