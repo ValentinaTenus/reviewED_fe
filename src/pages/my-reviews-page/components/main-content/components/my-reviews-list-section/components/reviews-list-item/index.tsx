@@ -15,6 +15,7 @@ import {
 	ActionsReviewModal,
 	IconsSection,
 	PopupMenu,
+	ReviewStatus,
 	ReviewTextSection,
 } from "../";
 import styles from "./styles.module.scss";
@@ -28,12 +29,6 @@ const MY_REVIEW_OPTIONS: MyReviewOptions[] = [
 	},
 	{ iconName: IconName.DELETE, label: "видалити", value: "delete" },
 ];
-
-const STATUS_TRANSLATIONS = {
-	pending: "В очікуванні",
-	published: "Опубліковано",
-	removed: "Неуспішно",
-};
 
 const MOBILE_BREAKPOINT = 576;
 
@@ -199,15 +194,8 @@ const ReviewListItem: React.FC<Properties> = ({
 							</Link>
 						</div>
 
-						<div className={styles["status"]}>
-							<div
-								className={clsx(
-									styles["status-text"],
-									styles[`${review.status}`],
-								)}
-							>
-								{STATUS_TRANSLATIONS[review.status]}
-							</div>
+						<div className={styles["status-section"]}>
+							<ReviewStatus status={review.status} />
 						</div>
 					</div>
 				</div>
@@ -235,13 +223,15 @@ const ReviewListItem: React.FC<Properties> = ({
 			</div>
 
 			<div className={clsx(styles["item__elem"], styles["item__elem-bottom"])}>
-				<div className={clsx(styles["status"], styles["status-bottom"])}>
-					<div
-						className={clsx(styles["status-text"], styles[`${review.status}`])}
-					>
-						{STATUS_TRANSLATIONS[review.status]}
-					</div>
-					<div className={styles["status-icons"]}>
+				<div
+					className={clsx(
+						styles["status-section"],
+						styles["status-section-bottom"],
+					)}
+				>
+					<ReviewStatus status={review.status} />
+
+					<div className={styles["status-section__icons"]}>
 						<div className={styles["icon-warning"]}>
 							{review.status === "removed" && <Icon name={IconName.WARNING} />}
 						</div>
@@ -264,7 +254,7 @@ const ReviewListItem: React.FC<Properties> = ({
 					</div>
 				</div>
 
-				<div className={styles["icons-bottom"]}>
+				<div className={styles["status-section__icons-bottom"]}>
 					<IconsSection
 						handleClickEdit={handleClickEditReview}
 						likesCount={review.likes_count}

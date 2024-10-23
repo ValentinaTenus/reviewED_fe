@@ -7,5 +7,6 @@ export { IconsSection } from "./icons-section/index";
 export { MyReviewsList } from "./my-reviews-list/index";
 export { NotFound } from "./not-found/index";
 export { PopupMenu } from "./popup-menu/index";
+export { ReviewStatus } from "./review-status";
 export { ReviewTextSection } from "./review-text-section/index";
 export { ReviewListItem } from "./reviews-list-item/index";

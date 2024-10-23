@@ -96,7 +96,7 @@ const EditReviewModal: React.FC<Properties> = ({
 								errors={errors}
 								maxWords={2000}
 								name="text"
-								placeholder="Review text"
+								placeholder="Текст відгуку"
 								rows={1}
 							/>
 							<div className={styles["edit__bottom"]}>

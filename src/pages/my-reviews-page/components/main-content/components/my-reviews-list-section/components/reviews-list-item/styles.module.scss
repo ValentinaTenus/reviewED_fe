@@ -17,21 +17,18 @@
 	}
 
 	&:nth-child(2) {
-		flex-basis: 30%;
-		flex-grow: 1;
+		flex-basis: 377px;
 	}
 
 	&:nth-child(3) {
-		flex-basis: 36%;
-		flex-grow: 1;
+		flex-basis: 449px;
 	}
 
 	&:nth-child(4) {
-		flex-basis: 34%;
-		flex-shrink: 5;
+		flex-grow: 1;
 	}
 
-	.icons-bottom {
+	.status-section__icons-bottom {
 		display: none;
 	}
 }
@@ -55,85 +52,36 @@
 .item__info-wrapper {
 	display: flex;
 	flex-direction: column;
+	width: 100%;
 }
 
 .item__info {
 	display: flex;
 	gap: 16px;
+	max-width: 297px;
+	width: 100%;
 
-	.item__img-wrapper {
-		width: 144px;
-		height: 110px;
-		flex-shrink: 1;
-
-		.item__img {
-			width: 100%;
-			height: 100%;
-		}
-
-		&.course {
-			width: 60px;
-			height: 60px;
-		}
+	&-content {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		flex-shrink: 5;
 	}
 
 	&-name {
 		display: -webkit-box;
 		line-clamp: 2;
 		-webkit-box-orient: vertical;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
-}
-
-.item__info-bottom {
-	font-size: var(--font-size-main-text);
-	color: var(--color-grey-900);
-
-	span {
-		color: var(--color-grey-400);
-	}
-
-	a {
-		text-decoration: underline;
-	}
-
-	.status {
-		display: none;
-	}
-
-	.item__info-author {
-		width: 100%;
-		display: none;
-		margin-top: 60px;
-
-		&.course {
-			display: block;
-		}
-	}
-
-	.courses-mobile {
-		display: none;
-	}
-}
-
-.item__info-content {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	max-width: 260px;
-	margin-right: 20px;
-	flex-shrink: 5;
-
-	.item__info-name {
 		font-weight: var(--font-weight-bold);
 		font-size: var(--font-size-title-large);
 		line-height: 140%;
 		letter-spacing: -0.06em;
 		color: var(--color-grey-900);
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 
-	.item__info-details {
+	&-details {
 		font-family: var(--font-family-main);
 		font-weight: var(--font-weight-bold);
 		font-size: var(--font-size-main-text);
@@ -156,6 +104,53 @@
 
 		&.course {
 			display: none;
+		}
+	}
+
+	&-bottom {
+		font-size: var(--font-size-main-text);
+		color: var(--color-grey-900);
+
+		span {
+			color: var(--color-grey-400);
+		}
+
+		a {
+			text-decoration: underline;
+		}
+
+		.status-section {
+			display: none;
+		}
+
+		.courses-mobile {
+			display: none;
+		}
+	}
+
+	&-author {
+		width: 100%;
+		display: none;
+		margin-top: 60px;
+
+		&.course {
+			display: block;
+		}
+	}
+
+	.item__img-wrapper {
+		width: 144px;
+		height: 110px;
+		flex-shrink: 1;
+
+		.item__img {
+			width: 100%;
+			height: 100%;
+		}
+
+		&.course {
+			width: 60px;
+			height: 60px;
 		}
 	}
 }
@@ -186,37 +181,13 @@
 	}
 }
 
-.status {
+.status-section {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	width: 100%;
 
-	&-text {
-		font-family: var(--font-family);
-		font-weight: var(--font-weight-text);
-		font-size: var(--font-size-title-h5);
-		border-radius: 100px;
-		padding: 4px 16px;
-		text-transform: capitalize;
-
-		&.published {
-			background-color: var(--color-green-200);
-			color: var(--color-green-500);
-		}
-
-		&.pending {
-			background-color: var(--color-orange-200);
-			color: var(--color-orange-500);
-		}
-
-		&.removed {
-			background-color: var(--color-red-200);
-			color: var(--color-red-500);
-		}
-	}
-
-	&-icons {
+	&__icons {
 		display: flex;
 		gap: 10px;
 		cursor: pointer;
@@ -253,6 +224,18 @@
 			right: 10px;
 			top: 15px;
 		}
+
+		&-bottom {
+			.status-section-bottom {
+				display: none;
+			}
+
+			.status-section__icons-bottom {
+				display: flex;
+				flex: 1;
+				margin-top: 20px;
+			}
+		}
 	}
 
 	.list__item {
@@ -265,58 +248,52 @@
 		position: relative;
 	}
 
-	.item__info-wrapper {
-		width: 100%;
-
-		.item__info-author {
+	.item__info {
+		&-author {
 			span {
 				display: none;
 			}
 		}
-	}
 
-	.item__info-details {
-		.details__reviews {
-			display: none;
-		}
+		&-details {
+			.details__reviews {
+				display: none;
+			}
 
-		.details__courses {
-			display: none;
-		}
+			.details__courses {
+				display: none;
+			}
 
-		.reviews-modile {
-			display: block !important;
-		}
-	}
-
-	.item__info-bottom {
-		display: flex;
-		justify-content: space-between;
-		width: 100%;
-		margin: 20px 0px 10px;
-
-		.status {
-			display: flex;
-			justify-content: end;
-
-			&-text {
-				display: inline-block;
+			.reviews-modile {
+				display: block !important;
 			}
 		}
 
-		.item__info-author {
-			margin-top: 0px;
-		}
-
-		.courses-mobile {
-			display: block;
+		&-bottom {
+			display: flex;
+			justify-content: space-between;
 			width: 100%;
-			color: var(--color-grey-500);
-			font-weight: var(--font-weight-text);
-			font-size: var(--font-size-main-text);
+			margin: 20px 0px 10px;
 
-			&.course {
-				display: none;
+			.status-section {
+				display: flex;
+				justify-content: end;
+			}
+
+			.item__info-author {
+				margin-top: 0px;
+			}
+
+			.courses-mobile {
+				display: block;
+				width: 100%;
+				color: var(--color-grey-500);
+				font-weight: var(--font-weight-text);
+				font-size: var(--font-size-main-text);
+
+				&.course {
+					display: none;
+				}
 			}
 		}
 	}
@@ -327,18 +304,6 @@
 			.date {
 				align-self: end;
 			}
-		}
-	}
-
-	.item__elem-bottom {
-		.status-bottom {
-			display: none;
-		}
-
-		.icons-bottom {
-			display: flex;
-			flex: 1;
-			margin-top: 20px;
 		}
 	}
 }
@@ -356,4 +321,3 @@
 		}
 	}
 }
-
