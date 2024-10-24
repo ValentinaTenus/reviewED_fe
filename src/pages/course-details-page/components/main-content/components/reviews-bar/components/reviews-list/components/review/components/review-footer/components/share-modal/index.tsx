@@ -1,5 +1,4 @@
 import React, { useCallback } from "react";
-import { Link } from "react-router-dom";
 
 import { Button, Icon } from "~/common/components/index";
 import { Modal } from "~/common/components/modal";
@@ -31,7 +30,7 @@ const ShareModal: React.FC<{
 
 	const { data: shareableLinkData } = useGetShareableLinkQuery({
 		id: review.id,
-		review_type: "company",
+		review_type: "course",
 	});
 
 	const generateShareLink = (
@@ -74,40 +73,37 @@ const ShareModal: React.FC<{
 				</div>
 				<div className={styles["modal_buttons"]}>
 					<Button variant={ButtonVariant.SHARE_LINKEDIN}>
-						<Link
+						<a
 							className={styles["button"]}
 							target="_blank"
-							to={generateShareLink(
-								"linkedin",
+							href={generateShareLink(
+								"facebook",
 								shareableLinkData?.shareable_link,
 							)}
 						>
 							<Icon className={styles["icon"]} name={IconName.LINKEDIN} />
 							Поділитися
-						</Link>
+						</a>
 					</Button>
 					<Button variant={ButtonVariant.SHARE_FACEBOOK}>
-						<Link
+						<a
 							className={styles["button"]}
 							target="_blank"
-							to={generateShareLink(
-								"facebook",
-								shareableLinkData?.shareable_link,
-							)}
+							href={`https://www.facebook.com/sharer/sharer.php?u=${shareableLinkData?.shareable_link}`}
 						>
 							<Icon className={styles["icon"]} name={IconName.FACEBOOK} />
 							Поділитися
-						</Link>
+						</a>
 					</Button>
 					<Button variant={ButtonVariant.SHARE_TWITTER}>
-						<Link
+						<a
 							className={styles["button"]}
 							target="_blank"
-							to={generateShareLink("x", shareableLinkData?.shareable_link)}
+							href={generateShareLink("x", shareableLinkData?.shareable_link)}
 						>
 							<Icon className={styles["icon"]} name={IconName.XRP} />
 							Поділитися
-						</Link>
+						</a>
 					</Button>
 				</div>
 			</div>

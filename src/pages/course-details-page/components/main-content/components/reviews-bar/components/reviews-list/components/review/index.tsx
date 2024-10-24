@@ -15,6 +15,7 @@ const Review: React.FC<ReviewProperties> = ({ review }) => {
 	return (
 		<div className={styles["review"]}>
 			<ReviewHeader
+				avatar={review.author_avatar}
 				date={review.time_added}
 				name={review.author_name}
 				rating={review.rating}

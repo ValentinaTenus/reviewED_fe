@@ -8,6 +8,7 @@ import { useTransformDate } from "~/common/hooks";
 import styles from "./styles.module.scss";
 
 type ReviewHeaderProperties = {
+	avatar?: string;
 	date: string;
 	name: string;
 	rating: number;
@@ -15,6 +16,7 @@ type ReviewHeaderProperties = {
 };
 
 const ReviewHeader: React.FC<ReviewHeaderProperties> = ({
+	avatar,
 	date,
 	name,
 	rating,
@@ -27,7 +29,7 @@ const ReviewHeader: React.FC<ReviewHeaderProperties> = ({
 				<img
 					alt="Course company logo"
 					className={styles["review__user-picture"]}
-					src={Image}
+					src={avatar ? avatar : Image}
 				/>
 				<div className={styles["review__name-block"]}>
 					<p className={styles["review__user-name"]}>{name}</p>
