@@ -9,6 +9,7 @@ export {
 	type SetModerationReviewsStatusRequest,
 } from "./get-moderation-reviews";
 export { type GetReviewsByCompanyIdResponseDto } from "./get-reviews-by-company-id-response-dto.type";
+export { type LikeReviewRequest } from "./like-review-request.type";
 export { type RecentReview } from "./recent-review";
 export { type Review } from "./review.type";
 export { type ReviewReport } from "./review-report";

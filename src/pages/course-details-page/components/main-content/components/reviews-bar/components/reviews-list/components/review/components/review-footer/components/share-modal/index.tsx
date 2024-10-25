@@ -4,7 +4,6 @@ import { Button, Icon } from "~/common/components/index";
 import { Modal } from "~/common/components/modal";
 import { ButtonVariant, IconName } from "~/common/enums/index";
 import { Review } from "~/common/types";
-import globalStyles from "~/pages/company-details-page/components/company-details/styles.module.scss";
 import { useGetShareableLinkQuery } from "~/redux/reviews/reviews-api";
 
 import styles from "./styles.module.scss";
@@ -31,7 +30,7 @@ const ShareModal: React.FC<{
 
 	const { data: shareableLinkData } = useGetShareableLinkQuery({
 		id: review.id,
-		review_type: "company",
+		review_type: "course",
 	});
 
 	const generateShareLink = (
@@ -64,7 +63,7 @@ const ShareModal: React.FC<{
 				<div className={styles["modal_link"]}>
 					<div>
 						<Icon className={styles["copy-icon"]} name={IconName.COPY} />
-						<span className={globalStyles["body-r"]} id="linkText">
+						<span className={styles["link-text"]} id="linkText">
 							{shareableLinkData?.shareable_link}
 						</span>
 					</div>
@@ -76,12 +75,11 @@ const ShareModal: React.FC<{
 					<Button variant={ButtonVariant.SHARE_LINKEDIN}>
 						<a
 							className={styles["button"]}
+							target="_blank"
 							href={generateShareLink(
-								"linkedin",
+								"facebook",
 								shareableLinkData?.shareable_link,
 							)}
-							rel="noopener noreferrer"
-							target="_blank"
 						>
 							<Icon className={styles["icon"]} name={IconName.LINKEDIN} />
 							Поділитися
@@ -90,12 +88,8 @@ const ShareModal: React.FC<{
 					<Button variant={ButtonVariant.SHARE_FACEBOOK}>
 						<a
 							className={styles["button"]}
-							href={generateShareLink(
-								"facebook",
-								shareableLinkData?.shareable_link,
-							)}
-							rel="noopener noreferrer"
 							target="_blank"
+							href={`https://www.facebook.com/sharer/sharer.php?u=${shareableLinkData?.shareable_link}`}
 						>
 							<Icon className={styles["icon"]} name={IconName.FACEBOOK} />
 							Поділитися
@@ -104,9 +98,8 @@ const ShareModal: React.FC<{
 					<Button variant={ButtonVariant.SHARE_TWITTER}>
 						<a
 							className={styles["button"]}
-							href={generateShareLink("x", shareableLinkData?.shareable_link)}
-							rel="noopener noreferrer"
 							target="_blank"
+							href={generateShareLink("x", shareableLinkData?.shareable_link)}
 						>
 							<Icon className={styles["icon"]} name={IconName.XRP} />
 							Поділитися

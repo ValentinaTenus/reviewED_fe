@@ -27,6 +27,10 @@
 	line-height: 1.3;
 }
 
+.rating__number {
+	font-size: var(--font-size-main-text);
+}
+
 .rating_mobile {
 	display: none;
 }

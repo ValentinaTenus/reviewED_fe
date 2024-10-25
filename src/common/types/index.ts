@@ -18,6 +18,7 @@ export {
 	type GetCoursesRequestQuery,
 	type GetCoursesResult,
 	type SendCourseRequest,
+	type SendReportRequest,
 } from "./courses/index";
 export { type DropdownOption } from "./dropdown-option";
 export {
@@ -34,6 +35,7 @@ export {
 	type GetModerationReviewsRequest,
 	type GetModerationReviewsResponse,
 	type GetReviewsByCompanyIdResponseDto,
+	type LikeReviewRequest,
 	type ModerationReviews,
 	type RecentReview,
 	type Review,
