@@ -37,15 +37,17 @@
 	position: relative;
 
 	.icon-more {
-		svg {
-			transform: rotate(90deg);
+		&__button {
+			svg {
+				transform: rotate(90deg);
+			}
 		}
 	}
 
-	.popup-menu-mobile {
+	.popup-menu-tablet {
 		position: absolute;
-		right: 190px;
-		top: 36px;
+		right: 8px;
+		top: 32px;
 	}
 }
 
@@ -191,11 +193,12 @@
 		display: flex;
 		gap: 10px;
 		cursor: pointer;
+		position: relative;
 
 		.popup-menu-desktop {
-			position: relative;
-			right: 160px;
-			top: 10px;
+			position: absolute;
+			right: 0px;
+			top: 32px;
 		}
 	}
 }

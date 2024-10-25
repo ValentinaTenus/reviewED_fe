@@ -36,6 +36,8 @@ const SINGLE_COURSE = 1;
 const MIN_PLURAL_COURSE = 2;
 const MAX_PLURAL_COURSE = 4;
 
+const POPUP_CLOSE_DELAY = 500;
+
 const getCourseLabel = (count: number) => {
 	if (count === SINGLE_COURSE) {
 		return `${count} курс`;
@@ -47,35 +49,44 @@ const getCourseLabel = (count: number) => {
 };
 
 interface Properties {
-	activePopup: null | number;
 	category: MyReviewCategory;
 	handleClickDeleteReview: (entityId: null | number) => void;
 	handleClickEditReview: (entityId: null | number) => void;
-	handleTogglePopup: (item: null | number) => void;
 	review: MyReview;
 }
 
 const ReviewListItem: React.FC<Properties> = ({
-	activePopup,
 	category,
 	handleClickDeleteReview,
 	handleClickEditReview,
-	handleTogglePopup,
 	review,
 }) => {
 	const [isOpenActionsModal, setIsOpenActionsModal] = useState<boolean>(false);
+	const [isOpenPopup, setIsOpenPopup] = useState<boolean>(false);
+	const [activePopup, setActivePopup] = useState<null | number>(null);
 	const { formattedDate } = useTransformDate(review.time_added);
 
-	const togglePopup = useCallback(() => {
-		// If the popup is already active for this review - close it
-		if (activePopup === review.id) {
-			handleTogglePopup(null);
-		} else {
-			handleTogglePopup(review.id);
-		}
-	}, [activePopup, review.id, handleTogglePopup]);
+	const handleClosePopup = useCallback(() => {
+		setActivePopup(null);
+		// Prevent reopening the Popup if the outside click is on the Popup open trigger
+		setTimeout(() => {
+			setIsOpenPopup(false);
+		}, POPUP_CLOSE_DELAY);
+	}, []);
 
-	const handleSelect = useCallback(
+	const handleClickOpenPopup = useCallback(() => {
+		const width = window.innerWidth;
+
+		// for mobile open ActionsModal, for desktop and tablet open PopupMenu
+		if (width > MOBILE_BREAKPOINT) {
+			setIsOpenPopup(true);
+			setActivePopup(review.id);
+		} else {
+			setIsOpenActionsModal(true);
+		}
+	}, [review.id]);
+
+	const handleSelectPopupOption = useCallback(
 		(option: string) => {
 			if (option === "edit") {
 				handleClickEditReview(review.id);
@@ -85,42 +96,32 @@ const ReviewListItem: React.FC<Properties> = ({
 				handleClickDeleteReview(review.id);
 			}
 
-			handleTogglePopup(null);
+			setActivePopup(null);
 		},
-		[
-			handleTogglePopup,
-			handleClickDeleteReview,
-			handleClickEditReview,
-			review.id,
-		],
+		[handleClickDeleteReview, handleClickEditReview, review.id],
 	);
-
-	const handleClickMoreOptions = useCallback(() => {
-		const width = window.innerWidth;
-
-		// for mobile open ActionsModal, for table open PopupMenu
-		if (width > MOBILE_BREAKPOINT) {
-			handleTogglePopup(review.id);
-			setIsOpenActionsModal(false);
-			return;
-		}
-
-		handleTogglePopup(null);
-		setIsOpenActionsModal(true);
-	}, [review.id, handleTogglePopup]);
 
 	return (
 		<li className={styles["list__item"]}>
 			<div className={clsx(styles["item__elem"], styles["more-options"])}>
-				<span className={styles["icon-more"]} onClick={handleClickMoreOptions}>
-					<Icon name={IconName.MORE} />
-				</span>
 				<div
-					className={clsx(styles["popup-menu"], styles["popup-menu-mobile"])}
+					className={styles["icon-more"]}
+					onClick={!isOpenPopup ? handleClickOpenPopup : undefined}
 				>
-					{activePopup === review.id && (
-						<PopupMenu onSelect={handleSelect} options={MY_REVIEW_OPTIONS} />
-					)}
+					<span className={styles["icon-more__button"]}>
+						<Icon name={IconName.MORE} />
+					</span>
+
+					<div
+						className={clsx(styles["popup-menu"], styles["popup-menu-tablet"])}
+					>
+						<PopupMenu
+							handleClosePopup={handleClosePopup}
+							handleSelect={handleSelectPopupOption}
+							isOpen={activePopup === review.id}
+							options={MY_REVIEW_OPTIONS}
+						/>
+					</div>
 				</div>
 			</div>
 
@@ -232,23 +233,31 @@ const ReviewListItem: React.FC<Properties> = ({
 					<ReviewStatus status={review.status} />
 
 					<div className={styles["status-section__icons"]}>
-						<div className={styles["icon-warning"]}>
-							{review.status === "removed" && <Icon name={IconName.WARNING} />}
-						</div>
-						<div className={styles["icon-more"]} onClick={togglePopup}>
-							<Icon name={IconName.MORE} />
+						{review.status === "removed" && (
+							<div className={styles["icon-warning"]}>
+								<Icon name={IconName.WARNING} />
+							</div>
+						)}
+						<div
+							className={styles["icon-more"]}
+							onClick={!isOpenPopup ? handleClickOpenPopup : undefined}
+						>
+							<span className={styles["icon-more__button"]}>
+								<Icon name={IconName.MORE} />
+							</span>
+
 							<div
 								className={clsx(
 									styles["popup-menu"],
 									styles["popup-menu-desktop"],
 								)}
 							>
-								{activePopup === review.id && (
-									<PopupMenu
-										onSelect={handleSelect}
-										options={MY_REVIEW_OPTIONS}
-									/>
-								)}
+								<PopupMenu
+									handleClosePopup={handleClosePopup}
+									handleSelect={handleSelectPopupOption}
+									isOpen={activePopup === review.id}
+									options={MY_REVIEW_OPTIONS}
+								/>
 							</div>
 						</div>
 					</div>
@@ -267,7 +276,7 @@ const ReviewListItem: React.FC<Properties> = ({
 			{isOpenActionsModal && (
 				<ActionsReviewModal
 					isOpen={isOpenActionsModal}
-					onSelect={handleSelect}
+					onSelect={handleSelectPopupOption}
 					options={MY_REVIEW_OPTIONS}
 					setIsOpenActionsModal={setIsOpenActionsModal}
 				/>
