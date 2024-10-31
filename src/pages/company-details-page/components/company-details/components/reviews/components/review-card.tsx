@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import { AuthorAvatar, Icon, StarRating } from "~/common/components";
+import {
+	AuthorAvatar,
+	Icon,
+	ShareModal,
+	StarRating,
+} from "~/common/components";
 import { AppRoute, IconName, RatingSize } from "~/common/enums";
 import { useTransformDate } from "~/common/hooks";
 import { CompanyReview } from "~/common/types";
@@ -17,7 +22,6 @@ import {
 } from "~/redux/reviews/reviews-slice";
 
 import { ReportModal } from "./components/report-modal";
-import { ShareModal } from "./components/share-modal";
 import styles from "./styles.module.scss";
 
 const ReviewCard: React.FC<{
@@ -192,7 +196,8 @@ const ReviewCard: React.FC<{
 			<ShareModal
 				isOpen={isShareModalOpen}
 				onClose={handleCloseShareModal}
-				review={review}
+				reviewId={review.id}
+				reviewType="company"
 			/>
 		</>
 	);

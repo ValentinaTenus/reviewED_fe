@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Button, Icon } from "~/common/components";
+import { Button, Icon, ShareModal } from "~/common/components";
 import { AppRoute, ButtonSize, ButtonVariant, IconName } from "~/common/enums";
 import { type CourseReview } from "~/common/types";
 import { useAppDispatch, useAppSelector } from "~/redux/hooks.type";
@@ -15,7 +15,6 @@ import {
 } from "~/redux/reviews/reviews-slice";
 
 import { ReportModal } from "./components/report-modal";
-import { ShareModal } from "./components/share-modal";
 import styles from "./styles.module.scss";
 
 type ReviewFooterProperties = {
@@ -125,7 +124,8 @@ const ReviewFooter: React.FC<ReviewFooterProperties> = ({ review }) => {
 				<ShareModal
 					isOpen={isShareModalOpen}
 					onClose={handleCloseShareModal}
-					review={review}
+					reviewId={review.id}
+					reviewType="course"
 				/>
 				<Button
 					className={styles["footer__button"]}
