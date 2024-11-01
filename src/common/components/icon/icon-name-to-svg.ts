@@ -21,6 +21,7 @@ import Flag from "~/assets/images/flag.svg?react";
 import Global from "~/assets/images/global.svg?react";
 import Linkedin from "~/assets/images/iconoir_linkedin.svg?react";
 import Like from "~/assets/images/like.svg?react";
+import LikeOutline from "~/assets/images/like_outline.svg?react";
 import LinkedInLogo from "~/assets/images/linkedIn-logo.svg?react";
 import ListView from "~/assets/images/list-view.svg?react";
 import Location from "~/assets/images/location.svg?react";
@@ -69,6 +70,7 @@ const iconNameToSvg: Record<
 	flag: Flag,
 	global: Global,
 	like: Like,
+	likeOutline: LikeOutline,
 	linkedin: Linkedin,
 	linkedinLogo: LinkedInLogo,
 	listView: ListView,

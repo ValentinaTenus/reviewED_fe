@@ -1,7 +1,8 @@
-.icons {
+.action-icons {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	gap: 20px;
 	width: 100%;
 	cursor: pointer;
 
@@ -14,7 +15,14 @@
 
 			span {
 				color: var(--color-grey-500);
+				font-size: var(--font-size-main-text);
 			}
+		}
+
+		svg {
+			height: 24px;
+			width: 24px;
+			color: var(--color-grey-900);
 		}
 	}
 
@@ -23,26 +31,7 @@
 		gap: 20px;
 	}
 
-	svg {
-		height: 24px;
-		width: 24px;
-		color: var(--color-grey-900);
-	}
-}
-
-@media (max-width: 458px) {
-	.icons {
-		&__right,
-		&__left {
-			div {
-				span {
-					display: none;
-				}
-
-				.like-count {
-					display: block;
-				}
-			}
-		}
+	h2{
+		color: var(--color-grey-900)
 	}
 }

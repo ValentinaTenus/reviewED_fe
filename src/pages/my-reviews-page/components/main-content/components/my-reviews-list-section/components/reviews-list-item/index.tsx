@@ -8,7 +8,7 @@ import { useTransformDate } from "~/common/hooks";
 import { MyReview, MyReviewCategory } from "~/common/types/my-reviews";
 
 import {
-	IconsSection,
+	ActionIconsPanel,
 	MoreOptions,
 	ReviewStatus,
 	ReviewTextSection,
@@ -146,6 +146,7 @@ const ReviewListItem: React.FC<Properties> = ({
 					</div>
 
 					<ReviewTextSection
+						category={category}
 						handleClickEditReview={handleClickEditReview}
 						id={review.id}
 						likesCount={review.likes_count}
@@ -176,11 +177,12 @@ const ReviewListItem: React.FC<Properties> = ({
 				</div>
 
 				<div className={styles["review-status__actions"]}>
-					<IconsSection
+					<ActionIconsPanel
 						handleClickEdit={handleClickEditReview}
 						likesCount={review.likes_count}
 						reviewId={review.id}
-						withEditIcon
+						reviewType={category}
+						showEditIcon
 					/>
 				</div>
 			</div>

@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback } from "react";
 
 import { Button, Icon } from "~/common/components/index";
 import { Modal } from "~/common/components/modal";
@@ -35,22 +35,20 @@ const ShareModal: React.FC<ShareModalProps> = ({
 	reviewId,
 	reviewType,
 }) => {
-	const linkTextRef = useRef<HTMLSpanElement>(null);
-
 	const handleCloseReviewModal = useCallback(() => {
 		onClose();
 	}, [onClose]);
-
-	const handleCopy = useCallback(() => {
-		if (linkTextRef.current) {
-			navigator.clipboard.writeText(linkTextRef.current.innerText);
-		}
-	}, []);
 
 	const { data: shareableLinkData } = useGetShareableLinkQuery({
 		id: reviewId,
 		review_type: reviewType,
 	});
+
+	const handleCopy = useCallback(() => {
+		if (shareableLinkData?.shareable_link) {
+			navigator.clipboard.writeText(shareableLinkData.shareable_link);
+		}
+	}, [shareableLinkData]);
 
 	const generateShareLink = (
 		platform: keyof typeof shareUrls,

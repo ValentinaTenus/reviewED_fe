@@ -19,6 +19,7 @@ enum IconName {
 	FLAG = "flag",
 	GLOBAL = "global",
 	LIKE = "like",
+	LIKEOUTLINE = "likeOutline",
 	LINKEDIN = "linkedin",
 	LINKEDIN_LOGO = "linkedinLogo",
 	LIST_VIEW = "listView",
