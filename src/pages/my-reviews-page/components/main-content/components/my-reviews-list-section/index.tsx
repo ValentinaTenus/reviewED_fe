@@ -187,6 +187,7 @@ const MyReviewsListSection: React.FC<Properties> = ({ category }) => {
 
 			{isOpenEditReviewModal && entityId && (
 				<EditReviewModal
+					category={category}
 					handleCloseEditReview={handleCloseEditReview}
 					handleEditReview={handleEditReview}
 					isEditing={isEditing}

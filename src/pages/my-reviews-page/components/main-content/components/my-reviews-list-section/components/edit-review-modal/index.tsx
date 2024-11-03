@@ -1,14 +1,31 @@
 import React, { useCallback, useState } from "react";
+import * as yup from "yup";
 
 import { Button, Input, Logo, StarRating } from "~/common/components";
 import { ButtonSize, ButtonType, ButtonVariant } from "~/common/enums";
 import { useAppForm, useTransformDate } from "~/common/hooks";
-import { MyReview } from "~/common/types/my-reviews";
+import { MyReview, MyReviewCategory } from "~/common/types/my-reviews";
 
-import { DialogModal, IconsSection } from "../";
+import { ActionIconsPanel, DialogModal } from "../";
 import styles from "./styles.module.scss";
 
+const MIN_SYMBOL_COUNT = 200;
+
+const errorMessage = `Мінімальна кількість символів — ${MIN_SYMBOL_COUNT}`;
+
+const schema = yup
+	.object({
+		text: yup
+			.string()
+			.required(errorMessage)
+			.min(MIN_SYMBOL_COUNT, errorMessage),
+	})
+	.required();
+
+type FormData = yup.InferType<typeof schema>;
+
 interface Properties {
+	category: MyReviewCategory;
 	handleCloseEditReview: () => void;
 	handleEditReview: (data: { rating: number; text: string }) => void;
 	isEditing: boolean;
@@ -17,6 +34,7 @@ interface Properties {
 }
 
 const EditReviewModal: React.FC<Properties> = ({
+	category,
 	handleCloseEditReview,
 	handleEditReview,
 	isEditing,
@@ -25,10 +43,12 @@ const EditReviewModal: React.FC<Properties> = ({
 }) => {
 	const [rating, setRating] = useState<null | number>(null);
 	const { formattedDate } = useTransformDate(review.time_added);
-	const { control, errors, handleSubmit } = useAppForm({
+	const { control, errors, handleSubmit } = useAppForm<FormData>({
 		defaultValues: {
 			text: review?.text || "",
 		},
+		mode: "onBlur",
+		validationSchema: schema,
 	});
 
 	const handleClose = useCallback(() => {
@@ -37,8 +57,6 @@ const EditReviewModal: React.FC<Properties> = ({
 
 	const onEditReview = useCallback(
 		({ text }: { text: string }) => {
-			if (!text) return;
-
 			const finalRating = rating !== null ? Math.ceil(rating) : review.rating;
 
 			handleEditReview({ rating: finalRating, text });
@@ -52,22 +70,24 @@ const EditReviewModal: React.FC<Properties> = ({
 
 	return (
 		<DialogModal classNames="edit-modal" isOpen={isOpen} onClose={handleClose}>
-			<div className={styles["review-content"]}>
-				<div className={styles["review-content__info"]}>
-					<div className={styles["info__left"]}>
-						<div className={styles["info__img-wrapper"]}>
+			<div className={styles["review"]}>
+				<div className={styles["review__info"]}>
+					<div className={styles["review__info-left"]}>
+						<div className={styles["review__info-logo-wrapper"]}>
 							<Logo
-								className={styles["item__img"]}
+								className={styles["review__info-logo"]}
 								logo={review.logo}
 								name={review.related_entity_name}
 							/>
 						</div>
-						<div className={styles["info__name"]}>
+
+						<div className={styles["review__info-name"]}>
 							{review.related_entity_name}
 						</div>
 					</div>
-					<div className={styles["info__right"]}>
-						<div className={styles["date"]}>
+
+					<div className={styles["review__info-right"]}>
+						<div className={styles["review__info-date"]}>
 							{formattedDate.replace(/\s+/g, "")}
 						</div>
 						<StarRating
@@ -80,34 +100,49 @@ const EditReviewModal: React.FC<Properties> = ({
 					</div>
 				</div>
 
-				<div className={styles["review-content__body"]}>
-					<div className={styles["review-content__text"]}>{review.text}</div>
-					<div className={styles["review-content__icons"]}>
-						<IconsSection likesCount={review.likes_count} />
+				<div className={styles["review__text"]}>
+					<div className={styles["review__text-text"]}>{review.text}</div>
+
+					<div className={styles["review__text-icons"]}>
+						<ActionIconsPanel
+							likesCount={review.likes_count}
+							reviewId={review.id}
+							reviewType={category}
+						/>
 					</div>
 				</div>
 
-				<div className={styles["review-content__edit"]}>
+				<div className={styles["review__edit"]}>
 					<form onSubmit={handleSubmit(onEditReview)}>
-						<div className={styles["edit__title"]}>Редагування відгуку</div>
-						<div className={styles["edit__textarea"]}>
+						<div className={styles["review__edit-title"]}>
+							Редагування відгуку
+						</div>
+
+						<div className={styles["review__edit-textarea"]}>
 							<Input
 								control={control}
 								errors={errors}
+								hasVisuallyHiddenLabel
 								maxWords={2000}
 								name="text"
 								placeholder="Текст відгуку"
 								rows={1}
 							/>
-							<div className={styles["edit__bottom"]}>
-								<div className={styles["edit__questing"]}>
+
+							<div className={styles["review__edit-error"]}>
+								{errors.text && errors.text.message}
+							</div>
+
+							<div className={styles["review__edit-bottom"]}>
+								<div className={styles["review__edit-questing"]}>
 									<p>Ви впевнені, що хочете відредагувати цей відгук?</p>
 									<p>
 										Після редагування він буде надісланий модератору для
 										повторного розгляду перед публікацією.
 									</p>
 								</div>
-								<div className={styles["edit__buttons"]}>
+
+								<div className={styles["review__edit-buttons"]}>
 									<Button
 										onClick={handleClose}
 										size={ButtonSize.MEDIUM}
