@@ -1,0 +1,14 @@
+.more-options {
+	&--tablet {
+		.more-options__button {
+			svg {
+				transform: rotate(90deg);
+			}
+		}
+	}
+	&__popup-menu {
+		position: absolute;
+		right: 8px;
+		top: 32px;
+	}
+}

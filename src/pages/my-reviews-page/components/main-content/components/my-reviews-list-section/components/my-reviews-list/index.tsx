@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React from "react";
 
 import { MyReview, MyReviewCategory } from "~/common/types/my-reviews";
 
@@ -18,21 +18,13 @@ const MyReviewsList: React.FC<Properties> = ({
 	handleClickEditReview,
 	reviews,
 }) => {
-	const [activePopup, setActivePopup] = useState<null | number>(null);
-
-	const handleTogglePopup = useCallback((item: null | number) => {
-		setActivePopup((prev) => (prev === item ? null : item));
-	}, []);
-
 	return (
 		<ul className={styles["my-reviews-list__list"]}>
 			{reviews.map((review) => (
 				<ReviewListItem
-					activePopup={activePopup}
 					category={category}
 					handleClickDeleteReview={handleClickDeleteReview}
 					handleClickEditReview={handleClickEditReview}
-					handleTogglePopup={handleTogglePopup}
 					key={review.id}
 					review={review}
 				/>

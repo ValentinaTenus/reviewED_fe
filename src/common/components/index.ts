@@ -21,6 +21,7 @@ export {
 } from "./protected-route/index";
 export { SearchBar } from "./search-bar/index";
 export { SearchInput } from "./search-input/index";
+export { ShareModal } from "./share-modal/index";
 export { SortDropdown } from "./sort-dropdown/index";
 export { Spinner } from "./spinner/index";
 export { StarRating } from "./star-rating/index";

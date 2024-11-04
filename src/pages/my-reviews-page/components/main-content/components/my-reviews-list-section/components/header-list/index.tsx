@@ -15,8 +15,14 @@ const HeaderList: React.FC<Properties> = ({ category }) => {
 		<ul className={styles["header__list"]}>
 			{[category, "Зміст відгуку", "Статус"].map((item) => (
 				<li className={styles["header__list-item"]} key={item}>
-					{item === "course" ? "курс" : item === "company" ? "компанія" : item}
-					<Icon name={IconName.ARROW_DOWN} />
+					<div>
+						{item === "course"
+							? "курс"
+							: item === "company"
+								? "компанія"
+								: item}
+						<Icon name={IconName.ARROW_DOWN} />
+					</div>
 				</li>
 			))}
 		</ul>

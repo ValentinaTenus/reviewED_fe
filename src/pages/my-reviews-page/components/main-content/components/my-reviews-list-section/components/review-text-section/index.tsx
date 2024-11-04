@@ -1,20 +1,25 @@
 import React, { useCallback, useEffect, useState } from "react";
 
-import { IconsSection } from "../icons-section";
+import { MyReviewCategory } from "~/common/types/my-reviews";
+
+import { ActionIconsPanel } from "../index";
 import styles from "./styles.module.scss";
 
 // Constants for breakpoints and max preview lengths
 const MAX_PREVIEW_LENGTH_DESKTOP = 200;
-const MAX_PREVIEW_LENGTH_MOBILE = 150;
+const MAX_PREVIEW_LENGTH_MOBILE = 160;
 const MAX_PREVIEW_LENGTH_TABLET = 290;
-const MAX_PREVIEW_LENGTH_LARGE_SCREEN = 350;
-const MAX_PREVIEW_LENGTH_EXTRA_LARGE = 190;
+const MAX_PREVIEW_LENGTH_LARGE_TABLET = 440;
+const MAX_PREVIEW_LENGTH_LARGE_SCREEN = 190;
+const MAX_PREVIEW_LENGTH_EXTRA_LARGE = 205;
 const MOBILE_BREAKPOINT = 576;
 const TABLET_BREAKPOINT = 630;
-const LARGE_SCREEN_BREAKPOINT = 888;
+const LARGE_TABLET_BREAKPOINT = 888;
+const LARGE_SCREEN_BREAKPOINT = 1150;
 const ZERO_NUMBER = 0;
 
 type Properties = {
+	category: MyReviewCategory;
 	handleClickEditReview: (id: number) => void;
 	id: number;
 	likesCount: number;
@@ -22,6 +27,7 @@ type Properties = {
 };
 
 const ReviewTextSection: React.FC<Properties> = ({
+	category,
 	handleClickEditReview,
 	id,
 	likesCount,
@@ -44,6 +50,8 @@ const ReviewTextSection: React.FC<Properties> = ({
 			setMaxPreviewLength(MAX_PREVIEW_LENGTH_MOBILE);
 		} else if (width <= TABLET_BREAKPOINT) {
 			setMaxPreviewLength(MAX_PREVIEW_LENGTH_TABLET);
+		} else if (width <= LARGE_TABLET_BREAKPOINT) {
+			setMaxPreviewLength(MAX_PREVIEW_LENGTH_LARGE_TABLET);
 		} else if (width <= LARGE_SCREEN_BREAKPOINT) {
 			setMaxPreviewLength(MAX_PREVIEW_LENGTH_LARGE_SCREEN);
 		} else {
@@ -70,11 +78,12 @@ const ReviewTextSection: React.FC<Properties> = ({
 						Закрити
 					</p>
 					<div className={styles["review-text__icons"]}>
-						<IconsSection
+						<ActionIconsPanel
 							handleClickEdit={handleClickEditReview}
 							likesCount={likesCount}
 							reviewId={id}
-							withEditIcon
+							reviewType={category}
+							showEditIcon
 						/>
 					</div>
 				</>
@@ -94,11 +103,12 @@ const ReviewTextSection: React.FC<Properties> = ({
 						<>
 							<span className={styles["review-text__full-text"]}>{text}</span>
 							<div className={styles["review-text__full-text-icons"]}>
-								<IconsSection
+								<ActionIconsPanel
 									handleClickEdit={handleClickEditReview}
 									likesCount={likesCount}
 									reviewId={id}
-									withEditIcon
+									reviewType={category}
+									showEditIcon
 								/>
 							</div>
 						</>
