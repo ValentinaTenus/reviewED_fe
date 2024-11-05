@@ -1,23 +1,18 @@
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import React, { useCallback, useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import React, { useEffect, useMemo, useState } from "react";
 
 import { Pagination, Spinner } from "~/common/components";
 import { SpinnerVariant } from "~/common/enums";
+import { useModalManager } from "~/common/hooks";
 import { MyReview, MyReviewCategory } from "~/common/types/my-reviews";
 import { useAppSelector } from "~/redux/hooks.type";
-import {
-	useDeleteMyReviewMutation,
-	useEditMyReviewMutation,
-	useGetMyReviewsQuery,
-} from "~/redux/my-reviews/my-reviews-api";
+import { useGetMyReviewsQuery } from "~/redux/my-reviews/my-reviews-api";
 
 import {
-	DeleteReviewModal,
-	EditReviewModal,
 	HeaderList,
 	MyReviewsList,
 	NotFound,
+	ReviewModals,
 } from "./components/index";
 import styles from "./styles.module.scss";
 
@@ -35,17 +30,10 @@ const MyReviewsListSection: React.FC<Properties> = ({ category }) => {
 	const [currentPage, setCurrentPage] = useState(DEFAULT_CURRENT_PAGE);
 	const [pageCount, setPageCount] = useState(DEFAULT_PAGE_COUNT);
 	const [serverError, setServerError] = useState("");
-	const [entityId, setEntityId] = useState<null | number>(null);
-	const [isOpenEditReviewModal, setIsOpenEditReviewModal] =
-		useState<boolean>(false);
-	const [isOpenDeleteReviewModal, setIsOpenDeleteReviewModal] =
-		useState<boolean>(false);
+
+	const { closeModal, currentModal, id, openModal } = useModalManager();
 
 	const { user } = useAppSelector((state) => state.auth);
-
-	const [deleteMyReview, { isLoading: isDeleting }] =
-		useDeleteMyReviewMutation();
-	const [editMyReview, { isLoading: isEditing }] = useEditMyReviewMutation();
 
 	const userId = user?.id as number;
 	const reviewsQueryParams = {
@@ -91,64 +79,13 @@ const MyReviewsListSection: React.FC<Properties> = ({ category }) => {
 		setCurrentPage(DEFAULT_CURRENT_PAGE);
 	}, [category]);
 
-	const handleClickDeleteReview = useCallback((entityId: null | number) => {
-		setIsOpenDeleteReviewModal(true);
-		setEntityId(entityId);
-	}, []);
-
-	const handleClickEditReview = useCallback((entityId: null | number) => {
-		setIsOpenEditReviewModal(true);
-		setEntityId(entityId);
-	}, []);
-
-	const handleCloseDeleteReview = useCallback(() => {
-		setIsOpenDeleteReviewModal(false);
-		setEntityId(null);
-	}, []);
-
-	const handleCloseEditReview = useCallback(() => {
-		setIsOpenEditReviewModal(false);
-		setEntityId(null);
-	}, []);
-
-	const handleError = (error: unknown, fallbackMessage?: string) => {
-		if (error instanceof Error) {
-			toast.error(`Error: ${error.message}`);
-		} else {
-			toast.error(fallbackMessage || "Щось пішло не так");
-		}
-	};
-
-	const handleDeleteReview = useCallback(async () => {
-		if (entityId) {
-			try {
-				await deleteMyReview({ category, entityId }).unwrap();
-			} catch (error) {
-				handleError(error, "Не вдалося видалити відгук");
-			} finally {
-				handleCloseDeleteReview();
-			}
-		}
-	}, [entityId, category, deleteMyReview, handleCloseDeleteReview]);
-
-	const handleEditReview = useCallback(
-		async (data: { rating: number; text: string }) => {
-			if (entityId) {
-				try {
-					await editMyReview({ body: data, category, entityId }).unwrap();
-				} catch (error) {
-					handleError(error, "Failed to edit review");
-				} finally {
-					handleCloseEditReview();
-				}
-			}
-		},
-		[entityId, category, editMyReview, handleCloseEditReview],
-	);
-
 	const reviews = reviewsData?.results;
 	const isAvailableMyReviews = reviews && reviews.length > ZERO_LENGTH;
 	const isMyReviewListEmpty = reviews && reviews.length === ZERO_LENGTH;
+
+	const selectedModalReview = useMemo(() => {
+		return reviews?.find((review) => review.id === id) || null;
+	}, [reviews, id]);
 
 	return (
 		<div className={styles["my-reviews-list"]}>
@@ -160,8 +97,7 @@ const MyReviewsListSection: React.FC<Properties> = ({ category }) => {
 				{isAvailableMyReviews && (
 					<MyReviewsList
 						category={category}
-						handleClickDeleteReview={handleClickDeleteReview}
-						handleClickEditReview={handleClickEditReview}
+						openModal={openModal}
 						reviews={reviewsData.results}
 					/>
 				)}
@@ -185,23 +121,13 @@ const MyReviewsListSection: React.FC<Properties> = ({ category }) => {
 				/>
 			)}
 
-			{isOpenEditReviewModal && entityId && (
-				<EditReviewModal
+			{currentModal && (
+				<ReviewModals
 					category={category}
-					handleCloseEditReview={handleCloseEditReview}
-					handleEditReview={handleEditReview}
-					isEditing={isEditing}
-					isOpen={isOpenEditReviewModal}
-					review={reviews?.find((review) => review.id === entityId) as MyReview}
-				/>
-			)}
-
-			{isOpenDeleteReviewModal && (
-				<DeleteReviewModal
-					handleCloseDeleteReview={handleCloseDeleteReview}
-					handleDeleteReview={handleDeleteReview}
-					isDeleting={isDeleting}
-					isOpen={isOpenDeleteReviewModal}
+					closeModal={closeModal}
+					currentModal={currentModal}
+					openModal={openModal}
+					review={selectedModalReview as MyReview}
 				/>
 			)}
 		</div>

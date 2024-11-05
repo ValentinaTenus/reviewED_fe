@@ -1,7 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
 
-import { MyReviewCategory } from "~/common/types/my-reviews";
-
 import { ActionIconsPanel } from "../index";
 import styles from "./styles.module.scss";
 
@@ -19,18 +17,16 @@ const LARGE_SCREEN_BREAKPOINT = 1150;
 const ZERO_NUMBER = 0;
 
 type Properties = {
-	category: MyReviewCategory;
-	handleClickEditReview: (id: number) => void;
 	id: number;
 	likesCount: number;
+	openModal: (currentModal: string, entityId: number) => void;
 	text: string;
 };
 
 const ReviewTextSection: React.FC<Properties> = ({
-	category,
-	handleClickEditReview,
 	id,
 	likesCount,
+	openModal,
 	text,
 }) => {
 	const [showFullText, setShowFullText] = useState(false);
@@ -79,10 +75,9 @@ const ReviewTextSection: React.FC<Properties> = ({
 					</p>
 					<div className={styles["review-text__icons"]}>
 						<ActionIconsPanel
-							handleClickEdit={handleClickEditReview}
 							likesCount={likesCount}
+							openModal={openModal}
 							reviewId={id}
-							reviewType={category}
 							showEditIcon
 						/>
 					</div>
@@ -104,10 +99,9 @@ const ReviewTextSection: React.FC<Properties> = ({
 							<span className={styles["review-text__full-text"]}>{text}</span>
 							<div className={styles["review-text__full-text-icons"]}>
 								<ActionIconsPanel
-									handleClickEdit={handleClickEditReview}
 									likesCount={likesCount}
+									openModal={openModal}
 									reviewId={id}
-									reviewType={category}
 									showEditIcon
 								/>
 							</div>

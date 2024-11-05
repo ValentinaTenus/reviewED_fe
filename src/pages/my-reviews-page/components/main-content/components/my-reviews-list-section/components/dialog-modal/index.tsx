@@ -10,7 +10,6 @@ import styles from "./styles.module.scss";
 type Properties = {
 	children?: React.ReactNode;
 	classNames?: keyof typeof styles;
-	isOpen: boolean;
 	onClose: () => void;
 	withIconClose?: boolean;
 };
@@ -18,25 +17,18 @@ type Properties = {
 const DialogModal: React.FC<Properties> = ({
 	children,
 	classNames,
-	isOpen,
 	onClose,
 	withIconClose = false,
 }) => {
 	// Prevent background scrolling when the modal is open
 	useEffect(() => {
-		if (isOpen) {
-			document.body.style.overflow = "hidden";
-		} else {
-			document.body.style.overflow = "";
-		}
+		document.body.style.overflow = "hidden";
 
 		// Cleanup when modal is closed
 		return () => {
 			document.body.style.overflow = "";
 		};
-	}, [isOpen]);
-
-	if (!isOpen) return null;
+	}, []);
 
 	return (
 		<div

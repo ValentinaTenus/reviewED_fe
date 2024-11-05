@@ -31,15 +31,13 @@ const getCourseLabel = (count: number, word: string) => {
 
 interface Properties {
 	category: MyReviewCategory;
-	handleClickDeleteReview: (entityId: null | number) => void;
-	handleClickEditReview: (entityId: null | number) => void;
+	openModal: (currentModal: string, entityId: number) => void;
 	review: MyReview;
 }
 
 const ReviewListItem: React.FC<Properties> = ({
 	category,
-	handleClickDeleteReview,
-	handleClickEditReview,
+	openModal,
 	review,
 }) => {
 	const { formattedDate } = useTransformDate(review.time_added);
@@ -53,12 +51,7 @@ const ReviewListItem: React.FC<Properties> = ({
 					styles["review-item__elem"],
 				)}
 			>
-				<MoreOptions
-					handleClickDeleteReview={handleClickDeleteReview}
-					handleClickEditReview={handleClickEditReview}
-					isForTablet
-					reviewId={review.id}
-				/>
+				<MoreOptions isForTablet openModal={openModal} reviewId={review.id} />
 			</div>
 
 			<div className={clsx(styles["review-info"], styles["review-item__elem"])}>
@@ -146,10 +139,9 @@ const ReviewListItem: React.FC<Properties> = ({
 					</div>
 
 					<ReviewTextSection
-						category={category}
-						handleClickEditReview={handleClickEditReview}
 						id={review.id}
 						likesCount={review.likes_count}
+						openModal={openModal}
 						text={review.text}
 					/>
 				</div>
@@ -168,20 +160,15 @@ const ReviewListItem: React.FC<Properties> = ({
 							</div>
 						)}
 
-						<MoreOptions
-							handleClickDeleteReview={handleClickDeleteReview}
-							handleClickEditReview={handleClickEditReview}
-							reviewId={review.id}
-						/>
+						<MoreOptions openModal={openModal} reviewId={review.id} />
 					</div>
 				</div>
 
 				<div className={styles["review-status__actions"]}>
 					<ActionIconsPanel
-						handleClickEdit={handleClickEditReview}
 						likesCount={review.likes_count}
+						openModal={openModal}
 						reviewId={review.id}
-						reviewType={category}
 						showEditIcon
 					/>
 				</div>

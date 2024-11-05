@@ -8,6 +8,7 @@ export { MoreOptions } from "./more-options/index";
 export { MyReviewsList } from "./my-reviews-list/index";
 export { NotFound } from "./not-found/index";
 export { PopupMenu } from "./popup-menu/index";
+export { ReviewModals } from "./review-modals/index";
 export { ReviewStatus } from "./review-status";
 export { ReviewTextSection } from "./review-text-section/index";
 export { ReviewListItem } from "./reviews-list-item/index";

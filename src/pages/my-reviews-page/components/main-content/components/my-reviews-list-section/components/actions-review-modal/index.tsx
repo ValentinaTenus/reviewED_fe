@@ -8,14 +8,12 @@ import { DialogModal } from "../";
 import styles from "./styles.module.scss";
 
 type Properties = {
-	isOpen: boolean;
 	onSelect: (option: string) => void;
 	options: MyReviewOptions[];
 	setIsOpenActionsModal: (value: boolean) => void;
 };
 
 const ActionsReviewModal: React.FC<Properties> = ({
-	isOpen,
 	onSelect,
 	options,
 	setIsOpenActionsModal,
@@ -33,11 +31,7 @@ const ActionsReviewModal: React.FC<Properties> = ({
 	);
 
 	return (
-		<DialogModal
-			classNames="actions-modal"
-			isOpen={isOpen}
-			onClose={handleClose}
-		>
+		<DialogModal classNames="actions-modal" onClose={handleClose}>
 			<div className={styles["actions-modal"]}>
 				<div className={styles["actions-modal__title"]}>Дії</div>
 

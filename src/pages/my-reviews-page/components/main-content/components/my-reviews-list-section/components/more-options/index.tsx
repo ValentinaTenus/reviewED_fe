@@ -23,16 +23,14 @@ const POPUP_CLOSE_DELAY = 500;
 const MOBILE_BREAKPOINT = 576;
 
 type Properties = {
-	handleClickDeleteReview: (entityId: null | number) => void;
-	handleClickEditReview: (entityId: null | number) => void;
 	isForTablet?: boolean;
+	openModal: (currentModal: string, entityId: number) => void;
 	reviewId: null | number;
 };
 
 const MoreOptions: React.FC<Properties> = ({
-	handleClickDeleteReview,
-	handleClickEditReview,
 	isForTablet = false,
+	openModal,
 	reviewId,
 }) => {
 	const [isOpenActionsModal, setIsOpenActionsModal] = useState<boolean>(false);
@@ -62,21 +60,16 @@ const MoreOptions: React.FC<Properties> = ({
 	const handleSelectOption = useCallback(
 		(option: string) => {
 			if (option === "edit") {
-				handleClickEditReview(reviewId);
+				openModal("editModal", reviewId as number);
 			}
 
 			if (option === "delete") {
-				handleClickDeleteReview(reviewId);
+				openModal("deleteModal", reviewId as number);
 			}
 
 			handleClosePopup();
 		},
-		[
-			handleClickDeleteReview,
-			handleClickEditReview,
-			handleClosePopup,
-			reviewId,
-		],
+		[handleClosePopup, openModal, reviewId],
 	);
 
 	return (
@@ -101,7 +94,6 @@ const MoreOptions: React.FC<Properties> = ({
 
 			{isOpenActionsModal && (
 				<ActionsReviewModal
-					isOpen={isOpenActionsModal}
 					onSelect={handleSelectOption}
 					options={MY_REVIEW_OPTIONS}
 					setIsOpenActionsModal={setIsOpenActionsModal}
