@@ -77,11 +77,13 @@ const MoreOptions: React.FC<Properties> = ({
 			className={clsx(styles["more-options"], {
 				[styles["more-options--tablet"]]: isForTablet,
 			})}
-			onClick={!isOpenPopup ? handleOpenPopup : undefined}
 		>
-			<span className={styles["more-options__button"]}>
+			<div
+				className={styles["more-options__button"]}
+				onClick={!isOpenPopup ? handleOpenPopup : undefined}
+			>
 				<Icon name={IconName.MORE} />
-			</span>
+			</div>
 
 			<div className={styles["more-options__popup-menu"]}>
 				<PopupMenu
