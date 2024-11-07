@@ -39,61 +39,48 @@
 			}
 		}
 	}
-
-	&.edit-modal {
-		align-items: flex-start;
-	}
-}
-
-@media (max-width: 1280px) {
-	.modal {
-		align-items: flex-start;
-		background-color: rgba(0, 0, 0, 0.5);
-	}
 }
 
 @media (max-width: 576px) {
 	.modal {
-		align-items: flex-start;
-		background-color: rgba(0, 0, 0, 0.5);
-
 		&-content {
-			margin: 0px;
-			border-radius: unset;
-		}
-	}
-
-	.modal-content {
-		&__icon-close {
-			display: block;
-		}
-	}
-
-	.delete-modal {
-		&.modal {
-			align-items: center;
-			background-color: rgba(0, 0, 0, 0.5);
-		}
-
-		.modal-content {
-			margin: 20px;
-			border-radius: 20px;
-			overflow-x: hidden;
-
 			&__icon-close {
-				display: none;
+				display: block;
 			}
 		}
-	}
 
-	.actions-modal {
-		&.modal {
-			align-items: flex-end;
-
+		&.edit-modal {
+			align-items: flex-start;
 			background-color: rgba(0, 0, 0, 0.5);
 
 			.modal-content {
 				margin: 0px;
+				border-radius: unset;
+			}
+		}
+
+		&.delete-modal {
+			align-items: center;
+			background-color: rgba(0, 0, 0, 0.5);
+
+			.modal-content {
+				margin: 20px;
+				border-radius: 20px;
+				overflow-x: hidden;
+
+				&__icon-close {
+					display: none;
+				}
+			}
+		}
+
+		&.actions-modal {
+			align-items: flex-end;
+			background-color: rgba(0, 0, 0, 0.5);
+
+			.modal-content {
+				margin: 0px;
+				border-radius: unset;
 				border-top-left-radius: 20px;
 				border-top-right-radius: 20px;
 				height: 50vh;

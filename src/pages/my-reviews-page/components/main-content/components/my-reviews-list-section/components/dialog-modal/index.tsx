@@ -20,13 +20,17 @@ const DialogModal: React.FC<Properties> = ({
 	onClose,
 	withIconClose = false,
 }) => {
-	// Prevent background scrolling when the modal is open
+	// Prevent background scrolling and handle content shifting
 	useEffect(() => {
+		const scrollbarWidth =
+			window.innerWidth - document.documentElement.clientWidth;
+		document.body.style.paddingRight = `${scrollbarWidth}px`;
 		document.body.style.overflow = "hidden";
 
 		// Cleanup when modal is closed
 		return () => {
 			document.body.style.overflow = "";
+			document.body.style.paddingRight = "";
 		};
 	}, []);
 

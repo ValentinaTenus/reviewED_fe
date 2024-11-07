@@ -19,6 +19,12 @@ const MY_REVIEW_OPTIONS: MyReviewOptions[] = [
 	{ iconName: IconName.DELETE, label: "видалити", value: "delete" },
 ];
 
+const OPTION_MODAL_MAP: Record<string, string> = {
+	"contact moderator": "contactModal",
+	delete: "deleteModal",
+	edit: "editModal",
+};
+
 const POPUP_CLOSE_DELAY = 500;
 const MOBILE_BREAKPOINT = 576;
 
@@ -59,13 +65,8 @@ const MoreOptions: React.FC<Properties> = ({
 
 	const handleSelectOption = useCallback(
 		(option: string) => {
-			if (option === "edit") {
-				openModal("editModal", reviewId as number);
-			}
-
-			if (option === "delete") {
-				openModal("deleteModal", reviewId as number);
-			}
+			const modalType = OPTION_MODAL_MAP[option];
+			openModal(modalType, reviewId as number);
 
 			handleClosePopup();
 		},
