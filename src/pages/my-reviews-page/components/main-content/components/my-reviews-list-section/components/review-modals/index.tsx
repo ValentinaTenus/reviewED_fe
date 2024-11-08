@@ -3,7 +3,7 @@ import React from "react";
 import { ShareModal } from "~/common/components";
 import { MyReview, MyReviewCategory } from "~/common/types/my-reviews";
 
-import { DeleteReviewModal, EditReviewModal } from "../";
+import { ContactModal, DeleteReviewModal, EditReviewModal } from "../";
 
 type ReviewModalsProps = {
 	category: MyReviewCategory;
@@ -46,6 +46,10 @@ const ReviewModals: React.FC<ReviewModalsProps> = ({
 					reviewId={review.id}
 					reviewType={category}
 				/>
+			)}
+
+			{currentModal === "contactModal" && (
+				<ContactModal closeModal={closeModal} />
 			)}
 		</>
 	);

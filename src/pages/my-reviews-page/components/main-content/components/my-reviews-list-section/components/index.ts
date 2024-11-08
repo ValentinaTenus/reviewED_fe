@@ -1,5 +1,6 @@
 export { ActionIconsPanel } from "./action-icons-panel/index";
 export { ActionsReviewModal } from "./actions-review-modal/index";
+export { ContactModal } from "./contact-modal/index";
 export { DeleteReviewModal } from "./delete-review-modal/index";
 export { DialogModal } from "./dialog-modal/index";
 export { EditReviewModal } from "./edit-review-modal/index";

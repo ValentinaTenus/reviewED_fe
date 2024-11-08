@@ -33,6 +33,7 @@ import Plus from "~/assets/images/plus.svg?react";
 import PlusSquare from "~/assets/images/plus-square.svg?react";
 import Price from "~/assets/images/price.svg?react";
 import SearchIcon from "~/assets/images/search-normal.svg?react";
+import SendMessage from "~/assets/images/send_message.svg?react";
 import Share from "~/assets/images/share.svg?react";
 import ShieldTick from "~/assets/images/shield-tick.svg?react";
 import Email from "~/assets/images/sms.svg?react";
@@ -84,6 +85,7 @@ const iconNameToSvg: Record<
 	plusSquare: PlusSquare,
 	price: Price,
 	search: SearchIcon,
+	sendMessage: SendMessage,
 	share: Share,
 	shieldTick: ShieldTick,
 	sort: SortIcon,
