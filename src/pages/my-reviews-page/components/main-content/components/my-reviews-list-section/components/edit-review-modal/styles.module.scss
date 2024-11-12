@@ -42,9 +42,6 @@
 			letter-spacing: -0.06em;
 			color: var(--color-grey-900);
 			height: fit-content;
-			display: -webkit-box;
-			line-clamp: 2;
-			-webkit-box-orient: vertical;
 			overflow: hidden;
 			text-overflow: ellipsis;
 		}
@@ -74,6 +71,8 @@
 			border-radius: 8px;
 			padding: 8px;
 			word-break: break-word;
+			max-height: 35vh;
+			overflow-y: auto;
 		}
 
 		&-icons {
@@ -147,6 +146,13 @@
 
 			&-left {
 				gap: 6px;
+			}
+		}
+
+		&__text {
+			&-text {
+				overflow-y: unset;
+				max-height: none; 
 			}
 		}
 

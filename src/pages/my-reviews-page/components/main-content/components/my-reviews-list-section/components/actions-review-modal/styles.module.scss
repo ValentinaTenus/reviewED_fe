@@ -32,7 +32,10 @@
 		display: flex;
 		align-items: center;
 		gap: 10px;
-		text-transform: capitalize;
+
+		span::first-letter {
+			text-transform: capitalize;
+		}
 
 		&.option-delete {
 			color: var(--color-red-500);

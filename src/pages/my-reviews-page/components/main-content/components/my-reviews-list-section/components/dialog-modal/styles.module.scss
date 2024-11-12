@@ -2,14 +2,14 @@
 	position: fixed;
 	inset: 0;
 	background-color: rgba(0, 0, 0, 0.5);
-	display: flex;
-	align-items: center;
-	justify-content: center;
+	display: grid;
+	place-items: center;
+	padding: 0px 27px;
 	overflow-y: auto;
 	z-index: 1000;
 
 	&-content {
-		margin: 40px 40px;
+		margin: 5px 40px;
 		background-color: white;
 		padding: 20px;
 		border-radius: 20px;
@@ -50,8 +50,9 @@
 		}
 
 		&.edit-modal {
-			align-items: flex-start;
+			place-items: start center;
 			background-color: rgba(0, 0, 0, 0.5);
+			padding: 0px;
 
 			.modal-content {
 				margin: 0px;
@@ -60,7 +61,6 @@
 		}
 
 		&.delete-modal {
-			align-items: center;
 			background-color: rgba(0, 0, 0, 0.5);
 
 			.modal-content {
@@ -75,8 +75,9 @@
 		}
 
 		&.actions-modal {
-			align-items: flex-end;
+			place-items: end center;
 			background-color: rgba(0, 0, 0, 0.5);
+			padding: 0px;
 
 			.modal-content {
 				margin: 0px;
