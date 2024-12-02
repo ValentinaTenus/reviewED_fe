@@ -1,51 +1,41 @@
-import React, { useState } from "react";
+import React, { useCallback } from "react";
 
-import { Icon, ShareModal } from "~/common/components/index";
+import { Icon } from "~/common/components/index";
 import { IconName } from "~/common/enums/index";
 
 import styles from "./styles.module.scss";
 
 type Properties = {
-	handleClickEdit?: (reviewId: number) => void;
 	likesCount: number;
+	openModal: (currentModal: string, entityId: number) => void;
 	reviewId: number;
-	reviewType: "company" | "course";
 	showEditIcon?: boolean;
 };
 
 const ActionIconsPanel: React.FC<Properties> = ({
-	handleClickEdit,
 	likesCount,
+	openModal,
 	reviewId,
-	reviewType,
 	showEditIcon = false,
 }) => {
-	const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+	const handleOpenShareModal = useCallback(() => {
+		openModal("shareModal", reviewId);
+	}, [openModal, reviewId]);
 
-	const handleOpenShareModal = () => {
-		setIsShareModalOpen(true);
-	};
-
-	const handleCloseShareModal = () => {
-		setIsShareModalOpen(false);
-	};
+	const handleOpenEditModal = useCallback(() => {
+		openModal("editModal", reviewId);
+	}, [openModal, reviewId]);
 
 	return (
 		<div className={styles["action-icons"]}>
-			<div
-				className={styles["action-icons__left"]}
-				onClick={
-					handleClickEdit
-						? () => handleClickEdit(reviewId as number)
-						: undefined
-				}
-			>
+			<div className={styles["action-icons__left"]}>
 				{showEditIcon && (
-					<div>
+					<div onClick={handleOpenEditModal}>
 						<Icon name={IconName.EDIT} /> <span>Редагувати</span>
 					</div>
 				)}
 			</div>
+
 			<div className={styles["action-icons__right"]}>
 				<div onClick={handleOpenShareModal}>
 					<Icon name={IconName.SHARE} /> <span>Поділитися</span>
@@ -55,13 +45,6 @@ const ActionIconsPanel: React.FC<Properties> = ({
 					<span className={styles["like-count"]}>{likesCount}</span>
 				</div>
 			</div>
-
-			<ShareModal
-				isOpen={isShareModalOpen}
-				onClose={handleCloseShareModal}
-				reviewId={reviewId}
-				reviewType={reviewType}
-			/>
 		</div>
 	);
 };

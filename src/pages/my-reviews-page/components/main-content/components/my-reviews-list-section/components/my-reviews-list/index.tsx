@@ -7,15 +7,13 @@ import styles from "./styles.module.scss";
 
 interface Properties {
 	category: MyReviewCategory;
-	handleClickDeleteReview: (entityId: null | number) => void;
-	handleClickEditReview: (entityId: null | number) => void;
+	openModal: (currentModal: string, entityId: number) => void;
 	reviews: MyReview[];
 }
 
 const MyReviewsList: React.FC<Properties> = ({
 	category,
-	handleClickDeleteReview,
-	handleClickEditReview,
+	openModal,
 	reviews,
 }) => {
 	return (
@@ -23,9 +21,8 @@ const MyReviewsList: React.FC<Properties> = ({
 			{reviews.map((review) => (
 				<ReviewListItem
 					category={category}
-					handleClickDeleteReview={handleClickDeleteReview}
-					handleClickEditReview={handleClickEditReview}
 					key={review.id}
+					openModal={openModal}
 					review={review}
 				/>
 			))}

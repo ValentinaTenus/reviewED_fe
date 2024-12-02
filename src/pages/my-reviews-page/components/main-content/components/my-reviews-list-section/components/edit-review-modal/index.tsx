@@ -1,10 +1,12 @@
 import React, { useCallback, useState } from "react";
+import { toast } from "react-toastify";
 import * as yup from "yup";
 
 import { Button, Input, Logo, StarRating } from "~/common/components";
 import { ButtonSize, ButtonType, ButtonVariant } from "~/common/enums";
 import { useAppForm, useTransformDate } from "~/common/hooks";
 import { MyReview, MyReviewCategory } from "~/common/types/my-reviews";
+import { useEditMyReviewMutation } from "~/redux/my-reviews/my-reviews-api";
 
 import { ActionIconsPanel, DialogModal } from "../";
 import styles from "./styles.module.scss";
@@ -26,23 +28,21 @@ type FormData = yup.InferType<typeof schema>;
 
 interface Properties {
 	category: MyReviewCategory;
-	handleCloseEditReview: () => void;
-	handleEditReview: (data: { rating: number; text: string }) => void;
-	isEditing: boolean;
-	isOpen: boolean;
+	closeModal: () => void;
+	openModal: (currentModal: string, entityId: number) => void;
 	review: MyReview;
 }
 
 const EditReviewModal: React.FC<Properties> = ({
 	category,
-	handleCloseEditReview,
-	handleEditReview,
-	isEditing,
-	isOpen,
+	closeModal,
+	openModal,
 	review,
 }) => {
 	const [rating, setRating] = useState<null | number>(null);
 	const { formattedDate } = useTransformDate(review.time_added);
+	const [editMyReview, { isLoading }] = useEditMyReviewMutation();
+
 	const { control, errors, handleSubmit } = useAppForm<FormData>({
 		defaultValues: {
 			text: review?.text || "",
@@ -51,25 +51,39 @@ const EditReviewModal: React.FC<Properties> = ({
 		validationSchema: schema,
 	});
 
-	const handleClose = useCallback(() => {
-		handleCloseEditReview();
-	}, [handleCloseEditReview]);
-
-	const onEditReview = useCallback(
-		({ text }: { text: string }) => {
+	const handleEditReview = useCallback(
+		async ({ text }: { text: string }) => {
 			const finalRating = rating !== null ? Math.ceil(rating) : review.rating;
 
-			handleEditReview({ rating: finalRating, text });
+			try {
+				await editMyReview({
+					body: { rating: finalRating, text },
+					category,
+					entityId: review.id,
+				}).unwrap();
+			} catch (error) {
+				if (error instanceof Error) {
+					toast.error(`Error: ${error.message}`);
+				} else {
+					toast.error("Виникла помилка при редагуванні відгуку.");
+				}
+			} finally {
+				closeModal();
+			}
 		},
-		[rating, handleEditReview, review.rating],
+		[rating, review.rating, review.id, category, closeModal, editMyReview],
 	);
+
+	const handleClose = useCallback(() => {
+		closeModal();
+	}, [closeModal]);
 
 	const handleStarClick = useCallback((rating: number) => {
 		setRating(rating);
 	}, []);
 
 	return (
-		<DialogModal classNames="edit-modal" isOpen={isOpen} onClose={handleClose}>
+		<DialogModal classNames="edit-modal" onClose={handleClose}>
 			<div className={styles["review"]}>
 				<div className={styles["review__info"]}>
 					<div className={styles["review__info-left"]}>
@@ -106,14 +120,14 @@ const EditReviewModal: React.FC<Properties> = ({
 					<div className={styles["review__text-icons"]}>
 						<ActionIconsPanel
 							likesCount={review.likes_count}
+							openModal={openModal}
 							reviewId={review.id}
-							reviewType={category}
 						/>
 					</div>
 				</div>
 
 				<div className={styles["review__edit"]}>
-					<form onSubmit={handleSubmit(onEditReview)}>
+					<form onSubmit={handleSubmit(handleEditReview)}>
 						<div className={styles["review__edit-title"]}>
 							Редагування відгуку
 						</div>
@@ -151,7 +165,7 @@ const EditReviewModal: React.FC<Properties> = ({
 										Скасувати
 									</Button>
 									<Button
-										disabled={isEditing}
+										disabled={isLoading}
 										size={ButtonSize.MEDIUM}
 										type={ButtonType.SUBMIT}
 										variant={ButtonVariant.PRIMARY}

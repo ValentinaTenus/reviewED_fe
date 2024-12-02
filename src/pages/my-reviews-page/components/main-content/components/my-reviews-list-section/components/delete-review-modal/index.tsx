@@ -1,39 +1,49 @@
 import React, { useCallback } from "react";
+import { toast } from "react-toastify";
 
 import { Button, Icon } from "~/common/components";
 import { ButtonSize, ButtonVariant, IconName } from "~/common/enums";
+import { MyReviewCategory } from "~/common/types/my-reviews";
+import { useDeleteMyReviewMutation } from "~/redux/my-reviews/my-reviews-api";
 
 import { DialogModal } from "../";
 import styles from "./styles.module.scss";
 
 type Properties = {
-	handleCloseDeleteReview: () => void;
-	handleDeleteReview: () => void;
-	isDeleting: boolean;
-	isOpen: boolean;
+	category: MyReviewCategory;
+	closeModal: () => void;
+	reviewId: number;
 };
 
 const DeleteReviewModal: React.FC<Properties> = ({
-	handleCloseDeleteReview,
-	handleDeleteReview,
-	isDeleting,
-	isOpen,
+	category,
+	closeModal,
+	reviewId,
 }) => {
-	const handleClose = useCallback(() => {
-		handleCloseDeleteReview();
-	}, [handleCloseDeleteReview]);
+	const [deleteMyReview, { isLoading }] = useDeleteMyReviewMutation();
 
-	const handleClickDelete = useCallback(() => {
-		handleDeleteReview();
-	}, [handleDeleteReview]);
+	const handleClose = useCallback(() => {
+		closeModal();
+	}, [closeModal]);
+
+	const handleDeleteReview = useCallback(async () => {
+		if (reviewId) {
+			try {
+				await deleteMyReview({ category, entityId: reviewId }).unwrap();
+			} catch (error) {
+				if (error instanceof Error) {
+					toast.error(`Error: ${error.message}`);
+				} else {
+					toast.error("Виникла помилка при видаленні відгуку.");
+				}
+			} finally {
+				closeModal();
+			}
+		}
+	}, [reviewId, category, deleteMyReview, closeModal]);
 
 	return (
-		<DialogModal
-			classNames="delete-modal"
-			isOpen={isOpen}
-			onClose={handleClose}
-			withIconClose
-		>
+		<DialogModal classNames="delete-modal" onClose={handleClose} withIconClose>
 			<div className={styles["delete-modal"]}>
 				<div className={styles["delete-modal__top"]}>
 					<div className={styles["delete-modal__icon"]}>
@@ -53,15 +63,15 @@ const DeleteReviewModal: React.FC<Properties> = ({
 				<div className={styles["delete-modal__bottom"]}>
 					<div className={styles["delete-modal__buttons"]}>
 						<Button
-							onClick={handleClose}
+							onClick={() => closeModal()}
 							size={ButtonSize.MEDIUM}
 							variant={ButtonVariant.SECONDARY}
 						>
 							Скасувати
 						</Button>
 						<Button
-							disabled={isDeleting}
-							onClick={handleClickDelete}
+							disabled={isLoading}
+							onClick={handleDeleteReview}
 							size={ButtonSize.MEDIUM}
 							variant={ButtonVariant.DELETE}
 						>

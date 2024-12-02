@@ -33,6 +33,7 @@ enum IconName {
 	PLUS_SQUARE = "plusSquare",
 	PRICE = "price",
 	SEARCH = "search",
+	SEND_MESSAGE = "sendMessage",
 	SHARE = "share",
 	SHIELD_TICK = "shieldTick",
 	SORT = "sort",

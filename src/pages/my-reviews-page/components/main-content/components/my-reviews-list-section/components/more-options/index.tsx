@@ -19,20 +19,24 @@ const MY_REVIEW_OPTIONS: MyReviewOptions[] = [
 	{ iconName: IconName.DELETE, label: "видалити", value: "delete" },
 ];
 
+const OPTION_MODAL_MAP: Record<string, string> = {
+	"contact moderator": "contactModal",
+	delete: "deleteModal",
+	edit: "editModal",
+};
+
 const POPUP_CLOSE_DELAY = 500;
 const MOBILE_BREAKPOINT = 576;
 
 type Properties = {
-	handleClickDeleteReview: (entityId: null | number) => void;
-	handleClickEditReview: (entityId: null | number) => void;
 	isForTablet?: boolean;
+	openModal: (currentModal: string, entityId: number) => void;
 	reviewId: null | number;
 };
 
 const MoreOptions: React.FC<Properties> = ({
-	handleClickDeleteReview,
-	handleClickEditReview,
 	isForTablet = false,
+	openModal,
 	reviewId,
 }) => {
 	const [isOpenActionsModal, setIsOpenActionsModal] = useState<boolean>(false);
@@ -61,22 +65,12 @@ const MoreOptions: React.FC<Properties> = ({
 
 	const handleSelectOption = useCallback(
 		(option: string) => {
-			if (option === "edit") {
-				handleClickEditReview(reviewId);
-			}
-
-			if (option === "delete") {
-				handleClickDeleteReview(reviewId);
-			}
+			const modalType = OPTION_MODAL_MAP[option];
+			openModal(modalType, reviewId as number);
 
 			handleClosePopup();
 		},
-		[
-			handleClickDeleteReview,
-			handleClickEditReview,
-			handleClosePopup,
-			reviewId,
-		],
+		[handleClosePopup, openModal, reviewId],
 	);
 
 	return (
@@ -84,11 +78,13 @@ const MoreOptions: React.FC<Properties> = ({
 			className={clsx(styles["more-options"], {
 				[styles["more-options--tablet"]]: isForTablet,
 			})}
-			onClick={!isOpenPopup ? handleOpenPopup : undefined}
 		>
-			<span className={styles["more-options__button"]}>
+			<div
+				className={styles["more-options__button"]}
+				onClick={!isOpenPopup ? handleOpenPopup : undefined}
+			>
 				<Icon name={IconName.MORE} />
-			</span>
+			</div>
 
 			<div className={styles["more-options__popup-menu"]}>
 				<PopupMenu
@@ -101,7 +97,6 @@ const MoreOptions: React.FC<Properties> = ({
 
 			{isOpenActionsModal && (
 				<ActionsReviewModal
-					isOpen={isOpenActionsModal}
 					onSelect={handleSelectOption}
 					options={MY_REVIEW_OPTIONS}
 					setIsOpenActionsModal={setIsOpenActionsModal}
